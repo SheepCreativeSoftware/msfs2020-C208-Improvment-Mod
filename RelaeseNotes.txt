@@ -10,3 +10,10 @@ v0.1.0 20.10.2020
 - added one Flap position on 10 degree
 - reduce Idle fuel consumtion
 - added fix for g1000 Annunications Messages for Turboprop
+
+v0.1.1 20.10.2020
+- remove USE OXYGEN MASK CAS Message, cause doesn't work
+- replace batterie amp var on Engine Page
+- GENERATOR OFF CAS Message only shown if Turbine is running
+- LOW VOLTAGE CAS Message is now only shown if voltage is below 24V
+- Set generator amps to '0' if Generator is off

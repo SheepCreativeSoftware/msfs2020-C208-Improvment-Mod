@@ -52,30 +52,17 @@
 			<Constant>40</Constant>
 		</LowerEqual>
       </Condition>
-    </Annunciation>
-    
-	<Annunciation>
-      <Type>Warning</Type>
-      <Text>USE OXYGEN MASK</Text>
-      <Condition>
-		<Greater>
-			<Simvar name="PRESSURIZATION CABIN ALTITUDE" unit="feet"/>
-			<Constant>10000</Constant>
-		</Greater>
-      </Condition>
-    </Annunciation>
-	
+    </Annunciation>	
     <Annunciation>
       <Type>Warning</Type>
       <Text>VOLTAGE LOW</Text>
       <Condition>
         <LowerEqual>
-          <Simvar name="ELECTRICAL MAIN BUS VOLTAGE:1" unit="volts"/>
-          <Constant>25.5</Constant>
+          <Simvar name="ELECTRICAL BATTERY BUS VOLTAGE:1" unit="volts"/>
+          <Constant>24.0</Constant>
         </LowerEqual>
       </Condition>
-    </Annunciation>
-    
+    </Annunciation>  
     <Annunciation>
       <Type>Warning</Type>
       <Text>VOLTAGE HIGH</Text>
@@ -96,7 +83,6 @@
 		</Equal>
 	  </Condition>
 	</Annunciation>
-
     <Annunciation>
       <Type>Caution</Type>
       <Text>R FUEL LOW</Text>
@@ -113,7 +99,6 @@
 		</And>
       </Condition>
     </Annunciation>
-
     <Annunciation>
       <Type>Caution</Type>
       <Text>L FUEL LOW</Text>
@@ -130,7 +115,6 @@
 		</And>
       </Condition>
     </Annunciation>
-	
 	<Annunciation>
       <Type>Caution</Type>
       <Text>L-R FUEL LOW</Text>
@@ -147,7 +131,6 @@
 		</And>
       </Condition>
     </Annunciation>
-	<!--Done by me-->
     <Annunciation>
       <Type>Caution</Type>
       <Text>FUEL BOOST ON</Text>
@@ -165,7 +148,6 @@
         </Lower>
       </Condition>
     </Annunciation>
-
 	<Annunciation>
 	  <Type>Caution</Type>
 	  <Text>STARTER ON</Text>
@@ -176,12 +158,18 @@
 	<Annunciation>
 	  <Type>Caution</Type>
 	  <Text>GENERATOR OFF</Text>
-	  <Condition>
-	    <Greater>
-			<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
-			<Constant>0</Constant>
-		</Greater>
-	  </Condition>
+		  <Condition>
+			<And>
+				<Greater>
+					<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+					<Constant>0</Constant>
+				</Greater>
+				<Greater>
+					<Simvar name="TURB ENG N1:1" unit="percent"/>
+					<Constant>30</Constant>
+				</Greater>
+			</And>
+		  </Condition>
 	</Annunciation>
 	<Annunciation>
 	  <Type>Advisory</Type>
