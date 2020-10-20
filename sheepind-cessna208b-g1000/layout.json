@@ -1,0 +1,24 @@
+{
+  "content": [
+    {
+      "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/engines.cfg",
+      "size": 15667,
+      "date": 132474533073506701
+    },
+    {
+      "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/flight_model.cfg",
+      "size": 18797,
+      "date": 132476507744910670
+    },
+    {
+      "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/panel/PANEL.CFG",
+      "size": 956,
+      "date": 132426560859273116
+    },
+    {
+      "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/panel/Panel.xml",
+      "size": 16940,
+      "date": 132426560859333159
+    }
+  ]
+}
