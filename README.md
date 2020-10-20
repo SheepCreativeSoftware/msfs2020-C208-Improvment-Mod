@@ -20,7 +20,8 @@ This mod includes also a fixed file for Annunciation Messages which need to be r
 1. Unzip the Mod and Copy it into the Community Folder.
 [Where is the Community Folder located?](https://www.flightsim.com/vbfs/content.php?21235-Finding-The-MSFS-2020-Community-Folder)
 
-2. Download, unzip and copy the WorkingTitle G1000 mod into the community folder.
+2. Download, unzip and copy the WorkingTitle G1000 mod into the community folder:  
+[https://github.com/Working-Title-MSFS-Mods/fspackages/releases/tag/g1000-v0.3.1](https://github.com/Working-Title-MSFS-Mods/fspackages/releases/tag/g1000-v0.3.1)
 
 3. Download, unzip and replace the CommonPFD_MFD.js in the WorkingTitle Mod wich is
 located in:  
