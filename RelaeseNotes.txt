@@ -1,0 +1,5 @@
+Release Notes
+
+v0.0.1 20.10.2020
+- Initial Version (Vanilla MSFS Files from v1.9.5)
+- Added File from WorkingTitle for Annunication fix
