@@ -17,8 +17,13 @@
     },
     {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/panel/Panel.xml",
-      "size": 16940,
-      "date": 132426560859333159
+      "size": 19229,
+      "date": 132476157910478480
+    },
+    {
+      "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/panel/WTEngineDisplay.xml",
+      "size": 17233,
+      "date": 132476247193430812
     }
   ]
 }

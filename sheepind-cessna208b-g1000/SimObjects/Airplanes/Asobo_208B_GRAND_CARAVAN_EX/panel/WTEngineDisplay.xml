@@ -1,0 +1,724 @@
+<WTEngineDisplay>
+	<EngineDisplayPage>
+        <ID>ENGINE</ID>
+		<Title>Engine</Title>
+		<Node>EngineDisplay</Node>
+	</EngineDisplayPage>
+	<EngineDisplayPage>
+        <ID>SYSTEM</ID>
+		<Title>System</Title>
+		<Node>EngineDisplaySystem</Node>
+	</EngineDisplayPage>
+
+	<EngineDisplaySystem>
+		<Gauge>
+			<Type>Circular</Type>
+			<Style>
+				<BeginAngle>-50</BeginAngle>
+				<EndAngle>190</EndAngle>
+				<ValuePos>End</ValuePos>
+				<CursorType>Triangle</CursorType>
+				<SizePercent>90</SizePercent>
+			</Style>
+			<BeginText></BeginText>
+			<EndText></EndText>
+			<ID>Turbo_TorqueGauge</ID>
+			<Title>TRQ</Title>
+			<Unit>FT-LB</Unit>
+			<Minimum>0</Minimum>
+			<Maximum>2600</Maximum>
+			<Value>
+				<Simvar name="TURB ENG FREE TURBINE TORQUE:1" unit="Foot pounds"/>
+			</Value>
+			<ColorZone>
+				<Color>green</Color>
+				<Begin>0</Begin>
+				<End>2396</End>
+			</ColorZone>
+			<ColorZone>
+				<Color>red</Color>
+				<Begin>2396</Begin>
+				<End>2600</End>
+			</ColorZone>
+			<GraduationLength>100</GraduationLength>
+			<GraduationTextLength>500</GraduationTextLength>
+			<RedBlink>
+				<Greater>
+					<Simvar name="ENG TORQUE:1" unit="Foot pounds"/>
+					<Constant>2400</Constant>
+				</Greater>
+			</RedBlink>
+		</Gauge>
+		
+		<Gauge>
+			<Type>Circular</Type>
+			<Style>
+				<BeginAngle>-10</BeginAngle>
+				<EndAngle>170</EndAngle>
+				<CursorType>Triangle</CursorType>
+				<ValuePos>End</ValuePos>
+				<SizePercent>90</SizePercent>
+			</Style>
+			<BeginText></BeginText>
+			<EndText></EndText>
+			<ID>Turbo_IttGauge</ID>
+			<Title>ITT</Title>
+			<Unit>°C</Unit>
+			<Minimum>0</Minimum>
+			<Maximum>
+				<StateMachine>
+					<State id="Start" value="1100">
+						<Transition to="Normal">
+							<Greater>
+								<Simvar name="TURB ENG N1:1" unit="percent"/>
+								<Constant>52</Constant>
+							</Greater>
+						</Transition>
+					</State>
+					<State id="Normal" value="900">
+						<Transition to="Start">
+							<Lower>
+								<Simvar name="TURB ENG N1:1" unit="percent"/>
+								<Constant>10</Constant>
+							</Lower>
+						</Transition>
+					</State>
+				</StateMachine>
+			</Maximum>
+			<Value>
+				<Simvar name="TURB ENG1 ITT" unit="celsius"/>
+			</Value>
+			<ColorZone>
+				<Color>green</Color>
+				<Begin>100</Begin>
+				<End>740</End>
+			</ColorZone>
+			<ColorZone>
+				<Color>yellow</Color>
+				<Begin>765</Begin>
+				<End>805</End>
+			</ColorZone>
+			<ColorLine>
+				<Color>red</Color>
+				<Position>						
+					<StateMachine>
+						<State id="Start" value="1090">
+							<Transition to="Normal">
+								<Greater>
+									<Simvar name="TURB ENG N1:1" unit="percent"/>
+									<Constant>52</Constant>
+								</Greater>
+							</Transition>
+						</State>
+						<State id="Normal" value="805">
+							<Transition to="Start">
+								<Lower>
+									<Simvar name="TURB ENG N1:1" unit="percent"/>
+									<Constant>10</Constant>
+								</Lower>
+							</Transition>
+						</State>
+					</StateMachine>
+				</Position>
+			</ColorLine>
+			
+			<RedBlink>
+				<Greater>
+					<Simvar name="TURB ENG1 ITT" unit="celsius"/>
+					<StateMachine>
+						<State id="Start" value="1090">
+							<Transition to="Normal">
+								<Greater>
+									<Simvar name="TURB ENG N1:1" unit="percent"/>
+									<Constant>52</Constant>
+								</Greater>
+							</Transition>
+						</State>
+						<State id="Normal" value="805">
+							<Transition to="Start">
+								<Lower>
+									<Simvar name="TURB ENG N1:1" unit="percent"/>
+									<Constant>10</Constant>
+								</Lower>
+							</Transition>
+						</State>
+					</StateMachine>
+				</Greater>
+			</RedBlink>
+			<GraduationLength>50</GraduationLength>
+		</Gauge>
+		
+		<Gauge>
+			<Type>Circular</Type>
+			<Style>
+				<BeginAngle>-10</BeginAngle>
+				<EndAngle>170</EndAngle>
+				<CursorType>Triangle</CursorType>
+				<ValuePos>End</ValuePos>
+				<SizePercent>90</SizePercent>
+				<TextIncrement>10</TextIncrement>
+			</Style>
+			<BeginText></BeginText>
+			<EndText></EndText>
+			<ID>Turbo_NgGauge</ID>
+			<Title>NG</Title>
+			<Unit>% RPM</Unit>
+			<Minimum>0</Minimum>
+			<Maximum>110</Maximum>
+			<Value>
+				<Simvar name="TURB ENG N1:1" unit="percent"/>
+			</Value>
+			<ColorZone>
+				<Color>green</Color>
+				<Begin>51</Begin>
+				<End>101.6</End>
+			</ColorZone>
+			<ColorLine>
+				<Color>red</Color>
+				<Position>101.6</Position>
+			</ColorLine>
+			<GraduationLength>10</GraduationLength>
+			<RedBlink>
+				<Greater>
+					<Simvar name="TURB ENG N1:1" unit="percent"/>
+					<Constant>101.6</Constant>
+				</Greater>
+			</RedBlink>
+		</Gauge>
+
+		<Text>
+			<Left fontsize="8">PROP RPM</Left>
+			<Right id="Turbo_RPMGauge" fontsize="8">
+				<Content>
+					<ToFixed precision="0">
+						<Simvar name="PROP RPM:1" unit="rpm"/>
+					</ToFixed>
+				</Content>
+				<Color>
+					<If>
+						<Condition>
+							<Greater>
+								<Simvar name="PROP RPM:1" unit="rpm"/>
+								<Constant>1600</Constant>
+							</Greater>
+						</Condition>
+						<Then>
+							<If>
+								<Condition>
+									<Greater>
+										<Simvar name="PROP RPM:1" unit="rpm"/>
+										<Constant>1900</Constant>
+									</Greater>
+								</Condition>
+								<Then>
+									<Constant>red</Constant>
+								</Then>
+								<Else>
+									<Constant>green</Constant>
+								</Else>
+							</If>
+						</Then>
+						<Else>
+							<Constant>white</Constant>
+						</Else>
+					</If>
+				</Color>
+			</Right>
+		</Text>
+		
+		<Text>
+		<Left>---</Left>
+		<Center>FUEL</Center>
+		<Right>---</Right>
+		</Text>
+		
+		<Text>
+			<Left fontsize="8">QTY L LBS</Left>
+			<Right fontsize="9">
+				<ToFixed precision="0">
+					<Multiply>
+						<Simvar name="FUEL LEFT QUANTITY" unit="gallons"/>
+						<Simvar name="FUEL WEIGHT PER GALLON" unit="pounds"/>
+					</Multiply>
+				</ToFixed>
+			</Right>
+		</Text>
+		
+		<Text>
+			<Left fontsize="8">QTY R LBS</Left>
+			<Right fontsize="9">
+				<ToFixed precision="0">
+					<Multiply>
+						<Simvar name="FUEL RIGHT QUANTITY" unit="gallons"/>
+						<Simvar name="FUEL WEIGHT PER GALLON" unit="pounds"/>
+					</Multiply>
+				</ToFixed>
+			</Right>
+		</Text>
+		
+		<Text>
+			<Left fontsize="8">FFLOW PPH</Left>
+			<Right fontsize="9">
+				<ToFixed precision="0">
+					<Simvar name="ENG FUEL FLOW PPH:1" unit="Pounds per hour"/>
+				</ToFixed>
+			</Right>
+		</Text>
+		
+		<Text>
+		<Left></Left>
+		<Center>FUEL TOTALIZER</Center>
+		<Right></Right>
+		</Text>
+
+		<Text>
+			<Left fontsize="8">LB REM</Left>			
+			<Right fontsize="9">
+				<ToFixed precision="0">
+					<Simvar name="FUEL TOTAL QUANTITY WEIGHT:1" unit="pounds"/>
+				</ToFixed>
+			</Right>
+		</Text>
+		
+		<Text>
+			<Left fontsize="8">LB USED</Left>			
+			<Right fontsize="9">
+				<ToFixed precision="0">
+					<Substract>
+						<MaxSinceStart>
+							<Simvar name="FUEL TOTAL QUANTITY WEIGHT:1" unit="pounds"/>
+						</MaxSinceStart>
+						<Simvar name="FUEL TOTAL QUANTITY WEIGHT:1" unit="pounds"/>
+					</Substract>
+				</ToFixed>
+			</Right>
+		</Text>
+		
+		<Text>
+		<Left>-</Left>
+		<Center>ELECTRICAL</Center>
+		<Right>-</Right>
+		</Text>
+		
+		<Text>
+			<Left fontsize="8">GEN AMPS</Left>
+			<Right fontsize="9">
+				<ToFixed precision="0">
+					<Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
+				</ToFixed>
+			</Right>
+		</Text>
+		<Text>
+			<Left fontsize="8">ALT AMPS</Left>
+			<Right fontsize="9">
+				<ToFixed precision="0">
+					<Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
+				</ToFixed>
+			</Right>
+		</Text>
+		<Text>
+			<Left fontsize="8">BAT AMPS</Left>
+			<Right fontsize="9">
+				<ToFixed precision="0">
+					<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amp"/>
+				</ToFixed>
+			</Right>
+		</Text>
+		<Text>
+			<Left fontsize="8">BUS VOLTS</Left>
+			<Right fontsize="9">
+				<ToFixed precision="1">
+					<Simvar name="ELECTRICAL MAIN BUS VOLTAGE:1" unit="volts"/>
+				</ToFixed>
+			</Right>
+		</Text>
+		
+	</EngineDisplaySystem>
+	
+	<!-- Engine Display -->
+
+  <EngineDisplay>
+		<Gauge>
+			<Type>Circular</Type>
+			<Style>
+				<BeginAngle>-50</BeginAngle>
+				<EndAngle>190</EndAngle>
+				<ValuePos>End</ValuePos>
+				<CursorType>Triangle</CursorType>
+				<SizePercent>90</SizePercent>
+			</Style>
+			<BeginText></BeginText>
+			<EndText></EndText>
+			<ID>Turbo_TorqueGauge</ID>
+			<Title>TRQ</Title>
+			<Unit>FT-LB</Unit>
+			<Minimum>0</Minimum>
+			<Maximum>2600</Maximum>
+			<Value>
+				<Simvar name="TURB ENG FREE TURBINE TORQUE:1" unit="Foot pounds"/>
+			</Value>
+			<ColorZone>
+				<Color>green</Color>
+				<Begin>0</Begin>
+				<End>2396</End>
+			</ColorZone>
+			<ColorZone>
+				<Color>red</Color>
+				<Begin>2396</Begin>
+				<End>2600</End>
+			</ColorZone>
+			<GraduationLength>100</GraduationLength>
+			<GraduationTextLength>500</GraduationTextLength>
+			<RedBlink>
+				<Greater>
+					<Simvar name="ENG TORQUE:1" unit="Foot pounds"/>
+					<Constant>2400</Constant>
+				</Greater>
+			</RedBlink>
+		</Gauge>
+		
+		<Gauge>
+			<Type>Circular</Type>
+			<Style>
+				<BeginAngle>-10</BeginAngle>
+				<EndAngle>170</EndAngle>
+				<CursorType>Triangle</CursorType>
+				<ValuePos>End</ValuePos>
+				<SizePercent>90</SizePercent>
+			</Style>
+			<BeginText></BeginText>
+			<EndText></EndText>
+			<ID>Turbo_IttGauge</ID>
+			<Title>ITT</Title>
+			<Unit>°C</Unit>
+			<Minimum>0</Minimum>
+			<Maximum>
+				<StateMachine>
+					<State id="Start" value="1100">
+						<Transition to="Normal">
+							<Greater>
+								<Simvar name="TURB ENG N1:1" unit="percent"/>
+								<Constant>52</Constant>
+							</Greater>
+						</Transition>
+					</State>
+					<State id="Normal" value="900">
+						<Transition to="Start">
+							<Lower>
+								<Simvar name="TURB ENG N1:1" unit="percent"/>
+								<Constant>10</Constant>
+							</Lower>
+						</Transition>
+					</State>
+				</StateMachine>
+			</Maximum>
+			<Value>
+				<Simvar name="TURB ENG1 ITT" unit="celsius"/>
+			</Value>
+			<ColorZone>
+				<Color>green</Color>
+				<Begin>100</Begin>
+				<End>740</End>
+			</ColorZone>
+			<ColorZone>
+				<Color>yellow</Color>
+				<Begin>765</Begin>
+				<End>805</End>
+			</ColorZone>
+			<ColorLine>
+				<Color>red</Color>
+				<Position>						
+					<StateMachine>
+						<State id="Start" value="1090">
+							<Transition to="Normal">
+								<Greater>
+									<Simvar name="TURB ENG N1:1" unit="percent"/>
+									<Constant>52</Constant>
+								</Greater>
+							</Transition>
+						</State>
+						<State id="Normal" value="805">
+							<Transition to="Start">
+								<Lower>
+									<Simvar name="TURB ENG N1:1" unit="percent"/>
+									<Constant>10</Constant>
+								</Lower>
+							</Transition>
+						</State>
+					</StateMachine>
+				</Position>
+			</ColorLine>
+			
+			<RedBlink>
+				<Greater>
+					<Simvar name="TURB ENG1 ITT" unit="celsius"/>
+					<StateMachine>
+						<State id="Start" value="1090">
+							<Transition to="Normal">
+								<Greater>
+									<Simvar name="TURB ENG N1:1" unit="percent"/>
+									<Constant>52</Constant>
+								</Greater>
+							</Transition>
+						</State>
+						<State id="Normal" value="805">
+							<Transition to="Start">
+								<Lower>
+									<Simvar name="TURB ENG N1:1" unit="percent"/>
+									<Constant>10</Constant>
+								</Lower>
+							</Transition>
+						</State>
+					</StateMachine>
+				</Greater>
+			</RedBlink>
+			<GraduationLength>50</GraduationLength>
+		</Gauge>
+		
+		<Gauge>
+			<Type>Circular</Type>
+			<Style>
+				<BeginAngle>-10</BeginAngle>
+				<EndAngle>170</EndAngle>
+				<CursorType>Triangle</CursorType>
+				<ValuePos>End</ValuePos>
+				<SizePercent>90</SizePercent>
+				<TextIncrement>10</TextIncrement>
+			</Style>
+			<BeginText></BeginText>
+			<EndText></EndText>
+			<ID>Turbo_NgGauge</ID>
+			<Title>NG</Title>
+			<Unit>% RPM</Unit>
+			<Minimum>0</Minimum>
+			<Maximum>110</Maximum>
+			<Value>
+				<Simvar name="TURB ENG N1:1" unit="percent"/>
+			</Value>
+			<ColorZone>
+				<Color>green</Color>
+				<Begin>51</Begin>
+				<End>101.6</End>
+			</ColorZone>
+			<ColorLine>
+				<Color>red</Color>
+				<Position>101.6</Position>
+			</ColorLine>
+			<GraduationLength>10</GraduationLength>
+			<RedBlink>
+				<Greater>
+					<Simvar name="TURB ENG N1:1" unit="percent"/>
+					<Constant>101.6</Constant>
+				</Greater>
+			</RedBlink>
+		</Gauge>
+		
+		<Text>
+			<Left>PROP RPM</Left>
+			<Right id="Turbo_RPMGauge">
+				<Content>
+					<ToFixed precision="0">
+						<Simvar name="PROP RPM:1" unit="rpm"/>
+					</ToFixed>
+				</Content>
+				<Color>
+					<If>
+						<Condition>
+							<Greater>
+								<Simvar name="PROP RPM:1" unit="rpm"/>
+								<Constant>1600</Constant>
+							</Greater>
+						</Condition>
+						<Then>
+							<If>
+								<Condition>
+									<Greater>
+										<Simvar name="PROP RPM:1" unit="rpm"/>
+										<Constant>1900</Constant>
+									</Greater>
+								</Condition>
+								<Then>
+									<Constant>red</Constant>
+								</Then>
+								<Else>
+									<Constant>green</Constant>
+								</Else>
+							</If>
+						</Then>
+						<Else>
+							<Constant>white</Constant>
+						</Else>
+					</If>
+				</Color>
+			</Right>
+		</Text>
+		
+		<Gauge>
+			<Type>Horizontal</Type>
+			<Style>
+				<ValuePos>End</ValuePos>
+			</Style>
+			<ID>Turbo_OilPressGauge</ID>
+			<Title>OIL</Title>
+			<Unit>PSI</Unit>
+			<Minimum>0</Minimum>
+			<Maximum>120</Maximum>
+			<Value>
+				<Simvar name="GENERAL ENG OIL PRESSURE:1" unit="psi"/>
+			</Value>
+			<ColorZone>
+				<Color>green</Color>
+				<Begin>85</Begin>
+				<End>105</End>
+			</ColorZone>
+			<ColorZone>
+				<Color>yellow</Color>
+				<Begin>40</Begin>
+				<End>85</End>
+			</ColorZone>
+			<ColorLine>
+				<Color>red</Color>
+				<Position>40</Position>
+			</ColorLine>
+			<ColorLine>
+				<Color>red</Color>
+				<Position>105</Position>
+			</ColorLine>
+			<BeginText></BeginText>
+			<EndText></EndText>
+			<RedBlink>
+				<Or>
+					<Greater>
+						<Simvar name="GENERAL ENG OIL PRESSURE:1" unit="psi"/>
+						<Constant>101.6</Constant>
+					</Greater>
+					<Lower>
+						<Simvar name="GENERAL ENG OIL PRESSURE:1" unit="psi"/>
+						<Constant>40</Constant>
+					</Lower>
+				</Or>
+			</RedBlink>
+		</Gauge>
+		
+		<Gauge>
+			<Type>Horizontal</Type>
+			<Style>
+				<ValuePos>End</ValuePos>
+			</Style>
+			<ID>Turbo_OilTempGauge</ID>
+			<Title>OIL</Title>
+			<Unit>°C</Unit>
+			<Minimum>-50</Minimum>
+			<Maximum>120</Maximum>
+			<Value>
+				<Simvar name="GENERAL ENG OIL TEMPERATURE:1" unit="celsius"/>
+			</Value>
+			<ColorZone>
+				<Color>green</Color>
+				<Begin>10</Begin>
+				<End>100</End>
+			</ColorZone>
+			<ColorZone>
+				<Color>yellow</Color>
+				<Begin>-40</Begin>
+				<End>10</End>
+			</ColorZone>
+			<ColorZone>
+				<Color>yellow</Color>
+				<Begin>100</Begin>
+				<End>105</End>
+			</ColorZone>
+			<ColorLine>
+				<Color>red</Color>
+				<Position>-41</Position>
+			</ColorLine>
+			<ColorLine>
+				<Color>red</Color>
+				<Position>105</Position>
+			</ColorLine>
+			<BeginText></BeginText>
+			<EndText></EndText>
+			<RedBlink>
+				<Or>
+					<Greater>
+						<Simvar name="GENERAL ENG OIL TEMPERATURE:1" unit="celsius"/>
+						<Constant>105</Constant>
+					</Greater>
+					<Lower>
+						<Simvar name="GENERAL ENG OIL TEMPERATURE:1" unit="celsius"/>
+						<Constant>-41</Constant>
+					</Lower>
+				</Or>
+			</RedBlink>
+		</Gauge>
+		
+		<Text>
+			<Left>L</Left>
+			<Center>FUEL QTY</Center>
+			<Right>R</Right>
+		</Text>
+		
+		<Gauge>
+			<Type>DoubleVertical</Type>
+			<ID>Turbo_FuelGauge</ID>
+			<Title></Title>
+			<Unit>LBS</Unit>
+			<Minimum>0</Minimum>
+			<Maximum>1100</Maximum>
+			<Style>
+				<Height>70</Height>
+			</Style>
+			<Value>
+				<Multiply>
+					<Simvar name="FUEL LEFT QUANTITY" unit="gallons"/>
+					<Simvar name="FUEL WEIGHT PER GALLON" unit="pounds"/>
+				</Multiply>
+			</Value>
+			<Value2>
+				<Multiply>
+					<Simvar name="FUEL RIGHT QUANTITY" unit="gallons"/>
+					<Simvar name="FUEL WEIGHT PER GALLON" unit="pounds"/>
+				</Multiply>
+			</Value2>
+			<ColorLine>
+				<Color>red</Color>
+				<Position>0</Position>
+			</ColorLine>
+			<ColorZone>
+				<Color>red</Color>
+				<Begin>0</Begin>
+				<End>25</End>
+			</ColorZone>
+			<GraduationLength text="True">200</GraduationLength>
+			<EndText></EndText>
+		</Gauge>
+		
+		<Text>
+			<Left>FFLOW PPH</Left>
+			<Right id="FuelFlow">
+				<ToFixed precision="0">
+					<Simvar name="ENG FUEL FLOW PPH:1" unit="Pounds per hour"/>
+				</ToFixed>
+			</Right>
+		</Text>
+		
+		<Text>
+			<Left>BAT AMPS</Left>
+			<Right id="Amperes">
+				<ToFixed precision="0">
+					<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="Amperes"/>
+				</ToFixed>
+			</Right>
+		</Text>
+		
+		<Text>
+			<Left>BUS VOLTS</Left>
+			<Right id="Volts">
+				<ToFixed precision="1">
+					<Simvar name="ELECTRICAL MAIN BUS VOLTAGE:1" unit="Volts"/>
+				</ToFixed>
+			</Right>
+		</Text>
+		
+	</EngineDisplay>
+</WTEngineDisplay>

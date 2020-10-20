@@ -12,6 +12,7 @@
 			<Simvar name="CIRCUIT ON:29" unit="Boolean"/>
 		</Or>
     </Electric>
+	<ReversionaryMode>True</ReversionaryMode>
   </Instrument>
   
   <!-- Second PFD
@@ -44,18 +45,29 @@
     
     <Annunciation>
       <Type>Warning</Type>
-      <Text>OIL PRESSURE</Text>
+      <Text>OIL PRESS LOW</Text>
       <Condition>
 		<LowerEqual>
 			<Simvar name="GENERAL ENG OIL PRESSURE:1" unit="psi"/>
-			<Constant>20</Constant>
+			<Constant>40</Constant>
 		</LowerEqual>
       </Condition>
     </Annunciation>
     
+	<Annunciation>
+      <Type>Warning</Type>
+      <Text>USE OXYGEN MASK</Text>
+      <Condition>
+		<Greater>
+			<Simvar name="PRESSURIZATION CABIN ALTITUDE" unit="feet"/>
+			<Constant>10000</Constant>
+		</Greater>
+      </Condition>
+    </Annunciation>
+	
     <Annunciation>
       <Type>Warning</Type>
-      <Text>LOW VOLTS</Text>
+      <Text>VOLTAGE LOW</Text>
       <Condition>
         <LowerEqual>
           <Simvar name="ELECTRICAL MAIN BUS VOLTAGE:1" unit="volts"/>
@@ -66,7 +78,7 @@
     
     <Annunciation>
       <Type>Warning</Type>
-      <Text>HIGH VOLTS</Text>
+      <Text>VOLTAGE HIGH</Text>
       <Condition>
         <Greater>
           <Simvar name="ELECTRICAL MAIN BUS VOLTAGE:1" unit="volts"/>
@@ -74,42 +86,119 @@
         </Greater>
       </Condition>
     </Annunciation>
-	
-    <Annunciation>
-      <Type>Caution</Type>
-      <Text>LOW VACUUM</Text>
-      <Condition>
-		<Lower>
-			<Simvar name="SUCTION PRESSURE" unit="inch of mercury"/>
-			<Constant>3.5</Constant>
-		</Lower>
-      </Condition>
-    </Annunciation>
+	<Annunciation>
+	  <Type>Warning</Type>
+	  <Text>FUEL SELECT OFF</Text>
+	  <Condition>
+		<Equal>
+		  <Simvar name="FUEL TANK SELECTOR:1" unit="number"/>
+		  <Constant>0</Constant>
+		</Equal>
+	  </Condition>
+	</Annunciation>
 
     <Annunciation>
       <Type>Caution</Type>
-      <Text>LOW FUEL R</Text>
+      <Text>R FUEL LOW</Text>
       <Condition>
+	  <And>
         <Lower>
           <Simvar name="FUEL RIGHT QUANTITY" unit="gallon"/>
           <Constant>5</Constant>
         </Lower>
+		<Greater>
+          <Simvar name="FUEL LEFT QUANTITY" unit="gallon"/>
+          <Constant>5</Constant>
+        </Greater>
+		</And>
       </Condition>
     </Annunciation>
 
     <Annunciation>
       <Type>Caution</Type>
-      <Text>LOW FUEL L</Text>
+      <Text>L FUEL LOW</Text>
       <Condition>
+        <And>
         <Lower>
           <Simvar name="FUEL LEFT QUANTITY" unit="gallon"/>
           <Constant>5</Constant>
         </Lower>
+		<Greater>
+          <Simvar name="FUEL RIGHT QUANTITY" unit="gallon"/>
+          <Constant>5</Constant>
+        </Greater>
+		</And>
       </Condition>
     </Annunciation>
-    
+	
+	<Annunciation>
+      <Type>Caution</Type>
+      <Text>L-R FUEL LOW</Text>
+      <Condition>
+        <And>
+        <Lower>
+          <Simvar name="FUEL LEFT QUANTITY" unit="gallon"/>
+          <Constant>5</Constant>
+        </Lower>
+		<Lower>
+          <Simvar name="FUEL RIGHT QUANTITY" unit="gallon"/>
+          <Constant>5</Constant>
+        </Lower>
+		</And>
+      </Condition>
+    </Annunciation>
+	<!--Done by me-->
+    <Annunciation>
+      <Type>Caution</Type>
+      <Text>FUEL BOOST ON</Text>
+      <Condition>
+        <Simvar name="GENERAL ENG FUEL PUMP ON:1" unit="Bool"/>
+      </Condition>
+    </Annunciation>
+	<Annunciation>
+      <Type>Caution</Type>
+      <Text>FUEL PRESS LOW</Text>
+      <Condition>
+        <Lower>
+          <Simvar name="GENERAL ENG FUEL PRESSURE:1" unit="psi"/>
+          <Constant>2</Constant>
+        </Lower>
+      </Condition>
+    </Annunciation>
+
+	<Annunciation>
+	  <Type>Caution</Type>
+	  <Text>STARTER ON</Text>
+	  <Condition>
+			<Simvar name="GENERAL ENG STARTER:1" unit="Bool"/>
+	  </Condition>
+	</Annunciation>
+	<Annunciation>
+	  <Type>Caution</Type>
+	  <Text>GENERATOR OFF</Text>
+	  <Condition>
+	    <Greater>
+			<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+			<Constant>0</Constant>
+		</Greater>
+	  </Condition>
+	</Annunciation>
+	<Annunciation>
+	  <Type>Advisory</Type>
+	  <Text>IGNITION ON</Text>
+	  <Condition>
+			<Simvar name="TURB ENG IS IGNITING:1" unit="Bool"/>
+	  </Condition>
+	</Annunciation>
+	<Annunciation>
+	  <Type>Advisory</Type>
+	  <Text>PARK BRAKE</Text>
+	  <Condition>
+			<Simvar name="BRAKE PARKING INDICATOR" unit="Bool"/>
+	  </Condition>
+	</Annunciation>
+		
   </Annunciations>
-  
 <!-- Engine Display -->
 
 	<EngineDisplay>

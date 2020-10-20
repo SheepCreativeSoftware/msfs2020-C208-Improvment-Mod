@@ -3,3 +3,10 @@ Release Notes
 v0.0.1 20.10.2020
 - Initial Version (Vanilla MSFS Files from v1.9.5)
 - Added File from WorkingTitle for Annunication fix
+
+v0.1.0 20.10.2020
+- added System Page as extension for WorkingTitle Engine Pages
+- added Annunications Messages
+- added one Flap position on 10 degree
+- reduce Idle fuel consumtion
+- added fix for g1000 Annunications Messages for Turboprop

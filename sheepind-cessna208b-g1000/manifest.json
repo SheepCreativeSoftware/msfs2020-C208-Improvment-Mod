@@ -1,21 +1,15 @@
 {
-  "dependencies": [
-    {
-      "name": "fs-base-propdefs",
-      "package_version": "0.1.2"
-    }
-  ],
+  "dependencies": [],
   "content_type": "AIRCRAFT",
-  "title": "Cessna 208B Grand Caravan EX",
-  "manufacturer": "Textron Aviation",
-  "creator": "Asobo Studio",
-  "package_version": "0.1.52",
-  "minimum_game_version": "1.9.2",
-  "release_notes": {
-    "neutral": {
-      "LastUpdate": "",
-      "OlderHistory": ""
+  "title": "SheepIndustries C208B Improvement",
+  "manufacturer": "",
+  "creator": "Magraina", 
+  "package_version": "0.1.0", 
+  "minimum_game_version": "1.9.5", 
+  "release_notes": { 
+     "neutral": { 
+       "LastUpdate": "",
+       "OlderHistory": "" 
     }
-  },
-  "total_package_size": "00000000000359220678"
+  }
 }
