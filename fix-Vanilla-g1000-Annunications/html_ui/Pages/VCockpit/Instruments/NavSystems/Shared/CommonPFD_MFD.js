@@ -1,5 +1,3 @@
-Include.addScript("/Pages/VCockpit/Instruments/Shared/WorkingTitle/DataStore.js")
-
 class PFD_VSpeed extends NavSystemElement {
     init(root) {
         this.vsi = this.gps.getChildById("VSpeed");
@@ -15,7 +13,6 @@ class PFD_VSpeed extends NavSystemElement {
     onEvent(_event) {
     }
 }
-
 class PFD_Airspeed extends NavSystemElement {
     constructor() {
         super();
@@ -277,52 +274,28 @@ class PFD_Altimeter extends NavSystemElement {
             case "BARO_DEC":
                 SimVar.SetSimVarValue("K:KOHLSMAN_DEC", "number", this.altimeterIndex);
                 break;
-            case "SoftKeys_Baro_IN":
-                this.altimeterElement.setAttribute("baro-mode", "IN");
-                break;
-            case "SoftKeys_Baro_HPA":
-                this.altimeterElement.setAttribute("baro-mode", "HPA");
-                break;
         }
-    }
-    getCurrentBaroMode() {
-        return this.altimeterElement.baroMode;
     }
 }
 class PFD_Attitude extends NavSystemElement {
     constructor() {
         super(...arguments);
         this.vDir = new Vec2();
-        this.syntheticVisionEnabled = false;
-        Include.addScript("/JS/debug.js", function () {
-            g_modDebugMgr.AddConsole(null);
-        });
     }
     init(root) {
         this.svg = this.gps.getChildById("Horizon");
     }
     onEnter() {
     }
-    setSyntheticVisionEnabled(enabled) {
-        this.syntheticVisionEnabled = enabled;
-    }
     onUpdate(_deltaTime) {
         var xyz = Simplane.getOrientationAxis();
         if (xyz) {
-            let gs = Simplane.getGroundSpeed() * 101.269;
-            let vs = Simplane.getVerticalSpeed();
-            let angle = Math.atan(vs/gs);
-            this.svg.setSytheticVisionEnabled(this.syntheticVisionEnabled);
-            this.svg.setAttribute("ground-speed", Simplane.getGroundSpeed().toString());
-            this.svg.setAttribute("actual-pitch", (angle / Math.PI * 180).toString());
             this.svg.setAttribute("pitch", (xyz.pitch / Math.PI * 180).toString());
             this.svg.setAttribute("bank", (xyz.bank / Math.PI * 180).toString());
             this.svg.setAttribute("slip_skid", Simplane.getInclinometer().toString());
             this.svg.setAttribute("flight_director-active", SimVar.GetSimVarValue("AUTOPILOT FLIGHT DIRECTOR ACTIVE", "Bool") ? "true" : "false");
             this.svg.setAttribute("flight_director-pitch", SimVar.GetSimVarValue("AUTOPILOT FLIGHT DIRECTOR PITCH", "degree"));
             this.svg.setAttribute("flight_director-bank", SimVar.GetSimVarValue("AUTOPILOT FLIGHT DIRECTOR BANK", "degree"));
-            this.svg.setAttribute("track", SimVar.GetSimVarValue("GPS GROUND MAGNETIC TRACK", "degrees"));
-            this.svg.setAttribute("heading", SimVar.GetSimVarValue("PLANE HEADING DEGREES MAGNETIC", "degree"));
         }
     }
     onExit() {
@@ -416,17 +389,17 @@ class PFD_Compass extends NavSystemElement {
         }
         else {
             this.ifTimer -= this.gps.deltaTime;
-        }        
+        }
         if (this.gps.currFlightPlanManager.isActiveApproach() && this.gps.currFlightPlanManager.getActiveWaypointIndex() != -1 && Simplane.getAutoPilotApproachType() == 4) {
-                if (((this.ifIcao && this.ifIcao != "" && this.ifIcao == this.gps.currFlightPlanManager.getActiveWaypoint().icao) || (this.gps.currFlightPlanManager.getActiveWaypointIndex() >= this.gps.currFlightPlanManager.getApproachWaypoints().length - 2)) && !this.hasLocBeenEntered) {
-                    let approachFrequency = this.gps.currFlightPlanManager.getApproachNavFrequency();
-                    if (!isNaN(approachFrequency)) {
-                        SimVar.SetSimVarValue("K:NAV1_RADIO_SWAP", "number", 0);
-                        SimVar.SetSimVarValue("K:NAV1_RADIO_SET_HZ", "hertz", approachFrequency * 1000000);
-                    }
-                    this.hasLocBeenEntered = true;
+            if (((this.ifIcao && this.ifIcao != "" && this.ifIcao == this.gps.currFlightPlanManager.getActiveWaypoint().icao) || (this.gps.currFlightPlanManager.getActiveWaypointIndex() >= this.gps.currFlightPlanManager.getApproachWaypoints().length - 2)) && !this.hasLocBeenEntered) {
+                let approachFrequency = this.gps.currFlightPlanManager.getApproachNavFrequency();
+                if (!isNaN(approachFrequency)) {
+                    SimVar.SetSimVarValue("K:NAV1_RADIO_SWAP", "number", 0);
+                    SimVar.SetSimVarValue("K:NAV1_RADIO_SET_HZ", "hertz", approachFrequency * 1000000);
                 }
-                else if (((this.ifIcao && this.ifIcao != "" && this.ifIcao == this.gps.currFlightPlanManager.getApproachWaypoints()[this.gps.currFlightPlanManager.getActiveWaypointIndex() - 1].icao && this.hasLocBeenEntered) || (this.gps.currFlightPlanManager.getActiveWaypointIndex() == this.gps.currFlightPlanManager.getApproachWaypoints().length - 1)) && !this.hasLocBeenActivated) {
+                this.hasLocBeenEntered = true;
+            }
+            else if (((this.ifIcao && this.ifIcao != "" && this.ifIcao == this.gps.currFlightPlanManager.getApproachWaypoints()[this.gps.currFlightPlanManager.getActiveWaypointIndex() - 1].icao && this.hasLocBeenEntered) || (this.gps.currFlightPlanManager.getActiveWaypointIndex() == this.gps.currFlightPlanManager.getApproachWaypoints().length - 1)) && !this.hasLocBeenActivated) {
                 if (SimVar.GetSimVarValue("GPS DRIVES NAV1", "boolean")) {
                     SimVar.SetSimVarValue("K:TOGGLE_GPS_DRIVES_NAV1", "number", 0);
                 }
@@ -544,12 +517,7 @@ class PFD_NavStatus extends NavSystemElement {
                     this.legSymbol = 2;
                 }
             }
-
-            var rawCurrentLegDistance = fastToFixed(SimVar.GetSimVarValue("GPS WP DISTANCE", "nautical miles"), 1);
-            if (rawCurrentLegDistance.indexOf(".") == -1) {
-                rawCurrentLegDistance = rawCurrentLegDistance + ".0"
-            }
-            var currentLegDistance = rawCurrentLegDistance + "NM";
+            var currentLegDistance = fastToFixed(SimVar.GetSimVarValue("GPS WP DISTANCE", "nautical miles"), 1) + "NM";
             if (this.currentLegDistanceValue != currentLegDistance) {
                 if (this.currentLegDistance)
                     this.currentLegDistance.textContent = currentLegDistance;
@@ -813,7 +781,7 @@ class PFD_Annunciations extends Annunciations {
     onEnter() {
     }
     onUpdate(_deltaTime) {
-        if ((this.engineType == EngineType.ENGINE_TYPE_PISTON) || (this.engineType == EngineType.ENGINE_TYPE_TURBOPROP)) {
+        if (this.engineType == EngineType.ENGINE_TYPE_PISTON) {
             for (var i = 0; i < this.allMessages.length; i++) {
                 var message = this.allMessages[i];
                 var value = false;
@@ -1097,7 +1065,7 @@ class AS1000_Alerts extends NavSystemElement {
 class PFD_WindData extends NavSystemElement {
     constructor() {
         super(...arguments);
-        this.mode = WTDataStore.get("WindData.Mode", 0);
+        this.mode = 0;
     }
     init(root) {
         this.svg = root;
@@ -1109,25 +1077,21 @@ class PFD_WindData extends NavSystemElement {
     onEnter() {
     }
     onUpdate(_deltaTime) {
-        let onGround = SimVar.GetSimVarValue("SIM ON GROUND", "boolean");
-        if (onGround) {
-            this.svg.setAttribute("wind-mode", (this.mode ? 4 : 0).toString());
-        } else {
-            let windSpd = SimVar.GetSimVarValue("AMBIENT WIND VELOCITY", "knots");
-            let windDir = SimVar.GetSimVarValue("AMBIENT WIND DIRECTION", "degree");
-            let planeHdg = SimVar.GetSimVarValue("PLANE HEADING DEGREES MAGNETIC", "degree");
+        if (SimVar.GetSimVarValue("AMBIENT WIND VELOCITY", "knots") >= 1) {
             this.svg.setAttribute("wind-mode", this.mode.toString());
             switch (this.mode) {
                 case 3:
-                    this.svg.setAttribute("wind-true-direction", (windSpd >= 1 ? windDir : 0).toString());
+                    this.svg.setAttribute("wind-true-direction", SimVar.GetSimVarValue("AMBIENT WIND DIRECTION", "degree").toString());
                 case 2:
                 case 1:
-                    this.svg.setAttribute("wind-direction",
-                        (windSpd >= 1 ? ((windDir + 180) % 360 - planeHdg) : 0).toString());
-                    this.svg.setAttribute("wind-strength", windSpd);
+                    this.svg.setAttribute("wind-direction", ((SimVar.GetSimVarValue("AMBIENT WIND DIRECTION", "degree") + 180) % 360 - SimVar.GetSimVarValue("PLANE HEADING DEGREES MAGNETIC", "degree")).toString());
+                    this.svg.setAttribute("wind-strength", SimVar.GetSimVarValue("AMBIENT WIND VELOCITY", "knots"));
                     break;
             }
-        }   
+        }
+        else {
+            this.svg.setAttribute("wind-mode", "4");
+        }
     }
     onExit() {
     }
@@ -1151,7 +1115,6 @@ class PFD_WindData extends NavSystemElement {
                 break;
         }
         SimVar.SetSimVarValue("L:Glasscockpit_Wind_Mode", "number", this.mode);
-        WTDataStore.set("WindData.Mode", this.mode);
     }
 }
 class MFD_WindData extends NavSystemElement {
@@ -1166,25 +1129,17 @@ class MFD_WindData extends NavSystemElement {
     onEnter() {
     }
     onUpdate(_deltaTime) {
-        let windSpd = SimVar.GetSimVarValue("AMBIENT WIND VELOCITY", "knots");
-        if (SimVar.GetSimVarValue("SIM ON GROUND", "boolean") || windSpd < 1) {
-            this.svg.setAttribute("wind-mode", "0");
-        } else {
-            let windDir = SimVar.GetSimVarValue("AMBIENT WIND DIRECTION", "degree");
-            let planeHdg = this.gps.trackup ? SimVar.GetSimVarValue("PLANE HEADING DEGREES MAGNETIC", "degree") : 0;
-            let adjustedDir = ((windDir + 180) % 360 - planeHdg).toString();
-
-            if (adjustedDir != this.windValue) {
-                this.svg.setAttribute("wind-direction", adjustedDir);
-                this.windValue = adjustedDir;
-            }
-            var strength = fastToFixed(windSpd, 0);
-            if (strength != this.strengthValue) {
-                this.svg.setAttribute("wind-strength", strength);
-                this.strengthValue = strength;
-            }
-            this.svg.setAttribute("wind-mode", "2");
+        var wind = fastToFixed(SimVar.GetSimVarValue("AMBIENT WIND DIRECTION", "degree"), 0);
+        if (wind != this.windValue) {
+            this.svg.setAttribute("wind-direction", wind);
+            this.windValue = wind;
         }
+        var strength = fastToFixed(SimVar.GetSimVarValue("AMBIENT WIND VELOCITY", "knots"), 0);
+        if (strength != this.strengthValue) {
+            this.svg.setAttribute("wind-strength", strength);
+            this.strengthValue = strength;
+        }
+        this.svg.setAttribute("wind-mode", "2");
     }
     onExit() {
     }
@@ -1363,29 +1318,7 @@ class PFD_MarkerBeacon extends NavSystemElement {
     onEvent(_event) {
     }
 }
-class MFD_MapElement extends MapInstrumentElement {
-    constructor() {
-        super(...arguments);
-    }
-    init(_root) {
-        super.init(_root);
-        this.trackUp = false;
-    }
-    onUpdate(_deltaTime) {
-        super.onUpdate(_deltaTime);
-        if (SimVar.GetSimVarValue("L:GPS_TRACK_UP", "boolean") != this.trackUp) {
-            this.trackUp = !this.trackUp;
-            this.instrument.rotateWithPlane(this.trackUp);
-            this.instrument.roadNetwork._lastRange = -1; // force canvas to redraw (SvgRoadNetworkElement.js:297)
-            let orientationEl = document.querySelector("#MapOrientation");
-            if (orientationEl) {
-                orientationEl.innerText = this.trackUp ? "TRACK UP" : "NORTH UP";
-            }
-        }
-    }
-}
-
-class PFD_InnerMap extends MFD_MapElement {
+class PFD_InnerMap extends MapInstrumentElement {
     constructor() {
         super(...arguments);
         this.gpsWasInReversionaryMode = false;
@@ -3108,33 +3041,7 @@ class MFD_ApproachSelection extends NavSystemElement {
                         elem.updateWaypoints();
                     }
                 }, this.selectedTransition);
-                //CWB add removal of enroute waypoints
-
-                let removeWaypointForApproachMethod = (callback = EmptyCallback.Void) => {
-                    let i = 1;
-                    let destinationIndex = this.gps.currFlightPlanManager.getWaypoints().findIndex(w => {
-                        return w.icao === this.gps.currFlightPlanManager.getDestination().icao;
-                    });
-
-                    if (i < destinationIndex) {
-                        this.gps.currFlightPlanManager.removeWaypoint(1, i === destinationIndex, () => {
-                            //i++;
-                            removeWaypointForApproachMethod(callback);
-                        });
-                    }
-                    else {
-                        callback();
-                    }
-                };
-
-                removeWaypointForApproachMethod(() => {
-                    this.gps.currFlightPlanManager.activateApproach();
-                });
-
-
-
-                //end of enroute waypoint deletion
-                //this.gps.currFlightPlanManager.activateApproach();
+                this.gps.currFlightPlanManager.activateApproach();
             }
             this.gps.closePopUpElement();
         }
@@ -3951,15 +3858,4 @@ class MFD_DepartureSelection extends NavSystemElement {
         }
     }
 }
-
-function fastToFixed(num, p) {
-    if (p <= 0)
-        return Math.round(num).toString();
-
-    r  = Math.round(num * Math.pow(10, p)).toString();
-    l = r.length;
-
-    return r.substring(0, l - p) + "." + r.substring(l - p, l);
-}
-
 //# sourceMappingURL=CommonPFD_MFD.js.map
