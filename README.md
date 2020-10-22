@@ -8,6 +8,7 @@ The goal is to make it much more realistic. So there will be more features in th
 This Mod will need to work the latest v0.3.1 G1000 Mod from WorkingTitle:  
 [https://github.com/Working-Title-MSFS-Mods/fspackages/releases/tag/g1000-v0.3.1](https://github.com/Working-Title-MSFS-Mods/fspackages/releases/tag/g1000-v0.3.1)  
 This mod includes also a fixed file for Annunciation Messages which need to be replaced in the mod from WorkingTitle  
+Included Messages: [https://github.com/SheepCreativeSoftware/msfs2020-C208-Improvment-Mod/wiki/CAS-Messages](https://github.com/SheepCreativeSoftware/msfs2020-C208-Improvment-Mod/wiki/CAS-Messages)
 
 ## Download
 
