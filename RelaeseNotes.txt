@@ -1,8 +1,15 @@
 Release Notes
 
-v0.0.1 20.10.2020
-- Initial Version (Vanilla MSFS Files from v1.9.5)
-- Added File from WorkingTitle for Annunication fix
+v0.1.2 21.10.2020
+- added and improve a lot of CAS Messages
+- fixed BAT VOLTS resuloution on Engine page
+
+v0.1.1 20.10.2020
+- remove USE OXYGEN MASK CAS Message, cause doesn't work
+- replace batterie amp var on Engine Page
+- GENERATOR OFF CAS Message only shown if Turbine is running
+- LOW VOLTAGE CAS Message is now only shown if voltage is below 24V
+- Set generator amps to '0' if Generator is off
 
 v0.1.0 20.10.2020
 - added System Page as extension for WorkingTitle Engine Pages
@@ -11,9 +18,6 @@ v0.1.0 20.10.2020
 - reduce Idle fuel consumtion
 - added fix for g1000 Annunications Messages for Turboprop
 
-v0.1.1 20.10.2020
-- remove USE OXYGEN MASK CAS Message, cause doesn't work
-- replace batterie amp var on Engine Page
-- GENERATOR OFF CAS Message only shown if Turbine is running
-- LOW VOLTAGE CAS Message is now only shown if voltage is below 24V
-- Set generator amps to '0' if Generator is off
+v0.0.1 20.10.2020
+- Initial Version (Vanilla MSFS Files from v1.9.5)
+- Added File from WorkingTitle for Annunication fix

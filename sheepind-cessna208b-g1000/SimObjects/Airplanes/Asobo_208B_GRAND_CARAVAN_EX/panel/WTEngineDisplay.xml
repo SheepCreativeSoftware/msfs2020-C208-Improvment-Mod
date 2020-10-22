@@ -9,11 +9,11 @@
 		<Title>System</Title>
 		<Node>EngineDisplaySystem</Node>
 	</EngineDisplayPage>
-	<EngineDisplayPage>
+	<!--<EngineDisplayPage>
         <ID>MISC</ID>
 		<Title>Misc</Title>
 		<Node>EngineDisplayMisc</Node>
-	</EngineDisplayPage>
+	</EngineDisplayPage>-->
 	
 
 	<EngineDisplaySystem>
@@ -354,7 +354,7 @@
 		
 	</EngineDisplaySystem>
 	
-	<EngineDisplayMisc>
+	<!--<EngineDisplayMisc>
 		<Text>
 			<Left fontsize="8">AVICS AMPS</Left>
 			<Right fontsize="9">
@@ -452,8 +452,33 @@
 				</ToFixed>
 			</Right>
 		</Text>
-	</EngineDisplayMisc>
-	
+		<Text>
+			<Left fontsize="8">FUEL PRESS</Left>
+			<Right fontsize="9">
+				<ToFixed precision="1">
+					<Simvar name="GENERAL ENG FUEL PRESSURE:1" unit="psi"/>
+				</ToFixed>
+			</Right>
+		</Text>
+		<Text>
+			<Left fontsize="8">ITT</Left>
+			<Right fontsize="9">
+				<ToFixed precision="1">
+					<Simvar name="TURB ENG1 ITT" unit="celsius"/>
+				</ToFixed>
+			</Right>
+		</Text>
+		<Text>
+			<Left fontsize="8">Fire</Left>
+			<Right fontsize="9">
+				<ToFixed precision="1">
+					<Simvar name="ENG ON FIRE" unit="bool"/>
+				</ToFixed>
+			</Right>
+		</Text>
+		
+	</EngineDisplayMisc>-->
+
 	
 	<!-- Engine Display -->
 
@@ -834,7 +859,7 @@
 		<Text>
 			<Left>BUS VOLTS</Left>
 			<Right id="Volts">
-				<ToFixed precision="1">
+				<ToFixed precision="0">
 					<Simvar name="ELECTRICAL MAIN BUS VOLTAGE:1" unit="Volts"/>
 				</ToFixed>
 			</Right>
