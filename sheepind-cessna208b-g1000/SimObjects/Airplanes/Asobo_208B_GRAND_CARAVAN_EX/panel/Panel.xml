@@ -319,10 +319,16 @@
 	  <Text>GENERATOR OFF</Text>
 		  <Condition>
 			<And>
-				<Greater>
-					<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
-					<Constant>0</Constant>
-				</Greater>
+				<Or>
+					<Greater>
+						<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+						<Constant>0</Constant>
+					</Greater>
+					<LowerEqual>
+						<Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
+						<Constant>0</Constant>
+					</LowerEqual>
+				</Or>
 				<Greater>
 					<Simvar name="TURB ENG N1:1" unit="percent"/>
 					<Constant>50</Constant>
