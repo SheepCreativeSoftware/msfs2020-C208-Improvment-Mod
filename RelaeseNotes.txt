@@ -1,5 +1,11 @@
 Release Notes
 
+v0.1.4 28.10.2020
+- changed battery voltage selection
+- ITT Precision changed
+- some design chanes for engine display
+- fuel and oil pressure is now displayed every time
+
 v0.1.3 22.10.2020
 - testing and fixed some bugs
 - removed flaps setting cause not really needed

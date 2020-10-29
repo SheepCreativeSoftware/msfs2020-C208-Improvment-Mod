@@ -47,16 +47,10 @@
       <Type>Warning</Type>
       <Text>OIL PRESS LOW</Text>
 		<Condition>
-			<And>
-				<LowerEqual>
-					<Simvar name="GENERAL ENG OIL PRESSURE:1" unit="psi"/>
-					<Constant>40</Constant>
-				</LowerEqual>
-				<Greater>
-					<Simvar name="TURB ENG N1:1" unit="percent"/>
-					<Constant>20</Constant><!-- if engine is running -->
-				</Greater>
-			</And>
+			<LowerEqual>
+				<Simvar name="GENERAL ENG OIL PRESSURE:1" unit="psi"/>
+				<Constant>40</Constant>
+			</LowerEqual>
 		</Condition>
     </Annunciation>	
     <!--Indicates electrical system bus voltage is less than 24.5 volts-->
@@ -217,16 +211,10 @@
       <Type>Caution</Type>
       <Text>FUEL PRESS LOW</Text>
 	  <Condition>
-			<And>
-				<Lower>
-				  <Simvar name="GENERAL ENG FUEL PRESSURE:1" unit="psi"/>
-				  <Constant>4.75</Constant>
-				</Lower>
-				<Greater>
-					<Simvar name="TURB ENG N1:1" unit="percent"/>
-					<Constant>10</Constant>
-				</Greater>
-			</And>
+			<Lower>
+			  <Simvar name="GENERAL ENG FUEL PRESSURE:1" unit="psi"/>
+			  <Constant>4.75</Constant>
+			</Lower>
 		  </Condition>
     </Annunciation>
 	<!--Indicates the starter-generator is operating in starter mode-->

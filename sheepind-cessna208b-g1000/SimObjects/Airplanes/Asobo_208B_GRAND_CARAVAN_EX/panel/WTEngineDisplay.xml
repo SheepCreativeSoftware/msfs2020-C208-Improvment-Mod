@@ -341,7 +341,7 @@
 			<Left fontsize="8">BUS VOLTS</Left>
 			<Right fontsize="9">
 				<ToFixed precision="1">
-					<Simvar name="ELECTRICAL MAIN BUS VOLTAGE:1" unit="volts"/>
+					<Simvar name="ELECTRICAL BATTERY BUS VOLTAGE:1" unit="volts"/>
 				</ToFixed>
 			</Right>
 		</Text>
@@ -495,7 +495,7 @@
 				<CursorType>Triangle</CursorType>
 				<ValuePos>End</ValuePos>
 				<SizePercent>90</SizePercent>
-				<TextIncrement>10</TextIncrement>
+				<!--<TextIncrement>10</TextIncrement>-->
 			</Style>
 			<BeginText></BeginText>
 			<EndText></EndText>
@@ -512,6 +512,22 @@
 				<Begin>51</Begin>
 				<End>101.6</End>
 			</ColorZone>
+			<!--<ColorLine>
+				<Color>white</Color>
+				<Position>0</Position>
+			</ColorLine>
+			<ColorLine>
+				<Color>white</Color>
+				<Position>12</Position>
+			</ColorLine>
+			<ColorLine>
+				<Color>white</Color>
+				<Position>50</Position>
+			</ColorLine>
+			<ColorLine>
+				<Color>white</Color>
+				<Position>105</Position>
+			</ColorLine>-->
 			<ColorLine>
 				<Color>red</Color>
 				<Position>101.6</Position>
@@ -536,18 +552,18 @@
 				<Color>
 					<If>
 						<Condition>
-							<Greater>
-								<Simvar name="PROP RPM:1" unit="rpm"/>
-								<Constant>1600</Constant>
-							</Greater>
+								<GreaterEqual>
+									<Simvar name="PROP RPM:1" unit="rpm"/>
+									<Constant>1600</Constant>
+								</GreaterEqual>
 						</Condition>
 						<Then>
 							<If>
 								<Condition>
-									<Greater>
+									<GreaterEqual>
 										<Simvar name="PROP RPM:1" unit="rpm"/>
-										<Constant>1900</Constant>
-									</Greater>
+										<Constant>1910</Constant>
+									</GreaterEqual>
 								</Condition>
 								<Then>
 									<Constant>red</Constant>
@@ -602,7 +618,7 @@
 				<Or>
 					<Greater>
 						<Simvar name="GENERAL ENG OIL PRESSURE:1" unit="psi"/>
-						<Constant>101.6</Constant>
+						<Constant>105</Constant>
 					</Greater>
 					<Lower>
 						<Simvar name="GENERAL ENG OIL PRESSURE:1" unit="psi"/>
@@ -638,7 +654,7 @@
 			<ColorZone>
 				<Color>yellow</Color>
 				<Begin>100</Begin>
-				<End>105</End>
+				<End>104</End>
 			</ColorZone>
 			<ColorLine>
 				<Color>red</Color>
@@ -706,8 +722,8 @@
 		</Gauge>
 		
 		<Text>
-			<Left>FFLOW PPH</Left>
-			<Right id="FuelFlow">
+			<Left fontsize="8">FFLOW PPH</Left>
+			<Right id="FuelFlow" fontsize="9">
 				<ToFixed precision="0">
 					<Simvar name="ENG FUEL FLOW PPH:1" unit="Pounds per hour"/>
 				</ToFixed>
@@ -715,8 +731,8 @@
 		</Text>
 		
 		<Text>
-			<Left>BAT AMPS</Left>
-			<Right id="Amperes">
+			<Left fontsize="8">BAT AMPS</Left>
+			<Right id="Amperes" fontsize="9">
 				<ToFixed precision="0">
 					<Simvar name="ELECTRICAL MAIN BUS AMPS:1" unit="Amperes"/>
 				</ToFixed>
@@ -724,10 +740,10 @@
 		</Text>
 		
 		<Text>
-			<Left>BUS VOLTS</Left>
-			<Right id="Volts">
-				<ToFixed precision="0">
-					<Simvar name="ELECTRICAL MAIN BUS VOLTAGE:1" unit="Volts"/>
+			<Left fontsize="8">BUS VOLTS</Left>
+			<Right id="Volts" fontsize="9">
+				<ToFixed precision="1">
+					<Simvar name="ELECTRICAL BATTERY BUS VOLTAGE:1" unit="Volts"/>
 				</ToFixed>
 			</Right>
 		</Text>
