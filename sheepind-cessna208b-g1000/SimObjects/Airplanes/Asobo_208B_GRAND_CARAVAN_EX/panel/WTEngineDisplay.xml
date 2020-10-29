@@ -156,7 +156,7 @@
 				<CursorType>Triangle</CursorType>
 				<ValuePos>End</ValuePos>
 				<SizePercent>90</SizePercent>
-				<TextIncrement>10</TextIncrement>
+				<!--<TextIncrement>10</TextIncrement>-->
 			</Style>
 			<BeginText></BeginText>
 			<EndText></EndText>
@@ -174,6 +174,22 @@
 				<End>101.6</End>
 			</ColorZone>
 			<ColorLine>
+				<Color>white</Color>
+				<Position>0</Position>
+			</ColorLine>
+			<ColorLine>
+				<Color>white</Color>
+				<Position>12</Position>
+			</ColorLine>
+			<ColorLine>
+				<Color>white</Color>
+				<Position>50</Position>
+			</ColorLine>
+			<ColorLine>
+				<Color>white</Color>
+				<Position>105</Position>
+			</ColorLine>
+			<ColorLine>
 				<Color>red</Color>
 				<Position>101.6</Position>
 			</ColorLine>
@@ -185,10 +201,10 @@
 				</Greater>
 			</RedBlink>
 		</Gauge>
-
+		
 		<Text>
-			<Left fontsize="8">PROP RPM</Left>
-			<Right id="Turbo_RPMGauge" fontsize="8">
+			<Left>PROP RPM</Left>
+			<Right id="Turbo_RPMGauge">
 				<Content>
 					<ToFixed precision="0">
 						<Simvar name="PROP RPM:1" unit="rpm"/>
@@ -197,18 +213,18 @@
 				<Color>
 					<If>
 						<Condition>
-							<Greater>
-								<Simvar name="PROP RPM:1" unit="rpm"/>
-								<Constant>1600</Constant>
-							</Greater>
+								<GreaterEqual>
+									<Simvar name="PROP RPM:1" unit="rpm"/>
+									<Constant>1600</Constant>
+								</GreaterEqual>
 						</Condition>
 						<Then>
 							<If>
 								<Condition>
-									<Greater>
+									<GreaterEqual>
 										<Simvar name="PROP RPM:1" unit="rpm"/>
-										<Constant>1900</Constant>
-									</Greater>
+										<Constant>1910</Constant>
+									</GreaterEqual>
 								</Condition>
 								<Then>
 									<Constant>red</Constant>
@@ -341,7 +357,7 @@
 			<Left fontsize="8">BUS VOLTS</Left>
 			<Right fontsize="9">
 				<ToFixed precision="1">
-					<Simvar name="ELECTRICAL BATTERY BUS VOLTAGE:1" unit="volts"/>
+					<Simvar name="ELECTRICAL MAIN BUS VOLTAGE:1" unit="volts"/>
 				</ToFixed>
 			</Right>
 		</Text>
@@ -512,7 +528,7 @@
 				<Begin>51</Begin>
 				<End>101.6</End>
 			</ColorZone>
-			<!--<ColorLine>
+			<ColorLine>
 				<Color>white</Color>
 				<Position>0</Position>
 			</ColorLine>
@@ -527,7 +543,7 @@
 			<ColorLine>
 				<Color>white</Color>
 				<Position>105</Position>
-			</ColorLine>-->
+			</ColorLine>
 			<ColorLine>
 				<Color>red</Color>
 				<Position>101.6</Position>
@@ -743,7 +759,7 @@
 			<Left fontsize="8">BUS VOLTS</Left>
 			<Right id="Volts" fontsize="9">
 				<ToFixed precision="1">
-					<Simvar name="ELECTRICAL BATTERY BUS VOLTAGE:1" unit="Volts"/>
+					<Simvar name="ELECTRICAL MAIN BUS VOLTAGE:1" unit="Volts"/>
 				</ToFixed>
 			</Right>
 		</Text>

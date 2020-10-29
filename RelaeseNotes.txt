@@ -1,5 +1,13 @@
 Release Notes
 
+v0.1.5 29.10.2020
+- tested conflicts with new MSFS Update 1.10.7.0
+- ITT Precision changed
+- added more detail to engine page
+- changed battery voltage selection
+- fixed 20° flaps setting
+- added 10° flapps setting
+
 v0.1.4 28.10.2020
 - changed battery voltage selection
 - ITT Precision changed
