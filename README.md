@@ -11,8 +11,8 @@ Included Annunciation Messages:
 
 ## Download
 
-Actual Pre-Released Alpha v0.1.0:  
-[https://github.com/SheepCreativeSoftware/msfs2020-C208-Improvment-Mod/releases/tag/v0.1.3](https://github.com/SheepCreativeSoftware/msfs2020-C208-Improvment-Mod/releases/tag/v0.1.3)
+Actual Release v0.1.6:  
+[https://github.com/SheepCreativeSoftware/msfs2020-C208-Improvment-Mod/releases/tag/v0.1.6](https://github.com/SheepCreativeSoftware/msfs2020-C208-Improvment-Mod/releases/tag/v0.1.6)
 
 ## How to install
 
