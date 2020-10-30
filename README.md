@@ -27,5 +27,5 @@ Actual Release v0.1.6:
 
 ## Changes
 - It will fix and add a lot of Annunciation Messages for the Cessna 208B Grand Caravan EX
-- Adding System page to Engine pages (WorkingTitle G1000 Mod v0.3.1 needed)
+- Adding System page to Engine pages (WorkingTitle G1000 Mod needed)
 - Reduced fuel consumption in low idle
