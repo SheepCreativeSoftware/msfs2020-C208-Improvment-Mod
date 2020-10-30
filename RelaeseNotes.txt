@@ -1,5 +1,8 @@
 Release Notes
 
+v0.1.6 30.10.2020
+- fix and support for new version of WorkingTitle g1000 v0.3.2 Mod
+
 v0.1.5 29.10.2020
 - tested conflicts with new MSFS Update 1.10.7.0
 - ITT Precision changed
