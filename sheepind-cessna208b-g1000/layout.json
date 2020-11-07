@@ -1,6 +1,116 @@
 {
   "content": [
     {
+      "path": "Effects/LIGHT_C208_BeaconTop.fx",
+      "size": 3501,
+      "date": 132461014956287606
+    },
+    {
+      "path": "Effects/LIGHT_C208_Landing.fx",
+      "size": 1161,
+      "date": 132462645868581254
+    },
+    {
+      "path": "Effects/LIGHT_C208_NavigationGreen.fx",
+      "size": 1158,
+      "date": 132461014955965030
+    },
+    {
+      "path": "Effects/LIGHT_C208_NavigationRed.fx",
+      "size": 1155,
+      "date": 132461014955994946
+    },
+    {
+      "path": "Effects/LIGHT_C208_NavigationWhite.fx",
+      "size": 1353,
+      "date": 132461769230083964
+    },
+    {
+      "path": "Effects/LIGHT_C208_StrobeSimple.fx",
+      "size": 4426,
+      "date": 132463431355922165
+    },
+    {
+      "path": "Effects/LIGHT_C208_Taxi.fx",
+      "size": 1210,
+      "date": 132471322198640365
+    },
+    {
+      "path": "Effects/LIGHT_C208_vLanding.fx",
+      "size": 1158,
+      "date": 132471322096775588
+    },
+    {
+      "path": "Effects/LIGHT_C208_vTaxi.fx",
+      "size": 1208,
+      "date": 132471322023231338
+    },
+    {
+      "path": "Effects/LIGHT_C208_Wing.fx",
+      "size": 1342,
+      "date": 132470820302321729
+    },
+    {
+      "path": "Effects/texture/FX_ulm01.PNG.dds",
+      "size": 87556,
+      "date": 132456699569509610
+    },
+    {
+      "path": "Effects/texture/fx_ulm01.png.DDS.FLAGS",
+      "size": 21,
+      "date": 132447569545285976
+    },
+    {
+      "path": "Effects/texture/FX_ulm01.PNG.DDS.json",
+      "size": 144,
+      "date": 132447569545285976
+    },
+    {
+      "path": "Effects/texture/FX_ulm02.PNG.dds",
+      "size": 87556,
+      "date": 132455783006451887
+    },
+    {
+      "path": "Effects/texture/fx_ulm02.png.DDS.FLAGS",
+      "size": 21,
+      "date": 132447569545285976
+    },
+    {
+      "path": "Effects/texture/FX_ulm02.PNG.DDS.json",
+      "size": 144,
+      "date": 132447569545285976
+    },
+    {
+      "path": "Effects/texture/FX_ulm03.PNG.dds",
+      "size": 87556,
+      "date": 132461719108903891
+    },
+    {
+      "path": "Effects/texture/fx_ulm03.png.DDS.FLAGS",
+      "size": 21,
+      "date": 132447569545285976
+    },
+    {
+      "path": "Effects/texture/FX_ulm03.PNG.DDS.json",
+      "size": 144,
+      "date": 132447569545285976
+    },
+    {
+      "path": "Effects/texture/FX_ulm04.PNG.DDS",
+      "size": 87556,
+      "date": 132458776466613442
+    },
+    {
+      "path": "Effects/texture/fx_ulm04.png.DDS.FLAGS",
+      "size": 21,
+      "date": 132447569545285976
+    },
+    {
+      "path": "Effects/texture/FX_ulm04.PNG.DDS.json",
+      "size": 144,
+      "date": 132447569545285976
+    },
+    {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/engines.cfg",
       "size": 15694,
       "date": 132476681037832381
@@ -8,7 +118,12 @@
     {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/flight_model.cfg",
       "size": 18833,
-      "date": 132484742154145541
+      "date": 132489102882653722
+    },
+    {
+      "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/systems.cfg",
+      "size": 15445,
+      "date": 132489179567226728
     },
     {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/panel/PANEL.CFG",
@@ -18,7 +133,7 @@
     {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/panel/Panel.xml",
       "size": 24710,
-      "date": 132479604710520824
+      "date": 132489178293049873
     },
     {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/panel/WTEngineDisplay.xml",

@@ -1,5 +1,10 @@
 Release Notes
 
+v0.1.7 07.11.2020 [Internal]
+-Added Uwa's Light Mod
+-Do not change Flaps dynamicly
+-Decreased stall speed to real value
+
 v0.1.6 30.10.2020
 - fix and support for new version of WorkingTitle g1000 v0.3.2 Mod
 
