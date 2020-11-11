@@ -38,6 +38,12 @@
 		<Simvar name="CIRCUIT ON:43" unit="Boolean"/>
     </Electric>
   </Instrument>
+	
+  <!--<Logic>
+	<Handler>Systems_AS1000</Handler>
+	<PFD>AS1000_PFD</PFD>
+	<MFD>AS1000_MFD</MFD>
+  </Logic>-->
 
 <!-- Annuntiations -->
 

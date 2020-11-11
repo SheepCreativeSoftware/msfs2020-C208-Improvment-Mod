@@ -1,5 +1,9 @@
 Release Notes
 
+v0.1.8 11.11.2020 [Internal]
+-remove panel.cfg cause not needed
+-some changes on the bus
+
 v0.1.7 07.11.2020 [Internal]
 -Added Uwa's Light Mod
 -Do not change Flaps dynamicly
