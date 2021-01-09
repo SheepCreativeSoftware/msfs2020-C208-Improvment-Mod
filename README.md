@@ -1,5 +1,8 @@
 # Cessna 208B Improvment-Mod for Microsoft Flight Simulator 2020
 
+# Project is temporary paused.
+# Since another player has taken the fun out of the game so much for me, so that I currently don't feel like it anymore
+
 ## About
 This Mod will improve the Cessna 208B Grand Caravan EX to match with the Pilot Handbook.  
 The goal is to make it much more realistic. So there will be more features in the future.  
