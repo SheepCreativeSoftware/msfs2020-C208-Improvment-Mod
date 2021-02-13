@@ -1,4 +1,4 @@
-Release Notes
+## Changelog [msfs2020-C208-Improvment-Mod](https://github.com/SheepCreativeSoftware/msfs2020-C208-Improvment-Mod)
 
 v0.1.8 11.11.2020 [Internal]
 -remove panel.cfg cause not needed
