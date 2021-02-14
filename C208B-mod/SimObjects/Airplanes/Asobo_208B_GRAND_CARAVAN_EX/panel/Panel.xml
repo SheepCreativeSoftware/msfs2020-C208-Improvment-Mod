@@ -1,0 +1,973 @@
+<PlaneHTMLConfig>
+  
+  <SoundSourceNode>AS1000_MFD</SoundSourceNode>
+  
+  <Instrument>
+    <Name>AS1000_PFD</Name>
+    <SyntheticVision>True</SyntheticVision>
+	<RadarAltitude>True</RadarAltitude>
+    <Electric>
+		<Simvar name="CIRCUIT ON:28" unit="Boolean"/>
+    </Electric>
+	<ReversionaryMode>True</ReversionaryMode>
+  </Instrument>
+  
+  <Instrument>
+    <Name>AS1000_PFD_2</Name>
+    <SyntheticVision>True</SyntheticVision>
+    <Electric>
+		<Simvar name="CIRCUIT ON:29" unit="Boolean"/>
+    </Electric>
+  </Instrument>
+  
+  <Instrument>
+    <Name>AS1000_MFD</Name>
+    <Electric>
+		<Simvar name="CIRCUIT ON:30" unit="Boolean"/>
+    </Electric>
+  </Instrument>
+
+  <Logic>
+	<Handler>Systems_AS1000</Handler>
+	<PFD>AS1000_PFD</PFD>
+	<MFD>AS1000_MFD</MFD>
+  </Logic>
+
+  <Instrument>
+    <Name>KR87</Name>
+    <Electric>
+		<Simvar name="CIRCUIT ON:43" unit="Boolean"/>
+    </Electric>
+  </Instrument>
+
+<!-- Annuntiations -->
+
+  <Annunciations>
+    <!--Indicates engine oil pressure is less than 40 psi-->
+    <Annunciation>
+      <Type>Warning</Type>
+      <Text>OIL PRESS LOW</Text>
+		<Condition>
+			<LowerEqual>
+				<Simvar name="GENERAL ENG OIL PRESSURE:1" unit="psi"/>
+				<Constant>40</Constant>
+			</LowerEqual>
+		</Condition>
+    </Annunciation>	
+    <!--Indicates electrical system bus voltage is less than 24.5 volts-->
+	<Annunciation>
+      <Type>Warning</Type>
+      <Text>VOLTAGE LOW</Text>
+      <Condition>
+        <LowerEqual>
+          <Simvar name="ELECTRICAL BATTERY BUS VOLTAGE:1" unit="volts"/>
+          <Constant>24.5</Constant><!-- less 24.5 volts -->
+        </LowerEqual>
+      </Condition>
+    </Annunciation>
+	<!--Indicates electrical system bus voltage is greater than 32.0 volts-->
+    <Annunciation>
+      <Type>Warning</Type>
+      <Text>VOLTAGE HIGH</Text>
+      <Condition>
+        <Greater>
+          <Simvar name="ELECTRICAL MAIN BUS VOLTAGE:1" unit="volts"/>
+          <Constant>32</Constant><!-- more than 32 volts -->
+        </Greater>
+      </Condition>
+    </Annunciation>
+	<!-- Indicates an excessive temperature condition and/or fire has occurred in the engine compartment-->
+	<Annunciation>
+      <Type>Warning</Type>
+      <Text>ENGINE FIRE</Text>
+      <Condition>
+		<Or>
+			<Simvar name="ENG ON FIRE" unit="bool"/>
+			<GreaterEqual>
+				<Simvar name="TURB ENG1 ITT" unit="celsius"/>
+				<Constant>1090</Constant>
+			</GreaterEqual>
+		</Or>
+      </Condition>
+    </Annunciation>
+	<!-- Indicates the fuel level in the reservoir tank is approximately one-half or less-->
+	<Annunciation>
+      <Type>Warning</Type>
+      <Text>RSVR FUEL LOW</Text>
+      <Condition>
+        <LowerEqual>
+          <Simvar name="FUEL TOTAL QUANTITY" unit="gallon"/>
+          <Constant>10</Constant>
+        </LowerEqual>
+      </Condition>
+    </Annunciation>
+	<!--both OFF at any time, or one fuel selector is OFF when other tank is low  or that either left or right selectors are OFF when starter switch is ON-->
+	<Annunciation>
+	  <Type>Warning</Type>
+	  <Text>FUEL SELECT OFF</Text>
+	  <Condition>
+		<Or>
+			<Equal>
+				<Simvar name="FUEL TANK SELECTOR:1" unit="number"/>
+				<Constant>0</Constant><!--both closed-->
+			</Equal>
+			<And>
+				<Equal>
+					<Simvar name="FUEL TANK SELECTOR:1" unit="number"/>
+					<Constant>2</Constant><!--left on-->
+				</Equal>
+				<LowerEqual>
+					<Simvar name="FUEL LEFT QUANTITY" unit="gallon"/>
+					<Constant>25</Constant><!--and fuel low on left-->
+				</LowerEqual>
+			</And>
+			<And>
+				<Equal>
+					<Simvar name="FUEL TANK SELECTOR:1" unit="number"/>
+					<Constant>3</Constant><!--only right on-->
+				</Equal>
+				<LowerEqual>
+					<Simvar name="FUEL RIGHT QUANTITY" unit="gallon"/>
+					<Constant>25</Constant><!--and fuel low on right-->
+				</LowerEqual>
+			</And>
+			<And>
+				<Or>
+				<Equal>
+					<Simvar name="FUEL TANK SELECTOR:1" unit="number"/>
+					<Constant>2</Constant><!--only left on-->
+				</Equal>
+				<Equal>
+					<Simvar name="FUEL TANK SELECTOR:1" unit="number"/>
+					<Constant>3</Constant><!--or only right on-->
+				</Equal>
+				</Or>
+				<Simvar name="GENERAL ENG STARTER:1" unit="Bool"/><!-- and starter on -->
+			</And>
+		</Or>
+	  </Condition>
+	</Annunciation>
+    <!--Indicates fuel quantity in right tank is 25 gallons or less-->
+	<Annunciation>
+      <Type>Caution</Type>
+      <Text>R FUEL LOW</Text>
+      <Condition>
+        <LowerEqual>
+          <Simvar name="FUEL RIGHT QUANTITY" unit="gallon"/>
+          <Constant>25</Constant>
+        </LowerEqual>
+      </Condition>
+    </Annunciation>
+	<!--Indicates fuel quantity in left tank is 25 gallons or less-->
+    <Annunciation>
+      <Type>Caution</Type>
+      <Text>L FUEL LOW</Text>
+      <Condition>
+        <LowerEqual>
+          <Simvar name="FUEL LEFT QUANTITY" unit="gallon"/>
+          <Constant>25</Constant>
+        </LowerEqual>
+      </Condition>
+    </Annunciation>
+	<!--Indicates fuel quantity in both tanks is 25 gallons or less-->
+	<Annunciation>
+      <Type>Caution</Type>
+      <Text>L-R FUEL LOW</Text>
+      <Condition>
+        <LowerEqual>
+          <Simvar name="FUEL TOTAL QUANTITY" unit="gallon"/>
+          <Constant>25</Constant>
+        </LowerEqual>
+      </Condition>
+    </Annunciation>
+    <!--Indicates the auxiliary fuel boost pump is operating. Switch is placed in the ON position or is in the NORM position and fuel pressure drops below 4.75 psi-->
+	<Annunciation>
+      <Type>Caution</Type>
+      <Text>FUEL BOOST ON</Text>
+      <Condition>
+		<Or>
+			<Equal>
+				<Simvar name="GENERAL ENG FUEL PUMP SWITCH EX1:1" unit="Enum"/>
+				<Constant>1</Constant><!--On Position-->
+			</Equal>
+			<And>
+				<Equal>
+				<Simvar name="GENERAL ENG FUEL PUMP SWITCH EX1:1" unit="Enum"/>
+				<Constant>2</Constant><!--Norm Position-->
+				</Equal>
+				<Greater>
+				  <Simvar name="GENERAL ENG FUEL PRESSURE:1" unit="psi"/>
+				  <Constant>4.75</Constant>
+				</Greater>
+				<Lower>
+					<Simvar name="TURB ENG N1:1" unit="percent"/>
+					<Constant>1</Constant>
+				</Lower>
+			</And>
+		</Or>
+      </Condition>
+    </Annunciation>
+	<!--Indicates fuel pressure is below 4.75 psi-->
+	<Annunciation>
+      <Type>Caution</Type>
+      <Text>FUEL PRESS LOW</Text>
+	  <Condition>
+			<Lower>
+			  <Simvar name="GENERAL ENG FUEL PRESSURE:1" unit="psi"/>
+			  <Constant>4.75</Constant>
+			</Lower>
+		  </Condition>
+    </Annunciation>
+	<!--Indicates the starter-generator is operating in starter mode-->
+	<Annunciation>
+	  <Type>Caution</Type>
+	  <Text>STARTER ON</Text>
+	  <Condition>
+			<Simvar name="GENERAL ENG STARTER:1" unit="Bool"/>
+	  </Condition>
+	</Annunciation>
+	<!--Indicates that either both pitot/static vane heater systems have malfunctioned or that both HEAT circuit breakers arepulled-->
+	<Annunciation>
+	  <Type>Caution</Type>
+	  <Text>CHIP DETECT</Text>
+	  <Condition>
+			<Simvar name="ROTOR CHIP DETECTED" unit="Bool"/>
+	  </Condition>
+	</Annunciation>
+	<!--Indicates the starter-generator is operating in starter mode-->
+	<Annunciation>
+	  <Type>Caution</Type>
+	  <Text>L-R P/S HEAT</Text>
+	  <Condition>
+		<And>
+			<Not>
+				<Simvar name="CIRCUIT PITOT HEAT ON" unit="Bool"/>
+			</Not>
+			<Greater>
+				<Simvar name="PITOT ICE PCT" unit="percent"/>
+				<Constant>90</Constant>
+			</Greater>
+		</And>
+	  </Condition>
+	</Annunciation>
+	<!--Indicates that the generator output is less than -10 amps or greater than 200 amps-->
+	<Annunciation>
+	  <Type>Caution</Type>
+	  <Text>GENERATOR AMPS</Text>
+		  <Condition>
+			<And>
+				<Greater>
+					<Simvar name="TURB ENG N1:1" unit="percent"/>
+					<Constant>50</Constant>
+				</Greater>
+				<Or>
+				<Lower>
+					<Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
+					<Constant>10</Constant>
+				</Lower>
+				<Greater>
+					<Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
+					<Constant>200</Constant>
+				</Greater>
+				</Or>
+			</And>
+		  </Condition>
+	</Annunciation>
+	<!--Indicates that the generator output is less than -10 amps or greater than 200 amps-->
+	<Annunciation>
+	  <Type>Caution</Type>
+	  <Text>ALTNR AMPS</Text>
+		  <Condition>
+			<And>
+				<Not>
+					<Equal>
+						<Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
+						<Constant>0</Constant>
+					</Equal>
+				</Not>
+				<Greater>
+					<Simvar name="TURB ENG N1:1" unit="percent"/>
+					<Constant>50</Constant>
+				</Greater>
+				<Or>
+				<Lower>
+					<Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
+					<Constant>10</Constant>
+				</Lower>
+				<Greater>
+					<Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
+					<Constant>75</Constant>
+				</Greater>
+				</Or>
+			</And>
+		  </Condition>
+	</Annunciation>
+	<!--Indicates that the generator is not connected to the aircraft bus-->
+	<Annunciation>
+	  <Type>Caution</Type>
+	  <Text>GENERATOR OFF</Text>
+		  <Condition>
+			<And>
+				<Or>
+					<Greater>
+						<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+						<Constant>0</Constant>
+					</Greater>
+					<LowerEqual>
+						<Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
+						<Constant>0</Constant>
+					</LowerEqual>
+				</Or>
+				<Greater>
+					<Simvar name="TURB ENG N1:1" unit="percent"/>
+					<Constant>50</Constant>
+				</Greater>
+			</And>
+		  </Condition>
+	</Annunciation>
+	<!--Indicates electrical power is not available from the standby alternator-->
+	<Annunciation>
+	  <Type>Caution</Type>
+	  <Text>STBY PWR INOP</Text>
+		<Condition>
+			<Equal>
+				<Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
+				<Constant>0</Constant>
+			</Equal>
+		</Condition>
+	</Annunciation>
+	<!--Indicates that the standby alternator is generating electrical power-->
+	<!-- <Annunciation>
+	  <Type>Advisory</Type>
+	  <Text>STBY PWR ON</Text>
+		<Condition>
+			<Greater>
+				<Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
+				<Constant>2</Constant>
+			</Greater>
+		</Condition>
+	</Annunciation> -->
+	<!--Indicates electrical power is being supplied to the engine ignition system-->		
+	<Annunciation>
+	  <Type>Advisory</Type>
+	  <Text>IGNITION ON</Text>
+	  <Condition>
+			<Simvar name="TURB ENG IS IGNITING:1" unit="Bool"/>
+	  </Condition>
+	</Annunciation>	
+	<!--Indicates anti-ice is ON; should indicate NORM and HIGH-->
+	<Annunciation>
+	  <Type>Advisory</Type>
+	  <Text>A-ICE ON</Text>
+	  <Condition>
+			<Simvar name="STRUCTURAL DEICE SWITCH:1" unit="Bool"/>
+			<Constant>1</Constant>
+	  </Condition>
+	</Annunciation>
+  </Annunciations>
+  
+<!-- Engine Display -->
+
+	<EngineDisplay>
+		<Gauge>
+			<Type>Circular</Type>
+			<Style>
+				<BeginAngle>-50</BeginAngle>
+				<EndAngle>190</EndAngle>
+				<ValuePos>End</ValuePos>
+				<CursorType>Triangle</CursorType>
+				<SizePercent>90</SizePercent>
+			</Style>
+			<BeginText></BeginText>
+			<EndText></EndText>
+			<ID>Turbo_TorqueGauge</ID>
+			<Title>TRQ</Title>
+			<Unit>FT-LB</Unit>
+			<Minimum>0</Minimum>
+			<Maximum>2600</Maximum>
+			<Value>
+				<Simvar name="TURB ENG FREE TURBINE TORQUE:1" unit="Foot pounds"/>
+			</Value>
+			<ColorZone>
+				<Color>green</Color>
+				<Begin>0</Begin>
+				<End>2396</End>
+			</ColorZone>
+			<ColorZone>
+				<Color>red</Color>
+				<Begin>2397</Begin>
+				<End>2600</End>
+			</ColorZone>
+			<GraduationLength>100</GraduationLength>
+			<GraduationTextLength>500</GraduationTextLength>
+			<RedBlink>
+				<Greater>
+					<Simvar name="ENG TORQUE:1" unit="Foot pounds"/>
+					<Constant>2397</Constant>
+				</Greater>
+			</RedBlink>
+		</Gauge>
+		
+		<Gauge>
+			<Type>Circular</Type>
+			<Style>
+				<BeginAngle>-10</BeginAngle>
+				<EndAngle>170</EndAngle>
+				<CursorType>Triangle</CursorType>
+				<ValuePos>End</ValuePos>
+				<SizePercent>90</SizePercent>
+			</Style>
+			<BeginText></BeginText>
+			<EndText></EndText>
+			<ID>Turbo_IttGauge</ID>
+			<Title>ITT</Title>
+			<Unit>°C</Unit>
+			<Minimum>0</Minimum>
+			<Maximum>
+				<StateMachine>
+					<State id="Start" value="1100">
+						<Transition to="Normal">
+							<Greater>
+								<Simvar name="TURB ENG N1:1" unit="percent"/>
+								<Constant>52</Constant>
+							</Greater>
+						</Transition>
+					</State>
+					<State id="Normal" value="900">
+						<Transition to="Start">
+							<Lower>
+								<Simvar name="TURB ENG N1:1" unit="percent"/>
+								<Constant>10</Constant>
+							</Lower>
+						</Transition>
+					</State>
+				</StateMachine>
+			</Maximum>
+			<Value>
+				<Simvar name="TURB ENG1 ITT" unit="celsius"/>
+			</Value>
+			<ColorZone>
+				<Color>green</Color>
+				<Begin>0</Begin>
+				<End>825</End>
+			</ColorZone>
+			<ColorZone>
+				<Color>yellow</Color>
+				<Begin>826</Begin>
+				<End>849</End>
+			</ColorZone>
+			<ColorLine>
+				<Color>red</Color>
+				<Position>						
+					<StateMachine>
+						<State id="Start" value="1090">
+							<Transition to="Normal">
+								<Greater>
+									<Simvar name="TURB ENG N1:1" unit="percent"/>
+									<Constant>52</Constant>
+								</Greater>
+							</Transition>
+						</State>
+						<State id="Normal" value="850">
+							<Transition to="Start">
+								<Lower>
+									<Simvar name="TURB ENG N1:1" unit="percent"/>
+									<Constant>10</Constant>
+								</Lower>
+							</Transition>
+						</State>
+					</StateMachine>
+				</Position>
+			</ColorLine>
+			
+			<RedBlink>
+				<Greater>
+					<Simvar name="TURB ENG1 ITT" unit="celsius"/>
+					<StateMachine>
+						<State id="Start" value="1090">
+							<Transition to="Normal">
+								<Greater>
+									<Simvar name="TURB ENG N1:1" unit="percent"/>
+									<Constant>52</Constant>
+								</Greater>
+							</Transition>
+						</State>
+						<State id="Normal" value="805">
+							<Transition to="Start">
+								<Lower>
+									<Simvar name="TURB ENG N1:1" unit="percent"/>
+									<Constant>10</Constant>
+								</Lower>
+							</Transition>
+						</State>
+					</StateMachine>
+				</Greater>
+			</RedBlink>
+			<GraduationLength>50</GraduationLength>
+		</Gauge>
+		
+		<Gauge>
+			<Type>Circular</Type>
+			<Style>
+				<BeginAngle>-10</BeginAngle>
+				<EndAngle>170</EndAngle>
+				<CursorType>Triangle</CursorType>
+				<ValuePos>End</ValuePos>
+				<SizePercent>90</SizePercent>
+				<TextIncrement>1</TextIncrement>
+			</Style>
+			<BeginText></BeginText>
+			<EndText></EndText>
+			<ID>Turbo_NgGauge</ID>
+			<Title>NG</Title>
+			<Unit>% RPM</Unit>
+			<Minimum>0</Minimum>
+			<Maximum>110</Maximum>
+			<Value>
+				<Simvar name="TURB ENG N1:1" unit="percent"/>
+			</Value>
+			<ColorZone>
+				<Color>green</Color>
+				<Begin>55</Begin>
+				<End>103.6</End>
+			</ColorZone>
+			<ColorLine>
+				<Color>red</Color>
+				<Position>103.7</Position>
+			</ColorLine>
+			<GraduationLength>10</GraduationLength>
+			<RedBlink>
+				<Greater>
+					<Simvar name="TURB ENG N1:1" unit="percent"/>
+					<Constant>103.6</Constant>
+				</Greater>
+			</RedBlink>
+		</Gauge>
+		
+		<Text>
+			<Left>PROP RPM</Left>
+			<Right id="Turbo_RPMGauge">
+				<Content>
+					<ToFixed precision="0">
+						<Simvar name="PROP RPM:1" unit="rpm"/>
+					</ToFixed>
+				</Content>
+				<Color>
+					<If>
+						<Condition>
+							<Greater>
+								<Simvar name="PROP RPM:1" unit="rpm"/>
+								<Constant>1600</Constant>
+							</Greater>
+						</Condition>
+						<Then>
+							<If>
+								<Condition>
+									<Greater>
+										<Simvar name="PROP RPM:1" unit="rpm"/>
+										<Constant>1910</Constant>
+									</Greater>
+								</Condition>
+								<Then>
+									<Constant>red</Constant>
+								</Then>
+								<Else>
+									<Constant>green</Constant>
+								</Else>
+							</If>
+						</Then>
+						<Else>
+							<Constant>white</Constant>
+						</Else>
+					</If>
+				</Color>
+			</Right>
+		</Text>
+		
+		<Gauge>
+			<Type>Horizontal</Type>
+			<Style>
+				<ValuePos>End</ValuePos>
+			</Style>
+			<ID>Turbo_OilPressGauge</ID>
+			<Title>OIL</Title>
+			<Unit>PSI</Unit>
+			<Minimum>0</Minimum>
+			<Maximum>120</Maximum>
+			<Value>
+				<Simvar name="GENERAL ENG OIL PRESSURE:1" unit="psi"/>
+			</Value>
+			<ColorZone>
+				<Color>green</Color>
+				<Begin>85</Begin>
+				<End>120</End>
+			</ColorZone>
+			<ColorZone>
+				<Color>yellow</Color>
+				<Begin>40</Begin>
+				<End>85</End>
+			</ColorZone>
+			<ColorLine>
+				<Color>red</Color>
+				<Position>40</Position>
+			</ColorLine>
+			<ColorLine>
+				<Color>red</Color>
+				<Position>120</Position>
+			</ColorLine>
+			<BeginText></BeginText>
+			<EndText></EndText>
+			<RedBlink>
+				<Or>
+					<Greater>
+						<Simvar name="GENERAL ENG OIL PRESSURE:1" unit="psi"/>
+						<Constant>101.6</Constant>
+					</Greater>
+					<Lower>
+						<Simvar name="GENERAL ENG OIL PRESSURE:1" unit="psi"/>
+						<Constant>40</Constant>
+					</Lower>
+				</Or>
+			</RedBlink>
+		</Gauge>
+		
+		<Gauge>
+			<Type>Horizontal</Type>
+			<Style>
+				<ValuePos>End</ValuePos>
+			</Style>
+			<ID>Turbo_OilTempGauge</ID>
+			<Title>OIL</Title>
+			<Unit>°C</Unit>
+			<Minimum>-50</Minimum>
+			<Maximum>120</Maximum>
+			<Value>
+				<Simvar name="GENERAL ENG OIL TEMPERATURE:1" unit="celsius"/>
+			</Value>
+			<ColorZone>
+				<Color>green</Color>
+				<Begin>32</Begin>
+				<End>99</End>
+			</ColorZone>
+			<ColorZone>
+				<Color>yellow</Color>
+				<Begin>-40</Begin>
+				<End>31</End>
+			</ColorZone>
+			<ColorZone>
+				<Color>yellow</Color>
+				<Begin>100</Begin>
+				<End>104</End>
+			</ColorZone>
+			<ColorLine>
+				<Color>red</Color>
+				<Position>-40</Position>
+			</ColorLine>
+			<ColorLine>
+				<Color>red</Color>
+				<Position>104</Position>
+			</ColorLine>
+			<BeginText></BeginText>
+			<EndText></EndText>
+			<RedBlink>
+				<Or>
+					<Greater>
+						<Simvar name="GENERAL ENG OIL TEMPERATURE:1" unit="celsius"/>
+						<Constant>104</Constant>
+					</Greater>
+					<Lower>
+						<Simvar name="GENERAL ENG OIL TEMPERATURE:1" unit="celsius"/>
+						<Constant>-41</Constant>
+					</Lower>
+				</Or>
+			</RedBlink>
+		</Gauge>
+		
+		<Text>
+			<Left>L</Left>
+			<Center>FUEL QTY</Center>
+			<Right>R</Right>
+		</Text>
+		
+		<Gauge>
+			<Type>DoubleVertical</Type>
+			<ID>Turbo_FuelGauge</ID>
+			<Title></Title>
+			<Unit>LBS</Unit>
+			<Minimum>0</Minimum>
+			<Maximum>1145</Maximum>
+			<Style>
+				<Height>70</Height>
+			</Style>
+			<Value>
+				<Multiply>
+					<Simvar name="FUEL LEFT QUANTITY" unit="gallons"/>
+					<Simvar name="FUEL WEIGHT PER GALLON" unit="pounds"/>
+				</Multiply>
+			</Value>
+			<Value2>
+				<Multiply>
+					<Simvar name="FUEL RIGHT QUANTITY" unit="gallons"/>
+					<Simvar name="FUEL WEIGHT PER GALLON" unit="pounds"/>
+				</Multiply>
+			</Value2>
+			<ColorLine>
+				<Color>red</Color>
+				<Position>0</Position>
+			</ColorLine>
+			<ColorZone>
+				<Color>red</Color>
+				<Begin>0</Begin>
+				<End>25</End>
+			</ColorZone>
+			<GraduationLength text="True">200</GraduationLength>
+			<EndText></EndText>
+		</Gauge>
+		
+		<Text>
+			<Left>FFLOW PPH</Left>
+			<Right id="FuelFlow">
+				<ToFixed precision="0">
+					<Simvar name="ENG FUEL FLOW PPH:1" unit="Pounds per hour"/>
+				</ToFixed>
+			</Right>
+		</Text>
+		
+		<Text>
+			<Left>BAT AMPS</Left>
+			<Right id="Amperes">
+				<ToFixed precision="0">
+					<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="Amperes"/>
+				</ToFixed>
+			</Right>
+		</Text>
+		
+		<Text>
+			<Left>BUS VOLTS</Left>
+			<Right id="Volts">
+				<ToFixed precision="0">
+					<Simvar name="ELECTRICAL MAIN BUS VOLTAGE:1" unit="Volts"/>
+				</ToFixed>
+			</Right>
+		</Text>
+		
+	</EngineDisplay>
+	
+	  <!-- Voices Alerts -->
+  
+  <VoicesAlerts>
+	<Alert>
+		<Type>SoundOnly</Type>
+		<SoundEvent>aural_500ft</SoundEvent>
+		<Condition>
+			<StateMachine>
+				<State id="Under" value="0">
+					<Transition to="Over">
+						<GreaterEqual>
+							<Simvar name="PLANE ALT ABOVE GROUND MINUS CG" unit="feet"/>
+							<Constant>510</Constant>
+						</GreaterEqual>
+					</Transition>
+				</State>
+				<State id="Over" value="0">
+					<Transition to="Alerting">
+						<LowerEqual>
+							<Simvar name="PLANE ALT ABOVE GROUND MINUS CG" unit="feet"/>
+							<Constant>500</Constant>
+						</LowerEqual>
+					</Transition>
+				</State>
+				<State id="Alerting" value="1">
+					<Transition to="Under">
+						<Constant>1</Constant>
+					</Transition>
+				</State>
+			</StateMachine>
+		</Condition>
+	</Alert>
+	
+	<Alert>
+		<Type>SoundOnly</Type>
+		<SoundEvent>aural_stall</SoundEvent>
+		<Condition>
+			<Simvar name="STALL WARNING" unit="Bool"/>
+		</Condition>
+	</Alert>
+	
+	<Alert>
+		<Type>Warning</Type>
+		<ShortText>PULL UP</ShortText>
+		<LongText>PULL UP</LongText>
+		<SoundEvent>aural_pull_up</SoundEvent>
+		<Condition>
+			<And>
+				<LinearMultiPoint>
+					<Table>
+						<ReferencePoints>1160,2320,4930,12000</ReferencePoints>
+						<Maximums>0,1070,2380,4285</Maximums>
+					</Table>
+					<Param>
+						<Multiply>
+							<Simvar name="VERTICAL SPEED" unit="feet per minute"/>
+							<Constant>-1</Constant>
+						</Multiply>
+					</Param>
+					<Param>
+						<Simvar name="PLANE ALT ABOVE GROUND" unit="feet"/>
+					</Param>
+				</LinearMultiPoint>
+				<Not>
+					<Simvar name="SIM ON GROUND" unit="bool"/>
+				</Not>
+			</And>
+		</Condition>
+	</Alert>
+	
+	<Alert>
+		<Type>SoundOnly</Type>
+		<SoundEvent>aural_overspeed</SoundEvent>
+		<Condition>
+			<Simvar name="OVERSPEED WARNING" unit="bool"/>
+		</Condition>
+	</Alert>
+	
+	<Alert>
+		<Type>Caution</Type>
+		<ShortText>TERRAIN</ShortText>
+		<LongText>SINK RATE</LongText>
+		<SoundEvent>aural_sink_rate</SoundEvent>
+		<Condition>
+				<And>
+					<LinearMultiPoint>
+						<Table>
+							<ReferencePoints>1160,2320,4930,12000</ReferencePoints>
+							<Minimums>0,1070,2380,4285</Minimums>
+							<Maximums>0,1460,2980,5360</Maximums>
+						</Table>
+						<Param>
+							<Multiply>
+								<Simvar name="VERTICAL SPEED" unit="feet per minute"/>
+								<Constant>-1</Constant>
+							</Multiply>
+						</Param>
+						<Param>
+							<Simvar name="PLANE ALT ABOVE GROUND" unit="feet"/>
+						</Param>
+					</LinearMultiPoint>
+					<Not>
+						<Simvar name="SIM ON GROUND" unit="bool"/>
+					</Not>
+				</And>
+		</Condition>
+	</Alert>
+	
+	<Alert>
+		<Type>Caution</Type>
+		<ShortText>TERRAIN</ShortText>
+		<LongText>DONT' SINK</LongText>
+		<SoundEvent>aural_dont_sink</SoundEvent>
+		<Condition>
+			<And>
+				<Lower>
+					<DistanceFromOrigin/>
+					<Constant>5</Constant>
+				</Lower>
+				<Lower>
+					<HeadingChangeFromDeparture/>
+					<Constant>110</Constant>
+				</Lower>
+				<Or>
+					<LinearMultiPoint>
+						<Table>
+							<ReferencePoints>0,500,7000</ReferencePoints>
+							<Maximums>50,700,700</Maximums>
+								<Minimums>50,50,50</Minimums>
+						</Table>
+						<Param>
+							<Multiply>
+								<Simvar name="VERTICAL SPEED" unit="feet per minute"/>
+								<Constant>-1</Constant>
+							</Multiply>
+						</Param>
+						<Param>
+							<Simvar name="PLANE ALT ABOVE GROUND" unit="feet"/>
+						</Param>
+					</LinearMultiPoint>
+					<LinearMultiPoint>
+						<Table>
+							<ReferencePoints>10,70,150</ReferencePoints>
+							<Maximums>50,700,700</Maximums>
+								<Minimums>50,50,50</Minimums>
+						</Table>
+						<Param>
+							<Substract>
+								<MaxSinceStart>
+									<Simvar name="PLANE ALTITUDE" unit="feet"/>
+								</MaxSinceStart>
+								<Simvar name="PLANE ALTITUDE" unit="feet"/>
+							</Substract>
+						</Param>
+						<Param>
+							<Simvar name="PLANE ALT ABOVE GROUND" unit="feet"/>
+						</Param>
+					</LinearMultiPoint>
+				</Or>
+			</And>
+		</Condition>
+	</Alert>
+	
+	<Alert>
+		<Type>SoundOnly</Type>
+		<SoundEvent>aural_landing_gear</SoundEvent>
+		<Condition>
+			<And>
+				<Simvar name="IS GEAR RETRACTABLE" unit="Boolean"/>
+				<Not>
+					<Simvar name="GEAR HANDLE POSITION" unit="Boolean"/>
+				</Not>
+				<Or>
+					<Greater>
+						<Simvar name="FLAPS HANDLE INDEX" unit="number"/>
+						<Constant>1</Constant>
+					</Greater>
+					<Equal>
+						<Simvar name="GENERAL ENG THROTTLE LEVER POSITION:1" unit="percent"/>
+						<Constant>0</Constant>
+					</Equal>
+				</Or>
+			</And>
+		</Condition>
+	</Alert>
+	
+	<Alert>
+		<Type>Test</Type>
+		<ShortText>TAWS TEST</ShortText>
+		<Condition>
+			<And>
+				<Lower>
+					<TimeSinceStart/>
+					<Constant>30000</Constant>
+				</Lower>
+				<InstrumentWasOff/>
+			</And>
+		</Condition>
+	</Alert>
+	
+	<Alert>
+		<Type>SoundOnly</Type>
+		<SoundEvent>aural_taws_system_test_ok</SoundEvent>
+		<Condition>
+			<And>
+				<Greater>
+					<TimeSinceStart/>
+					<Constant>30000</Constant>
+				</Greater>
+				<InstrumentWasOff/>
+			</And>
+		</Condition>
+		<Once>True</Once>
+	</Alert>
+
+  </VoicesAlerts>
+  
+</PlaneHTMLConfig>

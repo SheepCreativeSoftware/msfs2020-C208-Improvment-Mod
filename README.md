@@ -13,7 +13,7 @@ Tighter turning circle.
 More realistic idle behaviour, lower fuel burn.
 
 ***Systems & Avionics***  
-Added CAS annunciations, systems Page, improved engine readouts.   
+Added CAS annunciations, Systems Page, improved engine readouts.   
 Autopilot and instrument fixes.  
 More accurate start up.
 
@@ -46,8 +46,8 @@ As mentioned above, the flight model has been tuned using ISA conditions, a clim
 A few notes from my testing so far:
 
 - *Taxi* -  To compensate for the lack of beta, thrust in the beta range has been further reduced to make taxiing more manageable.
-- *Takeoff* - For the most part, takeoff procedures can be followed as you'd expect - maximum takeoff torque, takeoff distance and RoC with flaps TO/APR are fairly close to the POH, though temp, altitude and density will throw the numbers off.
-- *Climb* - The thrust to drag ratio favours the accuracy of cruise over climb performance. As a consequence, at lower weight, climb performance is higher than it should be, and requires a reduced power setting to keep airspeed under control. At maximum weight, required power/torque will be higher than expected. Time, fuel and distance are correct as long as VS/KIAS are kept in check.
+- *Takeoff* - For the most part, normal and short field takeoff procedures can be followed as you'd expect - maximum takeoff torque, takeoff distance and RoC with flaps TO/APR closely match the POH. Flaps UP takeoff ground roll is shorter than it should be.
+- *Climb* - The thrust to drag ratio favours the accuracy of cruise over climb performance. As a consequence, at lower weight, climb performance is higher than it should be, and requires a reduced power setting. At maximum weight, required power/torque will be higher than expected. Time, fuel and distance are correct as long as VS/KIAS are kept in check.
 - *Cruise* - Cruise performance is fairly accurate to 12,000 ft (1750 RPM), above which, torque and fuel flow remain accurate to 18,000 ft, while airspeed falls below expected numbers; to compensate, prop RPM can be increased without affecting torque. Above 18,000 ft, power must be increased and consequently fuel flow will be higher than expected.
 - *Descent, approach and landing* - Drag has been increased and the relationship between Ng and the power lever adjusted in an attempt to simulate propeller drag as you bring it back towards idle.
 
