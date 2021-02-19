@@ -1,5 +1,11 @@
 ## Changes
 
+**v2102.2**
+
+Compatibility patch for MSFS update 1.13.16.0
+
+- Flap lift/drag scalars adjusted
+
 **v2102.1b**
 
 Flight model/engine update addressing the following:

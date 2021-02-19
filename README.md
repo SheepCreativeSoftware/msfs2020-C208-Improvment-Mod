@@ -55,7 +55,7 @@ A few notes from my testing so far:
 
 ## Compatibility
 
-***Sim version*** - v1.12.13
+***Sim version*** - v1.13.16.0
 
 ***WT G1000 version*** - v0.3.4, v0.4 beta
 
@@ -68,14 +68,7 @@ A few notes from my testing so far:
 
 ## Download
 
-Since the new flight model has undergone limited testing, and for those who are happy with the current model, I've split the latest release into two versions:
-
-- ***v2102.1*** Old flight model
-- ***v2102.1b*** New flight model
-
-Other than the flight model, the two versions are identical.
-
-***[Latest Release v2102.1/2102.1b](https://github.com/dgtlanlg/C208B-mod/releases/tag/v2102.1)***
+***[Latest Release v2102.2](https://github.com/dgtlanlg/C208B-mod/releases/tag/v2102.2)***
 
 ## How to install
 
