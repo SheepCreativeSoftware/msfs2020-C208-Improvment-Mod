@@ -39,7 +39,7 @@ Thanks to everyone who has contributed, and to PilotTrev for sharing his knowled
 
 ***Cruise Performance*** - Due to the torque/prop issues, cruise performance and fuel flow can only be tuned correctly for a specific set of conditions, outside of which, engine behaviour and performance varies. For this purpose I used ISA conditions, 8807 pounds and 1750 RPM.
 
-***Flight Model (WIP)*** - The (new) flight model is the result of adapting the POH to the above issues and the limited control the config files provide. Not only are turboprops poorly simulated but the inaccuracies are all over the place, meaning the phases of flight are often at odds with each other. With this in mind, I've attempted to average out behaviour at all stages of operation, rather than perfecting any one aspect at the expense of another.
+***Flight Model (WIP)*** - The flight model is the result of adapting the POH to the above issues and the limited control the config files provide. Not only are turboprops poorly simulated but the inaccuracies are all over the place, meaning the phases of flight are often at odds with each other. With this in mind, I've attempted to average out behaviour at all stages of operation, rather than perfecting any one aspect at the expense of another.
 
 As mentioned above, the flight model has been tuned using ISA conditions, a climb/cruise/landing weight of 7300-8807/8807/8500 pounds, a cruise RPM of 1750 and the inertial separator normal; live weather behaviour will vary but should still show an improvement over the previous model.
 
@@ -68,7 +68,7 @@ A few notes from my testing so far:
 
 ## Download
 
-***[Latest Release v2102.2](https://github.com/dgtlanlg/C208B-mod/releases/tag/v2102.2)***
+***[Latest Release v2102.3](https://github.com/dgtlanlg/C208B-mod/releases/tag/v2102.3)***
 
 ## How to install
 

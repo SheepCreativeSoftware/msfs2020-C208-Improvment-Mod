@@ -1,5 +1,9 @@
 ## Changes
 
+**v2102.3**
+
+- Drag scalars adjusted
+
 **v2102.2**
 
 Compatibility patch for MSFS update 1.13.16.0
