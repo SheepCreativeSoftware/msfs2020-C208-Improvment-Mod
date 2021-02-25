@@ -1,8 +1,10 @@
 # Cessna 208B Improvment-Mod for Microsoft Flight Simulator 2020
 
 # Project is continued on:
+[https://github.com/dgtlanlg/C208B-mod](https://github.com/dgtlanlg/C208B-mod)
+# Official Release:
 [https://flightsim.to/file/8060/cessna-208b-grand-caravan-ex-improvement-mod](https://flightsim.to/file/8060/cessna-208b-grand-caravan-ex-improvement-mod)
-  
+
 
 ## About
 This Mod will improve the Cessna 208B Grand Caravan EX to match with the Pilot Handbook.  
