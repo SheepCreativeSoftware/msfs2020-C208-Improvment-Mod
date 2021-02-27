@@ -75,7 +75,7 @@
 							</Greater>
 						</Transition>
 					</State>
-					<State id="Normal" value="900">
+					<State id="Normal" value="950">
 						<Transition to="Start">
 							<Lower>
 								<Simvar name="TURB ENG N1:1" unit="percent"/>
@@ -91,7 +91,26 @@
 			<ColorZone>
 				<Color>green</Color>
 				<Begin>100</Begin>
-				<End>825</End>
+				<End>
+                                   <StateMachine>
+						<State id="Start" value="870">
+							<Transition to="Normal">
+								<Greater>
+									<Simvar name="TURB ENG N1:1" unit="percent"/>
+									<Constant>52</Constant>
+								</Greater>
+							</Transition>
+						</State>
+						<State id="Normal" value="825">
+							<Transition to="Start">
+								<Lower>
+									<Simvar name="TURB ENG N1:1" unit="percent"/>
+									<Constant>10</Constant>
+								</Lower>
+							</Transition>
+						</State>
+					</StateMachine>
+                            </End>
 			</ColorZone>
 			<ColorZone>
 				<Color>yellow</Color>
@@ -102,7 +121,7 @@
 				<Color>red</Color>
 				<Position>						
 					<StateMachine>
-						<State id="Start" value="1090">
+						<State id="Start" value="871">
 							<Transition to="Normal">
 								<Greater>
 									<Simvar name="TURB ENG N1:1" unit="percent"/>
@@ -126,7 +145,7 @@
 				<Greater>
 					<Simvar name="TURB ENG1 ITT" unit="celsius"/>
 					<StateMachine>
-						<State id="Start" value="1090">
+						<State id="Start" value="871">
 							<Transition to="Normal">
 								<Greater>
 									<Simvar name="TURB ENG N1:1" unit="percent"/>
@@ -422,7 +441,7 @@
 							</Greater>
 						</Transition>
 					</State>
-					<State id="Normal" value="900">
+					<State id="Normal" value="950">
 						<Transition to="Start">
 							<Lower>
 								<Simvar name="TURB ENG N1:1" unit="percent"/>
@@ -438,7 +457,26 @@
 			<ColorZone>
 				<Color>green</Color>
 				<Begin>100</Begin>
-				<End>825</End>
+				<End>
+                                   <StateMachine>
+						<State id="Start" value="870">
+							<Transition to="Normal">
+								<Greater>
+									<Simvar name="TURB ENG N1:1" unit="percent"/>
+									<Constant>52</Constant>
+								</Greater>
+							</Transition>
+						</State>
+						<State id="Normal" value="825">
+							<Transition to="Start">
+								<Lower>
+									<Simvar name="TURB ENG N1:1" unit="percent"/>
+									<Constant>10</Constant>
+								</Lower>
+							</Transition>
+						</State>
+					</StateMachine>
+                            </End>
 			</ColorZone>
 			<ColorZone>
 				<Color>yellow</Color>
@@ -449,7 +487,7 @@
 				<Color>red</Color>
 				<Position>						
 					<StateMachine>
-						<State id="Start" value="1090">
+						<State id="Start" value="871">
 							<Transition to="Normal">
 								<Greater>
 									<Simvar name="TURB ENG N1:1" unit="percent"/>
@@ -473,7 +511,7 @@
 				<Greater>
 					<Simvar name="TURB ENG1 ITT" unit="celsius"/>
 					<StateMachine>
-						<State id="Start" value="1090">
+						<State id="Start" value="871">
 							<Transition to="Normal">
 								<Greater>
 									<Simvar name="TURB ENG N1:1" unit="percent"/>
