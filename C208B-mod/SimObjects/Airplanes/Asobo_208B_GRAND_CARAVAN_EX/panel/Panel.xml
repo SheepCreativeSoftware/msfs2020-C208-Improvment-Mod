@@ -341,10 +341,28 @@
 	  <Type>Advisory</Type>
 	  <Text>STBY PWR ON</Text>
 		<Condition>
-			<Greater>
-				<Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
-				<Constant>40</Constant>
-			</Greater>
+                     <And>
+                            <Greater>
+                                   <Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
+                                   <Constant>2</Constant>
+                            </Greater>
+                            <And>
+                                   <Or>
+                                          <Greater>
+                                                 <Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+                                                 <Constant>0</Constant>
+                                          </Greater>
+                                          <LowerEqual>
+                                                 <Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
+                                                 <Constant>0</Constant>
+                                          </LowerEqual>
+                                   </Or>
+                                   <Greater>
+                                          <Simvar name="TURB ENG N1:1" unit="percent"/>
+                                          <Constant>50</Constant>
+                                   </Greater>
+                            </And>
+                     </And>
 		</Condition>
 	</Annunciation>
 	<!--Indicates electrical power is being supplied to the engine ignition system-->		
@@ -433,7 +451,7 @@
 							</Greater>
 						</Transition>
 					</State>
-					<State id="Normal" value="900">
+					<State id="Normal" value="950">
 						<Transition to="Start">
 							<Lower>
 								<Simvar name="TURB ENG N1:1" unit="percent"/>
@@ -448,8 +466,27 @@
 			</Value>
 			<ColorZone>
 				<Color>green</Color>
-				<Begin>0</Begin>
-				<End>825</End>
+				<Begin>100</Begin>
+				<End>
+                                   <StateMachine>
+						<State id="Start" value="870">
+							<Transition to="Normal">
+								<Greater>
+									<Simvar name="TURB ENG N1:1" unit="percent"/>
+									<Constant>52</Constant>
+								</Greater>
+							</Transition>
+						</State>
+						<State id="Normal" value="825">
+							<Transition to="Start">
+								<Lower>
+									<Simvar name="TURB ENG N1:1" unit="percent"/>
+									<Constant>10</Constant>
+								</Lower>
+							</Transition>
+						</State>
+					</StateMachine>
+                            </End>
 			</ColorZone>
 			<ColorZone>
 				<Color>yellow</Color>
@@ -460,7 +497,7 @@
 				<Color>red</Color>
 				<Position>						
 					<StateMachine>
-						<State id="Start" value="1090">
+						<State id="Start" value="871">
 							<Transition to="Normal">
 								<Greater>
 									<Simvar name="TURB ENG N1:1" unit="percent"/>
@@ -484,7 +521,7 @@
 				<Greater>
 					<Simvar name="TURB ENG1 ITT" unit="celsius"/>
 					<StateMachine>
-						<State id="Start" value="1090">
+						<State id="Start" value="871">
 							<Transition to="Normal">
 								<Greater>
 									<Simvar name="TURB ENG N1:1" unit="percent"/>
