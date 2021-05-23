@@ -364,6 +364,9 @@
 				</UseTemplate> 
 			</Component>
 			<UseTemplate Name="ASOBO_ENGINE_Lever_Propeller_Template">
+				<DRAG_MIN_VALUE_OVERRIDE>(A:THROTTLE LOWER LIMIT, position 16k)</DRAG_MIN_VALUE_OVERRIDE>
+				<LEVER_TYPE>REVERSE_IDLE_FULL</LEVER_TYPE>
+				<DELTA_MIN>0.00075</DELTA_MIN>			
 			</UseTemplate>
 			<CameraTitle>Engines</CameraTitle>
 		</Component>
