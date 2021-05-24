@@ -28,12 +28,12 @@ Thanks to everyone who has contributed, and to PilotTrev for sharing his knowled
 
 ## Issues and Limitations
 
-- Beta mode and prop feathering are nonfunctional
-- The propeller generates zero drag/has no affect on torque
+- Beta mode ~~and prop feathering are~~ nonfunctional **(Prop feathering fixed)**
+- ~~The propeller generates zero drag/has no affect on torque~~ **(I think I fixed this by boosting prop MOI by some amount, MS's values seemed absurdly low)**
 - Torque increases with altitude
 - ITT effectively decreases with altitude
 
-***Propeller*** - Beta mode is completely nonfunctional, blade pitch jumps from the minimum stop to reverse with no control between.  Feathering is possible, but the behaviour is so bugged that it's practically useless. The prop itself lacks any physics, produces no drag and has no affect on torque.
+***Propeller*** - Beta mode is completely nonfunctional, blade pitch jumps from the minimum stop to reverse with no control between.  ~~Feathering is possible, but the behaviour is so bugged that it's practically useless. The prop itself lacks any physics, produces no drag and has no affect on torque.~~
 
 ***Climb Performance*** - With ITT being broken, it's not possible to use it as a metric when tuning climb performance, neither is the *Maximum Torque for Climb* chart of much use. Instead, I referenced the *Maximum RoC* and *RoC - Takeoff Flap Setting* tables, crosschecked with *Time, Fuel, and Distance*, to find a somewhat acceptable balance where climb performance is not overly excessive at minimum weight, but still allows for max RoC at max weight. I haven't accounted for the reduction in airspeed when flying through clouds.
 
