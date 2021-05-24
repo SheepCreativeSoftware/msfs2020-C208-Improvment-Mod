@@ -68,7 +68,7 @@ A few notes from my testing so far:
 
 ## Download
 
-***[Latest Release v2102.3](https://github.com/dgtlanlg/C208B-mod/releases/tag/v2102.3)***
+***[Latest Release v2105.1](https://github.com/AlisterBrenton/C208B-mod/releases/tag/v2105.1)***
 
 ## How to install
 
