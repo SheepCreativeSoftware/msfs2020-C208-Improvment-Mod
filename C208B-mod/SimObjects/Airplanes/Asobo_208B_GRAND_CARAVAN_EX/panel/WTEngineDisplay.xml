@@ -37,7 +37,7 @@
 			</ColorZone>
 			<ColorZone>
 				<Color>red</Color>
-				<Begin>2396</Begin>
+				<Begin>2397</Begin>
 				<End>2600</End>
 			</ColorZone>
 			<GraduationLength>100</GraduationLength>
@@ -45,7 +45,7 @@
 			<RedBlink>
 				<Greater>
 					<Simvar name="ENG TORQUE:1" unit="Foot pounds"/>
-					<Constant>2400</Constant>
+					<Constant>2397</Constant>
 				</Greater>
 			</RedBlink>
 		</Gauge>
@@ -75,7 +75,7 @@
 							</Greater>
 						</Transition>
 					</State>
-					<State id="Normal" value="900">
+					<State id="Normal" value="950">
 						<Transition to="Start">
 							<Lower>
 								<Simvar name="TURB ENG N1:1" unit="percent"/>
@@ -91,18 +91,9 @@
 			<ColorZone>
 				<Color>green</Color>
 				<Begin>100</Begin>
-				<End>740</End>
-			</ColorZone>
-			<ColorZone>
-				<Color>yellow</Color>
-				<Begin>765</Begin>
-				<End>805</End>
-			</ColorZone>
-			<ColorLine>
-				<Color>red</Color>
-				<Position>						
-					<StateMachine>
-						<State id="Start" value="1090">
+				<End>
+                                   <StateMachine>
+						<State id="Start" value="870">
 							<Transition to="Normal">
 								<Greater>
 									<Simvar name="TURB ENG N1:1" unit="percent"/>
@@ -110,7 +101,35 @@
 								</Greater>
 							</Transition>
 						</State>
-						<State id="Normal" value="805">
+						<State id="Normal" value="825">
+							<Transition to="Start">
+								<Lower>
+									<Simvar name="TURB ENG N1:1" unit="percent"/>
+									<Constant>10</Constant>
+								</Lower>
+							</Transition>
+						</State>
+					</StateMachine>
+                            </End>
+			</ColorZone>
+			<ColorZone>
+				<Color>yellow</Color>
+				<Begin>826</Begin>
+				<End>849</End>
+			</ColorZone>
+			<ColorLine>
+				<Color>red</Color>
+				<Position>						
+					<StateMachine>
+						<State id="Start" value="871">
+							<Transition to="Normal">
+								<Greater>
+									<Simvar name="TURB ENG N1:1" unit="percent"/>
+									<Constant>52</Constant>
+								</Greater>
+							</Transition>
+						</State>
+						<State id="Normal" value="850">
 							<Transition to="Start">
 								<Lower>
 									<Simvar name="TURB ENG N1:1" unit="percent"/>
@@ -126,7 +145,7 @@
 				<Greater>
 					<Simvar name="TURB ENG1 ITT" unit="celsius"/>
 					<StateMachine>
-						<State id="Start" value="1090">
+						<State id="Start" value="871">
 							<Transition to="Normal">
 								<Greater>
 									<Simvar name="TURB ENG N1:1" unit="percent"/>
@@ -134,7 +153,7 @@
 								</Greater>
 							</Transition>
 						</State>
-						<State id="Normal" value="805">
+						<State id="Normal" value="850">
 							<Transition to="Start">
 								<Lower>
 									<Simvar name="TURB ENG N1:1" unit="percent"/>
@@ -156,7 +175,7 @@
 				<CursorType>Triangle</CursorType>
 				<ValuePos>End</ValuePos>
 				<SizePercent>90</SizePercent>
-				<!--<TextIncrement>10</TextIncrement>-->
+				<TextIncrement>1</TextIncrement>
 			</Style>
 			<BeginText></BeginText>
 			<EndText></EndText>
@@ -170,13 +189,9 @@
 			</Value>
 			<ColorZone>
 				<Color>green</Color>
-				<Begin>51</Begin>
-				<End>101.6</End>
+				<Begin>55</Begin>
+				<End>103.6</End>
 			</ColorZone>
-			<ColorLine>
-				<Color>white</Color>
-				<Position>0</Position>
-			</ColorLine>
 			<ColorLine>
 				<Color>white</Color>
 				<Position>12</Position>
@@ -186,18 +201,14 @@
 				<Position>50</Position>
 			</ColorLine>
 			<ColorLine>
-				<Color>white</Color>
-				<Position>105</Position>
-			</ColorLine>
-			<ColorLine>
 				<Color>red</Color>
-				<Position>101.6</Position>
+				<Position>103.7</Position>
 			</ColorLine>
 			<GraduationLength>10</GraduationLength>
 			<RedBlink>
 				<Greater>
 					<Simvar name="TURB ENG N1:1" unit="percent"/>
-					<Constant>101.6</Constant>
+					<Constant>103.6</Constant>
 				</Greater>
 			</RedBlink>
 		</Gauge>
@@ -392,7 +403,7 @@
 			</ColorZone>
 			<ColorZone>
 				<Color>red</Color>
-				<Begin>2396</Begin>
+				<Begin>2397</Begin>
 				<End>2600</End>
 			</ColorZone>
 			<GraduationLength>100</GraduationLength>
@@ -400,7 +411,7 @@
 			<RedBlink>
 				<Greater>
 					<Simvar name="ENG TORQUE:1" unit="Foot pounds"/>
-					<Constant>2400</Constant>
+					<Constant>2397</Constant>
 				</Greater>
 			</RedBlink>
 		</Gauge>
@@ -430,7 +441,7 @@
 							</Greater>
 						</Transition>
 					</State>
-					<State id="Normal" value="900">
+					<State id="Normal" value="950">
 						<Transition to="Start">
 							<Lower>
 								<Simvar name="TURB ENG N1:1" unit="percent"/>
@@ -446,18 +457,9 @@
 			<ColorZone>
 				<Color>green</Color>
 				<Begin>100</Begin>
-				<End>740</End>
-			</ColorZone>
-			<ColorZone>
-				<Color>yellow</Color>
-				<Begin>765</Begin>
-				<End>805</End>
-			</ColorZone>
-			<ColorLine>
-				<Color>red</Color>
-				<Position>						
-					<StateMachine>
-						<State id="Start" value="1090">
+				<End>
+                                   <StateMachine>
+						<State id="Start" value="870">
 							<Transition to="Normal">
 								<Greater>
 									<Simvar name="TURB ENG N1:1" unit="percent"/>
@@ -465,7 +467,35 @@
 								</Greater>
 							</Transition>
 						</State>
-						<State id="Normal" value="805">
+						<State id="Normal" value="825">
+							<Transition to="Start">
+								<Lower>
+									<Simvar name="TURB ENG N1:1" unit="percent"/>
+									<Constant>10</Constant>
+								</Lower>
+							</Transition>
+						</State>
+					</StateMachine>
+                            </End>
+			</ColorZone>
+			<ColorZone>
+				<Color>yellow</Color>
+				<Begin>826</Begin>
+				<End>849</End>
+			</ColorZone>
+			<ColorLine>
+				<Color>red</Color>
+				<Position>						
+					<StateMachine>
+						<State id="Start" value="871">
+							<Transition to="Normal">
+								<Greater>
+									<Simvar name="TURB ENG N1:1" unit="percent"/>
+									<Constant>52</Constant>
+								</Greater>
+							</Transition>
+						</State>
+						<State id="Normal" value="850">
 							<Transition to="Start">
 								<Lower>
 									<Simvar name="TURB ENG N1:1" unit="percent"/>
@@ -481,7 +511,7 @@
 				<Greater>
 					<Simvar name="TURB ENG1 ITT" unit="celsius"/>
 					<StateMachine>
-						<State id="Start" value="1090">
+						<State id="Start" value="871">
 							<Transition to="Normal">
 								<Greater>
 									<Simvar name="TURB ENG N1:1" unit="percent"/>
@@ -489,7 +519,7 @@
 								</Greater>
 							</Transition>
 						</State>
-						<State id="Normal" value="805">
+						<State id="Normal" value="850">
 							<Transition to="Start">
 								<Lower>
 									<Simvar name="TURB ENG N1:1" unit="percent"/>
@@ -511,7 +541,7 @@
 				<CursorType>Triangle</CursorType>
 				<ValuePos>End</ValuePos>
 				<SizePercent>90</SizePercent>
-				<!--<TextIncrement>10</TextIncrement>-->
+				<TextIncrement>1</TextIncrement>
 			</Style>
 			<BeginText></BeginText>
 			<EndText></EndText>
@@ -525,13 +555,9 @@
 			</Value>
 			<ColorZone>
 				<Color>green</Color>
-				<Begin>51</Begin>
-				<End>101.6</End>
+				<Begin>55</Begin>
+				<End>103.6</End>
 			</ColorZone>
-			<ColorLine>
-				<Color>white</Color>
-				<Position>0</Position>
-			</ColorLine>
 			<ColorLine>
 				<Color>white</Color>
 				<Position>12</Position>
@@ -541,18 +567,14 @@
 				<Position>50</Position>
 			</ColorLine>
 			<ColorLine>
-				<Color>white</Color>
-				<Position>105</Position>
-			</ColorLine>
-			<ColorLine>
 				<Color>red</Color>
-				<Position>101.6</Position>
+				<Position>103.7</Position>
 			</ColorLine>
 			<GraduationLength>10</GraduationLength>
 			<RedBlink>
 				<Greater>
 					<Simvar name="TURB ENG N1:1" unit="percent"/>
-					<Constant>101.6</Constant>
+					<Constant>103.6</Constant>
 				</Greater>
 			</RedBlink>
 		</Gauge>
@@ -606,7 +628,7 @@
 			<Title>OIL</Title>
 			<Unit>PSI</Unit>
 			<Minimum>0</Minimum>
-			<Maximum>120</Maximum>
+			<Maximum>130</Maximum>
 			<Value>
 				<Simvar name="GENERAL ENG OIL PRESSURE:1" unit="psi"/>
 			</Value>
@@ -618,11 +640,11 @@
 			<ColorZone>
 				<Color>yellow</Color>
 				<Begin>40</Begin>
-				<End>85</End>
+				<End>84</End>
 			</ColorZone>
 			<ColorLine>
 				<Color>red</Color>
-				<Position>40</Position>
+				<Position>39</Position>
 			</ColorLine>
 			<ColorLine>
 				<Color>red</Color>
@@ -659,13 +681,13 @@
 			</Value>
 			<ColorZone>
 				<Color>green</Color>
-				<Begin>10</Begin>
-				<End>100</End>
+				<Begin>32</Begin>
+				<End>99</End>
 			</ColorZone>
 			<ColorZone>
 				<Color>yellow</Color>
 				<Begin>-40</Begin>
-				<End>10</End>
+				<End>31</End>
 			</ColorZone>
 			<ColorZone>
 				<Color>yellow</Color>
@@ -686,11 +708,11 @@
 				<Or>
 					<Greater>
 						<Simvar name="GENERAL ENG OIL TEMPERATURE:1" unit="celsius"/>
-						<Constant>105</Constant>
+						<Constant>104</Constant>
 					</Greater>
 					<Lower>
 						<Simvar name="GENERAL ENG OIL TEMPERATURE:1" unit="celsius"/>
-						<Constant>-41</Constant>
+						<Constant>-40</Constant>
 					</Lower>
 				</Or>
 			</RedBlink>
@@ -708,7 +730,7 @@
 			<Title></Title>
 			<Unit>LBS</Unit>
 			<Minimum>0</Minimum>
-			<Maximum>1100</Maximum>
+			<Maximum>1145</Maximum>
 			<Style>
 				<Height>70</Height>
 			</Style>

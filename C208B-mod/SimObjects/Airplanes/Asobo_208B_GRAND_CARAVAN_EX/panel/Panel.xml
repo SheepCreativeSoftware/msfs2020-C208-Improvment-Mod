@@ -337,16 +337,34 @@
 		</Condition>
 	</Annunciation>
 	<!--Indicates that the standby alternator is generating electrical power-->
-	<!-- <Annunciation>
+	<Annunciation>
 	  <Type>Advisory</Type>
 	  <Text>STBY PWR ON</Text>
 		<Condition>
-			<Greater>
-				<Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
-				<Constant>2</Constant>
-			</Greater>
+                     <And>
+                            <Greater>
+                                   <Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
+                                   <Constant>2</Constant>
+                            </Greater>
+                            <And>
+                                   <Or>
+                                          <Greater>
+                                                 <Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+                                                 <Constant>0</Constant>
+                                          </Greater>
+                                          <LowerEqual>
+                                                 <Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
+                                                 <Constant>0</Constant>
+                                          </LowerEqual>
+                                   </Or>
+                                   <Greater>
+                                          <Simvar name="TURB ENG N1:1" unit="percent"/>
+                                          <Constant>50</Constant>
+                                   </Greater>
+                            </And>
+                     </And>
 		</Condition>
-	</Annunciation> -->
+	</Annunciation>
 	<!--Indicates electrical power is being supplied to the engine ignition system-->		
 	<Annunciation>
 	  <Type>Advisory</Type>
@@ -433,7 +451,7 @@
 							</Greater>
 						</Transition>
 					</State>
-					<State id="Normal" value="900">
+					<State id="Normal" value="950">
 						<Transition to="Start">
 							<Lower>
 								<Simvar name="TURB ENG N1:1" unit="percent"/>
@@ -448,8 +466,27 @@
 			</Value>
 			<ColorZone>
 				<Color>green</Color>
-				<Begin>0</Begin>
-				<End>825</End>
+				<Begin>100</Begin>
+				<End>
+                                   <StateMachine>
+						<State id="Start" value="870">
+							<Transition to="Normal">
+								<Greater>
+									<Simvar name="TURB ENG N1:1" unit="percent"/>
+									<Constant>52</Constant>
+								</Greater>
+							</Transition>
+						</State>
+						<State id="Normal" value="825">
+							<Transition to="Start">
+								<Lower>
+									<Simvar name="TURB ENG N1:1" unit="percent"/>
+									<Constant>10</Constant>
+								</Lower>
+							</Transition>
+						</State>
+					</StateMachine>
+                            </End>
 			</ColorZone>
 			<ColorZone>
 				<Color>yellow</Color>
@@ -460,7 +497,7 @@
 				<Color>red</Color>
 				<Position>						
 					<StateMachine>
-						<State id="Start" value="1090">
+						<State id="Start" value="871">
 							<Transition to="Normal">
 								<Greater>
 									<Simvar name="TURB ENG N1:1" unit="percent"/>
@@ -484,7 +521,7 @@
 				<Greater>
 					<Simvar name="TURB ENG1 ITT" unit="celsius"/>
 					<StateMachine>
-						<State id="Start" value="1090">
+						<State id="Start" value="871">
 							<Transition to="Normal">
 								<Greater>
 									<Simvar name="TURB ENG N1:1" unit="percent"/>
@@ -492,7 +529,7 @@
 								</Greater>
 							</Transition>
 						</State>
-						<State id="Normal" value="805">
+						<State id="Normal" value="850">
 							<Transition to="Start">
 								<Lower>
 									<Simvar name="TURB ENG N1:1" unit="percent"/>
@@ -531,6 +568,14 @@
 				<Begin>55</Begin>
 				<End>103.6</End>
 			</ColorZone>
+                     <ColorLine>
+				<Color>white</Color>
+				<Position>12</Position>
+			</ColorLine>
+			<ColorLine>
+				<Color>white</Color>
+				<Position>50</Position>
+			</ColorLine>
 			<ColorLine>
 				<Color>red</Color>
 				<Position>103.7</Position>
@@ -593,27 +638,27 @@
 			<Title>OIL</Title>
 			<Unit>PSI</Unit>
 			<Minimum>0</Minimum>
-			<Maximum>120</Maximum>
+			<Maximum>130</Maximum>
 			<Value>
 				<Simvar name="GENERAL ENG OIL PRESSURE:1" unit="psi"/>
 			</Value>
 			<ColorZone>
 				<Color>green</Color>
 				<Begin>85</Begin>
-				<End>120</End>
+				<End>105</End>
 			</ColorZone>
 			<ColorZone>
 				<Color>yellow</Color>
 				<Begin>40</Begin>
-				<End>85</End>
+				<End>84</End>
 			</ColorZone>
 			<ColorLine>
 				<Color>red</Color>
-				<Position>40</Position>
+				<Position>39</Position>
 			</ColorLine>
 			<ColorLine>
 				<Color>red</Color>
-				<Position>120</Position>
+				<Position>105</Position>
 			</ColorLine>
 			<BeginText></BeginText>
 			<EndText></EndText>
@@ -621,7 +666,7 @@
 				<Or>
 					<Greater>
 						<Simvar name="GENERAL ENG OIL PRESSURE:1" unit="psi"/>
-						<Constant>101.6</Constant>
+						<Constant>105</Constant>
 					</Greater>
 					<Lower>
 						<Simvar name="GENERAL ENG OIL PRESSURE:1" unit="psi"/>
@@ -661,11 +706,11 @@
 			</ColorZone>
 			<ColorLine>
 				<Color>red</Color>
-				<Position>-40</Position>
+				<Position>-41</Position>
 			</ColorLine>
 			<ColorLine>
 				<Color>red</Color>
-				<Position>104</Position>
+				<Position>105</Position>
 			</ColorLine>
 			<BeginText></BeginText>
 			<EndText></EndText>
@@ -677,7 +722,7 @@
 					</Greater>
 					<Lower>
 						<Simvar name="GENERAL ENG OIL TEMPERATURE:1" unit="celsius"/>
-						<Constant>-41</Constant>
+						<Constant>-40</Constant>
 					</Lower>
 				</Or>
 			</RedBlink>
@@ -725,8 +770,8 @@
 		</Gauge>
 		
 		<Text>
-			<Left>FFLOW PPH</Left>
-			<Right id="FuelFlow">
+			<Left fontsize="8">FFLOW PPH</Left>
+			<Right id="FuelFlow" fontsize="9">
 				<ToFixed precision="0">
 					<Simvar name="ENG FUEL FLOW PPH:1" unit="Pounds per hour"/>
 				</ToFixed>
@@ -734,18 +779,18 @@
 		</Text>
 		
 		<Text>
-			<Left>BAT AMPS</Left>
-			<Right id="Amperes">
+			<Left fontsize="8">BAT AMPS</Left>
+			<Right id="Amperes" fontsize="9">
 				<ToFixed precision="0">
-					<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="Amperes"/>
+					<Simvar name="ELECTRICAL MAIN BUS AMPS:1" unit="Amperes"/>
 				</ToFixed>
 			</Right>
 		</Text>
 		
 		<Text>
-			<Left>BUS VOLTS</Left>
-			<Right id="Volts">
-				<ToFixed precision="0">
+			<Left fontsize="8">BUS VOLTS</Left>
+			<Right id="Volts" fontsize="9">
+				<ToFixed precision="1">
 					<Simvar name="ELECTRICAL MAIN BUS VOLTAGE:1" unit="Volts"/>
 				</ToFixed>
 			</Right>
