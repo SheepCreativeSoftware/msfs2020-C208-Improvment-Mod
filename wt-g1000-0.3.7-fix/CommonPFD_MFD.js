@@ -293,9 +293,6 @@ class PFD_Attitude extends NavSystemElement {
     constructor() {
         super(...arguments);
         this.vDir = new Vec2();
-        Include.addScript("/JS/debug.js", function () {
-            g_modDebugMgr.AddConsole(null);
-        });
     }
     init(root) {
         this.svg = this.gps.getChildById("Horizon");
@@ -423,35 +420,6 @@ class PFD_Compass extends NavSystemElement {
         }
         else {
             this.ifTimer -= this.gps.deltaTime;
-        }
-        if (this.gps.currFlightPlanManager.isActiveApproach() && this.gps.currFlightPlanManager.getActiveWaypointIndex() != -1 && Simplane.getAutoPilotApproachType() == 4) {
-            let approachWPNb = this.gps.currFlightPlanManager.getApproachWaypoints().length;
-            let activeWP = this.gps.currFlightPlanManager.getActiveWaypoint();
-            if (((this.ifIcao && this.ifIcao != "" && activeWP && this.ifIcao == activeWP.icao) || (approachWPNb > 0 && this.gps.currFlightPlanManager.getActiveWaypointIndex() >= approachWPNb - 2)) && !this.hasLocBeenEntered) {
-                let approachFrequency = this.gps.currFlightPlanManager.getApproachNavFrequency();
-                if (!isNaN(approachFrequency)) {
-                    SimVar.SetSimVarValue("K:NAV1_RADIO_SWAP", "number", 0);
-                    SimVar.SetSimVarValue("K:NAV1_RADIO_SET_HZ", "hertz", approachFrequency * 1000000);
-                }
-                this.hasLocBeenEntered = true;
-            } else {
-                let approachWP;
-                let wpIndex = this.gps.currFlightPlanManager.getActiveWaypointIndex() - 1;
-                if (wpIndex >= 0 && wpIndex < approachWPNb) {
-                    approachWP = this.gps.currFlightPlanManager.getApproachWaypoints()[wpIndex];
-                }
-                if (((this.ifIcao && this.ifIcao != "" && approachWP && this.ifIcao == approachWP.icao && this.hasLocBeenEntered) || (approachWPNb > 0 && this.gps.currFlightPlanManager.getActiveWaypointIndex() == approachWPNb - 1)) && !this.hasLocBeenActivated) {
-                    if (SimVar.GetSimVarValue("GPS DRIVES NAV1", "boolean")) {
-                        SimVar.SetSimVarValue("K:TOGGLE_GPS_DRIVES_NAV1", "number", 0);
-                    }
-                    SimVar.SetSimVarValue("K:AP_NAV_SELECT_SET", "number", 1);
-                    this.hasLocBeenActivated = true;
-                }
-            }
-        }
-        else {
-            this.hasLocBeenEntered = false;
-            this.hasLocBeenActivated = false;
         }
     }
     onExit() {
