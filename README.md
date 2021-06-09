@@ -57,23 +57,23 @@ A few notes from my testing so far:
 
 ***Sim version*** - v1.13.16.0
 
-***WT G1000 version*** - v0.3.4, v0.4 beta
+***WT G1000 version*** - v0.3.7, v0.4 beta
 
 ## Required
 
-***[Working Title's G1000 v0.3.4](https://github.com/Working-Title-MSFS-Mods/fspackages/releases/tag/g1000-v0.3.4)***
+***[Working Title's G1000 v0.3.7](https://github.com/Working-Title-MSFS-Mods/fspackages/releases/tag/g1000-v0.3.7)***
 
 
 ----
 
 ## Download
 
-***[Latest Release v2105.1](https://github.com/AlisterBrenton/C208B-mod/releases/tag/v2105.1)***
+***[Latest Release v2106.1](https://github.com/SheepCreativeSoftware/msfs2020-C208-Improvment-Mod/releases/tag/v2106.1.beta.1)***
 
 ## How to install
 
 1. Delete any previous versions.
 2. Copy the C208B-mod folder into the Community Folder.
 
-***WT G1000 v0.3.4*** - To enable annunciations you will need to replace the following file with the one included with this mod (wt-g1000-0.3.4-fix):
+***WT G1000 v0.3.7*** - To enable annunciations you will need to replace the following file with the one included with this mod (wt-g1000-0.3.4-fix):
 *workingtitle-g1000\html_ui\WorkingTitle\Pages\VCockpit\Instruments\NavSystems\SharedCommonPFD_MFD.js*
