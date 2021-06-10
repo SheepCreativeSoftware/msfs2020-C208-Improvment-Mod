@@ -1,3 +1,4 @@
+/*WorkingTitle G1000 Fixed for C208B Mod*/
 Include.addScript("/Pages/VCockpit/Instruments/Shared/WorkingTitle/DataStore.js")
 
 class PFD_VSpeed extends NavSystemElement {
