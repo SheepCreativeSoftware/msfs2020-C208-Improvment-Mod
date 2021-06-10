@@ -5,6 +5,7 @@ Since Sim Update 4 lots of Things are even better by default.
 
 ***Engine and Flight Model***  
 - Based on Vanila Sim Update 4 (SU4)
+- Corrected Different Values according to POH
 - ~~Higher thrust and greater braking force, allowing for short field ops.~~  
 - ~~Improved flight characteristics, more realistic climb, increased drag on approach and less float on landing.~~  
 - ~~More accurate cruise performance.~~
