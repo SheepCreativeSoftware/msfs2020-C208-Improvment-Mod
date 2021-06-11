@@ -13,7 +13,7 @@ Since Sim Update 4 lots of Things are even better by default.
 ***Ground Handling***
 - Based on Vanila Sim Update 4 (SU4)
 - ~~More control while taxiing.~~  
-- ~~Tighter turning circle.~~  
+- Tighter turning circle. 
 - ~~More realistic idle behaviour, lower fuel burn.~~
 
 ***Systems & Avionics***  
