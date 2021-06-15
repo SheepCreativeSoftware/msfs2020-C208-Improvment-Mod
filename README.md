@@ -62,5 +62,5 @@ Thanks to everyone who has contributed, and to PilotTrev for sharing his knowled
 ***WT G1000 v0.3.7*** - To enable annunciations you will need to replace the following file with the one included with this mod (wt-g1000-fix):
 *workingtitle-g1000\html_ui\WorkingTitle\Pages\VCockpit\Instruments\NavSystems\SharedCommonPFD_MFD.js*
 
-***WT GX v0.7.2*** - If you have installed the WorkingTitle GX Mod you will need to replace the following file with the one included with this mod (wt-g1000-fix):
+***WT GX v0.1.0-dev8.*** - If you have installed the WorkingTitle GX Mod you will need to replace the following file with the one included with this mod (wt-g1000-fix):
 *workingtitle-g1000\html_ui\WorkingTitle\Pages\VCockpit\Instruments\NavSystems\SharedCommonPFD_MFD.js*
