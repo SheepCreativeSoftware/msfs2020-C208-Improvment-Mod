@@ -781,9 +781,33 @@
 		<Text>
 			<Left fontsize="8">BAT AMPS</Left>
 			<Right id="Amperes" fontsize="9">
-				<ToFixed precision="0">
-					<Simvar name="ELECTRICAL MAIN BUS AMPS:1" unit="Amperes"/>
-				</ToFixed>
+				<If>
+					<Condition>
+                                          <And>
+                                                 <Greater>
+                                                        <Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
+                                                        <Constant>0</Constant>
+                                                 </Greater>
+                                                 <Greater>
+                                                        <Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
+                                                        <Constant>0</Constant>
+                                                 </Greater>
+                                          </And>
+					</Condition>
+					<Then>
+                                          <ToFixed precision="0">
+                                                 <Substract>
+                                                        <Simvar name="ELECTRICAL MAIN BUS AMPS:1" unit="amp"/>
+                                                        <Constant>74</Constant>
+                                                 </Substract>
+                                          </ToFixed>
+					</Then>
+					<Else>
+                                          <ToFixed precision="0">
+                                                 <Simvar name="ELECTRICAL MAIN BUS AMPS:1" unit="amp"/>
+                                          </ToFixed>
+					</Else>
+				</If>
 			</Right>
 		</Text>
 		
@@ -830,7 +854,186 @@
 			</StateMachine>
 		</Condition>
 	</Alert>
-	
+	<Alert>
+           <Type>SoundOnly</Type>
+           <SoundEvent>tone_altitude_alert_default</SoundEvent>
+           <Condition>
+             <StateMachine>
+               <State id="Reset" value="0">
+                 <Transition to="Checking">
+                   <Or><!--Or Target Altitude is above-->
+                     <And>
+                     <!--And Target Altitude is above-->
+                       <GreaterEqual>
+                         <Substract>
+                           <Simvar name="AUTOPILOT ALTITUDE LOCK VAR" unit="feet"/>
+                           <Simvar name="INDICATED ALTITUDE" unit="feet"/>
+                         </Substract>
+                         <Constant>1000</Constant>
+                       </GreaterEqual>
+                     <!--And Not Autopilot is currently locked to an altitude-->
+                       <Not>
+                         <Simvar name="AUTOPILOT ALTITUDE LOCK" unit="bool"/>
+                       </Not>
+                     </And>
+                   <!--Or Target Altitude is below--> 
+                     <And>
+                     <!--And Target Altitude is below-->
+                        <GreaterEqual>
+                         <Substract>
+                           <Simvar name="INDICATED ALTITUDE" unit="feet"/>
+                           <Simvar name="AUTOPILOT ALTITUDE LOCK VAR" unit="feet"/>
+                         </Substract>
+                         <Constant>1000</Constant>
+                       </GreaterEqual>
+                     <!--And Not Autopilot is currently locked to an altitude-->
+                       <Not>
+                         <Simvar name="AUTOPILOT ALTITUDE LOCK" unit="bool"/>
+                       </Not>
+                     </And>
+                   </Or>
+                 </Transition>
+               </State>
+               <State id="Checking" value="0">
+                 <Transition to="Alerting">
+                   <Or><!--Or Target Altitude is above-->
+                     <And>
+                     <!--And Target Altitude is above-->
+                       <Greater>
+                         <Substract>
+                           <Simvar name="AUTOPILOT ALTITUDE LOCK VAR" unit="feet"/>
+                           <Simvar name="INDICATED ALTITUDE" unit="feet"/>
+                         </Substract>
+                         <Constant>0</Constant>
+                       </Greater>
+                     <!--And Target Altitude is less than 1000 above-->
+                       <Lower>
+                         <Substract>
+                           <Simvar name="AUTOPILOT ALTITUDE LOCK VAR" unit="feet"/>
+                           <Simvar name="INDICATED ALTITUDE" unit="feet"/>
+                         </Substract>
+                         <Constant>1000</Constant>
+                       </Lower>
+                     </And>
+                   <!--Or Target Altitude is below-->
+                     <And>
+                     <!--And Target Altitude is below-->
+                       <GreaterEqual>
+                         <Substract>
+                           <Simvar name="INDICATED ALTITUDE" unit="feet"/>
+                           <Simvar name="AUTOPILOT ALTITUDE LOCK VAR" unit="feet"/>
+                         </Substract>
+                         <Constant>0</Constant>
+                       </GreaterEqual>
+                     <!--And Target Altitude is less than 1000 below-->
+                       <Lower>
+                         <Substract>
+                           <Simvar name="INDICATED ALTITUDE" unit="feet"/>
+                           <Simvar name="AUTOPILOT ALTITUDE LOCK VAR" unit="feet"/>
+                         </Substract>
+                         <Constant>1000</Constant>
+                       </Lower>
+                     </And>
+                   </Or>
+                 </Transition>
+               </State>
+               <State id="Alerting" value="1">
+                 <Transition to="Reset">
+                   <Constant>1</Constant>
+                 </Transition>
+               </State>
+             </StateMachine>
+           </Condition>
+       </Alert>
+       <Alert>
+           <Type>SoundOnly</Type>
+           <SoundEvent>aural_minimums</SoundEvent>
+           <Condition>
+             <StateMachine>
+               <State id="Reset" value="0">
+                 <Transition to="Checking">
+                   <Or>
+                   <!--Or Minimals Mode = RA -->  
+                     <And>
+                     <!--And Minimals Mode = RA -->
+                       <Equal>
+                         <Simvar name="L:AS3000_MinimalsMode" unit="number"/> 
+                         <Constant>3</Constant>
+                       </Equal>
+                     <!--And RA is greater than the set minimums value -->
+                       <Greater>
+                         <Substract>
+                           <Simvar name="RADIO HEIGHT" unit="feet"/>
+                           <Simvar name="L:AS3000_MinimalsValue" unit="number"/>
+                         </Substract> 
+                         <Constant>0</Constant>                         
+                       </Greater>
+                     </And>
+                   <!--Or Minimals Mode = Baro-->
+                     <And>
+                     <!--And Minimals Mode = Baro -->
+                       <Equal>
+                         <Simvar name="L:AS3000_MinimalsMode" unit="number"/> 
+                         <Constant>1</Constant>
+                       </Equal>
+                       <!--And Baro Altitude is greater than the set minimums value -->
+                       <Greater>
+                         <Substract>
+                           <Simvar name="INDICATED ALTITUDE" unit="feet"/>
+                           <Simvar name="L:AS3000_MinimalsValue" unit="number"/>
+                         </Substract> 
+                         <Constant>0</Constant>                         
+                       </Greater>
+                     </And>
+                   </Or>
+                 </Transition>
+               </State>
+                 <State id="Checking" value="0">
+                   <Transition to="Alerting">
+                     <Or>
+                     <!--Or Minimals Mode = RA -->
+                       <And>
+                       <!--And Minimals Mode = RA -->
+                         <Equal>
+                           <Simvar name="L:AS3000_MinimalsMode" unit="number"/> 
+                           <Constant>3</Constant>
+                         </Equal>
+                         <!--And RA is less than or equal to the set minimums value -->
+                         <LowerEqual>
+                           <Substract>
+                             <Simvar name="RADIO HEIGHT" unit="feet"/>
+                             <Simvar name="L:AS3000_MinimalsValue" unit="number"/>
+                           </Substract> 
+                           <Constant>0</Constant>
+                         </LowerEqual>
+                       </And>
+                     <!--Or Minimals Mode = Baro-->  
+                       <And>
+                       <!--And Minimals Mode = Baro -->
+                         <Equal>
+                           <Simvar name="L:AS3000_MinimalsMode" unit="number"/> 
+                           <Constant>1</Constant>
+                         </Equal>
+                       <!--And Baro Altitude is less than or equal to the set minimums value -->
+                         <LowerEqual>
+                           <Substract>
+                             <Simvar name="INDICATED ALTITUDE" unit="feet"/>
+                             <Simvar name="L:AS3000_MinimalsValue" unit="number"/>
+                           </Substract> 
+                           <Constant>0</Constant>
+                         </LowerEqual>
+                       </And>
+                     </Or>
+                   </Transition>
+                 </State>
+                   <State id="Alerting" value="1">
+                     <Transition to="Reset">
+                         <Constant>1</Constant>
+                     </Transition>
+                   </State>
+               </StateMachine>
+             </Condition>
+       </Alert>
 	<Alert>
 		<Type>SoundOnly</Type>
 		<SoundEvent>aural_stall</SoundEvent>
@@ -1350,15 +1553,57 @@
 			<Right fontsize="9">
 				<If>
 					<Condition>
-						<Lower>
-							<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
-							<Constant>0</Constant>
-						</Lower>
+                                          <And>
+                                                 <Lower>
+                                                        <Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+                                                        <Constant>0</Constant>
+                                                 </Lower>
+                                                 <Greater>
+                                                        <Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
+                                                        <Constant>0</Constant>
+                                                 </Greater>
+                                          </And>
 					</Condition>
 					<Then>
-						<ToFixed precision="0">
-							<Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
-						</ToFixed>
+                                          <If>
+                                                 <Condition>
+                                                        <And>
+                                                               <Greater>
+                                                                      <Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
+                                                                      <Constant>0</Constant>
+                                                               </Greater>
+                                                               <Greater>
+                                                                      <Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
+                                                                      <Constant>0</Constant>
+                                                               </Greater>
+                                                        </And>
+                                                 </Condition>
+                                                 <Then>
+                                                        <ToFixed precision="0">
+                                                               <Add>
+                                                                      <Add>
+                                                                             <Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
+                                                                             <Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
+                                                                      </Add>
+                                                                      <Substract>
+                                                                             <Simvar name="ELECTRICAL MAIN BUS AMPS:1" unit="amp"/>
+                                                                             <Constant>74</Constant>
+                                                                      </Substract>
+                                                               </Add>
+                                                        </ToFixed>
+                                                 </Then>
+                                                 <Else>
+                                                        <ToFixed precision="0">
+                                                               <Add>
+                                                                      <Add>
+                                                                             <Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
+                                                                             <Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
+                                                                      </Add>
+                                                                      <Simvar name="ELECTRICAL MAIN BUS AMPS:1" unit="amp"/>
+                                                               </Add>
+                                                        </ToFixed>
+                                                 </Else>
+                                          </If>
 					</Then>
 					<Else>
 						<Constant>0</Constant>
@@ -1369,17 +1614,63 @@
 		<Text>
 			<Left fontsize="8">ALT AMPS</Left>
 			<Right fontsize="9">
-				<ToFixed precision="0">
-					<Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
-				</ToFixed>
+                            <If>
+					<Condition>
+                                          <And>
+                                                 <Equal>
+                                                        <Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
+                                                        <Constant>0</Constant>
+                                                 </Equal>
+                                                 <Greater>
+                                                        <Simvar name="ELECTRICAL MAIN BUS AMPS:1" unit="amp"/>
+                                                        <Constant>0</Constant>
+                                                 </Greater>
+                                          </And>
+					</Condition>
+					<Then>
+                                          <ToFixed precision="0">
+                                                 <Add>
+                                                        <Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
+                                                        <Simvar name="ELECTRICAL MAIN BUS AMPS:1" unit="amp"/>
+                                                 </Add>
+                                          </ToFixed>
+					</Then>
+					<Else>
+						<Constant>0</Constant>
+					</Else>
+				</If>
 			</Right>
 		</Text>
 		<Text>
 			<Left fontsize="8">BAT AMPS</Left>
 			<Right fontsize="9">
-				<ToFixed precision="0">
-					<Simvar name="ELECTRICAL MAIN BUS AMPS:1" unit="amp"/>
-				</ToFixed>
+                            <If>
+					<Condition>
+                                          <And>
+                                                 <Greater>
+                                                        <Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
+                                                        <Constant>0</Constant>
+                                                 </Greater>
+                                                 <Greater>
+                                                        <Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
+                                                        <Constant>0</Constant>
+                                                 </Greater>
+                                          </And>
+					</Condition>
+					<Then>
+                                          <ToFixed precision="0">
+                                                 <Substract>
+                                                        <Simvar name="ELECTRICAL MAIN BUS AMPS:1" unit="amp"/>
+                                                        <Constant>74</Constant>
+                                                 </Substract>
+                                          </ToFixed>
+					</Then>
+					<Else>
+                                          <ToFixed precision="0">
+                                                 <Simvar name="ELECTRICAL MAIN BUS AMPS:1" unit="amp"/>
+                                          </ToFixed>
+					</Else>
+				</If>
 			</Right>
 		</Text>
 		<Text>
@@ -1392,8 +1683,8 @@
 		</Text>
 		
 	</EngineDisplaySystem>
+             
 	<!-- Engine Display -->
-
   <EngineDisplay>
 		<Gauge>
 			<Type>Circular</Type>
@@ -1789,9 +2080,33 @@
 		<Text>
 			<Left fontsize="8">BAT AMPS</Left>
 			<Right id="Amperes" fontsize="9">
-				<ToFixed precision="0">
-					<Simvar name="ELECTRICAL MAIN BUS AMPS:1" unit="Amperes"/>
-				</ToFixed>
+				<If>
+					<Condition>
+                                          <And>
+                                                 <Greater>
+                                                        <Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
+                                                        <Constant>0</Constant>
+                                                 </Greater>
+                                                 <Greater>
+                                                        <Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
+                                                        <Constant>0</Constant>
+                                                 </Greater>
+                                          </And>
+					</Condition>
+					<Then>
+                                          <ToFixed precision="0">
+                                                 <Substract>
+                                                        <Simvar name="ELECTRICAL MAIN BUS AMPS:1" unit="amp"/>
+                                                        <Constant>74</Constant>
+                                                 </Substract>
+                                          </ToFixed>
+					</Then>
+					<Else>
+                                          <ToFixed precision="0">
+                                                 <Simvar name="ELECTRICAL MAIN BUS AMPS:1" unit="amp"/>
+                                          </ToFixed>
+					</Else>
+				</If>
 			</Right>
 		</Text>
 		
