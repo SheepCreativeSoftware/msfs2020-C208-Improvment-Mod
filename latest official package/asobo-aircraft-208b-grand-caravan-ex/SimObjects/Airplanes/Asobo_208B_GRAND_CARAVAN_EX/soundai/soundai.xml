@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright (c) Asobo Studio, All rights reserved. www.asobostudio.com -->
+
+<SoundInfo Version="0.1">
+
+	<WwisePackages>
+		<MainPackage Name="Asobo_208B_GRAND_CARAVAN_EX_AI"/>
+	</WwisePackages>
+	
+  <EngineSoundPresets>
+    <Sound WwiseEvent="Combustion" ConeHeading="220" RPMMin="1" WwiseData="true" EngineIndex="1" FadeOutType="2" FadeOutTime="5"/>
+    <Sound WwiseEvent="JetWhine" ConeHeading="0" WwiseData="true" EngineIndex="1" RPMMin="1" FadeOutType="2" FadeOutTime="5"/>
+  </EngineSoundPresets>
+  
+  <EngineSoundStates> 
+	<Sound WwiseEvent="eng1_prop" ConeHeading="0" RPMMin="1" WwiseData="true" EngineIndex="1"  StateOff="false" StateStart="true" StateOn="true">
+	  <WwiseRTPC SimVar="PROP MAX RPM PERCENT" Units="PERCENT OVER 100" Index="1" RTPCName="SIMVAR_PROP_MAX_RPM_PERCENT" />	
+	  <WwiseRTPC SimVar="PROP BETA" Units="RADIANS" Index="1" RTPCName="SIMVAR_PROP_BETA" />
+	  <WwiseRTPC SimVar="PROP RPM" Units="RPM" Index="1" RTPCName="SIMVAR_PROP_RPM" />
+	  <WwiseRTPC SimVar="TURB ENG MAX TORQUE PERCENT" Units="PERCENT OVER 100" Index="1" RTPCName="SIMVAR_TURB_ENG_MAX_TORQUE_PERCENT" />	  
+	</Sound>
+  </EngineSoundStates>
+    
+  <GroundSounds>
+    <Sound WwiseEvent="CENTER_TOUCHDOWN" FadeOutType="2" FadeOutTime="0.5" WwiseData="true" />
+	<Sound WwiseEvent="LEFT_TOUCHDOWN" FadeOutType="2" FadeOutTime="0.5" WwiseData="true" />  
+    <Sound WwiseEvent="RIGHT_TOUCHDOWN" FadeOutType="2" FadeOutTime="0.5" WwiseData="true" />
+  </GroundSounds>
+</SoundInfo>
