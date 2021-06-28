@@ -1,5 +1,12 @@
 ## Changes
 
+**v2106.3**
+- Increased propeller moi
+- added more texture fixes
+- Added additional Voice Alert for Minimums
+- Added additional Voice Alert when within 1000 feet of the target altitude set in the autopilot
+- Corrected BATT, GEN and ALT AMPS on Engine/System Pages
+
 **v2106.2**
 - Going back to most of the Vanila Data cause performance is good since SU4
 - Test
