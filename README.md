@@ -52,7 +52,7 @@ Thanks to everyone who has contributed, and to PilotTrev for sharing his knowled
 
 ## Download
 
-***[Latest Release v2106.2](https://github.com/SheepCreativeSoftware/msfs2020-C208-Improvment-Mod/releases/tag/v2106.2)***
+***[Latest Release v2106.2](https://github.com/SheepCreativeSoftware/msfs2020-C208-Improvment-Mod/releases/latest)***
 
 ## How to install
 
