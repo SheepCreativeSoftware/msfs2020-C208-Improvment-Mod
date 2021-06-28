@@ -1,11 +1,11 @@
 {
   "dependencies": [],
   "content_type": "CUSTOM",
-  "title": "C208B Improvment Mod",
-  "manufacturer": "",
+  "title": "C208B Grand Caravan EX Improvment Mod",
+  "manufacturer": "Textron Aviation",
   "creator": "Magraina/dgtlanlg/AlisterBrenton/TrentKama",
-  "package_version": "2106.2",
-  "minimum_game_version": "1.16.2.0",
+  "package_version": "2106.3",
+  "minimum_game_version": "1.16.2",
   "release_notes": {
     "neutral": {
       "LastUpdate": "",
