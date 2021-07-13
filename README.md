@@ -22,6 +22,7 @@ Since Sim Update 4 lots of Things are even better by default.
 - Yaw Damper Working
 - Autopilot and instrument fixes.  
 - More accurate start up.
+- Additional Voice Alerts
 
 ***Miscellaneous***  
 - Improved lighting and textures.
@@ -52,7 +53,7 @@ Thanks to everyone who has contributed, and to PilotTrev for sharing his knowled
 
 ## Download
 
-***[Latest Release v2106.2](https://github.com/SheepCreativeSoftware/msfs2020-C208-Improvment-Mod/releases/latest)***
+***[Latest Release v2106.3](https://github.com/SheepCreativeSoftware/msfs2020-C208-Improvment-Mod/releases/latest)***
 
 ## How to install
 
