@@ -22,6 +22,7 @@ Since Sim Update 4 lots of Things are even better by default.
 - Yaw Damper Working
 - Autopilot and instrument fixes.  
 - More accurate start up.
+- Additional Voice Alerts
 
 ***Miscellaneous***  
 - Improved lighting and textures.
