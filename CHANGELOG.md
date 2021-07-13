@@ -1,6 +1,6 @@
 ## Changes
 
-**v2106.3**
+**v2107.1**
 - Increased propeller moi
 - added more texture fixes
 - Added additional Voice Alert for Minimums
