@@ -42,7 +42,7 @@ Thanks to everyone who has contributed, and to PilotTrev for sharing his knowled
 
 ## Compatibility
 
-***Sim version*** - v1.18.11
+***Sim version*** - v1.18.11  
 ***WT G1000 version*** - >= v0.4.0 **OR** WorkingTitles NXi (available on Marketplace)
 
 ## Recomended Mods
