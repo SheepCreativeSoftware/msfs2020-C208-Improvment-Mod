@@ -1,7 +1,7 @@
 ## Changes
 
 **v2108.1**
-- Updated WorkingTitle v0.4 Fix
+- Updated WorkingTitle G1000 v0.4 / GX v0.1.0-dev10 Fix
 
 **v2108.1**
 - Updated Files for SU5
