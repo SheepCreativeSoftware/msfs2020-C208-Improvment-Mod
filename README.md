@@ -17,6 +17,7 @@ Since Sim Update 4 lots of Things are even better by default.
 - ~~More realistic idle behaviour, lower fuel burn.~~
 
 ***Systems & Avionics***  
+- Works with Vanilla, WT G1000 and WT G1000 NXi Avionics
 - Added CAS annunciations, Systems Page, improved engine readouts.
 - Reversionary Mode
 - Yaw Damper Working
@@ -35,15 +36,16 @@ Thanks to everyone who has contributed, and to PilotTrev for sharing his knowled
 
 ## Issues and Limitations
 
-- If you are using Working Title's GX Mod you also need to apply the same fix as for the G1000 Mod
+- None
+- WorkingTitle Fix is no longer needed for G1000 or GX
 ----
 
 ## Compatibility
 
 ***Sim version*** - v1.18.11
-***WT G1000 version*** - >= v0.4.0 **OR** WorkingTitles NXi
+***WT G1000 version*** - >= v0.4.0 **OR** WorkingTitles NXi (available on Marketplace)
 
-## Recomended
+## Recomended Mods
 
 ***[Working Title's G1000 v0.4.0](https://github.com/Working-Title-MSFS-Mods/fspackages/releases/tag/g1000-v0.4.0)***  
 OR ***[Working Title's G1000 NXi](https://www.workingtitle.aero/packages/nxi/)***
