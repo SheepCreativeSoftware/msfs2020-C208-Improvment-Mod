@@ -46,7 +46,7 @@ Thanks to everyone who has contributed, and to PilotTrev for sharing his knowled
 ## Recomended
 
 ***[Working Title's G1000 v0.4.0](https://github.com/Working-Title-MSFS-Mods/fspackages/releases/tag/g1000-v0.4.0)***  
-***[Working Title's G1000 NXi](https://www.workingtitle.aero/packages/nxi/)***
+OR ***[Working Title's G1000 NXi](https://www.workingtitle.aero/packages/nxi/)***
 
 ----
 
