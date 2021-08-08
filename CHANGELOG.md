@@ -1,6 +1,6 @@
 ## Changes
 
-**v2108.1**
+**v2108.2**
 - Updated WorkingTitle G1000 v0.4 / GX v0.1.0-dev10 Fix
 
 **v2108.1**
