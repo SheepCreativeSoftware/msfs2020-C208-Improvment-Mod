@@ -1,5 +1,9 @@
 ## Changes
 
+**2108.3**
+- Fixed Annunciation Messages
+- Deleted WorkingTitle Fix (No longer needed)
+
 **v2108.2**
 - Updated WorkingTitle G1000 v0.4 / GX v0.1.0-dev10 Fix
 
