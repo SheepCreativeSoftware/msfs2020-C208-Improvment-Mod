@@ -112,8 +112,8 @@
     },
     {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/apron.flt",
-      "size": 2854,
-      "date": 132675617614784802
+      "size": 2897,
+      "date": 132729103458470760
     },
     {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/engines.cfg",
@@ -122,8 +122,8 @@
     },
     {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/flight_model.cfg",
-      "size": 18744,
-      "date": 132680051615275350
+      "size": 18765,
+      "date": 132729102187123125
     },
     {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/systems.cfg",
@@ -151,29 +151,34 @@
       "date": 132675617611286936
     },
     {
+      "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/TEXTURE/CESSNA_208B_GRANDCARAVANEX_AIRFRAME_PROPELLER_COMP.PNG.DDS.FLAGS",
+      "size": 21,
+      "date": 132719420322776012
+    },
+    {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/TEXTURE/CESSNA_208B_GRANDCARAVANEX_AIRFRAME_PROPELLER_COMP.PNG.DDS.json",
       "size": 191,
       "date": 132675617610886569
     },
     {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/TEXTURE/CESSNA_208B_GRANDCARAVANEX_AIRFRAME_PROP_BLUR_ALBD.PNG.dds",
-      "size": 1398276,
-      "date": 132675617611427064
+      "size": 1398256,
+      "date": 132719420325798769
     },
     {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/TEXTURE/CESSNA_208B_GRANDCARAVANEX_AIRFRAME_PROP_BLUR_ALBD.PNG.DDS.json",
       "size": 119,
-      "date": 132675617611296941
+      "date": 132546827227126251
     },
     {
-      "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/TEXTURE/CESSNA_208B_GRANDCARAVANEX_AIRFRAME_PROP_SLOW_ALBD.PNG.dds",
-      "size": 1398276,
-      "date": 132675617611537155
+      "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/TEXTURE/CESSNA_208B_GRANDCARAVANEX_AIRFRAME_PROP__SLOW_ALBD.PNG.DDS",
+      "size": 1398256,
+      "date": 132719420325738716
     },
     {
-      "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/TEXTURE/CESSNA_208B_GRANDCARAVANEX_AIRFRAME_PROP_SLOW_ALBD.PNG.DDS.json",
+      "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/TEXTURE/CESSNA_208B_GRANDCARAVANEX_AIRFRAME_PROP__SLOW_ALBD.PNG.DDS.json",
       "size": 119,
-      "date": 132675617611427064
+      "date": 132479429979003548
     },
     {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/TEXTURE/CESSNA_208B_GRANDCARAVANEX_COCKPIT_BUTTONS_ALBD.PNG.dds",
@@ -189,6 +194,11 @@
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/TEXTURE/CESSNA_208B_GRANDCARAVANEX_COCKPIT_BUTTONS_COMP.PNG.dds",
       "size": 1398276,
       "date": 132675617611737344
+    },
+    {
+      "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/TEXTURE/CESSNA_208B_GRANDCARAVANEX_COCKPIT_BUTTONS_COMP.PNG.DDS.FLAGS",
+      "size": 21,
+      "date": 132719420322786030
     },
     {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/TEXTURE/CESSNA_208B_GRANDCARAVANEX_COCKPIT_BUTTONS_COMP.PNG.DDS.json",
@@ -219,6 +229,11 @@
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/TEXTURE/CESSNA_208B_GRANDCARAVANEX_COCKPIT_DECALS_RIBBONS_COMP.PNG.dds",
       "size": 349700,
       "date": 132675617611797401
+    },
+    {
+      "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/TEXTURE/CESSNA_208B_GRANDCARAVANEX_COCKPIT_DECALS_RIBBONS_COMP.PNG.DDS.FLAGS",
+      "size": 21,
+      "date": 132719420322796033
     },
     {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/TEXTURE/CESSNA_208B_GRANDCARAVANEX_COCKPIT_DECALS_RIBBONS_COMP.PNG.DDS.json",
@@ -266,6 +281,11 @@
       "date": 132675617613543666
     },
     {
+      "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/TEXTURE/CESSNA_208B_GRANDCARAVANEX_COCKPIT_MAIN_PANEL_COMP.PNG.DDS.FLAGS",
+      "size": 21,
+      "date": 132719420322806036
+    },
+    {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/TEXTURE/CESSNA_208B_GRANDCARAVANEX_COCKPIT_MAIN_PANEL_COMP.PNG.DDS.json",
       "size": 191,
       "date": 132675617613423560
@@ -284,6 +304,11 @@
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/TEXTURE/CESSNA_208B_GRANDCARAVANEX_COCKPIT_PEDESTAL_PEDALS_COMP.PNG.dds",
       "size": 1398276,
       "date": 132675617613883977
+    },
+    {
+      "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/TEXTURE/CESSNA_208B_GRANDCARAVANEX_COCKPIT_PEDESTAL_PEDALS_COMP.PNG.DDS.FLAGS",
+      "size": 21,
+      "date": 132719420322806036
     },
     {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/TEXTURE/CESSNA_208B_GRANDCARAVANEX_COCKPIT_PEDESTAL_PEDALS_COMP.PNG.DDS.json",
@@ -316,14 +341,19 @@
       "date": 132675617614764781
     },
     {
+      "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/TEXTURE/CESSNA_208B_GRANDCARAVANEX_COCKPIT_YOKE_COMP.PNG.DDS.FLAGS",
+      "size": 21,
+      "date": 132719420322816050
+    },
+    {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/TEXTURE/CESSNA_208B_GRANDCARAVANEX_COCKPIT_YOKE_COMP.PNG.DDS.json",
       "size": 191,
       "date": 132675617614314373
     },
     {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/TEXTURE/texture.cfg",
-      "size": 415,
-      "date": 132675617614774785
+      "size": 463,
+      "date": 132729104708997962
     },
     {
       "path": "texture/AS700/AS700_DECALS_ALBD.png",
