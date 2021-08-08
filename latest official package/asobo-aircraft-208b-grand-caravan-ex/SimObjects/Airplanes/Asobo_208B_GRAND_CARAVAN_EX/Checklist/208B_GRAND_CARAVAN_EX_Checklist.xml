@@ -61,9 +61,9 @@
 			<Instrument Id="ELECTRICAL_Switch_Avionics_Master_1"/>			
 			<!-- Circuit values are found in the plane's systems.cfg -->		
 			<SetTemplateValue Id="Circuit Avionics">
-					<Val SimVarName="CIRCUIT SWITCH ON:26" Units="Boolean"/>
+				<Val Code="(B:ELECTRICAL_Avionics_Bus_1)"/> 
 			</SetTemplateValue>
-			<SetTemplateAction Id="Toggle Avionics Bus" Copilot="True" Condition="TestValueFalse" Once="true" Code="26 (&gt;K:ELECTRICAL_CIRCUIT_TOGGLE)"/>
+			<SetTemplateAction Id="Toggle Avionics Bus" Copilot="True" Condition="TestValueFalse" Once="true" Code="(&gt;B:ELECTRICAL_Avionics_Bus_1_Toggle)"/>
 		</Checkpoint>
 
 		<!-- NOT MVP	A FAIRE		EMERGENCY POWER Lever : NORMAL	-->
@@ -98,9 +98,9 @@
 			<Instrument Id="ELECTRICAL_Switch_Avionics_Master_2"/>			
 			<!-- Circuit values are found in the plane's systems.cfg -->		
 			<SetTemplateValue Id="Circuit Avionics">
-					<Val SimVarName="CIRCUIT SWITCH ON:27" Units="Boolean"/>
+				<Val Code="(B:ELECTRICAL_Avionics_Bus_2)"/>
 			</SetTemplateValue>
-			<SetTemplateAction Id="Toggle Avionics Bus" Copilot="True" Condition="TestValueFalse" Once="true" Code="27 (&gt;K:ELECTRICAL_CIRCUIT_TOGGLE)"/>
+			<SetTemplateAction Id="Toggle Avionics Bus" Copilot="True" Condition="TestValueFalse" Once="true" Code="(&gt;B:ELECTRICAL_Avionics_Bus_2_Toggle)"/>
 		</Checkpoint>
 		
 		<!-- NOT MVP		<Checkpoint ReferenceId="Navigation_Lights_On"/> important	NAV Lights Switch : ON	-->

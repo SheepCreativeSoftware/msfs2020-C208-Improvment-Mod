@@ -21,7 +21,7 @@
       "AIRCRAFT.DESCRIPTION": {
         "UUID": "5e870834-c55c-436a-b845-2168725239ee",
         "LastModifiedBy": "jreynaud",
-        "LastModifiedDate": "2021-04-28 18:04:14",
+        "LastModifiedDate": "2021-04-30 16:44:43",
         "LocalizationStatus": "TranslationNeeded",
         "Languages": {
           "en-US": {
@@ -50,12 +50,10 @@
             "Text": "Самая первая версия многоцелевого самолёта Grand Caravan от Cessna была сертифицирована в 1986 году под официальным названием 208B Caravan. Более современная версия под названием Grand Caravan EX была представлена через 25 лет, в 2012 году.</br></br>Это неприхотливый самолёт, который разрабатывался для выполнения сложных операций с большой полезной нагрузкой и эксплуатации на маленьких аэродромах с короткой, не всегда безупречной полосой. Благодаря своей надёжности, экономичности и универсальности Grand Caravan EX быстро завоевал популярность среди небольших региональных эксплуатантов, а также чартерных и грузовых авиакомпаний.</br></br>Grand Caravan EX создан на основе проверенного временем планера и оборудован одним турбовинтовым двигателем. На судне установлен современный комплекс авионики Garmin G1000 и система защиты от обледенения, но больше всего пилоты ценят этот самолёт за его мощность.</br></br>Обновлённый двигатель Pratt & Whitney Canada PT6A-140 на 867 лошадиных сил обеспечивает самолёту солидную скорость и скороподъёмность, позволяет перевозить большой объём полезной нагрузки. При этом двигатель очень экономичен и прост в обслуживании и ремонте. Cessna 208B Grand Caravan EX — надёжный помощник для любого режима эксплуатации и множества задач."
           },
           "ja-JP": {
-            "Text": "正式名称 208B キャラバン、通称グランド キャラバン。セスナ社が開発したこの最初の汎用機は 1986 年に認証を受け、25 年以上にわたって生産された。そして、2012 年後半、新型のグランド キャラバン EX が登場した。</br></br>頑丈で汎用性の高いグランド キャラバン EX は難度の高いフライト、高ペイロード、起伏が多く短い滑走路に対応することを念頭に置いて設計されており、世界中の地域航空会社や、チャーター便会社、貨物航空会社のあいだで一躍人気を集めた。</br></br>実績のある機体設計に基づいて作られ、単発ユーティリティ ターボプロップ エンジンを搭載したこの航空機は、ガーミン G1000 アビオニクス スイートや優れた内装、防氷装置など数多くの機能強化を誇っているが、EX の真の魅力はそのパワーにある。</br></br>一新されたプラット・アンド・ホイットニー・カナダ社製の PT6A-140 エンジンは 867 馬力を生み出し、速度、上昇性能、ペイロード性能を向上させている。それにより、優れた効率と単発エンジンによるシンプルな構造がともに実現された。手入れが行き届いていない仮設飛行場であれ、離着陸の困難な土地であれ、どこに行かなければならないにせよ、安定性の高い汎用航空機セスナ 208B グランド キャラバン EX ならば安心のフライトが約束されている。",
-            "LocalizationStatus": "TranslationNeeded"
+            "Text": "正式名称 208B キャラバン、通称グランド キャラバン。セスナ社が開発したこの最初の汎用機は 1986 年に認証を受け、25 年以上にわたって生産された。そして、2012 年後半、新型のグランド キャラバン EX が登場した。</br></br>頑丈で汎用性の高いグランド キャラバン EX は難度の高いフライト、高ペイロード、起伏が多く短い滑走路に対応することを念頭に置いて設計されており、世界中の地域航空会社や、チャーター便会社、貨物航空会社のあいだで一躍人気を集めた。</br></br>実績のある機体設計に基づいて作られ、単発ユーティリティ ターボプロップ エンジンを搭載したこの航空機は、ガーミン G1000 アビオニクス スイートや優れた内装、防氷装置など数多くの機能強化を誇っているが、EX の真の魅力はそのパワーにある。</br></br>一新されたプラット・アンド・ホイットニー・カナダ社製の PT6A-140 エンジンは 867 馬力を生み出し、速度、上昇性能、ペイロード性能を向上させている。それにより、優れた効率と単発エンジンによるシンプルな構造がともに実現された。手入れが行き届いていない仮設飛行場であれ、離着陸の困難な土地であれ、どこに行かなければならないにせよ、安定性の高い汎用航空機セスナ 208B グランド キャラバン EX ならば安心のフライトが約束されている。"
           },
           "nl-NL": {
-            "Text": "De eerste versie van deze multifunctionele Cessna droeg officieel de naam 208B Caravan, maar werd verhandeld als Grand Caravan. Deze versie werd gecertificeerd in 1986 en de moderne Grand Caravan EX verscheen 25 jaar later, in 2012.</br></br>De robuuste en veelzijdige Grand Caravan EX was gemaakt voor uitdagende missies, zware lasten en korte, ruwe landingsbanen. Het werd snel een wereldwijde favoriet van regionale luchtvaartmaatschappijen, chartermaatschappijen en vrachtvervoerders.</br></br>Deze praktische eenmotorige turboprop is gebaseerd op een bewezen model en voorzien van diverse verbeteringen voor het Garmin G1000-avionica, het interieur en het ijsbestrijdingssysteem, maar het echte pluspunt van de EX is het vermogen.</br></br>De vernieuwde Pratt & Whitney Canada PT6A-140-motor genereert 867 pk, wat resulteert in een hogere snelheid, meer stijgvermogen en een groter draagvermogen – naast de superieure efficiëntie en eenvoud van een eenmotorig toestel. Waar je ook heen gaat, van piekfijne landingsbanen tot ruw terrein, de Cessna 208B Grand Caravan EX is het betrouwbare multifunctionele vliegtuig waarop je kunt rekenen.",
-            "LocalizationStatus": "TranslationNeeded"
+            "Text": "De eerste versie van deze multifunctionele Cessna droeg officieel de naam 208B Caravan, maar werd verhandeld als Grand Caravan. Deze versie werd gecertificeerd in 1986 en de moderne Grand Caravan EX verscheen 25 jaar later, in 2012.</br></br>De robuuste en veelzijdige Grand Caravan EX was gemaakt voor uitdagende missies, zware lasten en korte, ruwe landingsbanen. Het werd snel een wereldwijde favoriet van regionale luchtvaartmaatschappijen, chartermaatschappijen en vrachtvervoerders.</br></br>Deze praktische eenmotorige turboprop is gebaseerd op een bewezen model en voorzien van diverse verbeteringen voor het Garmin G1000-avionica, het interieur en het ijsbestrijdingssysteem, maar het echte pluspunt van de EX is het vermogen.</br></br>De vernieuwde Pratt & Whitney Canada PT6A-140-motor genereert 867 pk, wat resulteert in een hogere snelheid, meer stijgvermogen en een groter draagvermogen – naast de superieure efficiëntie en eenvoud van een eenmotorig toestel. Waar je ook heen gaat, van piekfijne landingsbanen tot ruw terrein, de Cessna 208B Grand Caravan EX is het betrouwbare multifunctionele vliegtuig waarop je kunt rekenen."
           },
           "nb-NO": {
             "Text": "Grand Carava, med det offisielle navnet 208B Caravan, er et flerbruksfly fra Cessna som ble sertifisert for første gang i 1986. Oppfølgeren, det moderne Grand Caravan EX, kom over 25 år senere, i 2012.</br></br>Flyet ble laget for å takle utfordrende oppdrag, høy nyttelast og korte, ujevne rullebaner, og det robuste og allsidige Grand Caravan EX ble raskt en favoritt blant regionale flyselskaper, charteroperatører og fraktselskaper over hele verden.</br></br>Det ble bygget på et velprøvd flyskrog, og den ene motoren med turboprop hadde mange forbedringer av Garmin G1000-flyelektronikken, interiøret og isbeskyttelsessystemet. Det som imidlertid virkelig gjorde EX så populært, var kraften til motoren.</br></br>Den oppdaterte Pratt & Whitney Canada PT6A-140-motoren genererer 867 hestekrefter, mer enn nok muskler til å oppnå en høyere hastighet, bedre evne til å klatre, og mulighet for større nyttelast – samtidig som motoren leverer overlegen effektivitet og enklere vedlikehold ved kun å ha én motor. Uansett hvor du skal, fra flotte rullebaner til humpete rullebaner med grus, vil Cessna 208B Grand Caravan EX-flerbruksflyet sørge for at du kommer deg dit."
@@ -71,7 +69,7 @@
       "AIRCRAFT.UI_MANUFACTURER": {
         "UUID": "3c9665a5-1b33-4371-8823-24da0c73beda",
         "LastModifiedBy": "jreynaud",
-        "LastModifiedDate": "2021-04-28 18:04:14",
+        "LastModifiedDate": "2021-04-30 16:44:51",
         "LocalizationStatus": "TranslationNeeded",
         "Languages": {
           "en-US": {
@@ -100,12 +98,10 @@
             "Text": "Textron Aviation"
           },
           "ja-JP": {
-            "Text": "テキストロン・アビエーション",
-            "LocalizationStatus": "TranslationNeeded"
+            "Text": "テキストロン・アビエーション"
           },
           "nl-NL": {
-            "Text": "Textron Aviation",
-            "LocalizationStatus": "TranslationNeeded"
+            "Text": "Textron Aviation"
           },
           "nb-NO": {
             "Text": "Textron Aviation"
@@ -121,7 +117,7 @@
       "AIRCRAFT.UI_MODEL": {
         "UUID": "451c9009-af61-489d-8123-e1ed10f5988b",
         "LastModifiedBy": "jreynaud",
-        "LastModifiedDate": "2021-04-28 18:04:14",
+        "LastModifiedDate": "2021-04-30 16:44:51",
         "LocalizationStatus": "TranslationNeeded",
         "Languages": {
           "en-US": {
@@ -150,12 +146,10 @@
             "Text": "Cessna 208 B Grand Caravan EX"
           },
           "ja-JP": {
-            "Text": "セスナ 208B グランド キャラバン EX",
-            "LocalizationStatus": "TranslationNeeded"
+            "Text": "セスナ 208B グランド キャラバン EX"
           },
           "nl-NL": {
-            "Text": "Cessna 208 B Grand Caravan EX",
-            "LocalizationStatus": "TranslationNeeded"
+            "Text": "Cessna 208 B Grand Caravan EX"
           },
           "nb-NO": {
             "Text": "Cessna 208 B Grand Caravan EX"

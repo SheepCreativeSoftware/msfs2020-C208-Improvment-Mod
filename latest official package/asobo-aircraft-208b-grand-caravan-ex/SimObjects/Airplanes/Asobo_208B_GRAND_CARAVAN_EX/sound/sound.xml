@@ -149,7 +149,25 @@
       </Requires>
       <WwiseRTPC SimVar="TRAILING EDGE FLAPS RIGHT PERCENT" Units="PERCENT" Derived="true" Index="0" RTPCName="SIMVAR_TRAILING_EDGE_FLAPS_RIGHT_PERCENT_DERIVED" />
     </Sound>
-    
+
+	<Sound WwiseData="true" WwiseEvent="flaps_drag_left" NodeName="WING_LEFT_FLAP" ContinuousStopDelay="1.0" SimVar="TRAILING EDGE FLAPS LEFT PERCENT" Units="PERCENT" Index="0">
+		<Range LowerBound="1" />	
+		<Requires SimVar="AIRSPEED TRUE" Units="KNOTS" Index="0">
+		  <Range LowerBound="1" />
+		</Requires>
+		<WwiseRTPC SimVar="TRAILING EDGE FLAPS LEFT PERCENT" Units="PERCENT" Index="0" RTPCName="SIMVAR_TRAILING_EDGE_FLAPS_LEFT_PERCENT" />
+		<WwiseRTPC SimVar="AIRSPEED TRUE" Units="KNOTS" Index="0" RTPCName="SIMVAR_AIRSPEED_TRUE"/> 
+    </Sound>
+
+    <Sound WwiseData="true" WwiseEvent="flaps_drag_right" NodeName="WING_RIGHT_FLAP" ContinuousStopDelay="1.0" SimVar="TRAILING EDGE FLAPS RIGHT PERCENT" Units="PERCENT" Index="0">
+		<Range LowerBound="1" />
+		<Requires SimVar="AIRSPEED TRUE" Units="KNOTS" Index="0">
+		  <Range LowerBound="1" />
+		</Requires>
+		<WwiseRTPC SimVar="TRAILING EDGE FLAPS RIGHT PERCENT" Units="PERCENT" Index="0" RTPCName="SIMVAR_TRAILING_EDGE_FLAPS_RIGHT_PERCENT" />
+        <WwiseRTPC SimVar="AIRSPEED TRUE" Units="KNOTS" Index="0" RTPCName="SIMVAR_AIRSPEED_TRUE"/> 
+    </Sound> 
+
     <!-- INSTRUMENTS FOLEYS  =========================================================================  -->  
      
     <Sound WwiseData="true" WwiseEvent="throttle_lever" ViewPoint="Inside" NodeName="ENGINE_LEVER_THROTTLE_1" ContinuousStopDelay="1.0" SimVar="GENERAL ENG THROTTLE LEVER POSITION" Units="PERCENT" Index="1">
@@ -359,7 +377,8 @@
 	<Sound WwiseData="true" WwiseEvent="nosmoke_light_switch_on" ViewPoint="Inside"/>  	  
 	<Sound WwiseData="true" WwiseEvent="nosmoke_light_switch_off" ViewPoint="Inside"/>	  	  
 	<Sound WwiseData="true" WwiseEvent="seatbelt_light_switch_on" ViewPoint="Inside"/>	  	  
-	<Sound WwiseData="true" WwiseEvent="seatbelt_light_switch_off" ViewPoint="Inside"/>	  
+	<Sound WwiseData="true" WwiseEvent="seatbelt_light_switch_off" ViewPoint="Inside"/>	 
+	<Sound WwiseData="true" WwiseEvent="light_switch" ViewPoint="Inside"/>	  	  	
 
     <!--FUEL ================================================================--> 
 	<Sound WwiseData="true" WwiseEvent="fuel_cutoff_switch_on" ViewPoint="Inside"/>	  	  
@@ -379,7 +398,8 @@
     <Sound WwiseData="true" WwiseEvent="pitot_heat_switch_on" ViewPoint="Inside"/>	  
     <Sound WwiseData="true" WwiseEvent="pitot_heat_switch_off" ViewPoint="Inside"/>	    
     <Sound WwiseData="true" WwiseEvent="alternator_switch_on" ViewPoint="Inside"/>	    
-	<Sound WwiseData="true" WwiseEvent="alternator_switch_off" ViewPoint="Inside"/> 	   	  
+	<Sound WwiseData="true" WwiseEvent="alternator_switch_off" ViewPoint="Inside"/> 	
+	<Sound WwiseData="true" WwiseEvent="alternator_switch" ViewPoint="Inside"/> 		
 	  
 	<!-- LEVERS ================================================================--> 	  
 	<Sound WwiseData="true" WwiseEvent="pressurization_bleed_switch_on" ViewPoint="Inside"/> -->  	  
@@ -390,7 +410,8 @@
     <Sound WwiseData="true" WwiseEvent="parking_brake_switch_off" ViewPoint="Inside"/>	     	       
 	<Sound WwiseData="true" WwiseEvent="trimlock_lever_on" ViewPoint="Inside"/>	   	
 	<Sound WwiseData="true" WwiseEvent="trimlock_lever_off" ViewPoint="Inside"/>	   	  
-    <Sound WwiseData="true" WwiseEvent="gear_lever" ViewPoint="Inside"/>
+    <Sound WwiseData="true" WwiseEvent="gear_lever_on" ViewPoint="Inside"/>
+	<Sound WwiseData="true" WwiseEvent="gear_lever_off" ViewPoint="Inside"/>
 	   
     <!-- Anti Ice / DEICE ==============================================================-->       
 	<Sound WwiseData="true" WwiseEvent="deice_engine_switch_on" ViewPoint="Inside"/>	   		 

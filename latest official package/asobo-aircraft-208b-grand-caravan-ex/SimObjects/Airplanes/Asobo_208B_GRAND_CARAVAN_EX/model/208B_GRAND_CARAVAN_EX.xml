@@ -9,7 +9,7 @@
 		<LOD minSize="75" ModelFile="208B_GRAND_CARAVAN_EX_LOD02.gltf"/>
 		<LOD minSize="30" ModelFile="208B_GRAND_CARAVAN_EX_LOD03.gltf"/>
 		<LOD minSize="15" ModelFile="208B_GRAND_CARAVAN_EX_LOD04.gltf"/>
-		<LOD minSize="5" ModelFile="208B_GRAND_CARAVAN_EX_LOD05.gltf"/>
+		<!-- <LOD minSize="5" ModelFile="208B_GRAND_CARAVAN_EX_LOD05.gltf"/> -->
 		<LOD minSize="1" ModelFile="208B_GRAND_CARAVAN_EX_LOD06.gltf"/>
 	</LODS>
 	<Behaviors>
