@@ -40,28 +40,22 @@ Thanks to everyone who has contributed, and to PilotTrev for sharing his knowled
 
 ## Compatibility
 
-***Sim version*** - v1.16.2.0
+***Sim version*** - v1.18.11
+***WT G1000 version*** - >= v0.4.0 **OR** WorkingTitles NXi
 
-***WT G1000 version*** - v0.3.7
+## Recomended
 
-## Required
-
-***[Working Title's G1000 v0.3.7](https://github.com/Working-Title-MSFS-Mods/fspackages/releases/tag/g1000-v0.3.7)***
-
+***[Working Title's G1000 v0.4.0](https://github.com/Working-Title-MSFS-Mods/fspackages/releases/tag/g1000-v0.4.0)***
+***[Working Title's G1000 NXi](https://www.workingtitle.aero/packages/nxi/)***
 
 ----
 
 ## Download
 
-***[Latest Release v2107.4](https://github.com/SheepCreativeSoftware/msfs2020-C208-Improvment-Mod/releases/latest)***
+***[Latest Release v2108.3](https://github.com/SheepCreativeSoftware/msfs2020-C208-Improvment-Mod/releases/latest)***
 
 ## How to install
 
 1. Delete any previous versions.
-2. Copy the C208B-mod folder into the Community Folder.
-
-***WT G1000 v0.3.7*** - To enable annunciations you will need to replace the following file with the one included with this mod (wt-g1000-fix):
-*workingtitle-g1000\html_ui\WorkingTitle\Pages\VCockpit\Instruments\NavSystems\SharedCommonPFD_MFD.js*
-
-***WT GX v0.1.0-dev8.*** - If you have installed the WorkingTitle GX Mod you will need to replace the following file with the one included with this mod (wt-g1000-fix):
-*workingtitle-g1000\html_ui\WorkingTitle\Pages\VCockpit\Instruments\NavSystems\SharedCommonPFD_MFD.js*
+2. Extract the Zip Archive
+3. Copy the C208B-mod folder into the Community Folder.
