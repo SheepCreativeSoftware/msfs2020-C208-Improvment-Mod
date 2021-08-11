@@ -12,13 +12,13 @@ Since Sim Update 4 lots of Things are even better by default.
 
 ***Ground Handling***
 - Based on Vanila Sim Update 4 (SU4)
-- ~~More control while taxiing.~~  
+- More control while taxiing.
 - Tighter turning circle. 
 - ~~More realistic idle behaviour, lower fuel burn.~~
 
 ***Systems & Avionics***  
 - Works with Vanilla, WT G1000 and WT G1000 NXi Avionics
-- Added CAS annunciations, Systems Page, improved engine readouts.
+- Added CAS annunciations, Systems Page, improved engine readouts (Additional Mods needed see below).
 - Reversionary Mode
 - Yaw Damper Working
 - Autopilot and instrument fixes.  
@@ -42,14 +42,16 @@ Thanks to everyone who has contributed, and to PilotTrev for sharing his knowled
 
 ## Compatibility
 
-***Sim version*** - v1.18.11  
-***WT G1000 version*** - >= v0.4.0 **OR** WorkingTitles NXi (available on Marketplace)
+- Sim version - v1.18.11  
+- WorkingTitle G1000 v0.4.0 or newer 
+- WorkingTitles NXi (available on Marketplace)
 
 ## Recomended Mods
 
-***[Working Title's G1000 v0.4.0](https://github.com/Working-Title-MSFS-Mods/fspackages/releases/tag/g1000-v0.4.0)***  
+***[Working Title's G1000 v0.4.0](https://github.com/Working-Title-MSFS-Mods/fspackages/releases/tag/g1000-v0.4.0)*** and [G1000 Turboprop Annunciation Fix](https://flightsim.to/file/18939/g1000-turboprop-annunciation-fix)
 OR ***[Working Title's G1000 NXi](https://www.workingtitle.aero/packages/nxi/)***
-
+  
+_Important Note: The legacy G1000 mod is now simply the stock G1000 + engine pages. You cannot have the Working Title Simulations G1000 NXi from the Marketplace installed and the legacy WT G1000 installed at the same time. If you want to use the NXi, uninstall the legacy mod, and if you want to use the legacy mod, uninstall the NXi._
 ----
 
 ## Download
@@ -60,4 +62,4 @@ OR ***[Working Title's G1000 NXi](https://www.workingtitle.aero/packages/nxi/)**
 
 1. Delete any previous versions.
 2. Extract the Zip Archive
-3. Copy the C208B-mod folder into the Community Folder.
+3. Copy the "C208B-mod" folder into the Community Folder.
