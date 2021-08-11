@@ -48,7 +48,7 @@ Thanks to everyone who has contributed, and to PilotTrev for sharing his knowled
 
 ## Recomended Mods
 
-***[Working Title's G1000 v0.4.0](https://github.com/Working-Title-MSFS-Mods/fspackages/releases/tag/g1000-v0.4.0)*** and [G1000 Turboprop Annunciation Fix](https://flightsim.to/file/18939/g1000-turboprop-annunciation-fix)
+***[Working Title's G1000 v0.4.0](https://github.com/Working-Title-MSFS-Mods/fspackages/releases/tag/g1000-v0.4.0)*** and [G1000 Turboprop Annunciation Fix](https://github.com/SheepCreativeSoftware/msfs2020-C208-Improvment-Mod/releases/tag/TurboFix.v2108.1)
 OR ***[Working Title's G1000 NXi](https://www.workingtitle.aero/packages/nxi/)***
   
 _Important Note: The legacy G1000 mod is now simply the stock G1000 + engine pages. You cannot have the Working Title Simulations G1000 NXi from the Marketplace installed and the legacy WT G1000 installed at the same time. If you want to use the NXi, uninstall the legacy mod, and if you want to use the legacy mod, uninstall the NXi._
