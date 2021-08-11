@@ -1,5 +1,9 @@
 ## Changes
 
+**2108.4**
+- Fixed compatibility issue on the Avionics with other Turboprops
+- Separate Mod for users who want to play with the vanilla G1000 or WorkingTitle legacy G1000
+
 **2108.3**
 - Fixed Annunciation Messages
 - Deleted WorkingTitle Fix (No longer needed)
