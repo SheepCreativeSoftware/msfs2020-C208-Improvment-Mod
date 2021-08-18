@@ -1,5 +1,8 @@
 ## Changes
 
+**2108.5**
+- Fixed Standby Airspeed Indicator texture
+
 **2108.4**
 - Fixed compatibility issue on the Avionics with other Turboprops
 - Separate Mod for users who want to play with the vanilla G1000 or WorkingTitle legacy G1000
