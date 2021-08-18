@@ -4,6 +4,7 @@
 - Fixed: Oil temperature is always in the yellow position
 - POIs do not popping in at far distances
 - Some small improvments on flight characteristics
+- Fixed: Standby torque does show the wrong value
 
 **2108.4**
 - Fixed compatibility issue on the Avionics with other Turboprops
