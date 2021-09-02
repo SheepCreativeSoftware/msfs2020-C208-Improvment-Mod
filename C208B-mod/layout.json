@@ -131,6 +131,31 @@
       "date": 132675617618916901
     },
     {
+      "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/model/208B_GRAND_CARAVAN_EX_INTERIOR_LOD00.gltf",
+      "size": 949978,
+      "date": 132737919417194525
+    },
+    {
+      "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/model/208B_GRAND_CARAVAN_EX_INTERIOR_LOD01.gltf",
+      "size": 874533,
+      "date": 132737919731198443
+    },
+    {
+      "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/model/208B_GRAND_CARAVAN_EX_INTERIOR_LOD02.gltf",
+      "size": 580849,
+      "date": 132737919955023136
+    },
+    {
+      "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/model/208B_GRAND_CARAVAN_EX_INTERIOR_LOD03.gltf",
+      "size": 147780,
+      "date": 132737920121087829
+    },
+    {
+      "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/model/208B_GRAND_CARAVAN_EX_INTERIOR_LOD04.gltf",
+      "size": 27198,
+      "date": 132719420327613316
+    },
+    {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/panel/Panel.xml",
       "size": 63700,
       "date": 132693900266059539
@@ -384,6 +409,51 @@
       "path": "texture/AS700/AS700_DECALS_EMIS.PNG.DDS.json",
       "size": 102,
       "date": 132675617616196084
+    },
+    {
+      "path": "texture/GAUGES/AirspeedIndicator_Caravan_albd.png",
+      "size": 474329,
+      "date": 132719483098219874
+    },
+    {
+      "path": "texture/GAUGES/AIRSPEEDINDICATOR_CARAVAN_ALBD.PNG.DDS",
+      "size": 1398256,
+      "date": 132737914571359084
+    },
+    {
+      "path": "texture/GAUGES/AIRSPEEDINDICATOR_CARAVAN_ALBD.PNG.DDS.json",
+      "size": 102,
+      "date": 132719483098119785
+    },
+    {
+      "path": "texture/GAUGES/AirspeedIndicator_Caravan_comp.png",
+      "size": 783695,
+      "date": 132719483098259910
+    },
+    {
+      "path": "texture/GAUGES/AIRSPEEDINDICATOR_CARAVAN_COMP.PNG.DDS",
+      "size": 699192,
+      "date": 132737913620178483
+    },
+    {
+      "path": "texture/GAUGES/AIRSPEEDINDICATOR_CARAVAN_COMP.PNG.DDS.json",
+      "size": 166,
+      "date": 132719483098169832
+    },
+    {
+      "path": "texture/GAUGES/AirspeedIndicator_CARAVAN_norm.png",
+      "size": 119106,
+      "date": 132719483098169832
+    },
+    {
+      "path": "texture/GAUGES/AIRSPEEDINDICATOR_CARAVAN_NORM.PNG.DDS",
+      "size": 1398256,
+      "date": 132719483098199863
+    },
+    {
+      "path": "texture/GAUGES/AIRSPEEDINDICATOR_CARAVAN_NORM.PNG.DDS.json",
+      "size": 177,
+      "date": 132719483098199863
     },
     {
       "path": "texture/GAUGES/MAGNETICCOMPASS_ALBD.png",
