@@ -2,9 +2,12 @@
 
 **2109.1**
 - Added and changed some Annunciation Messages
+- More steering angle on higher speed
 - Fixed: Oil temperature is always in the yellow position
 - POIs do not popping in at far distances
 - Some small improvments on flight characteristics
+- Fixed: Standby torque does show the wrong value
+- Fixed Standby Airspeed Indicator texture
 
 
 **2108.4**
