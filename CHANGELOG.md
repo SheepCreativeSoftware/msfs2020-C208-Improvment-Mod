@@ -1,6 +1,7 @@
 ## Changes
 
-**2108.5**
+**2109.1**
+- more steering angle on higher speed
 - Fixed: Oil temperature is always in the yellow position
 - POIs do not popping in at far distances
 - Some small improvments on flight characteristics
