@@ -422,7 +422,7 @@
 			</Greater>
 			<Greater>
 				<Simvar name="PITOT ICE PCT" unit="percent"/>
-				<Constant>95</Constant>
+				<Constant>99</Constant>
 			</Greater>
               </Or>
 	  </Condition>
@@ -439,7 +439,7 @@
 			</Greater>
 			<Greater>
 				<Simvar name="PITOT ICE PCT" unit="percent"/>
-				<Constant>95</Constant>
+				<Constant>91</Constant>
 			</Greater>
               </Or>
 	  </Condition>
