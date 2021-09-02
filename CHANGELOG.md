@@ -1,12 +1,14 @@
 ## Changes
 
 **2109.1**
-- more steering angle on higher speed
+- Added and changed some Annunciation Messages
+- More steering angle on higher speed
 - Fixed: Oil temperature is always in the yellow position
 - POIs do not popping in at far distances
 - Some small improvments on flight characteristics
 - Fixed: Standby torque does show the wrong value
 - Fixed Standby Airspeed Indicator texture
+
 
 **2108.4**
 - Fixed compatibility issue on the Avionics with other Turboprops
