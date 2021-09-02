@@ -1,5 +1,8 @@
 ## Changes
 
+**2109.1**
+- more steering angle on higher speed
+
 **2108.5**
 - Fixed: Oil temperature is always in the yellow position
 - POIs do not popping in at far distances
