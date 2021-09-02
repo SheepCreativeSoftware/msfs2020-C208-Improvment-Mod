@@ -152,10 +152,16 @@
       <Type>Caution</Type>
       <Text>R FUEL LOW</Text>
       <Condition>
-        <LowerEqual>
-          <Simvar name="FUEL RIGHT QUANTITY" unit="gallon"/>
-          <Constant>25</Constant>
-        </LowerEqual>
+       <And>
+              <Greater>
+                     <Simvar name="FUEL TOTAL QUANTITY" unit="gallon"/>
+                     <Constant>25</Constant>
+              </Greater>
+              <LowerEqual>
+                     <Simvar name="FUEL RIGHT QUANTITY" unit="gallon"/>
+                     <Constant>25</Constant>
+              </LowerEqual>
+       </And>
       </Condition>
     </Annunciation>
 	<!--Indicates fuel quantity in left tank is 25 gallons or less-->
@@ -163,10 +169,16 @@
       <Type>Caution</Type>
       <Text>L FUEL LOW</Text>
       <Condition>
-        <LowerEqual>
-          <Simvar name="FUEL LEFT QUANTITY" unit="gallon"/>
-          <Constant>25</Constant>
-        </LowerEqual>
+       <And>
+              <Greater>
+                     <Simvar name="FUEL TOTAL QUANTITY" unit="gallon"/>
+                     <Constant>25</Constant>
+              </Greater>
+              <LowerEqual>
+                     <Simvar name="FUEL LEFT QUANTITY" unit="gallon"/>
+                     <Constant>25</Constant>
+              </LowerEqual>
+       </And>
       </Condition>
     </Annunciation>
 	<!--Indicates fuel quantity in both tanks is 25 gallons or less-->
@@ -279,6 +291,16 @@
 	  <Text>ALTNR AMPS</Text>
 		  <Condition>
 			<And>
+                            <And> <!--If they are not equal then ALTNR should be 0-->
+                                   <Equal>
+                                          <Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
+                                          <Constant>0</Constant>
+                                   </Equal>
+                                   <Greater>
+                                          <Simvar name="ELECTRICAL MAIN BUS AMPS:1" unit="amp"/>
+                                          <Constant>0</Constant>
+                                   </Greater>
+                            </And>
 				<Not>
 					<Equal>
 						<Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
@@ -290,14 +312,20 @@
 					<Constant>50</Constant>
 				</Greater>
 				<Or>
-				<Lower>
-					<Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
-					<Constant>10</Constant>
-				</Lower>
-				<Greater>
-					<Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
-					<Constant>75</Constant>
-				</Greater>
+                                   <Lower>
+                                          <Add>
+                                                 <Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
+                                                 <Simvar name="ELECTRICAL MAIN BUS AMPS:1" unit="amp"/>
+                                          </Add>
+                                          <Constant>10</Constant>
+                                   </Lower>
+                                   <Greater>
+                                          <Add>
+                                                 <Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
+                                                 <Simvar name="ELECTRICAL MAIN BUS AMPS:1" unit="amp"/>
+                                          </Add>
+                                          <Constant>75</Constant>
+                                   </Greater>
 				</Or>
 			</And>
 		  </Condition>
@@ -382,6 +410,69 @@
 			<Constant>1</Constant>
 	  </Condition>
 	</Annunciation>
+       <!--Indicates Altimeter is not working-->
+       <Annunciation>
+	  <Type>Caution</Type>
+	  <Text>ALT MISCOMP</Text>
+	  <Condition>
+              <Or>
+                     <Greater>
+				<Simvar name="PARTIAL PANEL ALTIMETER" unit="Enum"/>
+				<Constant>0</Constant>
+			</Greater>
+			<Greater>
+				<Simvar name="PITOT ICE PCT" unit="percent"/>
+				<Constant>99</Constant>
+			</Greater>
+              </Or>
+	  </Condition>
+	</Annunciation>
+       <!--Indicates Airspeed is not working-->
+       <Annunciation>
+	  <Type>Caution</Type>
+	  <Text>IAS MISCOMP</Text>
+	  <Condition>
+              <Or>
+                     <Greater>
+				<Simvar name="PARTIAL PANEL AIRSPEED" unit="Enum"/>
+				<Constant>0</Constant>
+			</Greater>
+			<Greater>
+				<Simvar name="PITOT ICE PCT" unit="percent"/>
+				<Constant>91</Constant>
+			</Greater>
+              </Or>
+	  </Condition>
+	</Annunciation>
+       <!--The dynamic redline reverts to a static redline whenever the white TORQUE GAGE annunciation is shown on the PFD-->
+       <!--<Annunciation> Disabled for maybe someday
+	  <Type>Advisory</Type>
+	  <Text>TORQUE GAGE</Text>
+	  <Condition>
+              <Or>
+                     <Greater>
+				<Simvar name="PARTIAL PANEL AIRSPEED" unit="Enum"/>
+				<Constant>0</Constant>
+			</Greater>
+                     <Greater>
+				<Simvar name="PARTIAL PANEL ATTITUDE" unit="Enum"/>
+				<Constant>0</Constant>
+			</Greater>
+                     <Greater>
+				<Simvar name="PARTIAL PANEL ALTIMETER" unit="Enum"/>
+				<Constant>0</Constant>
+			</Greater>
+                     <Greater>
+				<Simvar name="PARTIAL PANEL PITOT" unit="Enum"/>
+				<Constant>0</Constant>
+			</Greater>
+			<Greater>
+				<Simvar name="PITOT ICE PCT" unit="percent"/>
+				<Constant>95</Constant>
+			</Greater>
+              </Or>
+	  </Condition>
+	</Annunciation>-->
   </Annunciations>
   
 <!-- Engine Display -->
