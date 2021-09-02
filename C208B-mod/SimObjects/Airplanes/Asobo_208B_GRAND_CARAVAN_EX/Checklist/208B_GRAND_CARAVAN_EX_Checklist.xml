@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+
+<SimBase.Document Type="Checklist" version="1,0">
+  <Checklist.Checklist>
+    <IncludeCheckpointLibrary FileName="CheckpointsLibrary\\Asobo_DefaultCheckpointLibrary.xml"/>
+
+    <Step ChecklistStepId="PREFLIGHT_GATE">
+      <!-- Preflight inspection - cockpit 1/2 -->
+      <Page SubjectTT="TT:GAME.CHECKLIST_PREFLIGHT_INSPECTION_COCKPIT_1">
+        
+		<!-- not MVP <Checkpoint ReferenceId="Parking_Brake_Set"/> -->
+		<!-- NOT MVP	<Checkpoint Id="ALL_ELECTRICAL_EQUIPMENT_OFF">
+			<CheckpointDesc SubjectTT="TT:GAME.CHECKLIST_ALL_SWITCHES" ExpectationTT="TT:GAME.CHECKLIST_OFF"/>
+		</Checkpoint> -->
+
+		<Checkpoint ReferenceId="Fuel_Selector_Both">
+			<Instrument Id="FUEL_SELECTOR_LEFT"/>
+			<Instrument Id="FUEL_SELECTOR_RIGHT"/>
+			<CheckpointDesc SubjectTT="TT:GAME.CHECKLIST_FUEL_SELECTOR" ExpectationTT="TT:GAME.CHECKLIST_BOTH_ON"/>
+			<ForceCamera name="Overhead"/>
+		</Checkpoint>
+	
+		
+		
+      </Page>
+	  
+      <!-- Before starting engine -->
+      <Page SubjectTT="TT:GAME.CHECKLIST_BEFORE_STARTING_ENGINE">
+
+		<Checkpoint ReferenceId="ENGINE_IGNITION_SELECTORS_NORM_2STEPS_SWITCH"/>
+		<Checkpoint ReferenceId="POWER_LEVER_IDLE">
+			<ForceCamera name="Pedestal_Up"/>
+		</Checkpoint>
+		<Checkpoint ReferenceId="PROP_RPM_LEVER_MAX">
+			<ForceCamera name="Pedestal_Up"/>
+		</Checkpoint>
+		<!-- NOT MVP	A FAIRE  FUEL CONDITION Lever : CUTOFF -->
+		<!-- NOT MVP	A FAIRE FUEL/OIL SHUTOFF Knob : CHECK -->
+
+        <!-- NOT MVP	<Checkpoint ReferenceId="Flaps_0">
+          <CheckpointDesc SubjectTT="TT:GAME.CHECKLIST_FLAPS" ExpectationTT="TT:GAME.CHECKLIST_UP"/>
+        </Checkpoint> -->
+
+		
+      </Page>
+	  
+      <!-- Starting Engine -->
+      <Page SubjectTT="TT:GAME.CHECKLIST_STARTING_ENGINE">
+
+        <Checkpoint ReferenceId="Battery_Switch_On">
+			<ForceCamera name="Engines"/>
+		</Checkpoint>
+		<Checkpoint ReferenceId="Beacon_Light_On">
+			<ForceCamera name="PFD"/>
+		</Checkpoint>
+
+		<Checkpoint ReferenceId="Avionics_Bus_Switch_On">
+			<Clue name="TT:CLUE.AVIONICS_NO_1_SWITCH_ON"/>
+			<CheckpointDesc SubjectTT="TT:GAME.CHECKLIST_AVIONICS_NO_1" ExpectationTT="TT:GAME.CHECKLIST_ON"/>
+			<ForceCamera name="Engines"/>
+			<Instrument Id="ELECTRICAL_Switch_Avionics_Master_1"/>			
+			<!-- Circuit values are found in the plane's systems.cfg -->		
+			<SetTemplateValue Id="Circuit Avionics">
+				<Val Code="(B:ELECTRICAL_Avionics_Bus_1)"/> 
+			</SetTemplateValue>
+			<SetTemplateAction Id="Toggle Avionics Bus" Copilot="True" Condition="TestValueFalse" Once="true" Code="(&gt;B:ELECTRICAL_Avionics_Bus_1_Toggle)"/>
+		</Checkpoint>
+
+		<!-- NOT MVP	A FAIRE		EMERGENCY POWER Lever : NORMAL	-->
+		
+		<Checkpoint ReferenceId="FUEL_BOOST_ON">
+			<Instrument Id="FUEL_Switch_Pump"/>
+			<ForceCamera name="Engines"/>
+		</Checkpoint>
+
+		<Checkpoint ReferenceId="STARTER_ON_3STATES_XML"/>
+
+		<Checkpoint ReferenceId="FUEL_CONDITION_LEVER_LOW_IDLE">
+			<ForceCamera name="Pedestal_Up"/>
+		</Checkpoint>
+
+		<Checkpoint ReferenceId="STARTER_OFF_3STATES_XML">
+			<ForceCamera name="Engines"/>
+		</Checkpoint>		
+		
+		
+		<!-- NOT MVP	Amber STARTER ON Annunciator : CHECK -->
+		<!-- NOT MVP	Engine Indicating System : CHECK PARAMETERS -->
+
+		<Checkpoint ReferenceId="FUEL_BOOST_NORM">
+			<ForceCamera name="Engines"/>
+		</Checkpoint>
+
+		<Checkpoint ReferenceId="Avionics_Bus_Switch_On">
+			<Clue name="TT:CLUE.AVIONICS_NO_2_SWITCH_ON"/>
+			<CheckpointDesc SubjectTT="TT:GAME.CHECKLIST_AVIONICS_NO_2" ExpectationTT="TT:GAME.CHECKLIST_ON"/>
+			<ForceCamera name="Engines"/>
+			<Instrument Id="ELECTRICAL_Switch_Avionics_Master_2"/>			
+			<!-- Circuit values are found in the plane's systems.cfg -->		
+			<SetTemplateValue Id="Circuit Avionics">
+				<Val Code="(B:ELECTRICAL_Avionics_Bus_2)"/>
+			</SetTemplateValue>
+			<SetTemplateAction Id="Toggle Avionics Bus" Copilot="True" Condition="TestValueFalse" Once="true" Code="(&gt;B:ELECTRICAL_Avionics_Bus_2_Toggle)"/>
+		</Checkpoint>
+		
+		<!-- NOT MVP		<Checkpoint ReferenceId="Navigation_Lights_On"/> important	NAV Lights Switch : ON	-->
+        
+      </Page>
+	  
+      <!-- After starting engine 1/2 -->
+      <Page SubjectTT="TT:GAME.CHECKLIST_AFTER_STARTING_ENGINE_1">
+        
+      </Page>
+    </Step>
+	
+    <Step ChecklistStepId="PREFLIGHT_TAXI_OUT">
+      <!-- Taxi -->
+      <Page SubjectTT="TT:GAME.CHECKLIST_TAXI">
+        <!--	Brakes : CHECK	-->
+      </Page>
+    </Step>
+	
+    <Step ChecklistStepId="FLIGHT_RUNWAY">
+      <!-- Run-up 1/3 -->
+      <Page SubjectTT="TT:GAME.CHECKLIST_RUN_UP_1">
+        
+      </Page>
+	  
+      <!-- Before take-off -->
+      <Page SubjectTT="TT:GAME.CHECKLIST_BEFORE_TAKE_OFF">
+
+		<Checkpoint ReferenceId="Parking_Brake_Set">
+			<ForceCamera name="Switches2"/>
+		</Checkpoint>
+		<!-- NOT MVP		Altimeters: a. PFD 1 and PFD 2 (BARO) : SET		-->
+		<!-- NOT MVP	 			  +++>	b. Standby Altimeter : SET	-->
+		<!-- NOT MVP	<Checkpoint ReferenceId="Standby_flight_instruments_check"/>	--> <!-- 		Standby Flight Instruments : CHECK	-->
+		<!-- NOT MVP	FUEL BOOST Switch : NORM	-->
+		<!-- NOT MVP	FUEL TANK SELECTORS : BOTH ON	-->
+		<!-- NOT MVP		<Checkpoint ReferenceId="FUEL_QUANTITY_CHECK"/>		--> <!-- 		FUEL QTY : CHECK	-->
+		<!-- NOT MVP	FUEL/OIL SHUTOFF Knob : CHECK	-->
+		<!-- NOT MVP	ELEVATOR, AILERON, and RUD TRIM Controls : 3 SET	-->
+		<!-- NOT MVP	POWER Lever : 400 FT-LB	-->
+		<!-- NOT MVP	Overspeed Governor : CHECK	-->
+		<!-- NOT MVP	  +++>	PROP RPM Lever : MAX	-->
+		<!-- NOT MVP	Quadrant Friction Lock : ADJUST	-->
+		<!-- NOT MVP	Manual Electric Pitch Trim (MEPT) : CHECK and SET	-->
+		<!-- NOT MVP	Avionics and Radar : SET FOR DEPARTURE	-->
+		<!-- NOT MVP	Nav Source : SET FOR DEPARTURE	-->
+		<!-- NOT MVP	XPDR : SET	-->
+		<Checkpoint ReferenceId="Strobe_Light_On">
+			<ForceCamera name="PFD"/>
+		</Checkpoint>
+		<!-- NOT MVP	Annunciators : CHECK	-->
+		<!-- NOT MVP	<Checkpoint ReferenceId="FLAPS_TAKEOFF"/> -->	<!-- 		WING FLAPS Handle : SET FOR TAKEOFF	-->
+		<Checkpoint ReferenceId="Parking_Brake_Release">
+			<ForceCamera name="Switches2"/>
+		</Checkpoint>
+		
+		<!-- MVP		FUEL CONDITION Lever : HIGH IDLE	-->
+
+
+      </Page>
+    </Step>
+	
+    <Step ChecklistStepId="FLIGHT_TAKEOFF">
+      <!-- Normal take-off -->
+      <Page SubjectTT="TT:GAME.CHECKLIST_NORMAL_TAKE_OFF"> -->
+        
+		<!-- NOT MVP			WING FLAPS Handle : UP or TO/APR 		-->
+		<!-- NOT MVP			POWER Lever : SET FOR TAKEOFF		-->
+		<!-- NOT MVP	Annunciators : CHECK		-->
+		<!-- NOT MVP	Rotate : 70-75 KIAS		-->
+		<!-- NOT MVP	Airspeed : 85-95 KIAS		-->
+		<!-- NOT MVP	<Checkpoint ReferenceId="Flaps_0"/>	important		WING FLAPS Handle : RETRACT to UP		-->
+
+		
+      </Page>
+	  
+      <!-- Enroute climb -->
+      <Page SubjectTT="TT:GAME.CHECKLIST_ENROUTE_CLIMB">
+        
+		<!-- NOT MVP	Airspeed : 110-120 KIAS	important		-->
+		<!-- NOT MVP	PROP RPM Lever : 1600-1900 RPM	MINIMAL		-->
+		<!-- NOT MVP	POWER Lever : SET FOR CLIMB	important		-->
+
+		
+      </Page>
+    </Step>
+	
+    <Step ChecklistStepId="FLIGHT_CRUISE">
+      <!-- Cruise -->
+      <Page SubjectTT="TT:GAME.CHECKLIST_CRUISE">
+        
+		<!-- NOT MVP	PROP RPM Lever : 1600 to 1900 RPM		-->
+		<!-- NOT MVP	POWER Lever : SET		-->
+		<!-- NOT MVP	Fuel Balance : CHECK		-->
+
+		
+      </Page>
+    </Step>
+	
+    <Step ChecklistStepId="FLIGHT_DESCENT">
+      <!-- Descent -->
+      <Page SubjectTT="TT:GAME.CHECKLIST_DESCENT">
+
+		<!-- NOT MVP	Altimeters : SET		-->
+		<!-- NOT MVP	NAV Source : SELECT		-->
+		<!-- NOT MVP	<Checkpoint ReferenceId="POWER_LEVER_AS_REQUIRED"/>	important	POWER Lever : AS REQUIRED		-->
+
+        
+      </Page>
+    </Step>
+	
+    <Step ChecklistStepId="LANDING_APPROACH">
+      <!-- Before landing -->
+      <Page SubjectTT="TT:GAME.CHECKLIST_BEFORE_LANDING">
+
+		<!-- NOT MVP	FUEL TANK SELECTORS : BOTH ON		-->
+		<!-- NOT MVP	FUEL CONDITION Lever : HIGH IDLE		-->
+		<!-- NOT MVP	PROP RPM Lever : MAX		-->
+		<!-- NOT MVP	AP/YD : OFF		-->
+		<!-- NOT MVP	WING FLAPS Handle : SET		-->
+ 
+
+      </Page>
+    </Step>
+	
+    <Step ChecklistStepId="LANDING_TOUCHDOWN">
+      <!-- Normal landing -->
+      <Page SubjectTT="TT:GAME.CHECKLIST_NORMAL_LANDING">
+
+		<!-- NOT MVP	WING FLAPS Handle : LAND		-->
+		<!-- NOT MVP	Airspeed : 75-85 KIAS		-->
+		<!-- NOT MVP	Touchdown : MAIN WHEELS FIRST		-->
+		<!-- NOT MVP	POWER Lever : BETA RANGE AFTER TOUCHDOWN		-->
+		<!-- NOT MVP	Brakes : APPLY		-->
+        
+      </Page>
+    </Step>
+	
+    <Step ChecklistStepId="LANDING_GROUNDROLL">
+      <!-- After landing -->
+      <Page SubjectTT="TT:GAME.CHECKLIST_AFTER_LANDING">
+        
+		<!-- NOT MVP	WING FLAPS Handle : UP		-->
+		<!-- NOT MVP	STBY ALT PWR Switch : OFF		-->
+		<!-- NOT MVP	STROBE Lights Switch : OFF		-->
+		<!-- NOT MVP	<Checkpoint ReferenceId="TAXI_AND_LANDING_LIGHTS_ON"/>	--> <!-- 		LDG and TAXI/RECOG Lights Switches : SET		-->
+		<!-- NOT MVP	FUEL CONDITION Lever :  LOW IDLE		-->
+
+		
+      </Page>
+    </Step>
+	
+    <Step ChecklistStepId="LANDING_TAXI_IN">
+    </Step>
+	
+    <Step ChecklistStepId="LANDING_GATE">
+      <!-- Parking -->
+      <Page SubjectTT="TT:GAME.CHECKLIST_PARKING">
+        
+      </Page>
+	  
+      <!-- Securing-->
+      <Page SubjectTT="TT:GAME.CHECKLIST_SECURING">
+        
+		<!-- NOT MVP	<Checkpoint ReferenceId="Parking_Brake_Set"/> important		PARKING BRAKE : SET		-->
+		<!-- NOT MVP	<Checkpoint ReferenceId="POWER_LEVER_IDLE"/>	important	POWER Lever : IDLE		-->
+		<!-- NOT MVP	ITT : STABILIZED		-->
+		<!-- NOT MVP	PROP RPM Lever : FEATHER		-->
+		<!-- NOT MVP	important			FUEL CONDITION Lever : CUTOFF		-->
+		<!-- NOT MVP	important			LIGHTS : OFF		-->
+		<!-- NOT MVP	important		FUEL BOOST Switch : OFF		-->
+		<!-- NOT MVP			Ng Indication : CHECK		-->
+
+		
+      </Page>
+    </Step>
+
+  </Checklist.Checklist>
+</SimBase.Document>
