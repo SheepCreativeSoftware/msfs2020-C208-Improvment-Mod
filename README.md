@@ -1,7 +1,8 @@
 # Cessna 208B Improvement Mod for Microsoft Flight Simulator
 
 A community mod for the Cessna 208B Grand Caravan, which aims to fix many of the issues present in the stock version.
-Since Sim Update 4 lots of Things are even better by default.
+Feel free to contribute to this mod! Create an issue or fork and create a pull request!  
+Disscution about this mod, takes place in the [official forum](https://forums.flightsimulator.com/t/c208b-grand-caravan-ex-mods-general/322172?u=magrainaone)
 
 ***Engine and Flight Model***  
 - Based on Vanila Sim Update 4 (SU4)
@@ -14,7 +15,6 @@ Since Sim Update 4 lots of Things are even better by default.
 - Based on Vanila Sim Update 4 (SU4)
 - More control while taxiing.
 - Tighter turning circle. 
-- ~~More realistic idle behaviour, lower fuel burn.~~
 
 ***Systems & Avionics***  
 - Works with Vanilla, WT G1000 and WT G1000 NXi Avionics
