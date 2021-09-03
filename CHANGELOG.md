@@ -1,6 +1,9 @@
 ## Changes
 
 **2109.1**
+- Fixed texture of standby torque gauge
+
+**2109.1**
 - Added and changed some Annunciation Messages
 - More steering angle on higher speed
 - Fixed: Oil temperature is always in the yellow position
