@@ -508,6 +508,20 @@
 			<EMISSIVE_CODE>1</EMISSIVE_CODE>
 		</UseTemplate>
 		<CameraTitle>PFD</CameraTitle>
+		<UseTemplate Name="ASOBO_LIGHTING_Switch_Light_Cabin_Template">
+			<ID>8</ID>
+			<NODE_ID>SWITCH_LIGHTS_NOSMOKE</NODE_ID>
+			<ANIM_NAME>SWITCH_LIGHTS_NOSMOKE</ANIM_NAME>
+			
+			<WWISE_EVENT>lighting_switch_generic</WWISE_EVENT>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_LIGHTING_Switch_Light_Cabin_Template">
+			<ID>9</ID>
+			<NODE_ID>SWITCH_LIGHTS_SEATBELT</NODE_ID>
+			<ANIM_NAME>SWITCH_LIGHTS_SEATBELT</ANIM_NAME>
+			
+			<WWISE_EVENT>lighting_switch_generic</WWISE_EVENT>
+		</UseTemplate>
 	</Component>
 	
 	<!-- PRESSURIZATION #################################-->
@@ -680,12 +694,6 @@
 	
 	<!-- DUMMIES ####################################-->	
 	<Component ID="DUMMY">
-		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
-			<NODE_ID>SWITCH_LIGHTS_NOSMOKE</NODE_ID>
-		</UseTemplate>
-		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
-			<NODE_ID>SWITCH_LIGHTS_SEATBELT</NODE_ID>
-		</UseTemplate>
 		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
 			<NODE_ID>SWITCH_ANTIICE_BACKUP</NODE_ID>
 		</UseTemplate>
