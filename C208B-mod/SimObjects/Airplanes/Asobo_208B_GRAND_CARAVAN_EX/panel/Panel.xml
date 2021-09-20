@@ -40,7 +40,7 @@
     </Electric>
   </Instrument>
 
-<!-- Annuntiations -->
+<!-- Annunciations -->
 
   <Annunciations>
     <!--Indicates engine oil pressure is less than 40 psi-->
@@ -97,7 +97,7 @@
       <Condition>
         <LowerEqual>
           <Simvar name="FUEL TOTAL QUANTITY" unit="gallon"/>
-          <Constant>10</Constant>
+          <Constant>8.1</Constant>
         </LowerEqual>
       </Condition>
     </Annunciation>
@@ -219,14 +219,14 @@
 		</Or>
       </Condition>
     </Annunciation>
-	<!--Indicates fuel pressure is below 4.75 psi-->
+	<!--Indicates fuel pressure is below 2.5 psi-->
 	<Annunciation>
       <Type>Caution</Type>
       <Text>FUEL PRESS LOW</Text>
 	  <Condition>
 			<Lower>
 			  <Simvar name="GENERAL ENG FUEL PRESSURE:1" unit="psi"/>
-			  <Constant>4.75</Constant>
+			  <Constant>2.5</Constant>
 			</Lower>
 		  </Condition>
     </Annunciation>
@@ -1307,6 +1307,52 @@
 		<Once>True</Once>
 	</Alert>
 
+<!--Added Aural warning when fuel selector is off during start-->
+	<Alert>
+	    <Type>SoundOnly</Type>
+	    <SoundEvent>aural_overspeed</SoundEvent>
+	  <Condition>
+		<Or>
+			<Equal>
+				<Simvar name="FUEL TANK SELECTOR:1" unit="number"/>
+				<Constant>0</Constant><!--both closed-->
+			</Equal>
+			<And>
+				<Equal>
+					<Simvar name="FUEL TANK SELECTOR:1" unit="number"/>
+					<Constant>2</Constant><!--left on-->
+				</Equal>
+				<LowerEqual>
+					<Simvar name="FUEL LEFT QUANTITY" unit="gallon"/>
+					<Constant>25</Constant><!--and fuel low on left-->
+				</LowerEqual>
+			</And>
+			<And>
+				<Equal>
+					<Simvar name="FUEL TANK SELECTOR:1" unit="number"/>
+					<Constant>3</Constant><!--only right on-->
+				</Equal>
+				<LowerEqual>
+					<Simvar name="FUEL RIGHT QUANTITY" unit="gallon"/>
+					<Constant>25</Constant><!--and fuel low on right-->
+				</LowerEqual>
+			</And>
+			<And>
+				<Or>
+				<Equal>
+					<Simvar name="FUEL TANK SELECTOR:1" unit="number"/>
+					<Constant>2</Constant><!--only left on-->
+				</Equal>
+				<Equal>
+					<Simvar name="FUEL TANK SELECTOR:1" unit="number"/>
+					<Constant>3</Constant><!--or only right on-->
+				</Equal>
+				</Or>
+				<Simvar name="GENERAL ENG STARTER:1" unit="Bool"/><!-- and starter on -->
+			</And>
+		</Or>
+	  </Condition>
+	</Alert>
   </VoicesAlerts>
 
 
