@@ -648,6 +648,7 @@
 	<!-- DEICE ##########################################-->	
 	<Component ID="DEICE">
 		<UseTemplate Name="ASOBO_DEICE_Switch_Windshield_Template">
+			<ID>1</ID>
 			<ANIM_NAME>DEICE_Switch_Windshield</ANIM_NAME>
 			<NODE_ID>DEICE_Switch_Windshield</NODE_ID>
 			<ANIMTIP_0>TT:COCKPIT.TOOLTIPS.C208_DEICE_MAX_FLOW_SET_WINDHIELD</ANIMTIP_0>
@@ -662,6 +663,7 @@
 			<TT_POS_2>(R:1:@TT_Package.GT_STATE_OFF)</TT_POS_2>
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_DEICE_Switch_Pitot_Template">
+		<ID>1</ID>
 		</UseTemplate>
 		<CameraTitle>Lights</CameraTitle>		
 	</Component>
@@ -698,27 +700,48 @@
 	<Component ID="DUMMY">
 		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
 			<NODE_ID>SWITCH_ANTIICE_BACKUP</NODE_ID>
+			<ANIM_NAME>SWITCH_ANTIICE_BACKUP</ANIM_NAME>
 		</UseTemplate>
-		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+		<UseTemplate Name="ASOBO_LIGHTING_Switch_Light_Panel_Template">
+			<ID>4</ID>
 			<NODE_ID>SWITCH_ANTIICE_STALLHEAT</NODE_ID>
+			<ANIM_NAME>SWITCH_ANTIICE_STALLHEAT</ANIM_NAME>
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
 			<NODE_ID>SWITCH_TESTSWITCH_FIREDETECT</NODE_ID>
+			<ANIM_NAME>SWITCH_TESTSWITCH_FIREDETECT</ANIM_NAME>
 		</UseTemplate>
-		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+
+			<EMISSIVE_CODE>(L:XMLVAR_WarningEnabled)</EMISSIVE_CODE>
+
+		<UseTemplate Name="ASOBO_PASSENGER_Switch_Cabin_Air_Template">
+			<ID>1</ID>
+			<NUM_STATES>2</NUM_STATES>
 			<NODE_ID>SWITCH_AC_AFT</NODE_ID>
+			<ANIM_NAME>SWITCH_AC_AFT</ANIM_NAME>
 		</UseTemplate>
-		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+		<UseTemplate Name="ASOBO_PASSENGER_Switch_Cabin_Air_Template">
+			<ID>2</ID>
+			<NUM_STATES>2</NUM_STATES>
 			<NODE_ID>SWITCH_AC_LEFT</NODE_ID>
+			<ANIM_NAME>SWITCH_AC_LEFT</ANIM_NAME>
 		</UseTemplate>
-		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+		<UseTemplate Name="ASOBO_PASSENGER_Switch_Cabin_Air_Template">
+			<ID>3</ID>
+			<NUM_STATES>2</NUM_STATES>
 			<NODE_ID>SWITCH_AC_RIGHT</NODE_ID>
+			<ANIM_NAME>SWITCH_AC_RIGHT</ANIM_NAME>
 		</UseTemplate>
-		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+		<UseTemplate Name="ASOBO_PASSENGER_Switch_Cabin_Air_Template">
+			<ID>4</ID>
+			<NUM_STATES>3</NUM_STATES>
 			<NODE_ID>SWITCH_AC_VENTILATE</NODE_ID>
+			<ANIM_NAME>SWITCH_AC_VENTILATE</ANIM_NAME>
 		</UseTemplate>
-		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+		<UseTemplate Name="ASOBO_LIGHTING_Switch_Light_Cabin_Template">
+			<ID>10</ID>
 			<NODE_ID>SWITCH_POWEROUTLET_CREW</NODE_ID>
+			<ANIM_NAME>SWITCH_POWEROUTLET_CREW</ANIM_NAME>
 		</UseTemplate>
 		<CameraTitle>Pilot</CameraTitle>
 	</Component>
@@ -768,12 +791,19 @@
 	<Component ID="TT_INOP">
 		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
 			<NODE_ID>PUSH_VENT_L2</NODE_ID>
+			<ANIM_NAME>PUSH_VENT_L2</ANIM_NAME>
 		</UseTemplate>
-		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+		<UseTemplate Name="ASOBO_PASSENGER_Switch_Cabin_Air_Template">
+			<ID>7</ID>
 			<NODE_ID>PUSH_VENT_L1</NODE_ID>
+			<ANIM_NAME>PUSH_VENT_L1</ANIM_NAME>
+			<WWISE_EVENT_1>lighting_switch_generic</WWISE_EVENT_1>
+			<WWISE_EVENT_2>lighting_switch_generic</WWISE_EVENT_2>
 		</UseTemplate>
-		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+		<UseTemplate Name="ASOBO_LIGHTING_Push_Light_Cabin_Template">
 			<NODE_ID>PUSH_OVERSPEEDGOVERNOR</NODE_ID>
+			<ANIM_NAME>PUSH_OVERSPEEDGOVERNOR</ANIM_NAME>
+			<ID>10</ID>
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
 			<NODE_ID>PUSH_CABINHEATFIREWALL</NODE_ID>
@@ -784,49 +814,72 @@
 		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
 			<NODE_ID>PUSH_VENT_R2</NODE_ID>
 		</UseTemplate>
-		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+		<UseTemplate Name="ASOBO_PASSENGER_Switch_Cabin_Air_Template">
+			<ID>8</ID>
 			<NODE_ID>PUSH_VENT_R1</NODE_ID>
+			<ANIM_NAME>PUSH_VENT_R1</ANIM_NAME>
 		</UseTemplate>
-		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+		<UseTemplate Name="ASOBO_PASSENGER_Knob_Cabin_Heat_Template">
 			<NODE_ID>PASSENGERS_Knob_CabinHeat</NODE_ID>
+			<ANIM_NAME>PASSENGERS_Knob_CabinHeat</ANIM_NAME>
+			<INIT_VALUE>50</INIT_VALUE>
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
 			<NODE_ID>PUSH_CH_MIXINGAIR_2</NODE_ID>
+			<ANIM_NAME>PUSH_CH_MIXINGAIR_2</ANIM_NAME>
+			<NUM_STATES>2</NUM_STATES>
 		</UseTemplate>
-		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+		<UseTemplate Name="ASOBO_PASSENGER_Switch_Cabin_Air_Template">
+			<ID>5</ID>
 			<NODE_ID>PUSH_CH_MIXINGAIR_1</NODE_ID>
+			<ANIM_NAME>PUSH_CH_MIXINGAIR_1</ANIM_NAME>
+			<NUM_STATES>2</NUM_STATES>
+		</UseTemplate>
+				<UseTemplate Name="ASOBO_PASSENGER_Knob_Cabin_Heat_Template">
+			<NODE_ID>PASSENGERS_Knob_CabinHeat</NODE_ID>
+			<ANIM_NAME>PASSENGERS_Knob_CabinHeat</ANIM_NAME>
+			<INIT_VALUE>50</INIT_VALUE>
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
 			<NODE_ID>PUSH_CH_DEFROST_2</NODE_ID>
 		</UseTemplate>
-		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+		<UseTemplate Name="ASOBO_DEICE_Switch_Windshield_Template">
+			<ID>2</ID>
 			<NODE_ID>PUSH_CH_DEFROST_1</NODE_ID>
+			<ANIM_NAME>PUSH_CH_DEFROST_1</ANIM_NAME>
+			<NUM_STATES>2</NUM_STATES>
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
 			<NODE_ID>PUSH_CH_CABIN_2</NODE_ID>
 		</UseTemplate>
-		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+		<UseTemplate Name="ASOBO_PASSENGER_Switch_Cabin_Air_Template">
+			<ID>6</ID>
 			<NODE_ID>PUSH_CH_CABIN_1</NODE_ID>
+			<ANIM_NAME>PUSH_CH_CABIN_1</ANIM_NAME>
+			<NUM_STATES>2</NUM_STATES>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_PRESSURIZATION_Knob_ClimbRate_Template">
+			<NODE_ID>KNOB_TOPPANEL_OPENLFAN</NODE_ID>
+			<ANIM_NAME>KNOB_TOPPANEL_OPENLFAN</ANIM_NAME>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_PRESSURIZATION_Knob_CabinAlt_Template">
+			<NODE_ID>KNOB_TOPPANEL_OPENRFAN</NODE_ID>
+			<ANIM_NAME>KNOB_TOPPANEL_OPENRFAN</ANIM_NAME>
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
 			<NODE_ID>KNOB_TOPPANEL_FUELSELECTOR</NODE_ID>
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
-			<NODE_ID>KNOB_TOPPANEL_OPENLFAN</NODE_ID>
-		</UseTemplate>
-		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
-			<NODE_ID>KNOB_TOPPANEL_OPENRFAN</NODE_ID>
-		</UseTemplate>
-		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
 			<NODE_ID>KNOB_TOPPANEL_STBYFLAP</NODE_ID>
 		</UseTemplate>
-		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
-			<NODE_ID>LOCK_TOPPANEL_STBYFLAP_DOWN</NODE_ID>
+		<UseTemplate Name="ASOBO_ELECTRICAL_Switch_Avionics_STBY_Power_Template">
+			<COVER_NODE_ID>LOCK_TOPPANEL_STBYFLAP_DOWN</COVER_NODE_ID>
+			<COVER_ANIM_NAME>LOCK_TOPPANEL_STBYFLAP_DOWN</COVER_ANIM_NAME>
 		</UseTemplate>
-		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
-			<NODE_ID>LOCK_TOPPANEL_STBYFLAP_NORMAL</NODE_ID>
+		<UseTemplate Name="ASOBO_ELECTRICAL_Switch_Avionics_STBY_Power_Template">
+			<COVER_NODE_ID>LOCK_TOPPANEL_STBYFLAP_NORMAL</COVER_NODE_ID>
+			<COVER_ANIM_NAME>LOCK_TOPPANEL_STBYFLAP_NORMAL</COVER_ANIM_NAME>
 		</UseTemplate>
-		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
 		<UseTemplate Name="ASOBO_PRESSURIZATION_Switch_Oxygen_Template">
 			<ANIM_NAME>PRESSURIZATION_Switch_Oxygen</ANIM_NAME>
 			<NODE_ID>PRESSURIZATION_Switch_Oxygen</NODE_ID>
