@@ -110,8 +110,61 @@
 				<ANIM_NAME>c_wheel</ANIM_NAME>
 			</UseTemplate>
 		</Component>
-		<Component ID="LANDING_FX">
-			<UseTemplate Name="ASOBO_LANDING_FX"/>
+		<Component OverrideID="LANDING_FX">
+			<UseTemplate Name="ASOBO_WET_CP_LANDING_FX">
+				<FX_CONTACT_POINT_ID>0</FX_CONTACT_POINT_ID>
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_WET_CP_LANDING_FX">
+				<FX_CONTACT_POINT_ID>1</FX_CONTACT_POINT_ID>
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_WET_CP_LANDING_FX">
+				<FX_CONTACT_POINT_ID>2</FX_CONTACT_POINT_ID>
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_SMOKE_CP_LANDING_FX">
+				<FX_CONTACT_POINT_ID>0</FX_CONTACT_POINT_ID>
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_SMOKE_CP_LANDING_FX">
+				<FX_CONTACT_POINT_ID>1</FX_CONTACT_POINT_ID>
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_SMOKE_CP_LANDING_FX">
+				<FX_CONTACT_POINT_ID>2</FX_CONTACT_POINT_ID>
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_DUST_CP_LANDING_FX">
+				<FX_CONTACT_POINT_ID>0</FX_CONTACT_POINT_ID>
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_DUST_CP_LANDING_FX">
+				<FX_CONTACT_POINT_ID>1</FX_CONTACT_POINT_ID>
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_DUST_CP_LANDING_FX">
+				<FX_CONTACT_POINT_ID>2</FX_CONTACT_POINT_ID>
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_GRASS_CP_LANDING_FX">
+				<FX_CONTACT_POINT_ID>0</FX_CONTACT_POINT_ID>
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_GRASS_CP_LANDING_FX">
+				<FX_CONTACT_POINT_ID>1</FX_CONTACT_POINT_ID>
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_GRASS_CP_LANDING_FX">
+				<FX_CONTACT_POINT_ID>2</FX_CONTACT_POINT_ID>
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_SNOW_CP_LANDING_FX">
+				<FX_CONTACT_POINT_ID>0</FX_CONTACT_POINT_ID>
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_SNOW_CP_LANDING_FX">
+				<FX_CONTACT_POINT_ID>1</FX_CONTACT_POINT_ID>
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_SNOW_CP_LANDING_FX">
+				<FX_CONTACT_POINT_ID>2</FX_CONTACT_POINT_ID>
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_WATER_CP_LANDING_FX">
+				<FX_CONTACT_POINT_ID>0</FX_CONTACT_POINT_ID>
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_WATER_CP_LANDING_FX">
+				<FX_CONTACT_POINT_ID>1</FX_CONTACT_POINT_ID>
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_WATER_CP_LANDING_FX">
+				<FX_CONTACT_POINT_ID>2</FX_CONTACT_POINT_ID>
+			</UseTemplate>
 		</Component>
 	</Behaviors>
 </ModelInfo>
