@@ -152,16 +152,16 @@
       <Type>Caution</Type>
       <Text>R FUEL LOW</Text>
       <Condition>
-       <And>
-              <Greater>
-                     <Simvar name="FUEL TOTAL QUANTITY" unit="gallon"/>
-                     <Constant>25</Constant>
-              </Greater>
-              <LowerEqual>
-                     <Simvar name="FUEL RIGHT QUANTITY" unit="gallon"/>
-                     <Constant>25</Constant>
-              </LowerEqual>
-       </And>
+		<And>
+		    <Greater>
+        		<Simvar name="FUEL LEFT QUANTITY" unit="gallon"/>
+        		<Constant>25</Constant>
+        	</Greater>
+		<LowerEqual>
+          <Simvar name="FUEL RIGHT QUANTITY" unit="gallon"/>
+          <Constant>25</Constant>
+        </LowerEqual>
+		</And>
       </Condition>
     </Annunciation>
 	<!--Indicates fuel quantity in left tank is 25 gallons or less-->
@@ -169,16 +169,16 @@
       <Type>Caution</Type>
       <Text>L FUEL LOW</Text>
       <Condition>
-       <And>
-              <Greater>
-                     <Simvar name="FUEL TOTAL QUANTITY" unit="gallon"/>
-                     <Constant>25</Constant>
-              </Greater>
-              <LowerEqual>
-                     <Simvar name="FUEL LEFT QUANTITY" unit="gallon"/>
-                     <Constant>25</Constant>
-              </LowerEqual>
-       </And>
+		<And>
+			<Greater>
+          		<Simvar name="FUEL RIGHT QUANTITY" unit="gallon"/>
+          		<Constant>25</Constant>
+        	</Greater>
+		<LowerEqual>
+          <Simvar name="FUEL LEFT QUANTITY" unit="gallon"/>
+          <Constant>25</Constant>
+        </LowerEqual>
+		</And>
       </Condition>
     </Annunciation>
 	<!--Indicates fuel quantity in both tanks is 25 gallons or less-->
@@ -186,10 +186,17 @@
       <Type>Caution</Type>
       <Text>L-R FUEL LOW</Text>
       <Condition>
-        <LowerEqual>
-          <Simvar name="FUEL TOTAL QUANTITY" unit="gallon"/>
+
+		<And>
+		<LowerEqual>
+          <Simvar name="FUEL LEFT QUANTITY" unit="gallon"/>
           <Constant>25</Constant>
         </LowerEqual>
+			<LowerEqual>
+          		<Simvar name="FUEL RIGHT QUANTITY" unit="gallon"/>
+          		<Constant>25</Constant>
+        	</LowerEqual>
+		</And>
       </Condition>
     </Annunciation>
     <!--Indicates the auxiliary fuel boost pump is operating. Switch is placed in the ON position or is in the NORM position and fuel pressure drops below 4.75 psi-->
