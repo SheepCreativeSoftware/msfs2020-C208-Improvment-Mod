@@ -51,8 +51,8 @@ Face=1, 1, 1
 Blend Mode=2
 Texture=fx_0.png
 Bounce=0.0
-Color Start=173, 180, 255, 25
-Color End=173, 180, 255, 25
+Color Start=170, 180, 255, 25
+Color End=170, 180, 255, 25
 Jitter Distance=0.0
 Jitter Time=0.0
 uv1=0.0, 0.0
@@ -63,9 +63,9 @@ MinProjSize= 0.4
 
 [LightAttributes.0]
 Type=spot
-Size=0.1
-Range=800.0
-Intensity=40.0
+Size=0.2
+Range=1000.0
+Intensity=150.0
 Softness=0.0
 SpotInner=8
 SpotOuter=15
