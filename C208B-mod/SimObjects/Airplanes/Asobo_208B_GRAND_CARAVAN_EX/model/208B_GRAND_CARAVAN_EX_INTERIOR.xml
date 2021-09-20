@@ -526,12 +526,9 @@
 	
 	<!-- PRESSURIZATION #################################-->
 	<Component ID="PRESSURIZATION">
-		<UseTemplate Name="ASOBO_GT_Switch_Dummy">
-			<NUM_STATES>2</NUM_STATES>
+		<UseTemplate Name="ASOBO_PRESSURIZATION_Switch_Bleed_Template">
 			<NODE_ID>PRESSURIZATION_Switch_Bleed</NODE_ID>
-			<PART_ID>PRESSURIZATION_Switch_Bleed</PART_ID>
 			<ANIM_NAME>PRESSURIZATION_Switch_Bleed</ANIM_NAME>
-			<DISABLE_MOUSERECT>True</DISABLE_MOUSERECT>
 		</UseTemplate>
 		<!-- Make sure bleed air system is running as expected -->
 		<UseTemplate Name="ASOBO_GT_Update">
@@ -539,6 +536,11 @@
 			<UPDATE_CODE>(A:BLEED AIR ENGINE:1, Bool) ! if{ 1 0 (&gt;K:ENGINE_BLEED_AIR_SOURCE_SET) 0 (&gt;K:BLEED_AIR_SOURCE_CONTROL_SET) }</UPDATE_CODE>
 		</UseTemplate>
 		<CameraTitle>Switches2</CameraTitle>
+		<UseTemplate Name="ASOBO_SAFETY_Gauge_OxygenPressure_Template">
+			<NODE_ID>SAFETY_Gauge_OxygenPressure</NODE_ID>
+			<ANIM_NAME>SAFETY_Gauge_OxygenPressure</ANIM_NAME>
+			<TT_ICON>MOVE_AXIS_Y</TT_ICON>
+		</UseTemplate>
 	</Component>
 	
 	<!-- SAFETY #########################################-->
@@ -825,7 +827,10 @@
 			<NODE_ID>LOCK_TOPPANEL_STBYFLAP_NORMAL</NODE_ID>
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+		<UseTemplate Name="ASOBO_PRESSURIZATION_Switch_Oxygen_Template">
+			<ANIM_NAME>PRESSURIZATION_Switch_Oxygen</ANIM_NAME>
 			<NODE_ID>PRESSURIZATION_Switch_Oxygen</NODE_ID>
+			<NUM_STATES>2</NUM_STATES>
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
 			<NODE_ID>SWITCH_TOPPANEL_STBYFLAP_DOWN</NODE_ID>
