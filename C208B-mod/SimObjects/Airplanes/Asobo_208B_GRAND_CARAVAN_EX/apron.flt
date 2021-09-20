@@ -58,7 +58,7 @@ IgnitionSwitch=1
 Afterburner=0
 
 [Propeller.1.0]
-prop_beta=0.30
+prop_beta=0.1
 prop_max_rpm_percent=0
 
 [Fuel.0]
