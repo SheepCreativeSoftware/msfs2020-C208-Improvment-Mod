@@ -199,7 +199,7 @@
 		</And>
       </Condition>
     </Annunciation>
-    <!--Indicates the auxiliary fuel boost pump is operating. Switch is placed in the ON position or is in the NORM position and fuel pressure drops below 4.75 psi-->
+    <!--Indicates the auxiliary fuel boost pump is operating. Switch is placed in the ON position or is in the NORM position and fuel pressure drops below 2.5 psi-->
 	<Annunciation>
       <Type>Caution</Type>
       <Text>FUEL BOOST ON</Text>
@@ -216,7 +216,7 @@
 				</Equal>
 				<Greater>
 				  <Simvar name="GENERAL ENG FUEL PRESSURE:1" unit="psi"/>
-				  <Constant>4.75</Constant>
+				  <Constant>2.5</Constant>
 				</Greater>
 				<Lower>
 					<Simvar name="TURB ENG N1:1" unit="percent"/>
@@ -481,7 +481,7 @@
 	  </Condition>
 	</Annunciation>-->
   </Annunciations>
-  
+
 <!-- Engine Display -->
 
 	<EngineDisplay>
@@ -919,7 +919,7 @@
 		</Text>
 		
 	</EngineDisplay>
-	
+
 	  <!-- Voices Alerts -->
   
   <VoicesAlerts>
@@ -1617,7 +1617,7 @@
 				</Color>
 			</Right>
 		</Text>
-		
+
 		<Text>
 		<Left>---</Left>
 		<Center>FUEL</Center>
@@ -1827,7 +1827,7 @@
 		</Text>
 		
 	</EngineDisplaySystem>
-             
+
 	<!-- Engine Display -->
   <EngineDisplay>
 		<Gauge>
