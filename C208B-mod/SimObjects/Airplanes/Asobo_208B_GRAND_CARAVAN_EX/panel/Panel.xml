@@ -40,7 +40,7 @@
     </Electric>
   </Instrument>
 
-<!-- Annuntiations -->
+<!-- Annunciations -->
 
   <Annunciations>
     <!--Indicates engine oil pressure is less than 40 psi-->
@@ -97,7 +97,7 @@
       <Condition>
         <LowerEqual>
           <Simvar name="FUEL TOTAL QUANTITY" unit="gallon"/>
-          <Constant>10</Constant>
+          <Constant>8.1</Constant>
         </LowerEqual>
       </Condition>
     </Annunciation>
@@ -152,16 +152,16 @@
       <Type>Caution</Type>
       <Text>R FUEL LOW</Text>
       <Condition>
-       <And>
-              <Greater>
-                     <Simvar name="FUEL TOTAL QUANTITY" unit="gallon"/>
-                     <Constant>25</Constant>
-              </Greater>
-              <LowerEqual>
-                     <Simvar name="FUEL RIGHT QUANTITY" unit="gallon"/>
-                     <Constant>25</Constant>
-              </LowerEqual>
-       </And>
+		<And>
+		    <Greater>
+        		<Simvar name="FUEL LEFT QUANTITY" unit="gallon"/>
+        		<Constant>25</Constant>
+        	</Greater>
+		<LowerEqual>
+          <Simvar name="FUEL RIGHT QUANTITY" unit="gallon"/>
+          <Constant>25</Constant>
+        </LowerEqual>
+		</And>
       </Condition>
     </Annunciation>
 	<!--Indicates fuel quantity in left tank is 25 gallons or less-->
@@ -169,16 +169,16 @@
       <Type>Caution</Type>
       <Text>L FUEL LOW</Text>
       <Condition>
-       <And>
-              <Greater>
-                     <Simvar name="FUEL TOTAL QUANTITY" unit="gallon"/>
-                     <Constant>25</Constant>
-              </Greater>
-              <LowerEqual>
-                     <Simvar name="FUEL LEFT QUANTITY" unit="gallon"/>
-                     <Constant>25</Constant>
-              </LowerEqual>
-       </And>
+		<And>
+			<Greater>
+          		<Simvar name="FUEL RIGHT QUANTITY" unit="gallon"/>
+          		<Constant>25</Constant>
+        	</Greater>
+		<LowerEqual>
+          <Simvar name="FUEL LEFT QUANTITY" unit="gallon"/>
+          <Constant>25</Constant>
+        </LowerEqual>
+		</And>
       </Condition>
     </Annunciation>
 	<!--Indicates fuel quantity in both tanks is 25 gallons or less-->
@@ -186,13 +186,20 @@
       <Type>Caution</Type>
       <Text>L-R FUEL LOW</Text>
       <Condition>
-        <LowerEqual>
-          <Simvar name="FUEL TOTAL QUANTITY" unit="gallon"/>
+
+		<And>
+		<LowerEqual>
+          <Simvar name="FUEL LEFT QUANTITY" unit="gallon"/>
           <Constant>25</Constant>
         </LowerEqual>
+			<LowerEqual>
+          		<Simvar name="FUEL RIGHT QUANTITY" unit="gallon"/>
+          		<Constant>25</Constant>
+        	</LowerEqual>
+		</And>
       </Condition>
     </Annunciation>
-    <!--Indicates the auxiliary fuel boost pump is operating. Switch is placed in the ON position or is in the NORM position and fuel pressure drops below 4.75 psi-->
+    <!--Indicates the auxiliary fuel boost pump is operating. Switch is placed in the ON position or is in the NORM position and fuel pressure drops below 2.5 psi-->
 	<Annunciation>
       <Type>Caution</Type>
       <Text>FUEL BOOST ON</Text>
@@ -209,7 +216,7 @@
 				</Equal>
 				<Greater>
 				  <Simvar name="GENERAL ENG FUEL PRESSURE:1" unit="psi"/>
-				  <Constant>4.75</Constant>
+				  <Constant>2.5</Constant>
 				</Greater>
 				<Lower>
 					<Simvar name="TURB ENG N1:1" unit="percent"/>
@@ -219,14 +226,14 @@
 		</Or>
       </Condition>
     </Annunciation>
-	<!--Indicates fuel pressure is below 4.75 psi-->
+	<!--Indicates fuel pressure is below 2.5 psi-->
 	<Annunciation>
       <Type>Caution</Type>
       <Text>FUEL PRESS LOW</Text>
 	  <Condition>
 			<Lower>
 			  <Simvar name="GENERAL ENG FUEL PRESSURE:1" unit="psi"/>
-			  <Constant>4.75</Constant>
+			  <Constant>2.5</Constant>
 			</Lower>
 		  </Condition>
     </Annunciation>
@@ -474,7 +481,7 @@
 	  </Condition>
 	</Annunciation>-->
   </Annunciations>
-  
+
 <!-- Engine Display -->
 
 	<EngineDisplay>
@@ -912,7 +919,7 @@
 		</Text>
 		
 	</EngineDisplay>
-	
+
 	  <!-- Voices Alerts -->
   
   <VoicesAlerts>
@@ -1307,6 +1314,52 @@
 		<Once>True</Once>
 	</Alert>
 
+<!--Added Aural warning when fuel selector is off during start-->
+	<Alert>
+	    <Type>SoundOnly</Type>
+	    <SoundEvent>aural_overspeed</SoundEvent>
+	  <Condition>
+		<Or>
+			<Equal>
+				<Simvar name="FUEL TANK SELECTOR:1" unit="number"/>
+				<Constant>0</Constant><!--both closed-->
+			</Equal>
+			<And>
+				<Equal>
+					<Simvar name="FUEL TANK SELECTOR:1" unit="number"/>
+					<Constant>2</Constant><!--left on-->
+				</Equal>
+				<LowerEqual>
+					<Simvar name="FUEL LEFT QUANTITY" unit="gallon"/>
+					<Constant>25</Constant><!--and fuel low on left-->
+				</LowerEqual>
+			</And>
+			<And>
+				<Equal>
+					<Simvar name="FUEL TANK SELECTOR:1" unit="number"/>
+					<Constant>3</Constant><!--only right on-->
+				</Equal>
+				<LowerEqual>
+					<Simvar name="FUEL RIGHT QUANTITY" unit="gallon"/>
+					<Constant>25</Constant><!--and fuel low on right-->
+				</LowerEqual>
+			</And>
+			<And>
+				<Or>
+				<Equal>
+					<Simvar name="FUEL TANK SELECTOR:1" unit="number"/>
+					<Constant>2</Constant><!--only left on-->
+				</Equal>
+				<Equal>
+					<Simvar name="FUEL TANK SELECTOR:1" unit="number"/>
+					<Constant>3</Constant><!--or only right on-->
+				</Equal>
+				</Or>
+				<Simvar name="GENERAL ENG STARTER:1" unit="Bool"/><!-- and starter on -->
+			</And>
+		</Or>
+	  </Condition>
+	</Alert>
   </VoicesAlerts>
 
 
@@ -1564,7 +1617,7 @@
 				</Color>
 			</Right>
 		</Text>
-		
+
 		<Text>
 		<Left>---</Left>
 		<Center>FUEL</Center>
@@ -1774,7 +1827,7 @@
 		</Text>
 		
 	</EngineDisplaySystem>
-             
+
 	<!-- Engine Display -->
   <EngineDisplay>
 		<Gauge>
