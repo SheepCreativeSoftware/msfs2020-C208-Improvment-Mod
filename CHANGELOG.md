@@ -1,5 +1,35 @@
 ## Changes
 
+**2109.2.2 [Internal]**
+- Improve Engine Performance and fuel consumption
+- Fixed Flap position
+- Updated Flight tuning
+- Update Aerodynamics
+- Updated Aircraft Geometry
+- Adjusted Reference Speeds
+
+**2109.2.1 [Internal]**
+- Added a lot of improvments from @CarbonProp
+- Removed stick shaker
+- Removed gear warning
+- Removed Copilot weight and added more weight for the pilot itself (like in OnAir)
+- improved ground steering
+- Modify Light mod (Range, Intensity, Size)
+- Set prop beta position to nearly zero on apron
+- Updated some annunciation messages
+- Added Aural warning when fuel selector is off during start
+- Fixed Fuel Caution message
+- Changed Fuel boost caution message
+- Increased brake scalar
+- Improved autopilot
+- Optimized Engine parameters
+- Adjust gauge values in cockpit
+- Adjusted target performance
+- Modified gear damping to reduce bounce on landing
+- No Smoke and Seatbelt switch functional
+- Bleed Air and Oxygen Switch functional
+- make a lot of switches functional
+
 **2109.2**
 - Fixed texture of standby torque gauge
 
