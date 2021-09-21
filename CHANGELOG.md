@@ -1,5 +1,13 @@
 ## Changes
 
+**2109.2.2 [Internal]**
+- Improve Engine Performance and fuel consumption
+- Fixed Flap position
+- Updated Flight tuning
+- Update Aerodynamics
+- Updated Aircraft Geometry
+- Adjusted Reference Speeds
+
 **2109.2.1 [Internal]**
 - Added a lot of improvments from @CarbonProp
 - Removed stick shaker
