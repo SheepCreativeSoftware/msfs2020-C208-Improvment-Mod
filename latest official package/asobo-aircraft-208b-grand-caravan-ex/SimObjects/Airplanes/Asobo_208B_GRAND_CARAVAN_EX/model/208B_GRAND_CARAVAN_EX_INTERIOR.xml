@@ -213,14 +213,6 @@
 
 	<!-- FUEL ###########################################-->
 	<Component ID="FUEL">
-		<UseTemplate Name="ASOBO_FUEL_Lever_Mixture_Template">
-			<ID>1</ID>
-		</UseTemplate>
-			<Component ID="Mixture_1_Visibility" Node="FUEL_LEVER_MIXTURE_1">
-			<UseTemplate Name="ASOBO_GT_Visibility_Code">
-				<VISIBILITY_CODE>(L:XMLVAR_LeverMixtureHidden1) !</VISIBILITY_CODE>
-			</UseTemplate> 
-		</Component>
 		<UseTemplate Name="ASOBO_FUEL_Switch_Pump_Template">
 			<ID>1</ID>
 			<SWITCH_TYPE>OFF_AUTO_ON</SWITCH_TYPE>
@@ -266,6 +258,14 @@
 			</UseTemplate>
 		</Component>
 		<UseTemplate Name="ASOBO_FUEL_Switch_Cutoff_Template">
+			<CONDITION_LEVER>True</CONDITION_LEVER>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_FUEL_Condition_Lever_Template">
+			<ID>1</ID>
+			<HIDE_NODE>True</HIDE_NODE>
+			<VALVE_NODE>True</VALVE_NODE>
+			<NODE_ID>FUEL_LEVER_MIXTURE_1</NODE_ID>
+			<ANIM_NAME>FUEL_LEVER_MIXTURE_1</ANIM_NAME>
 		</UseTemplate>
 		<CameraTitle>Overhead</CameraTitle>
 	</Component>

@@ -75,7 +75,7 @@
 
 		<Checkpoint ReferenceId="STARTER_ON_3STATES_XML"/>
 
-		<Checkpoint ReferenceId="FUEL_CONDITION_LEVER_LOW_IDLE">
+		<Checkpoint ReferenceId="FUEL_CONDITION_LEVER_LOW_IDLE_Template">
 			<ForceCamera name="Pedestal_Up"/>
 		</Checkpoint>
 
