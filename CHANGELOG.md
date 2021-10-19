@@ -1,9 +1,13 @@
 ## Changes
 
-**2110.alpha2**
+**2110.0.beta1**
+- New EIS function will work with stock G1000 (NXi not ready yet)
+- Improved EIS for WorkingTitle NXi (Engine Page, System Page)
+
+**2110.0.alpha2**
 - EIS Update for WorkingTitle NXi
 
-**2110.alpha1**
+**2110.0.alpha1**
 - Update for SU6
 
 **2109.2**

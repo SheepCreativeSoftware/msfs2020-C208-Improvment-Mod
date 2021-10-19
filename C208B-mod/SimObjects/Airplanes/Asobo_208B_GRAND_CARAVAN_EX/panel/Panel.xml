@@ -1115,7 +1115,7 @@
 				<ColorZone>
 					<Color>red</Color>
 					<Begin>2397</Begin>
-					<End>2600</End>
+					<End>2450</End>
 				</ColorZone>
 				<GraduationLength>100</GraduationLength>
 				<GraduationTextLength>500</GraduationTextLength>
@@ -1290,7 +1290,21 @@
 				</RedBlink>
 			</Gauge>
 			
+			<Text> <!--Adjust with a brake-->
+				<Style>
+					<Margins>
+						<Top>20</Top>
+					</Margins>
+				</Style>
+				<Center>---------------------------------</Center>
+			</Text>
+			
 			<Text>
+				<Style> <!--Adjust placement-->
+					<Margins>
+						<Bottom>10</Bottom>
+					</Margins>
+				</Style>
 				<Left>PROP RPM</Left>
 				<Right id="Turbo_RPMGauge">
 					<Content>
@@ -1430,6 +1444,11 @@
 			</Gauge>
 			
 			<Text>
+				<Style>
+					<Margins>
+						<Top>10</Top>
+					</Margins>
+				</Style>
 				<Left>L</Left>
 				<Center>FUEL QTY</Center>
 				<Right>R</Right>
@@ -1471,6 +1490,11 @@
 			</Gauge>
 			
 			<Text>
+				<Style>
+					<Margins>
+						<Top>10</Top>
+					</Margins>
+				</Style>
 				<Left fontsize="8">FFLOW PPH</Left>
 				<Right id="FuelFlow" fontsize="9">
 					<ToFixed precision="0">
@@ -1495,7 +1519,7 @@
 								</Greater>
 							</And>
 						</Condition>
-						<Then>
+						<Then> <!-- if Generator porvide current then correct amps -->
 							<ToFixed precision="0">
 								<Substract>
 									<Simvar name="ELECTRICAL MAIN BUS AMPS:1" unit="amp"/>
@@ -1503,7 +1527,7 @@
 								</Substract>
 							</ToFixed>
 						</Then>
-						<Else>
+						<Else> <!-- else use normal value -->
 							<ToFixed precision="0">
 								<Simvar name="ELECTRICAL MAIN BUS AMPS:1" unit="amp"/>
 							</ToFixed>
@@ -1512,7 +1536,7 @@
 				</Right>
 			</Text>
 			
-			<Text>
+			<Text> <!-- Don't use bat volts cause they negative -->
 				<Left fontsize="8">BUS VOLTS</Left>
 				<Right id="Volts" fontsize="9">
 					<ToFixed precision="1">
@@ -1551,7 +1575,7 @@
 				<ColorZone>
 					<Color>red</Color>
 					<Begin>2397</Begin>
-					<End>2600</End>
+					<End>2450</End>
 				</ColorZone>
 				<GraduationLength>100</GraduationLength>
 				<GraduationTextLength>500</GraduationTextLength>
@@ -1726,6 +1750,10 @@
 				</RedBlink>
 			</Gauge>
 			
+			<Text> <!--Adjust with a brake-->
+				<Center>---------------------------------</Center>
+			</Text>
+			
 			<Text>
 				<Left>PROP RPM</Left>
 				<Right id="Turbo_RPMGauge">
@@ -1767,9 +1795,9 @@
 			</Text>
 
 			<Text>
-			<Left>---</Left>
+			<Left>------------</Left>
 			<Center>FUEL</Center>
-			<Right>---</Right>
+			<Right>------------</Right>
 			</Text>
 			
 			<Text>
@@ -1806,16 +1834,19 @@
 			</Text>
 			
 			<Text>
-			<Left></Left>
-			<Center>FUEL TOTALIZER</Center>
-			<Right></Right>
+				<Left>--</Left>
+				<Center>FUEL TOTALIZER</Center>
+				<Right>--</Right>
 			</Text>
 
 			<Text>
 				<Left fontsize="8">LB REM</Left>			
 				<Right fontsize="9">
 					<ToFixed precision="0">
-						<Simvar name="FUEL TOTAL QUANTITY WEIGHT:1" unit="pounds"/>
+						<Multiply>
+							<Simvar name="L:WT1000_Fuel_GalRemaining" unit="gallon"/>
+							<Simvar name="FUEL WEIGHT PER GALLON" unit="pounds"/>
+						</Multiply>
 					</ToFixed>
 				</Right>
 			</Text>
@@ -1824,20 +1855,18 @@
 				<Left fontsize="8">LB USED</Left>			
 				<Right fontsize="9">
 					<ToFixed precision="0">
-						<Substract>
-							<MaxSinceStart>
-								<Simvar name="FUEL TOTAL QUANTITY WEIGHT:1" unit="pounds"/>
-							</MaxSinceStart>
-							<Simvar name="FUEL TOTAL QUANTITY WEIGHT:1" unit="pounds"/>
-						</Substract>
+						<Multiply>
+							<Simvar name="L:WT1000_Fuel_GalBurned" unit="gallon"/>
+							<Simvar name="FUEL WEIGHT PER GALLON" unit="pounds"/>
+						</Multiply>
 					</ToFixed>
 				</Right>
 			</Text>
 			
 			<Text>
-			<Left>-</Left>
-			<Center>ELECTRICAL</Center>
-			<Right>-</Right>
+				<Left>------</Left>
+				<Center>ELECTRICAL</Center>
+				<Right>------</Right>
 			</Text>
 			
 			<Text>
@@ -1856,7 +1885,7 @@
 								</Greater>
 							</And>
 						</Condition>
-						<Then>
+						<Then> <!-- if Generator provide power and battery is not zero-->
 							<If>
 								<Condition>
 									<And>
@@ -1870,21 +1899,21 @@
 										</Greater>
 									</And>
 								</Condition>
-								<Then>
+								<Then> <!--if both generators provide power then correct GEN amps cause Alternator only provides power when Generator does not -->
 									<ToFixed precision="0">
 										<Add>
-											<Add>
+											<Add> 
 												<Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
 												<Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
 											</Add>
-											<Substract>
+											<Substract> <!-- correct value by the factor of 74-->
 												<Simvar name="ELECTRICAL MAIN BUS AMPS:1" unit="amp"/>
 												<Constant>74</Constant>
 											</Substract>
 										</Add>
 									</ToFixed>
 								</Then>
-								<Else>
+								<Else> <!-- else if only one Generator provide power then only correct value-->
 									<ToFixed precision="0">
 										<Add>
 											<Add>
@@ -1897,7 +1926,7 @@
 								</Else>
 							</If>
 						</Then>
-						<Else>
+						<Else> <!--else set to zero-->
 							<Constant>0</Constant>
 						</Else>
 					</If>
@@ -1907,7 +1936,7 @@
 				<Left fontsize="8">ALT AMPS</Left>
 				<Right fontsize="9">
 					<If>
-						<Condition>
+						<Condition> 
 							<And>
 								<Equal>
 									<Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
@@ -1919,7 +1948,7 @@
 								</Greater>
 							</And>
 						</Condition>
-						<Then>
+						<Then> <!-- if Generator does not provide power and power ist provided then correct value with Alternator Amps-->
 							<ToFixed precision="0">
 								<Add>
 									<Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
@@ -1927,7 +1956,7 @@
 								</Add>
 							</ToFixed>
 						</Then>
-						<Else>
+						<Else> <!-- else set to zero -->
 							<Constant>0</Constant>
 						</Else>
 					</If>
@@ -1949,7 +1978,7 @@
 								</Greater>
 							</And>
 						</Condition>
-						<Then>
+						<Then> <!-- if Generators provide power then correct value by factor of 74-->
 							<ToFixed precision="0">
 								<Substract>
 									<Simvar name="ELECTRICAL MAIN BUS AMPS:1" unit="amp"/>
@@ -1957,7 +1986,7 @@
 								</Substract>
 							</ToFixed>
 						</Then>
-						<Else>
+						<Else> <!-- else use default main bus value-->
 							<ToFixed precision="0">
 								<Simvar name="ELECTRICAL MAIN BUS AMPS:1" unit="amp"/>
 							</ToFixed>
