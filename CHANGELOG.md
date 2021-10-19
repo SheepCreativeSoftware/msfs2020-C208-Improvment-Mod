@@ -1,5 +1,8 @@
 ## Changes
 
+**2110.x**
+- New EIS dynamic function now working with NXi
+
 **2110.0**
 - Tested Release Version
 
