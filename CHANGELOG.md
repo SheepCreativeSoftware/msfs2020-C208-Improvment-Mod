@@ -1,5 +1,11 @@
 ## Changes
 
+**2110.alpha2**
+- EIS Update for WorkingTitle NXi
+
+**2110.alpha1**
+- Update for SU6
+
 **2109.2**
 - Fixed texture of standby torque gauge
 
