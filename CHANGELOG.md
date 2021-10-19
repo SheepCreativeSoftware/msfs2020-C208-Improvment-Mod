@@ -1,5 +1,8 @@
 ## Changes
 
+**2110.0**
+- Tested Release Version
+
 **2110.0.beta1**
 - New EIS function will work with stock G1000 (NXi not ready yet)
 - Improved EIS for WorkingTitle NXi (Engine Page, System Page)
