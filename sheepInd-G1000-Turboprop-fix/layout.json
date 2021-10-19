@@ -1,19 +1,9 @@
 {
   "content": [
     {
-      "path": "html_ui/Pages/VCockpit/Instruments/NavSystems/AS1000/PFD/AS1000_PFD.html",
-      "size": 130,
-      "date": 132731741840148320
-    },
-    {
       "path": "html_ui/SheepInd/Pages/VCockpit/Instruments/NavSystems/AS1000/PFD/AS1000_PFD.html",
-      "size": 40009,
-      "date": 132731748019314931
-    },
-    {
-      "path": "html_ui/SheepInd/Pages/VCockpit/Instruments/NavSystems/Shared/CommonPFD_MFD.js",
-      "size": 196556,
-      "date": 132729170275632438
+      "size": 40013,
+      "date": 132791587053410106
     }
   ]
 }
