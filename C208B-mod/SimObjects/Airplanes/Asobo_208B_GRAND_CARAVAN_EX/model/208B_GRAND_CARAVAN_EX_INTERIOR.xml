@@ -365,6 +365,19 @@
 			<UseTemplate Name="ASOBO_GT_Component_Emissive_Gauge">
 				<NODE_ID>LIGHTING_KNOB_POTENTIOMETER</NODE_ID>
 			</UseTemplate>
+
+      <UseTemplate Name="ASOBO_GT_Switch_Dummy">
+        <NODE_ID>SWITCH_LIGHTS_NOSMOKE</NODE_ID>
+        <ANIM_NAME>SWITCH_LIGHTS_NOSMOKE</ANIM_NAME>
+        <ANIMTIP_0>TT:COCKPIT.TOOLTIPS.LIGHTS_NOSMOKE_OFF</ANIMTIP_0>
+        <ANIMTIP_1>TT:COCKPIT.TOOLTIPS.LIGHTS_NOSMOKE_ON</ANIMTIP_1>
+      </UseTemplate>
+      <UseTemplate Name="ASOBO_GT_Switch_Dummy">
+        <NODE_ID>SWITCH_LIGHTS_SEATBELT</NODE_ID>
+        <ANIM_NAME>SWITCH_LIGHTS_SEATBELT</ANIM_NAME>
+        <ANIMTIP_0>TT:COCKPIT.TOOLTIPS.LIGHTS_SEATBELT_OFF</ANIMTIP_0>
+        <ANIMTIP_1>TT:COCKPIT.TOOLTIPS.LIGHTS_SEATBELT_ON</ANIMTIP_1>
+      </UseTemplate>
 		</Component>
 		
 		<!-- SW/CB : backlighting -->
@@ -680,12 +693,6 @@
 	
 	<!-- DUMMIES ####################################-->	
 	<Component ID="DUMMY">
-		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
-			<NODE_ID>SWITCH_LIGHTS_NOSMOKE</NODE_ID>
-		</UseTemplate>
-		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
-			<NODE_ID>SWITCH_LIGHTS_SEATBELT</NODE_ID>
-		</UseTemplate>
 		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
 			<NODE_ID>SWITCH_ANTIICE_BACKUP</NODE_ID>
 		</UseTemplate>
