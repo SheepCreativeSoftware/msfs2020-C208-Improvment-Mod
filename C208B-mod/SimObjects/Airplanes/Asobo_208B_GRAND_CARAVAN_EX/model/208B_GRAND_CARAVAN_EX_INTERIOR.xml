@@ -1,0 +1,831 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ModelInfo>
+	<LODS>
+		<!-- Highest LOD -->
+		<!-- minimum display size in % (should be bounding sphere vertical screen size, sphere will often be slightly larger than you expect) -->
+		<!-- default minSize is 0 -->
+		<LOD minSize="250" ModelFile="208B_GRAND_CARAVAN_EX_INTERIOR_LOD00.gltf"/>
+		<LOD minSize="110" ModelFile="208B_GRAND_CARAVAN_EX_INTERIOR_LOD01.gltf"/>
+		<LOD minSize="50" ModelFile="208B_GRAND_CARAVAN_EX_INTERIOR_LOD02.gltf"/>
+		<LOD minSize="25" ModelFile="208B_GRAND_CARAVAN_EX_INTERIOR_LOD03.gltf"/>
+		<LOD minSize="5" ModelFile="208B_GRAND_CARAVAN_EX_INTERIOR_LOD04.gltf"/>
+		<!-- <LOD minSize="2" ModelFile="208B_GRAND_CARAVAN_EX_INTERIOR_LOD05.gltf"/> -->
+		<LOD minSize="1" ModelFile="208B_GRAND_CARAVAN_EX_INTERIOR_LOD06.gltf"/>
+	</LODS>
+	<Behaviors>
+		<Include ModelBehaviorFile="Asobo\Common.xml"/>
+		<Include ModelBehaviorFile="Asobo\GlassCockpit\AS1000.xml"/>
+		<Include ModelBehaviorFile="Asobo\NAVCOM\ADF.xml"/>
+
+	<!-- HANDLING #######################################-->
+	<Component ID="ADF">
+		<UseTemplate Name="ASOBO_ADF_AS87_Template">
+			<EMISSIVE_POTENTIOMETER>30</EMISSIVE_POTENTIOMETER>
+			<CIRCUIT_ADF>43</CIRCUIT_ADF>
+			<BUTTON_EMISSIVE_FACTOR>0.2</BUTTON_EMISSIVE_FACTOR>
+		</UseTemplate>
+	</Component>
+	
+	<!-- HANDLING #######################################-->
+	<Component ID="HANDLING_Pedestal_Up">
+		<UseTemplate Name="ASOBO_HANDLING_RudderPedals_Template">
+			<RUDDERPEDALS_TYPE>MIXED</RUDDERPEDALS_TYPE>
+			<NODE_ID_L_BRAKE_1>HANDLING_RudderPedals_Brake_1_1</NODE_ID_L_BRAKE_1>
+			<NODE_ID_L_BRAKE_2>HANDLING_RudderPeddals_Brake_2_1</NODE_ID_L_BRAKE_2>
+			<NODE_ID_R_BRAKE_1>HANDLING_RudderPedals_Brake_1_2</NODE_ID_R_BRAKE_1>
+			<NODE_ID_R_BRAKE_2>HANDLING_RudderPeddals_Brake_2_2</NODE_ID_R_BRAKE_2>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_HANDLING_Wheel_ElevatorTrim_Template">
+			<NEEDLE_NODE_ID>HANDLING_Wheel_ElevatorTrim_Indicator</NEEDLE_NODE_ID>
+			<NEEDLE_ANIM_NAME>HANDLING_Wheel_ElevatorTrim_Indicator</NEEDLE_ANIM_NAME>
+			<HIGHLIGHT_NODE_ID>HANDLING_Wheel_ElevatorTrim_Visual</HIGHLIGHT_NODE_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_HANDLING_Indicator_ElevatorTrim_Template">
+			<ANIM_NAME>HANDLING_Wheel_ElevatorTrim_Indicator</ANIM_NAME> 
+		</UseTemplate>
+			<Component ID="Flaps_Visibility" Node="HANDLING_LEVER_FLAPS">
+			<UseTemplate Name="ASOBO_GT_Visibility_Code">
+				<VISIBILITY_CODE>(L:XMLVAR_LeverFlapsHidden) !</VISIBILITY_CODE>
+			</UseTemplate> 
+		</Component>
+		<UseTemplate Name="ASOBO_HANDLING_Lever_Flaps_Continuous_Template">
+			<DRAG_SPEED>20</DRAG_SPEED>
+			<USE_TRAJECTORY_DRAG_MODE>True</USE_TRAJECTORY_DRAG_MODE>
+			<INVERT_IM_DRAG_INPUT_SCALAR>True</INVERT_IM_DRAG_INPUT_SCALAR>
+		</UseTemplate>
+		<CameraTitle>Pedestal_Up</CameraTitle>
+	</Component>
+	
+	<Component ID="HANDLING_Pedestal_Down">
+		<UseTemplate Name="ASOBO_HANDLING_Knob_RudderTrim_Template">
+			<NO_ARROWS/>
+			<NEEDLE_NODE_ID>HANDLING_Knob_RudderTrim_Indicator</NEEDLE_NODE_ID>
+			<NEEDLE_ANIM_NAME>HANDLING_Knob_RudderTrim_Indicator</NEEDLE_ANIM_NAME>
+			<KNOB_HIGHLIGHT_NODE_ID>HANDLING_Knob_RudderTrim_Visual</KNOB_HIGHLIGHT_NODE_ID>
+		</UseTemplate>	
+		<UseTemplate Name="ASOBO_HANDLING_Knob_AileronTrim_Template">
+			<ANIM_SIMVAR_SCALE>0.5</ANIM_SIMVAR_SCALE>
+			<NEEDLE_NODE_ID>HANDLING_Knob_AileronTrim_Indicator</NEEDLE_NODE_ID>
+			<NEEDLE_ANIM_NAME>HANDLING_Knob_AileronTrim_Indicator</NEEDLE_ANIM_NAME>
+			<INVERT_KNOB_ANIM>False</INVERT_KNOB_ANIM>
+			<TT_ICON>ROTATE</TT_ICON>
+		</UseTemplate>
+		<CameraTitle>Pedestal_Down</CameraTitle>
+	</Component>
+	
+	<Component ID="YOKES">
+	
+		<!-- <UseTemplate Name="ASOBO_HANDLING_Yoke_Hideable_Template"> -->
+			<!-- <TOOLTIPID>TT:COCKPIT.TOOLTIPS.YOKE_VISIBILITY</TOOLTIPID> -->
+		<!-- </UseTemplate> -->
+		<!-- <UseTemplate Name="ASOBO_HANDLING_Yoke_Hider_Template"> -->
+			<!-- <ID>1</ID> -->
+			<!-- <NODE_ID>HANDLING_Yoke_Hider_1_Add</NODE_ID> -->
+			<!-- <HIGHLIGHT_NODE_ID>HANDLING_Yoke_1</HIGHLIGHT_NODE_ID> -->
+		<!-- </UseTemplate> -->
+		<!-- <UseTemplate Name="ASOBO_HANDLING_Yoke_Hideable_Template"> -->
+			<!-- <ID>2</ID> -->
+			<!-- <ONLY_HIDEABLE/> -->
+		<!-- </UseTemplate> -->
+		<!-- <UseTemplate Name="ASOBO_HANDLING_Yoke_Hider_Template"> -->
+			<!-- <ID>2</ID> -->
+			<!-- <NODE_ID>HANDLING_Yoke_Hider_2_Add</NODE_ID> -->
+			<!-- <HIGHLIGHT_NODE_ID>HANDLING_Yoke_2</HIGHLIGHT_NODE_ID> -->
+		<!-- </UseTemplate> -->
+		<!-- <UseTemplate Name="ASOBO_HANDLING_Yoke_Hideable_Template"> -->
+			<!-- <NODE_ID>HANDLING_Yoke_Cable_1</NODE_ID> -->
+			<!-- <ID>1</ID> -->
+			<!-- <ONLY_DECORATIVE/> -->
+		<!-- </UseTemplate> -->
+		<!-- <UseTemplate Name="ASOBO_HANDLING_Yoke_Hideable_Template"> -->
+			<!-- <NODE_ID>HANDLING_Yoke_Cable_2</NODE_ID> -->
+			<!-- <ID>2</ID> -->
+			<!-- <ONLY_DECORATIVE/> -->
+		<!-- </UseTemplate> -->
+		
+		<UseTemplate Name="ASOBO_HANDLING_Yoke_Hideable_Template">
+			<NODE_ID>yoke_left</NODE_ID>
+			<YOKE_HIDER_NODE_ID>YOKE_LEFT_VISIBILITY</YOKE_HIDER_NODE_ID>
+			<YOKE_NODE_ID>yoke_left</YOKE_NODE_ID>
+			<ANIM_NAME_YOKE_X>HANDLING_Yoke_Lever_StickLR</ANIM_NAME_YOKE_X>
+			<ANIM_NAME_YOKE_Y>HANDLING_Yoke_Lever_StickForeAft</ANIM_NAME_YOKE_Y>
+			<AP_CAN_DRIVE_ANIMATION>True</AP_CAN_DRIVE_ANIMATION>
+			<ID>1</ID>
+		</UseTemplate>
+		
+		<UseTemplate Name="ASOBO_HANDLING_Yoke_Hideable_Template">
+			<NODE_ID>yoke_right</NODE_ID>
+			<YOKE_HIDER_NODE_ID>YOKE_RIGHT_VISIBILITY</YOKE_HIDER_NODE_ID>
+			<YOKE_NODE_ID>yoke_right</YOKE_NODE_ID>
+			<ID>2</ID>
+			<ONLY_HIDEABLE/>
+		</UseTemplate>
+		
+		<UseTemplate Name="ASOBO_HANDLING_Yoke_Hideable_Template">
+			<NODE_ID>HANDLING_Yoke_1_Cable</NODE_ID>
+			<ID>1</ID>
+			<ONLY_DECORATIVE/>
+		</UseTemplate>
+		
+		<UseTemplate Name="ASOBO_HANDLING_Yoke_Hideable_Template">
+			<NODE_ID>HANDLING_Yoke_2_Cable</NODE_ID>
+			<ID>2</ID>
+			<ONLY_DECORATIVE/>
+		</UseTemplate>
+		
+		<CameraTitle>Yokes</CameraTitle>
+	</Component>
+	
+	<Component ID="HANDLING_Inertsep">
+		<UseTemplate Name="ASOBO_HANDLING_Lever_InertSep_Template">
+			<NODE_ID>HANDLING_Lever_TrimLock</NODE_ID>
+			<ANIM_NAME>HANDLING_Lever_TrimLock</ANIM_NAME>
+			<WWISE_EVENT_1>trimlock_lever_on</WWISE_EVENT_1>
+			<WWISE_EVENT_2>trimlock_lever_off</WWISE_EVENT_2>
+			<ANIM_LAG>100</ANIM_LAG>
+			<INVERT_SWITCH_ON_CONDITION>True</INVERT_SWITCH_ON_CONDITION>
+		</UseTemplate>
+		<CameraTitle>Switches2</CameraTitle>
+	</Component>
+	
+	<!-- LANDING GEARS ##################################-->
+	<Component ID="LANDING_GEAR">
+		<UseTemplate Name="ASOBO_LANDING_GEAR_Switch_ParkingBrake_Template">
+			<ANIM_SIMVAR_SCALE>100</ANIM_SIMVAR_SCALE>
+			<ANIM_DELAY>0.5</ANIM_DELAY>
+			<INVERT_SWITCH_ON_CONDITION>True</INVERT_SWITCH_ON_CONDITION>
+		</UseTemplate>
+		<CameraTitle>Switches1</CameraTitle>
+	</Component>
+
+	<!-- ELECTRICAL #####################################-->
+	<Component ID="ELECTRICAL">
+		<UseTemplate Name="ASOBO_ELECTRICAL_Switch_Battery_Master_Template">
+			<ANIM_NAME>ELECTRICAL_Switch_Battery_Master</ANIM_NAME>
+			<NODE_ID>ELECTRICAL_Switch_Battery_Master</NODE_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_ELECTRICAL_Switch_Avionics_Bus_Template">
+			<ID>1</ID>
+			<AVIONICS_BUS_ID>8</AVIONICS_BUS_ID> 
+			<SOURCE_BUS_ID>1</SOURCE_BUS_ID> 
+			<AVIONICS_CIRCUIT_ID>26</AVIONICS_CIRCUIT_ID>
+			<NODE_ID>ELECTRICAL_Switch_Avionics_Master_1</NODE_ID>
+			<ANIM_NAME>ELECTRICAL_Switch_Avionics_Master_1</ANIM_NAME>
+			<PART_ID>ELECTRICAL_Switch_Avionics_Master_1</PART_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_ELECTRICAL_Switch_Avionics_Bus_Template">
+			<ID>2</ID>
+			<AVIONICS_BUS_ID>9</AVIONICS_BUS_ID> 
+			<SOURCE_BUS_ID>1</SOURCE_BUS_ID> 
+			<AVIONICS_CIRCUIT_ID>27</AVIONICS_CIRCUIT_ID>
+			<NODE_ID>ELECTRICAL_Switch_Avionics_Master_2</NODE_ID>
+			<ANIM_NAME>ELECTRICAL_Switch_Avionics_Master_2</ANIM_NAME>
+			<PART_ID>ELECTRICAL_Switch_Avionics_Master_2</PART_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_ELECTRICAL_Switch_Alternator_Template">
+			<TYPE>RESET_ON_TRIP</TYPE>
+			<INVERT_SWITCH_ON_CONDITION>True</INVERT_SWITCH_ON_CONDITION>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_ELECTRICAL_Switch_Alternator_STBY_Template">
+			<LIGHT_NODE_ID>ELECTRICAL_Light_Alternator_STBY</LIGHT_NODE_ID>
+			<SOURCE_BUS_ID>10</SOURCE_BUS_ID>
+			<DESTINATION_BUS>11</DESTINATION_BUS>
+			<DONT_OVERRIDE_BASE_EMISSIVE>True</DONT_OVERRIDE_BASE_EMISSIVE>
+			<DEFAULT_EMISSIVE>1</DEFAULT_EMISSIVE>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_ELECTRICAL_Switch_Avionics_STBY_Power_Template">
+			<SOURCE_BUS_ID>8</SOURCE_BUS_ID>
+			<DESTINATION_BUS>11</DESTINATION_BUS>
+				<INVERT_COVER_ANIM>True</INVERT_COVER_ANIM>
+				<TT_DESCRIPTION_ID>@TT_Package.ELECTRICAL_SWITCH_AVIONICS_STANDBY_ACTION_SET</TT_DESCRIPTION_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_ELECTRICAL_Switch_Avionics_Bus_Tie_Template">
+			<SOURCE_BUS_ID>8</SOURCE_BUS_ID>
+			<DESTINATION_BUS>9</DESTINATION_BUS>
+				<INVERT_COVER_ANIM>True</INVERT_COVER_ANIM>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_ELECTRICAL_Switch_ExternalPower_Template">
+			<NUM_STATES>3</NUM_STATES>
+				<TT_DESCRIPTION_ID>@TT_Package.ELECTRICAL_EXTERNAL_POWER_ACTION</TT_DESCRIPTION_ID>
+		</UseTemplate>
+		<CameraTitle>Engines</CameraTitle>
+	</Component>	
+
+	<!-- FUEL ###########################################-->
+	<Component ID="FUEL">
+		<UseTemplate Name="ASOBO_FUEL_Switch_Pump_Template">
+			<ID>1</ID>
+			<SWITCH_TYPE>OFF_AUTO_ON</SWITCH_TYPE>
+			<STATE_OFF>2</STATE_OFF>
+			<STATE_ON>0</STATE_ON>
+			<STATE_AUTO>1</STATE_AUTO>
+		</UseTemplate>
+		<Component ID="Fuel_Selectors">
+			<Parameters Type="Override">
+				<SELECTOR_TYPE>INDEPENDANT</SELECTOR_TYPE>
+				<ENG_ID>1</ENG_ID>
+				<IS_VALID_ENUM_VAL_TEST_EXTERNAL>l0 1 ==</IS_VALID_ENUM_VAL_TEST_EXTERNAL>
+				<ENUM_VAL_TO_POS_EXTERNAL>l0 1 == if{ 1 sp1 g1 }</ENUM_VAL_TO_POS_EXTERNAL>
+			</Parameters>
+			<UseTemplate Name="ASOBO_FUEL_Knob_Selector_Template">
+				<INVERT_SWITCH_ON_CONDITION>True</INVERT_SWITCH_ON_CONDITION>
+				<PART_ID>FUEL_SELECTOR_LEFT</PART_ID>
+				<TT_DESCRIPTION_ID>@TT_Package.FUEL_SELECTOR_ACTION_SET</TT_DESCRIPTION_ID>
+				<TT_DESCRIPTION_INDEX>(R:1:@TT_Package.GT_STATE_LEFT)</TT_DESCRIPTION_INDEX>
+				<ID>1</ID>
+				<SELECTOR_STATE_0>OFF</SELECTOR_STATE_0>
+				<SELECTOR_STATE_1>LEFT</SELECTOR_STATE_1>
+				<POS_TO_ENUM_VAL_EXTERNAL>
+					l0 0 == if{ 3 0 (A:FUEL TANK SELECTOR:#ENG_ID#, Enum) 2 != ? sp1 g1 }
+					l0 1 == if{ 1 2 (A:FUEL TANK SELECTOR:#ENG_ID#, Enum) 3 == ? sp1 g1 }
+				</POS_TO_ENUM_VAL_EXTERNAL>
+				<ENUM_VAL_TO_POS_EXTERNAL>#ENUM_VAL_TO_POS_EXTERNAL# l0 3 == if{ 0 sp1 g1 }</ENUM_VAL_TO_POS_EXTERNAL>
+				<IS_VALID_ENUM_VAL_TEST_EXTERNAL>#IS_VALID_ENUM_VAL_TEST_EXTERNAL# l0 3 == or</IS_VALID_ENUM_VAL_TEST_EXTERNAL>
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_FUEL_Knob_Selector_Template">
+				<PART_ID>FUEL_SELECTOR_RIGHT</PART_ID>
+				<TT_DESCRIPTION_ID>@TT_Package.FUEL_SELECTOR_ACTION_SET</TT_DESCRIPTION_ID>
+				<TT_DESCRIPTION_INDEX>(R:1:@TT_Package.GT_STATE_RIGHT)</TT_DESCRIPTION_INDEX>
+				<ID>2</ID>
+				<SELECTOR_STATE_0>OFF</SELECTOR_STATE_0>
+				<SELECTOR_STATE_1>RIGHT</SELECTOR_STATE_1>
+				<POS_TO_ENUM_VAL_EXTERNAL>
+					l0 0 == if{ 2 0 (A:FUEL TANK SELECTOR:#ENG_ID#, Enum) 3 != ? sp1 g1 }
+					l0 1 == if{ 1 3 (A:FUEL TANK SELECTOR:#ENG_ID#, Enum) 2 == ? sp1 g1 }
+				</POS_TO_ENUM_VAL_EXTERNAL>
+				<ENUM_VAL_TO_POS_EXTERNAL>#ENUM_VAL_TO_POS_EXTERNAL# l0 2 == if{ 0 sp1 g1 }</ENUM_VAL_TO_POS_EXTERNAL>
+				<IS_VALID_ENUM_VAL_TEST_EXTERNAL>#IS_VALID_ENUM_VAL_TEST_EXTERNAL# l0 2 == or</IS_VALID_ENUM_VAL_TEST_EXTERNAL>
+			</UseTemplate>
+		</Component>
+		<UseTemplate Name="ASOBO_FUEL_Switch_Cutoff_Template">
+			<CONDITION_LEVER>True</CONDITION_LEVER>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_FUEL_Condition_Lever_Template">
+			<ID>1</ID>
+			<HIDE_NODE>True</HIDE_NODE>
+			<VALVE_NODE>True</VALVE_NODE>
+			<NODE_ID>FUEL_LEVER_MIXTURE_1</NODE_ID>
+			<ANIM_NAME>FUEL_LEVER_MIXTURE_1</ANIM_NAME>
+		</UseTemplate>
+		<CameraTitle>Overhead</CameraTitle>
+	</Component>
+
+	<!-- ENGINE START ###################################-->
+	<Component ID="ENGINE">
+		<UseTemplate Name="ASOBO_ENGINE_Switch_Starter_Template">
+			<WWISE_EVENT>electrical_switch_battery_master</WWISE_EVENT>
+			<AUDIO_DIRECTION>Both</AUDIO_DIRECTION>
+			<ANIM_EVENT_EFFECT_NAME>CAM_ENGINE_START</ANIM_EVENT_EFFECT_NAME>
+			<NORMALIZED_TIME>0.01</NORMALIZED_TIME>
+			<DIRECTION>Forward</DIRECTION>
+			<TYPE>3Values_StarterIgnition</TYPE>
+			<NODE_ID>ENGINE_Switch_Starter</NODE_ID>
+			<ANIM_NAME>ENGINE_Switch_Starter</ANIM_NAME>
+			<TT_DESCRIPTION_ID>@TT_Package.ENGINE_STARTER_ACTION_SET_1ENG</TT_DESCRIPTION_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_ENGINE_Switch_Ignition_Template">
+			<NODE_ID>ENGINE_Switch_Ignition</NODE_ID>
+			<ANIM_NAME>ENGINE_Switch_Ignition</ANIM_NAME>
+			<NUM_STATES>2</NUM_STATES>
+			<TT_DESCRIPTION_ID>@TT_Package.ENGINE_IGNITION_ACTION_SET_1ENG</TT_DESCRIPTION_ID>
+		</UseTemplate>
+			<Component ID="Throttle_1_Visibility" Node="ENGINE_LEVER_THROTTLE_1">
+			<UseTemplate Name="ASOBO_GT_Visibility_Code">
+				<VISIBILITY_CODE>(L:XMLVAR_LeverThrottleHidden1) !</VISIBILITY_CODE>
+			</UseTemplate> 
+		</Component>
+		<UseTemplate Name="ASOBO_ENGINE_Lever_Throttle_Template">
+			<ID>1</ID>
+			<HAS_IDLE_GATE/>
+			<IDLE_GATE_ANIM_POS>0.2</IDLE_GATE_ANIM_POS>
+		</UseTemplate>
+			<Component ID="Propeller_1_Visibility" Node="ENGINE_LEVER_PROPELLER_1">
+			<UseTemplate Name="ASOBO_GT_Visibility_Code">
+				<VISIBILITY_CODE>(L:XMLVAR_LeverPropellerHidden1) !</VISIBILITY_CODE>
+			</UseTemplate> 
+		</Component>
+		<UseTemplate Name="ASOBO_ENGINE_Lever_Propeller_Template">
+			<IDLE_GATE_ANIM_POS>0.25</IDLE_GATE_ANIM_POS>
+			<LEVER_TYPE>REVERSE_IDLE_FULL</LEVER_TYPE>
+		</UseTemplate>
+		<CameraTitle>Engines</CameraTitle>
+	</Component>
+	
+	<!-- LIGHTING #######################################-->
+	<Component ID="LIGHTING_Knobs">
+		<DefaultTemplateParameters>
+			<ANIM_WRAP>False</ANIM_WRAP>
+			<KNOB_EMISSIVE_POTENTIOMETER>3</KNOB_EMISSIVE_POTENTIOMETER>
+			<KNOB_TURN_SPEED>5</KNOB_TURN_SPEED>
+			<DONT_OVERRIDE_BASE_EMISSIVE>false</DONT_OVERRIDE_BASE_EMISSIVE>
+		</DefaultTemplateParameters>
+		<UseTemplate Name="ASOBO_LIGHTING_Ambient_Template">
+			<BOUNCE_POTENTIOMETER_PERCENT>
+				(A:LIGHT CABIN ON:3, Bool)
+				(A:LIGHT CABIN ON:4, Bool) + 
+				2 / 100 *
+			</BOUNCE_POTENTIOMETER_PERCENT>
+			<POTENTIOMETER>14</POTENTIOMETER>
+			<ID>3</ID>
+		</UseTemplate>
+		
+		<!-- Decals emissive -->
+		<UseTemplate Name="ASOBO_LIGHTING_Pedestal_Emissive_Template">
+			<NODE_ID>LIGHTING_Light_Pedestal</NODE_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_LIGHTING_Panel_Emissive_Template">
+			<NODE_ID>DECALS_Emissive</NODE_ID>
+			<POTENTIOMETER>3</POTENTIOMETER>
+			<EMISSIVE_CODE>0.1</EMISSIVE_CODE>
+			<NO_SIMVAR_LIGHT/>
+			<DONT_OVERRIDE_BASE_EMISSIVE>False</DONT_OVERRIDE_BASE_EMISSIVE>
+			<TT_DESCRIPTION_ID>@TT_Package.LIGHTING_KNOB_STDYINSTRUBRIGHTNESS_ACTION_SET</TT_DESCRIPTION_ID>
+			<TOOLTIP_TITLE>@TT_Package.LIGHTING_KNOB_STDYINSTRUBRIGHTNESS_TITLE</TOOLTIP_TITLE> 
+		</UseTemplate>
+		
+		<Component ID="LIGHTING_Knobs_Emissives">
+			<Parameters Type="Default">
+				<POTENTIOMETER>3</POTENTIOMETER>
+			</Parameters>
+			<UseTemplate Name="ASOBO_GT_Component_Emissive_Gauge">
+				<NODE_ID>LIGHTING_KNOB_AVIONICS</NODE_ID>
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_GT_Component_Emissive_Gauge">
+				<NODE_ID>LIGHTING_KNOB_CABIN_1</NODE_ID>
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_GT_Component_Emissive_Gauge">
+				<NODE_ID>LIGHTING_KNOB_CABIN_2</NODE_ID>
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_GT_Component_Emissive_Gauge">
+				<NODE_ID>LIGHTING_KNOB_PANEL</NODE_ID>
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_GT_Component_Emissive_Gauge">
+				<NODE_ID>LIGHTING_KNOB_PEDESTAL</NODE_ID>
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_GT_Component_Emissive_Gauge">
+				<NODE_ID>LIGHTING_KNOB_POTENTIOMETER</NODE_ID>
+			</UseTemplate>
+		</Component>
+		
+		<!-- SW/CB : backlighting -->
+		<UseTemplate Name="ASOBO_LIGHTING_Knob_Potentiometer_Template">
+			<NODE_ID>KNOB_POTENTIOMETER</NODE_ID>
+			<POTENTIOMETER>3</POTENTIOMETER>
+			<INIT_VALUE>(A:LIGHT PANEL, Bool) 100 *</INIT_VALUE>
+			<TT_DESCRIPTION_ID>@TT_Package.LIGHTING_SWITCH_LIGHT_PANEL_ACTION</TT_DESCRIPTION_ID>
+			<TOOLTIP_TITLE>@TT_Package.LIGHTING_SWITCH_LIGHT_PANEL_TITLE</TOOLTIP_TITLE>
+		</UseTemplate>
+		
+		<!-- STBY IND : standby instruments-->
+		<UseTemplate Name="ASOBO_LIGHTING_Knob_Panel_Template">
+			<NODE_ID>KNOB_PANEL</NODE_ID>
+			<POTENTIOMETER>2</POTENTIOMETER>
+			<TT_DESCRIPTION_ID>@TT_Package.LIGHTING_KNOB_STDYINSTRUBRIGHTNESS_ACTION_SET</TT_DESCRIPTION_ID>
+			<TOOLTIP_TITLE>@TT_Package.LIGHTING_KNOB_STDYINSTRUBRIGHTNESS_TITLE</TOOLTIP_TITLE>
+		</UseTemplate>
+		
+		<!-- PEDESTAL : pedestal/OVHD/CB-->
+		<UseTemplate Name="ASOBO_LIGHTING_Knob_Pedestal_Template">
+			<NODE_ID>KNOB_PEDESTAL</NODE_ID>
+			<ANIM_NAME>LIGHTING_Knob_Pedestal</ANIM_NAME>
+			<ANIMREF_ID>0</ANIMREF_ID>
+			<TT_DESCRIPTION_ID>@TT_Package.LIGHTING_SWITCH_LIGHT_PEDESTAL_BRIGHTNESS_ACTION</TT_DESCRIPTION_ID>
+			<TOOLTIP_TITLE>@TT_Package.LIGHTING_KNOB_PEDESTAL_TITLE</TOOLTIP_TITLE>
+		</UseTemplate>
+		
+		<!-- Avionics-->
+		<UseTemplate Name="ASOBO_LIGHTING_Knob_Avionics_Template">
+			<NODE_ID>KNOB_AVIONICS</NODE_ID>
+			<POTENTIOMETER>30</POTENTIOMETER>
+			<!-- <ANIMREF_ID>0</ANIMREF_ID> -->
+			<ANIMREF_ID>0</ANIMREF_ID>
+			<ANIMTIP_0_ON_CURSOR>TurnLeft</ANIMTIP_0_ON_CURSOR>
+			<ANIMTIP_1_ON_CURSOR>TurnRight</ANIMTIP_1_ON_CURSOR>
+			<TT_DESCRIPTION_ID>@TT_Package.LIGHTING_KNOB_AVIONICSBRIGHTNESS_ACTION_SET</TT_DESCRIPTION_ID>
+			<TOOLTIP_TITLE>@TT_Package.LIGHTING_KNOB_AVIONICSBRIGHTNESS_TITLE</TOOLTIP_TITLE>
+		</UseTemplate>
+		
+		<Component ID="LIGHTING_Flood">
+			<Component ID="LIGTHING_Knobs_Flood">
+				<!-- Left Flood -->
+				<UseTemplate Name="ASOBO_LIGHTING_Knob_Cabin_Template">
+					<NODE_ID>KNOB_CABIN_1</NODE_ID>
+					<POTENTIOMETER>13</POTENTIOMETER>
+					<ID>1</ID>
+					<ANIMREF_ID>0</ANIMREF_ID>
+					<TT_DESCRIPTION_ID>@TT_Package.LIGHTING_KNOB_LIGHT_FLOODLIGHT_BRIGHTNESS_ACTION</TT_DESCRIPTION_ID>
+					<TOOLTIP_TITLE>@TT_Package.LIGHTING_KNOB_LIGHT_FLOODLIGHT_BRIGHTNESS_TITLE</TOOLTIP_TITLE>
+					<SIMVAR_INDEX>2</SIMVAR_INDEX>
+					<!-- <NO_AUTHORITY_OVER_SWITCH_STATE/> -->
+				</UseTemplate>
+				<!-- Right Flood -->
+				<UseTemplate Name="ASOBO_LIGHTING_Knob_Cabin_Template">
+					<NODE_ID>KNOB_CABIN</NODE_ID>
+					<POTENTIOMETER>12</POTENTIOMETER>
+					<ID>2</ID>
+					<ANIMREF_ID>0</ANIMREF_ID>
+					<TT_DESCRIPTION_ID>@TT_Package.LIGHTING_KNOB_LIGHT_FLOODLIGHT_BRIGHTNESS_ACTION</TT_DESCRIPTION_ID>
+					<TOOLTIP_TITLE>@TT_Package.LIGHTING_KNOB_LIGHT_FLOODLIGHT_BRIGHTNESS_TITLE</TOOLTIP_TITLE>
+					<SIMVAR_INDEX>1</SIMVAR_INDEX>
+					<!-- <NO_AUTHORITY_OVER_SWITCH_STATE/> -->
+				</UseTemplate>
+			</Component>
+			<Component ID="LIGHTING_Lights_Flood">
+				<UseTemplate Name="ASOBO_LIGHTING_Cabin_Emissive_Template">
+					<NODE_ID>LIGHTING_Light_FloodPilot</NODE_ID>
+					<POTENTIOMETER>13</POTENTIOMETER>
+					<SIMVAR_INDEX>2</SIMVAR_INDEX>
+					<TT_DESCRIPTION_ID>@TT_Package.LIGHTING_KNOB_CABIN_ACTION</TT_DESCRIPTION_ID>
+					<TOOLTIP_TITLE>@TT_Package.LIGHTING_KNOB_CABIN_TITLE</TOOLTIP_TITLE>
+					<TT_DESCRIPTION_INDEX>(R:1:@TT_Package.GT_STATE_LEFT)</TT_DESCRIPTION_INDEX>	
+				</UseTemplate>
+				<UseTemplate Name="ASOBO_LIGHTING_Cabin_Emissive_Template">
+					<NODE_ID>LIGHTING_Light_FloodCopilot</NODE_ID>
+					<POTENTIOMETER>12</POTENTIOMETER>
+					<SIMVAR_INDEX>1</SIMVAR_INDEX>
+					<TT_DESCRIPTION_ID>@TT_Package.LIGHTING_KNOB_CABIN_ACTION</TT_DESCRIPTION_ID>
+					<TOOLTIP_TITLE>@TT_Package.LIGHTING_KNOB_CABIN_TITLE</TOOLTIP_TITLE>
+					<TT_DESCRIPTION_INDEX>(R:1:@TT_Package.GT_STATE_RIGHT)</TT_DESCRIPTION_INDEX>	
+				</UseTemplate>
+				<UseTemplate Name="ASOBO_LIGHTING_Ambient_Template">
+					<BOUNCE_POTENTIOMETER_PERCENT>
+						(A:LIGHT CABIN ON:1, Bool) (A:LIGHT POTENTIOMETER:12, percent) * 2 /
+						(A:LIGHT CABIN ON:2, Bool) (A:LIGHT POTENTIOMETER:13, percent) * 2 / +
+					</BOUNCE_POTENTIOMETER_PERCENT>
+					<POTENTIOMETER>18</POTENTIOMETER>
+					<ID>Flood_Lights</ID>
+				</UseTemplate>
+			</Component>
+		</Component>
+		<CameraTitle>Switches2</CameraTitle>
+	</Component>
+	
+	<Component ID="LIGHTING_Switches">
+		<UseTemplate Name="ASOBO_LIGHTING_Switch_Light_Strobe_Template">
+			<TT_DESCRIPTION_ID>@TT_Package.LIGHTING_SWITCH_LIGHT_STROBE_ACTION</TT_DESCRIPTION_ID>
+			<TOOLTIP_TITLE>@TT_Package.LIGHTING_SWITCH_LIGHT_STROBE_TITLE</TOOLTIP_TITLE>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_LIGHTING_Switch_Light_Beacon_Template">
+			<TT_DESCRIPTION_ID>@TT_Package.LIGHTING_SWITCH_LIGHT_BEACON_ACTION_SET</TT_DESCRIPTION_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_LIGHTING_Switch_Light_Navigation_Template">	
+			<TT_DESCRIPTION_ID>@TT_Package.LIGHTING_SWITCH_LIGHT_NAV_ACTION_SET</TT_DESCRIPTION_ID>			
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_LIGHTING_Switch_Light_Landing_Template">
+			<ANIM_EVENT_EFFECT_NAME>CAM_Landing_Lights</ANIM_EVENT_EFFECT_NAME>
+			<NORMALIZED_TIME>0.01</NORMALIZED_TIME>
+			<DIRECTION>Forward</DIRECTION>
+			<SIMVAR_INDEX>1</SIMVAR_INDEX>
+			<TT_DESCRIPTION_ID>@TT_Package.AIRLINER_LIGHTING_SWITCH_LIGHT_LANDING_ACTION</TT_DESCRIPTION_ID>			
+			<TT_DESCRIPTION_INDEX>1 (R:1:@TT_Package.GT_STATE_LEFT)</TT_DESCRIPTION_INDEX>	
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_LIGHTING_Switch_Light_Landing_Template">
+			<TT_DESCRIPTION_ID>@TT_Package.AIRLINER_LIGHTING_SWITCH_LIGHT_LANDING_ACTION</TT_DESCRIPTION_ID>			
+			<TT_DESCRIPTION_INDEX>1 (R:1:@TT_Package.GT_STATE_RIGHT)</TT_DESCRIPTION_INDEX>	
+			<SIMVAR_INDEX>2</SIMVAR_INDEX>
+			<ID>2</ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_LIGHTING_Switch_Light_Taxi_Template">
+			<TT_DESCRIPTION_ID>@TT_Package.LIGHTING_SWITCH_LIGHT_TAXI_ACTION_SET</TT_DESCRIPTION_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_LIGHTING_Switch_Light_Wing_Template">
+			<TT_DESCRIPTION_ID>@TT_Package.LIGHTING_SWITCH_LIGHT_WING_TITLE</TT_DESCRIPTION_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_LIGHTING_Switch_Light_Cabin_Template">
+			<NODE_ID>LIGHTING_Switch_Light_Cabin_1</NODE_ID>
+			<ANIM_NAME>LIGHTING_Switch_Light_Cabin_1</ANIM_NAME>
+			<SIMVAR_INDEX>3</SIMVAR_INDEX>
+			<SIMVAR_INDEX_2>4</SIMVAR_INDEX_2>
+			<TYPE>ToggleSimvars</TYPE>
+			<TT_STATE_1ST>(R:1:@TT_Package.GT_STATE_LEFT)</TT_STATE_1ST>
+			<TT_STATE_2ND>(R:1:@TT_Package.GT_STATE_RIGHT)</TT_STATE_2ND>
+			<TT_DESCRIPTION_ID>@TT_Package.LIGHTING_SWITCH_CABIN_ACTION_SET</TT_DESCRIPTION_ID>
+			<TOOLTIP_TITLE>@TT_Package.LIGHTING_KNOB_CABIN_TITLE</TOOLTIP_TITLE>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Component_Emissive_Gauge">
+			<NODE_ID>LIGHTING_Light_Cabin</NODE_ID>
+			<FAILURE>(A:LIGHT CABIN ON:3, Bool) (A:LIGHT CABIN ON:4, Bool) and</FAILURE>
+			<EMISSIVE_CODE>1</EMISSIVE_CODE>
+		</UseTemplate>
+		<CameraTitle>PFD</CameraTitle>
+	</Component>
+	
+	<!-- PRESSURIZATION #################################-->
+	<Component ID="PRESSURIZATION">
+		<UseTemplate Name="ASOBO_GT_Switch_Dummy">
+			<NUM_STATES>2</NUM_STATES>
+			<NODE_ID>PRESSURIZATION_Switch_Bleed</NODE_ID>
+			<PART_ID>PRESSURIZATION_Switch_Bleed</PART_ID>
+			<ANIM_NAME>PRESSURIZATION_Switch_Bleed</ANIM_NAME>
+			<DISABLE_MOUSERECT>True</DISABLE_MOUSERECT>
+		</UseTemplate>
+		<!-- Make sure bleed air system is running as expected -->
+		<UseTemplate Name="ASOBO_GT_Update">
+			<FREQUENCY>1</FREQUENCY>
+			<UPDATE_CODE>(A:BLEED AIR ENGINE:1, Bool) ! if{ 1 0 (&gt;K:ENGINE_BLEED_AIR_SOURCE_SET) 0 (&gt;K:BLEED_AIR_SOURCE_CONTROL_SET) }</UPDATE_CODE>
+		</UseTemplate>
+		<CameraTitle>Switches2</CameraTitle>
+	</Component>
+	
+	<!-- SAFETY #########################################-->
+	<Component ID="SAFETY">
+		<UseTemplate Name="ASOBO_SAFETY_Switch_AlternateStaticAir_Template">
+			<NODE_ID>SAFETY_Push_AlternateStaticAir</NODE_ID>
+			<ANIM_NAME>SAFETY_Push_AlternateStaticAir</ANIM_NAME>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_SAFETY_Switch_ELT_Template">
+			<TYPE>ARM_ON</TYPE>
+			<EMISSIVE_NODE_ID>SAFETY_Switch_ELT_Indicator</EMISSIVE_NODE_ID>
+			<NODE_ID>SAFETY_Switch_ELT</NODE_ID>
+			<ANIM_NAME>SAFETY_Switch_ELT</ANIM_NAME>
+		</UseTemplate>
+		<CameraTitle>Engines</CameraTitle>
+	</Component>
+
+	<!-- AUTOPILOT ######################################-->
+	<Component ID="AUTOPILOT">
+		<DefaultTemplateParameters>
+			<CIRCUIT_ID>26</CIRCUIT_ID>
+			<EMISSIVE_CODE>0.1</EMISSIVE_CODE>
+		</DefaultTemplateParameters>
+		<Component ID="AUTOPILOT_Decals" Node="AUTOPILOT_Decals_1">
+			<UseTemplate Name="ASOBO_GT_Emissive_Gauge">
+				<EMISSIVE_CODE>(A:CIRCUIT ON:#CIRCUIT_ID#, Bool) #EMISSIVE_CODE# *</EMISSIVE_CODE>
+			</UseTemplate>
+		</Component>
+		<!-- ENGAGE/DISENGAGE ------------------------------------------------------------------------------->
+		<UseTemplate Name="ASOBO_AUTOPILOT_Push_Autopilot_Template">
+			<ON_AP_MASTER_SWITCH>FD_ON</ON_AP_MASTER_SWITCH>
+		</UseTemplate>
+		<!-- HEADING ------------------------------------------------------------------------------->	
+		<UseTemplate Name="ASOBO_AUTOPILOT_Push_Heading_Template">
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_AUTOPILOT_Knob_Heading_Template">
+			<PUSH/>
+			<ID>4</ID>
+		</UseTemplate>
+		<!-- BANK ------------------------------------------------------------------------------->	
+		<UseTemplate Name="ASOBO_AUTOPILOT_Push_Bank_Template">
+			<REVERSE_ACTIVE_CONDITION>True</REVERSE_ACTIVE_CONDITION>
+			<TYPE>HALF_BANK</TYPE>
+		</UseTemplate>
+		<!-- APPROACH ------------------------------------------------------------------------------->	
+		<UseTemplate Name="ASOBO_AUTOPILOT_Push_Approach_Template">
+		</UseTemplate>
+		<!-- BACKCOURSE ------------------------------------------------------------------------------->	
+		<UseTemplate Name="ASOBO_AUTOPILOT_Push_BackCourse_Template">
+			<ID>1</ID>
+		</UseTemplate>
+		<!-- FLIGHT DIRECTOR ------------------------------------------------------------------------------->	
+		<UseTemplate Name="ASOBO_AUTOPILOT_Push_FlightDirector_Template">
+				<FD_TOGGLE_CONDITION>(A:AUTOPILOT MASTER, Bool) !</FD_TOGGLE_CONDITION>
+		</UseTemplate>
+		<!-- YAW DAMPER ------------------------------------------------------------------------------->	
+		<UseTemplate Name="ASOBO_AUTOPILOT_Push_YawDamper_Template">
+		</UseTemplate>
+		<!-- ALTITUDE ------------------------------------------------------------------------------->	
+		<UseTemplate Name="ASOBO_AUTOPILOT_Push_FlightLevelChange_Template">
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_AUTOPILOT_Push_Altitude_Template">
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_AUTOPILOT_Knob_Altitude_Template">
+			<INCREMENT>100</INCREMENT>
+			<NODE_ID>AUTOPILOT_Knob_Altitude_1</NODE_ID>
+			<ANIM_NAME>AUTOPILOT_Knob_Altitude_1</ANIM_NAME>
+		</UseTemplate>
+		<!-- VERTICAL SPEED ------------------------------------------------------------------------------->	
+		<UseTemplate Name="ASOBO_AUTOPILOT_Push_VerticalSpeed_Template">
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_AUTOPILOT_Knob_VerticalSpeed_Template">
+			<UP_DEC_DN_INC>True</UP_DEC_DN_INC>
+			<SET_AIRSPEED_ON_FLC>True</SET_AIRSPEED_ON_FLC>
+		</UseTemplate>
+		<!-- AP Transfer ------------------------------------------------------------------------------->	
+		<UseTemplate Name="ASOBO_AUTOPILOT_Push_Transfer_Template">
+		</UseTemplate>
+		<!-- NAV ------------------------------------------------------------------------------->	
+		<UseTemplate Name="ASOBO_AUTOPILOT_Push_Navigation_Template">
+		</UseTemplate>
+		<!-- VNAV ------------------------------------------------------------------------------->	
+		<UseTemplate Name="ASOBO_AUTOPILOT_Push_Vertical_Navigation_Template">
+		</UseTemplate>
+		<!-- SPEED ------------------------------------------------------------------------------->	
+		<!-- replaced by speed toggle <UseTemplate Name="ASOBO_AUTOPILOT_Push_Speed_Template">
+		</UseTemplate>  -->
+		<UseTemplate Name="ASOBO_AUTOPILOT_Push_SpeedToggle_Template">
+			<DEFAULT_NAME>Speed</DEFAULT_NAME>
+		</UseTemplate>		
+		<!-- COURSE ------------------------------------------------------------------------------->	
+		<UseTemplate Name="ASOBO_AUTOPILOT_Knob_Course_Template">
+			<PUSH/>
+			<ID>1</ID>
+			<CONTAINER_ID>1</CONTAINER_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_AUTOPILOT_Knob_Course_Template">
+			<PUSH/>
+			<ID>2</ID>
+			<CONTAINER_ID>1</CONTAINER_ID>
+		</UseTemplate>
+		<CameraTitle>MFD</CameraTitle>
+	</Component>
+
+	<!-- DEICE ##########################################-->	
+	<Component ID="DEICE">
+		<UseTemplate Name="ASOBO_DEICE_Switch_Windshield_Template">
+			<ANIM_NAME>DEICE_Switch_Windshield</ANIM_NAME>
+			<NODE_ID>DEICE_Switch_Windshield</NODE_ID>
+			<ANIMTIP_0>TT:COCKPIT.TOOLTIPS.C208_DEICE_MAX_FLOW_SET_WINDHIELD</ANIMTIP_0>
+			<ANIMTIP_1>TT:COCKPIT.TOOLTIPS.C208_DEICE_MAX_FLOW_SET_AIRFRAME</ANIMTIP_1>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_DEICE_Switch_Airframe_Template">
+			<ANIM_EVENT_EFFECT_NAME>CAM_Deice</ANIM_EVENT_EFFECT_NAME>
+			<NORMALIZED_TIME>0.01</NORMALIZED_TIME>
+			<SWITCH_TYPE>ON_NORM_OFF</SWITCH_TYPE>
+			<TT_POS_0>(R:1:@TT_Package.GT_STATE_HIGH)</TT_POS_0>
+			<TT_POS_1>(R:1:@TT_Package.GT_STATE_MODENORM)</TT_POS_1>
+			<TT_POS_2>(R:1:@TT_Package.GT_STATE_OFF)</TT_POS_2>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_DEICE_Switch_Pitot_Template">
+		</UseTemplate>
+		<CameraTitle>Lights</CameraTitle>		
+	</Component>
+
+	<!-- INSTRUMENTS ####################################-->	
+	<Component ID="INSTRUMENT">
+		<UseTemplate Name="ASOBO_INSTRUMENT_Dial_Compass_Template">
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_INSTRUMENT_AttitudeIndicator_Template">
+			<NO_CAGE/>
+			<USE_FLAG/>
+			<USE_SUCTION_PRESSURE_CHECK/>
+			<USE_LINEAR_VALUES>True</USE_LINEAR_VALUES>
+			<KNOB_HIGHLIGHT_NODE_ID>INSTRUMENT_AttitudeIndicator_Knob_Visual_1</KNOB_HIGHLIGHT_NODE_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_INSTRUMENT_Altimeter_Template">
+			<MIN_VALUE_STRIP>27.9</MIN_VALUE_STRIP>
+			<MAX_VALUE_STRIP>31.6</MAX_VALUE_STRIP>
+			<MIN_VALUE_KNOB>28.2</MIN_VALUE_KNOB>
+			<MAX_VALUE_KNOB>31.3</MAX_VALUE_KNOB>
+			<KNOB_HIGHLIGHT_NODE_ID>INSTRUMENT_Knob_Altimeter_Visual_1</KNOB_HIGHLIGHT_NODE_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_INSTRUMENT_Needle_Airspeed_Template">
+			<USE_TRUE_AIRSPEED_CALIBRATOR>True</USE_TRUE_AIRSPEED_CALIBRATOR>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_INSTRUMENT_Needle_Torque_Template">
+			<NODE_ID>ENGINE_Needle_Torque_1</NODE_ID>
+			<ANIM_NAME>ENGINE_Needle_Torque_1</ANIM_NAME>
+		</UseTemplate>
+		<CameraTitle>Pilot</CameraTitle>
+	</Component>
+	
+	<!-- DUMMIES ####################################-->	
+	<Component ID="DUMMY">
+		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+			<NODE_ID>SWITCH_LIGHTS_NOSMOKE</NODE_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+			<NODE_ID>SWITCH_LIGHTS_SEATBELT</NODE_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+			<NODE_ID>SWITCH_ANTIICE_BACKUP</NODE_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+			<NODE_ID>SWITCH_ANTIICE_STALLHEAT</NODE_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+			<NODE_ID>SWITCH_TESTSWITCH_FIREDETECT</NODE_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+			<NODE_ID>SWITCH_AC_AFT</NODE_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+			<NODE_ID>SWITCH_AC_LEFT</NODE_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+			<NODE_ID>SWITCH_AC_RIGHT</NODE_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+			<NODE_ID>SWITCH_AC_VENTILATE</NODE_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+			<NODE_ID>SWITCH_POWEROUTLET_CREW</NODE_ID>
+		</UseTemplate>
+		<CameraTitle>Pilot</CameraTitle>
+	</Component>
+
+	<!-- AS1000 ##########################################-->
+	<Component ID="AS1000_PFD_1">
+		<UseTemplate Name="ASOBO_AS1000_PFD_Template">
+			<POTENTIOMETER>30</POTENTIOMETER>
+			<ID>1</ID>
+			<CIRCUIT_ID>28</CIRCUIT_ID>
+			<AMBIENT_POTENTIOMETER>15</AMBIENT_POTENTIOMETER>
+			<NO_AUTOPILOT/>
+			<PANEL_NODE_ID>AS1000_Panel_NoAutopilot_1</PANEL_NODE_ID>
+			<!-- <NO_HEADING>True</NO_HEADING> -->
+			<PFD_ID>1</PFD_ID>
+		</UseTemplate>
+	</Component>
+	<Component ID="AS1000_PFD_2">
+		<UseTemplate Name="ASOBO_AS1000_PFD_Template">
+			<POTENTIOMETER>30</POTENTIOMETER>
+			<ID>2</ID>
+			<CIRCUIT_ID>29</CIRCUIT_ID>
+			<AMBIENT_POTENTIOMETER>17</AMBIENT_POTENTIOMETER>
+			<NO_AUTOPILOT/>
+			<PANEL_NODE_ID>AS1000_Panel_NoAutopilot_2</PANEL_NODE_ID>
+			<!-- <NO_HEADING>True</NO_HEADING> -->
+			<PFD_ID>2</PFD_ID>
+		</UseTemplate>
+	</Component>
+	<Component ID="AS1000_MID">
+		<UseTemplate Name="ASOBO_AS1000_Mid_Template">
+			<POTENTIOMETER>30</POTENTIOMETER>
+			<CIRCUIT_ID>44</CIRCUIT_ID>
+		</UseTemplate>
+	</Component>
+	<Component ID="AS1000_MFD">
+		<UseTemplate Name="ASOBO_AS1000_MFD_Template">
+			<POTENTIOMETER>30</POTENTIOMETER>
+			<ID>3</ID>
+			<CIRCUIT_ID>30</CIRCUIT_ID>
+			<AMBIENT_POTENTIOMETER>16</AMBIENT_POTENTIOMETER>
+			<NO_AUTOPILOT/>
+			<PANEL_NODE_ID>AS1000_Panel_NoAutopilot_3</PANEL_NODE_ID>
+			<!-- <NO_HEADING>True</NO_HEADING> -->
+		</UseTemplate>
+	</Component>
+	<Component ID="TT_INOP">
+		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+			<NODE_ID>PUSH_VENT_L2</NODE_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+			<NODE_ID>PUSH_VENT_L1</NODE_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+			<NODE_ID>PUSH_OVERSPEEDGOVERNOR</NODE_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+			<NODE_ID>PUSH_CABINHEATFIREWALL</NODE_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+			<NODE_ID>KNOB_LOCKOPERATION</NODE_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+			<NODE_ID>PUSH_VENT_R2</NODE_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+			<NODE_ID>PUSH_VENT_R1</NODE_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+			<NODE_ID>PASSENGERS_Knob_CabinHeat</NODE_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+			<NODE_ID>PUSH_CH_MIXINGAIR_2</NODE_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+			<NODE_ID>PUSH_CH_MIXINGAIR_1</NODE_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+			<NODE_ID>PUSH_CH_DEFROST_2</NODE_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+			<NODE_ID>PUSH_CH_DEFROST_1</NODE_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+			<NODE_ID>PUSH_CH_CABIN_2</NODE_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+			<NODE_ID>PUSH_CH_CABIN_1</NODE_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+			<NODE_ID>KNOB_TOPPANEL_FUELSELECTOR</NODE_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+			<NODE_ID>KNOB_TOPPANEL_OPENLFAN</NODE_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+			<NODE_ID>KNOB_TOPPANEL_OPENRFAN</NODE_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+			<NODE_ID>KNOB_TOPPANEL_STBYFLAP</NODE_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+			<NODE_ID>LOCK_TOPPANEL_STBYFLAP_DOWN</NODE_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+			<NODE_ID>LOCK_TOPPANEL_STBYFLAP_NORMAL</NODE_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+			<NODE_ID>PRESSURIZATION_Switch_Oxygen</NODE_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+			<NODE_ID>SWITCH_TOPPANEL_STBYFLAP_DOWN</NODE_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+			<NODE_ID>SWITCH_TOPPANEL_STBYFLAP_NORMAL</NODE_ID>
+		</UseTemplate>
+	</Component>
+	
+	</Behaviors>
+</ModelInfo>
