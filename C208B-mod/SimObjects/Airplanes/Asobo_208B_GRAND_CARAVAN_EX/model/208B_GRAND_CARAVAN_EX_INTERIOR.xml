@@ -379,6 +379,32 @@
         <ANIMTIP_1>TT:COCKPIT.TOOLTIPS.LIGHTS_SEATBELT_ON</ANIMTIP_1>
       </UseTemplate>
 		</Component>
+
+    <!-- Ventilation -->
+    <UseTemplate Name="ASOBO_GT_Switch_Dummy">
+      <NODE_ID>SWITCH_AC_AFT</NODE_ID>
+      <ANIM_NAME>SWITCH_AC_AFT</ANIM_NAME>
+      <ANIMTIP_0>AFT high</ANIMTIP_0>
+      <ANIMTIP_1>AFT low</ANIMTIP_1>
+    </UseTemplate>
+    <UseTemplate Name="ASOBO_GT_Switch_Dummy">
+      <NODE_ID>SWITCH_AC_LEFT</NODE_ID>
+      <ANIM_NAME>SWITCH_AC_LEFT</ANIM_NAME>
+      <ANIMTIP_0>AC left high</ANIMTIP_0>
+      <ANIMTIP_1>AC left low</ANIMTIP_1>
+    </UseTemplate>
+    <UseTemplate Name="ASOBO_GT_Switch_Dummy">
+      <NODE_ID>SWITCH_AC_RIGHT</NODE_ID>
+      <ANIM_NAME>SWITCH_AC_RIGHT</ANIM_NAME>
+      <ANIMTIP_0>AC right high</ANIMTIP_0>
+      <ANIMTIP_1>AC right low</ANIMTIP_1>
+    </UseTemplate>
+    <UseTemplate Name="ASOBO_GT_Switch_Dummy">
+      <NODE_ID>SWITCH_AC_VENTILATE</NODE_ID>
+      <ANIM_NAME>SWITCH_AC_VENTILATE</ANIM_NAME>
+      <ANIMTIP_0>Ventilate</ANIMTIP_0>
+      <ANIMTIP_1>Cool</ANIMTIP_1>
+    </UseTemplate>
 		
 		<!-- SW/CB : backlighting -->
 		<UseTemplate Name="ASOBO_LIGHTING_Knob_Potentiometer_Template">
@@ -701,18 +727,6 @@
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
 			<NODE_ID>SWITCH_TESTSWITCH_FIREDETECT</NODE_ID>
-		</UseTemplate>
-		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
-			<NODE_ID>SWITCH_AC_AFT</NODE_ID>
-		</UseTemplate>
-		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
-			<NODE_ID>SWITCH_AC_LEFT</NODE_ID>
-		</UseTemplate>
-		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
-			<NODE_ID>SWITCH_AC_RIGHT</NODE_ID>
-		</UseTemplate>
-		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
-			<NODE_ID>SWITCH_AC_VENTILATE</NODE_ID>
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
 			<NODE_ID>SWITCH_POWEROUTLET_CREW</NODE_ID>
