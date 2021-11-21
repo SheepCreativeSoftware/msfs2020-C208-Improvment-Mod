@@ -1,5 +1,8 @@
 ## Changes
 
+**2111.1**
+- Added some INOP switches
+
 **2111.0**
 - Update for SU7
 
