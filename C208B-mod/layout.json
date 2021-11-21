@@ -113,52 +113,37 @@
     {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/apron.flt",
       "size": 2897,
-      "date": 132791358918040690
+      "date": 132792290392883735
     },
     {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/engines.cfg",
-      "size": 15976,
-      "date": 132791383038332019
+      "size": 15974,
+      "date": 132819739096310349
     },
     {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/flight_model.cfg",
       "size": 18898,
-      "date": 132791383038332019
+      "date": 132792289996002880
     },
     {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/systems.cfg",
       "size": 15635,
-      "date": 132791358919010565
+      "date": 132792290850025435
     },
     {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/model/208B_GRAND_CARAVAN_EX_INTERIOR_LOD00.gltf",
-      "size": 949979,
-      "date": 132791369271721185
-    },
-    {
-      "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/model/208B_GRAND_CARAVAN_EX_INTERIOR_LOD01.gltf",
-      "size": 874530,
-      "date": 132791371246341330
-    },
-    {
-      "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/model/208B_GRAND_CARAVAN_EX_INTERIOR_LOD02.gltf",
-      "size": 580844,
-      "date": 132791372350635559
-    },
-    {
-      "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/model/208B_GRAND_CARAVAN_EX_INTERIOR_LOD03.gltf",
-      "size": 147780,
-      "date": 132791373044443114
+      "size": 922937,
+      "date": 132819744404562809
     },
     {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/model/208B_GRAND_CARAVAN_EX_INTERIOR_LOD04.gltf",
-      "size": 27198,
-      "date": 132766337965635585
+      "size": 27191,
+      "date": 132819746493982363
     },
     {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/panel/Panel.xml",
       "size": 84229,
-      "date": 132791495720091334
+      "date": 132792300262052054
     },
     {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/TEXTURE/CESSNA_208B_GRANDCARAVANEX_AIRFRAME_PROPELLER_ALBD.PNG.dds",
