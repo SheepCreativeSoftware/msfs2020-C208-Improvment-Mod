@@ -1,5 +1,8 @@
 ## Changes
 
+**2112.0.3**
+- Prop is now in Feather when starting in cold & dark
+
 **2112.0**
 - New EIS dynamic function now working with NXi
 - Corrected BATT, GEN and ALT AMPS
