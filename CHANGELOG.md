@@ -1,15 +1,13 @@
 ## Changes
 
-**2112.0**
-- New EIS dynamic function now working with NXi
-- Corrected BATT, GEN and ALT AMPS
+**2111.0.2**
+- Fixed Center of Gravity, Forward and Aft Limit to be more accurate
 
 **2111.1**
 - Added some INOP switches
 
 **2111.0**
 - Update for SU7
-
 
 **2110.0**
 - Tested Release Version
