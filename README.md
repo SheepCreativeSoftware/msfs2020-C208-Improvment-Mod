@@ -37,6 +37,7 @@ Thanks to everyone who has contributed, and to PilotTrev for sharing his knowled
 ## Known Issues and Limitations
 - Some Voice Alerts won't work with NXi (Is not implemented by WT yet)
 - Fuel consumption is not zero when engine isn't started (Bug by Asobo)
+- Not compatible or maybe not compatible with mods which are modifying the C208 Grand Caravan EX
 
 ----
 
