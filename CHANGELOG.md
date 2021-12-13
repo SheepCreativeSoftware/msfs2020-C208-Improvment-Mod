@@ -1,7 +1,8 @@
 ## Changes
 
-**2110.x**
+**2112.0**
 - New EIS dynamic function now working with NXi
+- Corrected BATT, GEN and ALT AMPS
 
 **2110.0**
 - Tested Release Version
