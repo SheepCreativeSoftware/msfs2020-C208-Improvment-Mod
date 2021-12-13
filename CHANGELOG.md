@@ -1,5 +1,8 @@
 ## Changes
 
+**2112.1**
+- Tested version
+
 **2112.0.3**
 - Prop is now in Feather when starting in cold & dark
 
@@ -10,11 +13,9 @@
 - Changed position of Condition lever depending on startup scenario (Fuel Valve will be closed when starting in cold & dark)
 - Changed position of Alternator switch depending on startup scenario
 
-
 **2112.0**
-- New EIS dynamic function now working with NXi
+- New EIS dynamic function now also working with NXi
 - Corrected BATT, GEN and ALT AMPS
-
 
 **2111.1**
 - Added some INOP switches
