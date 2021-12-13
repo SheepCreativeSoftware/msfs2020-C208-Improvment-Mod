@@ -117,8 +117,8 @@
     },
     {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/engines.cfg",
-      "size": 15976,
-      "date": 132838899131045541
+      "size": 15974,
+      "date": 132819739096310349
     },
     {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/flight_model.cfg",
@@ -131,29 +131,19 @@
       "date": 132792290850025435
     },
     {
+      "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/model/208B_GRAND_CARAVAN_EX_INTERIOR.xml",
+      "size": 37265,
+      "date": 132819760876609468
+    },
+    {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/model/208B_GRAND_CARAVAN_EX_INTERIOR_LOD00.gltf",
-      "size": 949979,
-      "date": 132838899131556009
-    },
-    {
-      "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/model/208B_GRAND_CARAVAN_EX_INTERIOR_LOD01.gltf",
-      "size": 874530,
-      "date": 132838899131956364
-    },
-    {
-      "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/model/208B_GRAND_CARAVAN_EX_INTERIOR_LOD02.gltf",
-      "size": 580844,
-      "date": 132838899133417702
-    },
-    {
-      "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/model/208B_GRAND_CARAVAN_EX_INTERIOR_LOD03.gltf",
-      "size": 147780,
-      "date": 132838899133607869
+      "size": 922937,
+      "date": 132819744404562809
     },
     {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/model/208B_GRAND_CARAVAN_EX_INTERIOR_LOD04.gltf",
-      "size": 27198,
-      "date": 132838899133737987
+      "size": 27191,
+      "date": 132819746493982363
     },
     {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/panel/Panel.xml",

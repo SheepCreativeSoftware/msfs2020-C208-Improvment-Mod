@@ -18,7 +18,7 @@ Disscution about this mod, takes place in the [official forum](https://forums.fl
 
 ***Systems & Avionics***  
 - Works with Vanilla, WT G1000 and WT G1000 NXi Avionics
-- Added CAS annunciations, Systems Page, improved engine readouts (Additional Mods needed see below).
+- Added CAS annunciations, Systems Page, improved engine readouts
 - Reversionary Mode (will only work on stock G1000 at the moment cause NXi cannot yet)
 - Yaw Damper Working
 - Autopilot and instrument fixes.  
@@ -53,7 +53,7 @@ Thanks to everyone who has contributed, and to PilotTrev for sharing his knowled
 
 ## Recomended Mods
 
-***[Working Title's G1000 v0.4.0](https://github.com/Working-Title-MSFS-Mods/fspackages/releases/tag/g1000-v0.4.0)*** and [G1000 Turboprop Annunciation Fix](https://github.com/SheepCreativeSoftware/msfs2020-C208-Improvment-Mod/releases/tag/TurboFix.v2108.1)
+***[Working Title's G1000 v0.4.1](https://github.com/Working-Title-MSFS-Mods/fspackages/releases/tag/g1000-v0.4.1)*** (Turboprob Fix mod is no longer needed)
 OR ***[Working Title's G1000 NXi](https://www.workingtitle.aero/packages/nxi/)***
   
 _Important Note: The legacy G1000 mod is now simply the stock G1000 + engine pages. You cannot have the Working Title Simulations G1000 NXi from the Marketplace installed and the legacy WT G1000 installed at the same time. If you want to use the NXi, uninstall the legacy mod, and if you want to use the legacy mod, uninstall the NXi._
