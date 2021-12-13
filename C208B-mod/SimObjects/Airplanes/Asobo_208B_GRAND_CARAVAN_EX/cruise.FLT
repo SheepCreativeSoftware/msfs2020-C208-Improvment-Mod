@@ -151,3 +151,6 @@ AileronTrimPct=0
 AileronTrimDisabled=False
 ElevatorTrimDisabled=False
 RudderTrimDisabled=False
+
+[LocalVars.0]
+Condition_Lever_CutOff_1=2

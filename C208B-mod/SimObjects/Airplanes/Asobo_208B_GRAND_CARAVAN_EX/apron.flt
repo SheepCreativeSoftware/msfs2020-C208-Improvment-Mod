@@ -47,7 +47,7 @@ MaxReachedEngineRPM=0
 LeftMagneto=True
 RightMagneto=True
 GeneratorSwitch=False
-FuelValveOpen=True
+FuelValveOpen=False
 CowlFlapPct=0
 FuelPumpSwitch=False
 FuelPumpSwitch_EX1=0
@@ -160,3 +160,6 @@ AileronTrimPct=0
 AileronTrimDisabled=False
 ElevatorTrimDisabled=False
 RudderTrimDisabled=False
+
+[LocalVars.0]
+Condition_Lever_CutOff_1=0
