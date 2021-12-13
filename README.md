@@ -39,8 +39,6 @@ Thanks to everyone who has contributed, and to PilotTrev for sharing his knowled
 - Reversionary Mode will only work on stock G1000 at the moment cause NXi cannot yet (Is not implemented by WT yet)
 - Color Lines on EIS Gauges does not work with NXi (Is not implemented by WT yet)
 - Some Voice Alerts won't work with NXi (Is not implemented by WT yet)
-- New dynamic Red Line Torque Engine gauge does not work with NXi (Is not implemented by WT yet)
-- New blue Torque Engine gauge to indicate the Maximum cruise torque does not work with NXi (Is not implemented by WT yet)
 - Condition Lever always set to low idle at game start (Bug by Asobo)
 - Fuel consumption is not zero when engine isn't started (Bug by Asobo)
 - WorkingTitle Fix is no longer needed for G1000 or GX

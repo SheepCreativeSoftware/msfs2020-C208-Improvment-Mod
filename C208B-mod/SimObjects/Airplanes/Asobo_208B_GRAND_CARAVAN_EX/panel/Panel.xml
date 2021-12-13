@@ -1088,6 +1088,7 @@
 		</Text>
 		<!-- Engine Page for WorkingTitle NXi-->
 		<EnginePage>
+			
 			<Gauge>
 				<Type>Circular</Type>
 				<Style>
@@ -1110,21 +1111,46 @@
 				<ColorZone>
 					<Color>green</Color>
 					<Begin>0</Begin>
-					<End>2396</End>
+					<End>
+						<Function Name="TorqueRedLine"/>
+					</End>
+					<SmoothFactor>0.2</SmoothFactor>
 				</ColorZone>
-				<ColorZone>
+				<ColorLine>
 					<Color>red</Color>
-					<Begin>2397</Begin>
-					<End>2450</End>
-				</ColorZone>
+					<Position>
+						<Function Name="TorqueRedLine"/>
+					</Position>
+					<SmoothFactor>0.2</SmoothFactor>
+				</ColorLine>
 				<GraduationLength>100</GraduationLength>
 				<GraduationTextLength>500</GraduationTextLength>
 				<RedBlink>
 					<Greater>
-						<Simvar name="ENG TORQUE:1" unit="Foot pounds"/>
-						<Constant>2397</Constant>
+						<Simvar name="TURB ENG FREE TURBINE TORQUE:1" unit="Foot pounds"/>
+						<Function Name="TorqueRedLine"/>
 					</Greater>
 				</RedBlink>
+				<ReferenceBug>
+					<Style>
+						<Color>#00ccff</Color>
+					</Style>
+					<DisplayLogic>
+						<And>
+							<GreaterEqual>
+								<Simvar name="PROP RPM:1" unit="rpm"/>
+								<Constant>1600</Constant>
+							</GreaterEqual>
+							<LowerEqual>
+								<Simvar name="PROP RPM:1" unit="rpm"/>
+								<Constant>1900</Constant>
+							</LowerEqual>
+						</And>
+					</DisplayLogic>
+					<Position>
+						<Function Name="MaximumCruiseTorqueBug"/>
+					</Position>
+				</ReferenceBug>
 			</Gauge>
 			
 			<Gauge>
@@ -1523,7 +1549,7 @@
 							<ToFixed precision="0">
 								<Substract>
 									<Simvar name="ELECTRICAL MAIN BUS AMPS:1" unit="amp"/>
-									<Constant>74</Constant>
+									<Constant>64</Constant>
 								</Substract>
 							</ToFixed>
 						</Then>
@@ -1570,21 +1596,46 @@
 				<ColorZone>
 					<Color>green</Color>
 					<Begin>0</Begin>
-					<End>2396</End>
+					<End>
+						<Function Name="TorqueRedLine"/>
+					</End>
+					<SmoothFactor>0.2</SmoothFactor>
 				</ColorZone>
-				<ColorZone>
+				<ColorLine>
 					<Color>red</Color>
-					<Begin>2397</Begin>
-					<End>2450</End>
-				</ColorZone>
+					<Position>
+						<Function Name="TorqueRedLine"/>
+					</Position>
+					<SmoothFactor>0.2</SmoothFactor>
+				</ColorLine>
 				<GraduationLength>100</GraduationLength>
 				<GraduationTextLength>500</GraduationTextLength>
 				<RedBlink>
 					<Greater>
-						<Simvar name="ENG TORQUE:1" unit="Foot pounds"/>
-						<Constant>2397</Constant>
+						<Simvar name="TURB ENG FREE TURBINE TORQUE:1" unit="Foot pounds"/>
+						<Function Name="TorqueRedLine"/>
 					</Greater>
 				</RedBlink>
+				<ReferenceBug>
+					<Style>
+						<Color>#00ccff</Color>
+					</Style>
+					<DisplayLogic>
+						<And>
+							<GreaterEqual>
+								<Simvar name="PROP RPM:1" unit="rpm"/>
+								<Constant>1600</Constant>
+							</GreaterEqual>
+							<LowerEqual>
+								<Simvar name="PROP RPM:1" unit="rpm"/>
+								<Constant>1900</Constant>
+							</LowerEqual>
+						</And>
+					</DisplayLogic>
+					<Position>
+						<Function Name="MaximumCruiseTorqueBug"/>
+					</Position>
+				</ReferenceBug>
 			</Gauge>
 			
 			<Gauge>
@@ -1908,7 +1959,7 @@
 											</Add>
 											<Substract> <!-- correct value by the factor of 74-->
 												<Simvar name="ELECTRICAL MAIN BUS AMPS:1" unit="amp"/>
-												<Constant>74</Constant>
+												<Constant>64</Constant>
 											</Substract>
 										</Add>
 									</ToFixed>
@@ -1982,7 +2033,7 @@
 							<ToFixed precision="0">
 								<Substract>
 									<Simvar name="ELECTRICAL MAIN BUS AMPS:1" unit="amp"/>
-									<Constant>74</Constant>
+									<Constant>64</Constant>
 								</Substract>
 							</ToFixed>
 						</Then>
@@ -2002,6 +2053,7 @@
 					</ToFixed>
 				</Right>
 			</Text>
+			
 		</SystemPage>
 	</EngineDisplay>
 	
