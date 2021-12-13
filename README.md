@@ -19,7 +19,7 @@ Disscution about this mod, takes place in the [official forum](https://forums.fl
 ***Systems & Avionics***  
 - Works with Vanilla, WT G1000 and WT G1000 NXi Avionics
 - Added CAS annunciations, Systems Page, improved engine readouts
-- Reversionary Mode (will only work on stock G1000 at the moment cause NXi cannot yet)
+- Reversionary Mode
 - Yaw Damper Working
 - Autopilot and instrument fixes.  
 - More accurate start up.
@@ -35,26 +35,19 @@ Thanks to everyone who has contributed, and to PilotTrev for sharing his knowled
 ----
 
 ## Known Issues and Limitations
-
-- Reversionary Mode will only work on stock G1000 at the moment cause NXi cannot yet (Is not implemented by WT yet)
-- Color Lines on EIS Gauges does not work with NXi (Is not implemented by WT yet)
 - Some Voice Alerts won't work with NXi (Is not implemented by WT yet)
-- Condition Lever always set to low idle at game start (Bug by Asobo)
 - Fuel consumption is not zero when engine isn't started (Bug by Asobo)
-- WorkingTitle Fix is no longer needed for G1000 or GX
 
 ----
 
 ## Compatibility
 
-- Sim version - v1.20.5  
-- WorkingTitle G1000 v0.4.0 or newer 
+- Sim version - v1.21.13.0  
 - WorkingTitles NXi (available on Marketplace)
 
 ## Recomended Mods
 
-***[Working Title's G1000 v0.4.1](https://github.com/Working-Title-MSFS-Mods/fspackages/releases/tag/g1000-v0.4.1)*** (Turboprob Fix mod is no longer needed)
-OR ***[Working Title's G1000 NXi](https://www.workingtitle.aero/packages/nxi/)***
+***[Working Title's G1000 NXi](https://www.workingtitle.aero/packages/nxi/)***
   
 _Important Note: The legacy G1000 mod is now simply the stock G1000 + engine pages. You cannot have the Working Title Simulations G1000 NXi from the Marketplace installed and the legacy WT G1000 installed at the same time. If you want to use the NXi, uninstall the legacy mod, and if you want to use the legacy mod, uninstall the NXi._
 _(Please note the freeware G1000 is officially at end-of-life and will not be updated.  Users are encouraged to download the NXi from the Marketplace.)_
@@ -62,7 +55,7 @@ _(Please note the freeware G1000 is officially at end-of-life and will not be up
 
 ## Download
 
-***[Latest Release v2110.0](https://github.com/SheepCreativeSoftware/msfs2020-C208-Improvment-Mod/releases/latest)***
+***[Latest Release v2112.1](https://github.com/SheepCreativeSoftware/msfs2020-C208-Improvment-Mod/releases/latest)***
 
 ## How to install
 
