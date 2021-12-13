@@ -1,10 +1,15 @@
 ## Changes
 
+**2112.0**
+- New EIS dynamic function now working with NXi
+- Corrected BATT, GEN and ALT AMPS
+
 **2111.1**
 - Added some INOP switches
 
 **2111.0**
 - Update for SU7
+
 
 **2110.0**
 - Tested Release Version
