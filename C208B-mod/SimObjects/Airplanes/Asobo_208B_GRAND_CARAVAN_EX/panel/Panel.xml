@@ -1065,7 +1065,7 @@
                                           <ToFixed precision="0">
                                                  <Substract>
                                                         <Simvar name="ELECTRICAL MAIN BUS AMPS:1" unit="amp"/>
-                                                        <Constant>74</Constant>
+                                                        <Constant>64</Constant>
                                                  </Substract>
                                           </ToFixed>
 					</Then>
