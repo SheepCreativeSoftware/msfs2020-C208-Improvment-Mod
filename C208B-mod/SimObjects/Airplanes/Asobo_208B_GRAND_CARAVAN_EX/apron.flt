@@ -40,7 +40,7 @@ AvionicsSwitch=False
 
 [Engine Parameters.1.0]
 ThrottleLeverPct=0
-PropellerLeverPct=0
+PropellerLeverPct=-0.25
 MixtureLeverPct=0
 Pct Engine RPM=0
 MaxReachedEngineRPM=0
@@ -58,7 +58,7 @@ IgnitionSwitch=1
 Afterburner=0
 
 [Propeller.1.0]
-prop_beta=0.30
+prop_beta=1.5358897417550099185
 prop_max_rpm_percent=0
 
 [Fuel.0]
