@@ -63,3 +63,7 @@ _(Please note the freeware G1000 is officially at end-of-life and will not be up
 1. Delete any previous versions.
 2. Extract the Zip Archive
 3. Copy the "C208B-mod" folder into the Community Folder.
+
+## License
+Microsoft Flight Simulator © Microsoft Corporation.  
+Cessna 208B Grand Caravan EX Improvement Mod was created under Microsoft's "[Game Content Usage Rules](https://www.xbox.com/en-US/developers/rules)" using assets from Microsoft Flight Simulator and it is not endorsed by or affiliated with Microsoft.
