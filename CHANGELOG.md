@@ -1,5 +1,8 @@
 ## Changes
 
+**2111.0.1**
+- Changed position of Condition lever depending on startup scenario (Fuel Valve will be closed when starting in cold & dark)
+
 **2111.1**
 - Added some INOP switches
 
