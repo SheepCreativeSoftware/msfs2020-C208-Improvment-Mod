@@ -111,6 +111,11 @@
       "date": 132692650507315965
     },
     {
+      "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/aircraft.cfg",
+      "size": 4381,
+      "date": 132840675542523995
+    },
+    {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/approach.FLT",
       "size": 2918,
       "date": 132839012904069549
@@ -143,7 +148,7 @@
     {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/flight_model.cfg",
       "size": 18940,
-      "date": 132839890440830921
+      "date": 132839891830797760
     },
     {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/runway.FLT",
@@ -172,8 +177,9 @@
     },
     {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/panel/Panel.xml",
-      "size": 85547,
-      "date": 132840308004940355
+
+      "size": 85605,
+      "date": 132840674803000971
     },
     {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/TEXTURE/CESSNA_208B_GRANDCARAVANEX_AIRFRAME_PROPELLER_ALBD.PNG.dds",
