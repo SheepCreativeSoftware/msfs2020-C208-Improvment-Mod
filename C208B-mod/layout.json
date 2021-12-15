@@ -1,6 +1,11 @@
 {
   "content": [
     {
+      "path": "ContentInfo/Sheep_208B_GRAND_CARAVAN_EX_Impro/Thumbnail.jpg",
+      "size": 39021,
+      "date": 132819012246938692
+    },
+    {
       "path": "Effects/LIGHT_C208_BeaconTop.fx",
       "size": 3501,
       "date": 132692650507395997
@@ -109,6 +114,11 @@
       "path": "Effects/texture/FX_ulm04.PNG.DDS.json",
       "size": 144,
       "date": 132692650507315965
+    },
+    {
+      "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/aircraft.cfg",
+      "size": 4381,
+      "date": 132840675542523995
     },
     {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/approach.FLT",
