@@ -3,6 +3,9 @@
 **2112.1.3**
 - Power supply truck can be requested for external power supply
 
+**2112.1.2**
+- Activate Startup Screen for MFD
+
 **2112.1.1**
 - Removed yellow color range on the airspeed indicator
 
