@@ -1,7 +1,7 @@
 ## Changes
 
 **2112.1.3**
-- Activate Startup Screen for MFD
+- Power supply truck can be requested for external power supply
 
 **2112.1.1**
 - Removed yellow color range on the airspeed indicator
