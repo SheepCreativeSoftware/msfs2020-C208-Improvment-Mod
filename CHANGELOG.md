@@ -3,6 +3,9 @@
 **2112.1.3**
 - Activate Startup Screen for MFD
 
+**2112.1.1**
+- Removed yellow color range on the airspeed indicator
+
 **2112.1**
 - Tested version
 
