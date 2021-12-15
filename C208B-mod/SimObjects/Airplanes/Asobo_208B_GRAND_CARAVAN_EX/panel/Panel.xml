@@ -22,7 +22,6 @@
   
   <Instrument>
     <Name>AS1000_MFD</Name>
-	<SkipValidationAfterInit>True</SkipValidationAfterInit>
     <Electric>
 		<Simvar name="CIRCUIT ON:30" unit="Boolean"/>
     </Electric>
