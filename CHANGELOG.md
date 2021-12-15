@@ -1,5 +1,8 @@
 ## Changes
 
+**2112.1.3**
+- Activate Startup Screen for MFD
+
 **2112.1**
 - Tested version
 
