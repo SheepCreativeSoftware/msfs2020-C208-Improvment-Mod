@@ -102,7 +102,6 @@ WingLights=False
 CabinLights=False
 GlareshieldLights=False
 PedestalLights=False
-Potentiometer.3 = 0
 
 [Electrical.0]
 bus.11 = bus.10:0
@@ -110,7 +109,6 @@ bus.8 = bus.11:0, bus.9:0
 battery.1=False
 alternator.1=False
 alternator.2=False
-circuit.52=True,1.00
 
 [AutoPilot.0]
 MasterSwitch=False

@@ -1,5 +1,8 @@
 ## Changes
 
+**2112.1.5**
+- Fixed wrong behaivor of the passenger cabin lights
+
 **2112.1.4**
 - Added Content Info
 
