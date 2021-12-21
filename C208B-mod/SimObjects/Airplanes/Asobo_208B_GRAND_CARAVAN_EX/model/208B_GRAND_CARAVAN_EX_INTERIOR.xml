@@ -17,6 +17,36 @@
 		<Include ModelBehaviorFile="Asobo\GlassCockpit\AS1000.xml"/>
 		<Include ModelBehaviorFile="Asobo\NAVCOM\ADF.xml"/>
 
+        <Template Name="ASOBO_ELECTRICAL_Switch_Alternator_Template_Mod">
+            <Component ID="ELECTRICAL_Switch_Alternator" Node="ELECTRICAL_Switch_Alternator_#ID#">
+	            <UseTemplate Name="ASOBO_GT_Switch_3States">
+	                <MOMENTARY_SWITCH/>
+    	            <STATE_MAX_TIMER>0.5</STATE_MAX_TIMER>
+        	        <STATE0_TIMER>0.5</STATE0_TIMER>
+
+					<CODE_POS_0>(*RESET*) (A:GENERAL ENG MASTER ALTERNATOR:#ID#, bool) ! if{ (&gt;K:TOGGLE_ALTERNATOR#ID#) } </CODE_POS_0>
+					<CODE_POS_1>(*ON   *) </CODE_POS_1>
+					<CODE_POS_2>(*TRIP *) (A:GENERAL ENG MASTER ALTERNATOR:#ID#, bool) if{ (&gt;K:TOGGLE_ALTERNATOR#ID#) } </CODE_POS_2>
+
+	                <TOOLTIP_ENTRY_0>ELECTRICAL_Alternator_#ID#</TOOLTIP_ENTRY_0>
+    	            <TOOLTIP_TITLE>@TT_Package.ELECTRICAL_ALTERNATOR_TITLE</TOOLTIP_TITLE>
+
+	                <TT_DESCRIPTION_ID>@TT_Package.ELECTRICAL_ALTERNATOR_ACTION_SET_SOLO</TT_DESCRIPTION_ID>
+    	            <TT_ICON>MOVE_Y</TT_ICON>
+	                <TT_VALUE_0>@TT_Package.GT_STATE_RESET</TT_VALUE_0>
+    	            <TT_VALUE_1>@TT_Package.GT_STATE_ON</TT_VALUE_1>
+	                <TT_VALUE_2>@TT_Package.GT_STATE_TRIP</TT_VALUE_2>
+
+	                <WWISE_EVENT>alternator_switch</WWISE_EVENT>
+					<AUDIO_DIRECTION>Both</AUDIO_DIRECTION>
+
+		   	        <ANIM_NAME>ELECTRICAL_Switch_Alternator_#ID#</ANIM_NAME>
+					<!-- This is the normalized time of the animation from which the sound will play. It's going from 0 to 1.  -->                       
+					<NORMALIZED_TIME>0.1</NORMALIZED_TIME>
+                </UseTemplate>
+            </Component>
+        </Template>	
+
 	<!-- HANDLING #######################################-->
 	<Component ID="ADF">
 		<UseTemplate Name="ASOBO_ADF_AS87_Template">
@@ -163,6 +193,8 @@
 		<UseTemplate Name="ASOBO_ELECTRICAL_Switch_Battery_Master_Template">
 			<ANIM_NAME>ELECTRICAL_Switch_Battery_Master</ANIM_NAME>
 			<NODE_ID>ELECTRICAL_Switch_Battery_Master</NODE_ID>
+			<BATTERY_BUS_ID>1</BATTERY_BUS_ID>
+			<HOT_BATTERY_BUS_ID>10</HOT_BATTERY_BUS_ID>
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_ELECTRICAL_Switch_Avionics_Bus_Template">
 			<ID>1</ID>
@@ -182,9 +214,8 @@
 			<ANIM_NAME>ELECTRICAL_Switch_Avionics_Master_2</ANIM_NAME>
 			<PART_ID>ELECTRICAL_Switch_Avionics_Master_2</PART_ID>
 		</UseTemplate>
-		<UseTemplate Name="ASOBO_ELECTRICAL_Switch_Alternator_Template">
-			<TYPE>RESET_ON_TRIP</TYPE>
-			<INVERT_SWITCH_ON_CONDITION>True</INVERT_SWITCH_ON_CONDITION>
+		<UseTemplate Name="ASOBO_ELECTRICAL_Switch_Alternator_Template_Mod">
+			<ID>1</ID>
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_ELECTRICAL_Switch_Alternator_STBY_Template">
 			<LIGHT_NODE_ID>ELECTRICAL_Light_Alternator_STBY</LIGHT_NODE_ID>
@@ -365,46 +396,7 @@
 			<UseTemplate Name="ASOBO_GT_Component_Emissive_Gauge">
 				<NODE_ID>LIGHTING_KNOB_POTENTIOMETER</NODE_ID>
 			</UseTemplate>
-
-      <UseTemplate Name="ASOBO_GT_Switch_Dummy">
-        <NODE_ID>SWITCH_LIGHTS_NOSMOKE</NODE_ID>
-        <ANIM_NAME>SWITCH_LIGHTS_NOSMOKE</ANIM_NAME>
-        <ANIMTIP_0>TT:COCKPIT.TOOLTIPS.LIGHTS_NOSMOKE_OFF</ANIMTIP_0>
-        <ANIMTIP_1>TT:COCKPIT.TOOLTIPS.LIGHTS_NOSMOKE_ON</ANIMTIP_1>
-      </UseTemplate>
-      <UseTemplate Name="ASOBO_GT_Switch_Dummy">
-        <NODE_ID>SWITCH_LIGHTS_SEATBELT</NODE_ID>
-        <ANIM_NAME>SWITCH_LIGHTS_SEATBELT</ANIM_NAME>
-        <ANIMTIP_0>TT:COCKPIT.TOOLTIPS.LIGHTS_SEATBELT_OFF</ANIMTIP_0>
-        <ANIMTIP_1>TT:COCKPIT.TOOLTIPS.LIGHTS_SEATBELT_ON</ANIMTIP_1>
-      </UseTemplate>
 		</Component>
-
-    <!-- Ventilation -->
-    <UseTemplate Name="ASOBO_GT_Switch_Dummy">
-      <NODE_ID>SWITCH_AC_AFT</NODE_ID>
-      <ANIM_NAME>SWITCH_AC_AFT</ANIM_NAME>
-      <ANIMTIP_0>AFT high</ANIMTIP_0>
-      <ANIMTIP_1>AFT low</ANIMTIP_1>
-    </UseTemplate>
-    <UseTemplate Name="ASOBO_GT_Switch_Dummy">
-      <NODE_ID>SWITCH_AC_LEFT</NODE_ID>
-      <ANIM_NAME>SWITCH_AC_LEFT</ANIM_NAME>
-      <ANIMTIP_0>AC left high</ANIMTIP_0>
-      <ANIMTIP_1>AC left low</ANIMTIP_1>
-    </UseTemplate>
-    <UseTemplate Name="ASOBO_GT_Switch_Dummy">
-      <NODE_ID>SWITCH_AC_RIGHT</NODE_ID>
-      <ANIM_NAME>SWITCH_AC_RIGHT</ANIM_NAME>
-      <ANIMTIP_0>AC right high</ANIMTIP_0>
-      <ANIMTIP_1>AC right low</ANIMTIP_1>
-    </UseTemplate>
-    <UseTemplate Name="ASOBO_GT_Switch_Dummy">
-      <NODE_ID>SWITCH_AC_VENTILATE</NODE_ID>
-      <ANIM_NAME>SWITCH_AC_VENTILATE</ANIM_NAME>
-      <ANIMTIP_0>Ventilate</ANIMTIP_0>
-      <ANIMTIP_1>Cool</ANIMTIP_1>
-    </UseTemplate>
 		
 		<!-- SW/CB : backlighting -->
 		<UseTemplate Name="ASOBO_LIGHTING_Knob_Potentiometer_Template">
@@ -556,7 +548,6 @@
 			<NODE_ID>PRESSURIZATION_Switch_Bleed</NODE_ID>
 			<PART_ID>PRESSURIZATION_Switch_Bleed</PART_ID>
 			<ANIM_NAME>PRESSURIZATION_Switch_Bleed</ANIM_NAME>
-			<DISABLE_MOUSERECT>True</DISABLE_MOUSERECT>
 		</UseTemplate>
 		<!-- Make sure bleed air system is running as expected -->
 		<UseTemplate Name="ASOBO_GT_Update">
@@ -719,6 +710,18 @@
 	
 	<!-- DUMMIES ####################################-->	
 	<Component ID="DUMMY">
+		<UseTemplate Name="ASOBO_GT_Switch_Dummy">
+			<NODE_ID>SWITCH_LIGHTS_NOSMOKE</NODE_ID>
+			<ANIM_NAME>SWITCH_LIGHTS_NOSMOKE</ANIM_NAME>
+			<ANIMTIP_0>TT:COCKPIT.TOOLTIPS.LIGHTS_NOSMOKE_OFF</ANIMTIP_0>
+			<ANIMTIP_1>TT:COCKPIT.TOOLTIPS.LIGHTS_NOSMOKE_ON</ANIMTIP_1>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Switch_Dummy">
+			<NODE_ID>SWITCH_LIGHTS_SEATBELT</NODE_ID>
+			<ANIM_NAME>SWITCH_LIGHTS_SEATBELT</ANIM_NAME>
+			<ANIMTIP_0>TT:COCKPIT.TOOLTIPS.LIGHTS_SEATBELT_OFF</ANIMTIP_0>
+			<ANIMTIP_1>TT:COCKPIT.TOOLTIPS.LIGHTS_SEATBELT_ON</ANIMTIP_1>
+		</UseTemplate>
 		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
 			<NODE_ID>SWITCH_ANTIICE_BACKUP</NODE_ID>
 		</UseTemplate>
@@ -728,8 +731,34 @@
 		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
 			<NODE_ID>SWITCH_TESTSWITCH_FIREDETECT</NODE_ID>
 		</UseTemplate>
-		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
+        <UseTemplate Name="ASOBO_GT_Switch_Dummy">
+			<NODE_ID>SWITCH_AC_AFT</NODE_ID>
+			<ANIM_NAME>SWITCH_AC_AFT</ANIM_NAME>
+            <ANIMTIP_0>AFT high</ANIMTIP_0>
+            <ANIMTIP_1>AFT low</ANIMTIP_1>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Switch_Dummy">
+			<NODE_ID>SWITCH_AC_LEFT</NODE_ID>
+			<ANIM_NAME>SWITCH_AC_LEFT</ANIM_NAME>
+            <ANIMTIP_0>AC left high</ANIMTIP_0>
+            <ANIMTIP_1>AC left low</ANIMTIP_1>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Switch_Dummy">
+			<NODE_ID>SWITCH_AC_RIGHT</NODE_ID>
+			<ANIM_NAME>SWITCH_AC_RIGHT</ANIM_NAME>
+            <ANIMTIP_0>AC right high</ANIMTIP_0>
+            <ANIMTIP_1>AC right low</ANIMTIP_1>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Switch_Dummy">
+			<NODE_ID>SWITCH_AC_VENTILATE</NODE_ID>
+			<ANIM_NAME>SWITCH_AC_VENTILATE</ANIM_NAME>
+			<NUM_STATES>3</NUM_STATES>
+            <ANIMTIP_0>Ventilate</ANIMTIP_0>
+            <ANIMTIP_1>Cool</ANIMTIP_1>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Switch_Dummy">
 			<NODE_ID>SWITCH_POWEROUTLET_CREW</NODE_ID>
+			<ANIM_NAME>SWITCH_POWEROUTLET_CREW</ANIM_NAME>
 		</UseTemplate>
 		<CameraTitle>Pilot</CameraTitle>
 	</Component>
