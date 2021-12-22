@@ -17,6 +17,62 @@
 		<Include ModelBehaviorFile="Asobo\GlassCockpit\AS1000.xml"/>
 		<Include ModelBehaviorFile="Asobo\NAVCOM\ADF.xml"/>
 
+		<InputEvent ID="ELECTRICAL_MOD">
+			<Presets>
+            <Condition Check="INPUT_EVENT_ID_SOURCE" Match="ELECTRICAL_Power_Bus">
+			<True>
+			<Extend Target="ASOBO_GIE_Base">
+				<Parameters Type="Default">
+					<VALUE_UNITS>Bool</VALUE_UNITS>
+					<VALUE_CODE>
+						 #POWER_BUS_ID# (>A:BUS LOOKUP INDEX, Number) (A:BUS CONNECTION ON:#BATTERY_BUS_ID#, Bool) 
+					</VALUE_CODE>
+					<INIT_CODE>
+						#POWER_BUS_ID# (>A:BUS LOOKUP INDEX, Number) (A:BUS CONNECTION ON:#BATTERY_BUS_ID#, Bool)
+						(A:ELECTRICAL MASTER BATTERY:#MASTER_BATTERY_ID#, Bool) ! s0 and if{ #POWER_BUS_ID# #BATTERY_BUS_ID# (&gt;K:2:ELECTRICAL_BUS_TO_BUS_CONNECTION_TOGGLE) }
+						l0 if{ #MASTER_BATTERY_ID# (&gt;K:TOGGLE_MASTER_BATTERY) }
+					</INIT_CODE>
+					<INC_CODE/>
+					<DEC_CODE/>
+					<SET_CODE>
+						#POWER_BUS_ID# (>A:BUS LOOKUP INDEX, Number) (A:BUS CONNECTION ON:#BATTERY_BUS_ID#, Bool) p0
+						!= if{ #POWER_BUS_ID# #BATTERY_BUS_ID# (&gt;K:2:ELECTRICAL_BUS_TO_BUS_CONNECTION_TOGGLE) } 
+					</SET_CODE>
+					<SET_ARG_COUNT>1</SET_ARG_COUNT>
+				
+					<BINDING_SET_0>Toggle</BINDING_SET_0>
+					<BINDING_SET_0_PARAM_0>(B:#INPUT_EVENT_ID_SOURCE#_#IE_NAME#) !</BINDING_SET_0_PARAM_0>
+					<BINDING_SET_0_PARAM_0_IS_DYNAMIC>TRUE</BINDING_SET_0_PARAM_0_IS_DYNAMIC>
+				
+					<BINDING_SET_1>EVENT</BINDING_SET_1>
+					<BINDING_SET_1_EVENT_ID>TOGGLE_MASTER_BATTERY</BINDING_SET_1_EVENT_ID>
+					<BINDING_SET_1_EVENT_ID_ONLY>TRUE</BINDING_SET_1_EVENT_ID_ONLY>
+					<BINDING_SET_1_PARAM_0>(B:#INPUT_EVENT_ID_SOURCE#_#IE_NAME#) !</BINDING_SET_1_PARAM_0>
+					<BINDING_SET_1_PARAM_0_IS_DYNAMIC>TRUE</BINDING_SET_1_PARAM_0_IS_DYNAMIC>
+				</Parameters>
+			</Extend>
+			</True>
+			</Condition>
+			</Presets>
+		</InputEvent>
+
+        <Template Name="ASOBO_ELECTRICAL_Switch_Battery_Master_Template_Mod">
+			<Component ID="#PART_ID#" Node="#NODE_ID#">
+				<Parameters Type="Override">
+					<INPUT_EVENT_ID_SOURCE>ELECTRICAL_Power_Bus</INPUT_EVENT_ID_SOURCE>
+					<IE_NAME>Switch</IE_NAME>
+				</Parameters>
+				<UseInputEvent ID="ELECTRICAL_MOD">
+				</UseInputEvent>
+				<UseTemplate Name="ASOBO_GT_Switch_Code">
+					<ANIM_CODE>(B:#INPUT_EVENT_ID_SOURCE#_#IE_NAME#) 100 *</ANIM_CODE>
+					<LEFT_SINGLE_CODE>(&gt;B:#INPUT_EVENT_ID_SOURCE#_#IE_NAME#_Toggle)
+									  (L:#INPUT_EVENT_ID_SOURCE#_#IE_NAME#) ! (&gt;L:#INPUT_EVENT_ID_SOURCE#_#IE_NAME#)
+					</LEFT_SINGLE_CODE>
+				</UseTemplate>
+			</Component>		
+        </Template>	
+
         <Template Name="ASOBO_ELECTRICAL_Switch_Alternator_Template_Mod">
             <Component ID="ELECTRICAL_Switch_Alternator" Node="ELECTRICAL_Switch_Alternator_#ID#">
 	            <UseTemplate Name="ASOBO_GT_Switch_3States">
@@ -190,11 +246,13 @@
 
 	<!-- ELECTRICAL #####################################-->
 	<Component ID="ELECTRICAL">
-		<UseTemplate Name="ASOBO_ELECTRICAL_Switch_Battery_Master_Template">
+		<UseTemplate Name="ASOBO_ELECTRICAL_Switch_Battery_Master_Template_Mod">
 			<ANIM_NAME>ELECTRICAL_Switch_Battery_Master</ANIM_NAME>
 			<NODE_ID>ELECTRICAL_Switch_Battery_Master</NODE_ID>
-			<BATTERY_BUS_ID>1</BATTERY_BUS_ID>
-			<HOT_BATTERY_BUS_ID>10</HOT_BATTERY_BUS_ID>
+			<PART_ID>ELECTRICAL_Switch_Battery_Master</PART_ID>
+			<POWER_BUS_ID>1</POWER_BUS_ID>
+			<BATTERY_BUS_ID>10</BATTERY_BUS_ID>
+			<MASTER_BATTERY_ID>1</MASTER_BATTERY_ID>
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_ELECTRICAL_Switch_Avionics_Bus_Template">
 			<ID>1</ID>
@@ -731,7 +789,7 @@
 		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
 			<NODE_ID>SWITCH_TESTSWITCH_FIREDETECT</NODE_ID>
 		</UseTemplate>
-        <UseTemplate Name="ASOBO_GT_Switch_Dummy">
+		<UseTemplate Name="ASOBO_GT_Switch_Dummy">
 			<NODE_ID>SWITCH_AC_AFT</NODE_ID>
 			<ANIM_NAME>SWITCH_AC_AFT</ANIM_NAME>
             <ANIMTIP_0>AFT high</ANIMTIP_0>
