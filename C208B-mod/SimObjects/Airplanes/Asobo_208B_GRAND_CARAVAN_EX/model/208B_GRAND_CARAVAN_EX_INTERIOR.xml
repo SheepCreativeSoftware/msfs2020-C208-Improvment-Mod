@@ -116,6 +116,73 @@
             </Component>
         </Template>	
 
+        <Template Name="ASOBO_ELECTRICAL_Switch_ExternalPower_Template_Mod">
+            <Parameters Type="Default">
+    			<COVER_NODE_ID>#NODE_ID#_Cover</COVER_NODE_ID>
+    			<COVER_ANIM_NAME>#ANIM_NAME#_Cover</COVER_ANIM_NAME>
+    			<GET_STATE_EXTERNAL>
+    								12 (&gt;A:BUS LOOKUP INDEX, Number) (A:BUS CONNECTION ON:1, Bool) sp1
+    								12 (&gt;A:BUS LOOKUP INDEX, Number) (A:CIRCUIT CONNECTION ON:11, Bool) sp2
+    								1 (&gt;A:BUS LOOKUP INDEX, Number) (A:CIRCUIT CONNECTION ON:11, Bool) sp3
+    			</GET_STATE_EXTERNAL>
+    			<SET_EXTPWR_MAIN_BUS_CONNECTION>l1 != if{ 1 12 (&gt;K:2:ELECTRICAL_BUS_TO_BUS_CONNECTION_TOGGLE) }</SET_EXTPWR_MAIN_BUS_CONNECTION>
+    			<SET_EXTPWR_STARTER_CONNECTION>l2 != if{ 11 12 (&gt;K:2:ELECTRICAL_BUS_TO_CIRCUIT_CONNECTION_TOGGLE) }</SET_EXTPWR_STARTER_CONNECTION>
+    			<SET_STARTER_MAIN_BUS_CONNECTION>l3 != if{ 11 1 (&gt;K:2:ELECTRICAL_BUS_TO_CIRCUIT_CONNECTION_TOGGLE) }</SET_STARTER_MAIN_BUS_CONNECTION>
+            </Parameters>
+            <Parameters Type="Override">
+                <SWITCH_NODE_ID>#NODE_ID#</SWITCH_NODE_ID>
+    			<SWITCH_ANIM_NAME>#ANIM_NAME#</SWITCH_ANIM_NAME>
+    			<COVER_VAR_NAME>XMLVAR_ELECTRICAL_ExternalPower_#ID#_Cover_Opened</COVER_VAR_NAME>
+    			<WWISE_EVENT>externalpower_switch</WWISE_EVENT>
+    			<BTN_ID>ExternalPower_#ID#</BTN_ID>
+    		</Parameters>
+            <Component ID="ELECTRICAL_ExternalPower">
+    			<UseTemplate Name="ASOBO_GT_Switch_Covered">
+    				<NUM_STATES>3</NUM_STATES>
+    				<INPUT_EVENT_ID>ELECTRICAL</INPUT_EVENT_ID>
+    				<COVER_IE_NAME>#BTN_ID#_Cover</COVER_IE_NAME>
+    				<COVER_IE_ID_SOURCE>ELECTRICAL</COVER_IE_ID_SOURCE>
+    				<CODE_POS_0>(&gt;B:ELECTRICAL_#BTN_ID#_Bus)</CODE_POS_0>
+    				<CODE_POS_1>(&gt;B:ELECTRICAL_#BTN_ID#_Starter)</CODE_POS_1>
+    				<CODE_POS_2>(&gt;B:ELECTRICAL_#BTN_ID#_Off)</CODE_POS_2>
+    				<STATE0_TEST>(B:ELECTRICAL_#BTN_ID#, Number) 0 ==</STATE0_TEST>
+    				<STATE1_TEST>(B:ELECTRICAL_#BTN_ID#, Number) 1 ==</STATE1_TEST>
+    				<STATE2_TEST>(B:ELECTRICAL_#BTN_ID#, Number) 2 ==</STATE2_TEST>
+    				<STR_STATE_0>Bus</STR_STATE_0>
+    				<STR_STATE_1>Starter</STR_STATE_1>
+    				<STR_STATE_2>Off</STR_STATE_2>
+    				<TT_VALUE_0>@TT_Package.GT_STATE_BUS</TT_VALUE_0>
+    				<TT_VALUE_1>@TT_Package.GT_STATE_STARTER</TT_VALUE_1>
+    				<TT_VALUE_2>@TT_Package.GT_STATE_OFF</TT_VALUE_2>
+    				<SET_STATE_0>
+    					(A:EXTERNAL POWER ON:#ID#, Bool) ! if{ #ID# (&gt;K:TOGGLE_EXTERNAL_POWER) }
+    					1 #SET_EXTPWR_MAIN_BUS_CONNECTION#
+    					0 #SET_EXTPWR_STARTER_CONNECTION#
+    					1 #SET_STARTER_MAIN_BUS_CONNECTION#
+    				</SET_STATE_0>
+    				<SET_STATE_1>
+    					(A:EXTERNAL POWER ON:#ID#, Bool) ! if{ #ID# (&gt;K:TOGGLE_EXTERNAL_POWER) }
+    					0 #SET_EXTPWR_MAIN_BUS_CONNECTION#
+    					1 #SET_EXTPWR_STARTER_CONNECTION#
+    					0 #SET_STARTER_MAIN_BUS_CONNECTION#
+    				</SET_STATE_1>
+    				<SET_STATE_2>
+    					(A:EXTERNAL POWER ON:#ID#, Bool) if{ #ID# (&gt;K:TOGGLE_EXTERNAL_POWER) }
+    					0 #SET_EXTPWR_MAIN_BUS_CONNECTION#
+    					0 #SET_EXTPWR_STARTER_CONNECTION#
+    					1 #SET_STARTER_MAIN_BUS_CONNECTION#
+    				</SET_STATE_2>
+    				<TOOLTIP_TITLE>@TT_Package.ELECTRICAL_EXTERNAL_POWER_TITLE</TOOLTIP_TITLE>
+    				<TOOLTIP_ENTRY_0>ELECTRICAL_#BTN_ID#</TOOLTIP_ENTRY_0>
+<!--					<TT_DESCRIPTION_ID>@TT_Package.ELECTRICAL_EXTERNAL_POWER_ACTION</TT_DESCRIPTION_ID>  -->
+       				<TT_DESCRIPTION_ID>@TT_Package.ELECTRICAL_EXTERNAL_POWER_ACTION_SET</TT_DESCRIPTION_ID>
+    				<ON_BEFORE_SET_CODE>#GET_STATE_EXTERNAL# </ON_BEFORE_SET_CODE>
+    				<ENUM_VAL_TO_POS_EXTERNAL>(A:EXTERNAL POWER ON:#ID#, Bool) if{ l1 l2 ! and l3 and if{ 0 sp4 g2 } els{ 1 sp4 g2 } } els{ 2 sp4 g2 } :2 l4</ENUM_VAL_TO_POS_EXTERNAL>
+    				<SIMVAR_TO_WATCH_0>EXTERNAL POWER ON:#ID#</SIMVAR_TO_WATCH_0>
+    			</UseTemplate>
+    		</Component>
+        </Template>	
+    
 	<!-- HANDLING #######################################-->
 	<Component ID="ADF">
 		<UseTemplate Name="ASOBO_ADF_AS87_Template">
@@ -298,17 +365,19 @@
 		<UseTemplate Name="ASOBO_ELECTRICAL_Switch_Avionics_STBY_Power_Template">
 			<SOURCE_BUS_ID>8</SOURCE_BUS_ID>
 			<DESTINATION_BUS>11</DESTINATION_BUS>
-				<INVERT_COVER_ANIM>True</INVERT_COVER_ANIM>
-				<TT_DESCRIPTION_ID>@TT_Package.ELECTRICAL_SWITCH_AVIONICS_STANDBY_ACTION_SET</TT_DESCRIPTION_ID>
+			<INVERT_COVER_ANIM>True</INVERT_COVER_ANIM>
+			<TT_DESCRIPTION_ID>@TT_Package.ELECTRICAL_SWITCH_AVIONICS_STANDBY_ACTION_SET</TT_DESCRIPTION_ID>
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_ELECTRICAL_Switch_Avionics_Bus_Tie_Template">
 			<SOURCE_BUS_ID>8</SOURCE_BUS_ID>
 			<DESTINATION_BUS>9</DESTINATION_BUS>
-				<INVERT_COVER_ANIM>True</INVERT_COVER_ANIM>
+			<INVERT_COVER_ANIM>True</INVERT_COVER_ANIM>
 		</UseTemplate>
-		<UseTemplate Name="ASOBO_ELECTRICAL_Switch_ExternalPower_Template">
-			<NUM_STATES>3</NUM_STATES>
-				<TT_DESCRIPTION_ID>@TT_Package.ELECTRICAL_EXTERNAL_POWER_ACTION</TT_DESCRIPTION_ID>
+		<UseTemplate Name="ASOBO_ELECTRICAL_Switch_ExternalPower_Template_Mod">
+			<ID>1</ID>
+            <PART_ID>ELECTRICAL_Switch_ExternalPower</PART_ID>
+  			<ANIM_NAME>ELECTRICAL_Switch_ExternalPower_1</ANIM_NAME>
+   			<NODE_ID>ELECTRICAL_Switch_ExternalPower_1</NODE_ID>
 		</UseTemplate>
 		<CameraTitle>Engines</CameraTitle>
 	</Component>	
