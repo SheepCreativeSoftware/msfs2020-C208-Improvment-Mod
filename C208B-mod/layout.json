@@ -1,6 +1,71 @@
 {
   "content": [
     {
+      "path": "de-DE.locPak",
+      "size": 1541,
+      "date": 132849057918254675
+    },
+    {
+      "path": "en-US.locPak",
+      "size": 1363,
+      "date": 132849057860003204
+    },
+    {
+      "path": "es-ES.locPak",
+      "size": 1488,
+      "date": 132849057807402099
+    },
+    {
+      "path": "fi-FI.locPak",
+      "size": 1458,
+      "date": 132849057705617869
+    },
+    {
+      "path": "fr-FR.locPak",
+      "size": 1628,
+      "date": 132849057643152960
+    },
+    {
+      "path": "it-IT.locPak",
+      "size": 1413,
+      "date": 132849057579302620
+    },
+    {
+      "path": "ja-JP.locPak",
+      "size": 1883,
+      "date": 132849057512904022
+    },
+    {
+      "path": "nb-NO.locPak",
+      "size": 1427,
+      "date": 132849057439902344
+    },
+    {
+      "path": "nl-NL.locPak",
+      "size": 1384,
+      "date": 132849057370804341
+    },
+    {
+      "path": "pl-PL.locPak",
+      "size": 1655,
+      "date": 132849057249206388
+    },
+    {
+      "path": "pt-BR.locPak",
+      "size": 1454,
+      "date": 132849057154004013
+    },
+    {
+      "path": "ru-RU.locPak",
+      "size": 2442,
+      "date": 132849057102598966
+    },
+    {
+      "path": "sv-SE.locPak",
+      "size": 1492,
+      "date": 132849057039983518
+    },
+    {
       "path": "ContentInfo/Sheep_208B_GRAND_CARAVAN_EX_Impro/Thumbnail.jpg",
       "size": 39021,
       "date": 132848919381154966
