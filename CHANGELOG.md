@@ -1,5 +1,21 @@
 ## Changes
 
+**2112.1.5**
+- Fixed wrong behaivor of the passenger cabin lights
+
+**2112.1.4**
+- Added Content Info
+
+**2112.1.3**
+- Power supply truck can be requested for external power supply
+
+**2112.1.2**
+- Activate Startup Screen for MFD
+
+**2112.1.1**
+- Removed yellow color range on the airspeed indicator
+- Added License info
+
 **2112.1**
 - Tested version
 

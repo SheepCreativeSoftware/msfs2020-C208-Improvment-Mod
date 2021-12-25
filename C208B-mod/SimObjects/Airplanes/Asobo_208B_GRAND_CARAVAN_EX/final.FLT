@@ -89,7 +89,6 @@ WingLights=True
 CabinLights=False
 GlareshieldLights=False
 PedestalLights=False
-Potentiometer.3 = 1
 
 [Electrical.0]
 bus.1=bus.12:0
