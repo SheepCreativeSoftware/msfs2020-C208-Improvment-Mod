@@ -16,6 +16,27 @@
 		<Include ModelBehaviorFile="Asobo\Common.xml"/>
 		<Include ModelBehaviorFile="Asobo\GlassCockpit\AS1000.xml"/>
 		<Include ModelBehaviorFile="Asobo\NAVCOM\ADF.xml"/>
+        
+        <Template Name="ASOBO_ENGINE_MetalChipDetector_Template_Mod">
+            <Parameters Type="Default">
+			<ENGINE_MAX_TORQUE>2397</ENGINE_MAX_TORQUE> <!-- max torque above which engine is overstressed -->
+			<ENGINE_RESISTANCE_TIME>240</ENGINE_RESISTANCE_TIME> <!-- 4 minutes of the engine overstress is without penalty -->
+			<MAX_PROBABILITY>0.125</MAX_PROBABILITY> <!-- max probability of engine failure in one second -->
+			<TIME_CONST>1000</TIME_CONST>  <!-- Number of seconds after which the overstress causes max engine failure probability -->
+            </Parameters>
+            <Component ID="ENGINE_MetalChipDetector">
+			<UseTemplate Name="ASOBO_GT_Update">
+				<UPDATE_CODE>
+					(A:ENG FAILED:1, Bool) ! if{
+						(A:TURB ENG FREE TURBINE TORQUE:1, Foot Pounds) #ENGINE_MAX_TORQUE# &gt; if{
+							(L:XMLVAR_ChipDetectTimer) 1 + s0 (&gt;L:XMLVAR_ChipDetectTimer)
+							l0 #ENGINE_RESISTANCE_TIME# &gt; l0 #TIME_CONST# &lt;= and if{
+								#MAX_PROBABILITY# #TIME_CONST# l0 - / (&gt;O:EngineFailureProb) } } 
+						rand (O:EngineFailureProb) &lt; if{ (&gt;K:TOGGLE_ENGINE1_FAILURE) } }		
+				</UPDATE_CODE>
+			</UseTemplate>
+    		</Component>
+        </Template>	
 
 	<!-- HANDLING #######################################-->
 	<Component ID="ADF">
@@ -307,6 +328,8 @@
 		<UseTemplate Name="ASOBO_ENGINE_Lever_Propeller_Template">
 			<IDLE_GATE_ANIM_POS>0.25</IDLE_GATE_ANIM_POS>
 			<LEVER_TYPE>REVERSE_IDLE_FULL</LEVER_TYPE>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_ENGINE_MetalChipDetector_Template_Mod">
 		</UseTemplate>
 		<CameraTitle>Engines</CameraTitle>
 	</Component>

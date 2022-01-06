@@ -238,14 +238,25 @@
 			<Simvar name="GENERAL ENG STARTER:1" unit="Bool"/>
 	  </Condition>
 	</Annunciation>
-	<!--Indicates that either both pitot/static vane heater systems have malfunctioned or that both HEAT circuit breakers arepulled-->
+	<!--Indicates that metal chips are present in one or both of the chip detectors.-->
 	<Annunciation>
-	  <Type>Caution</Type>
-	  <Text>CHIP DETECT</Text>
-	  <Condition>
-			<Simvar name="ROTOR CHIP DETECTED" unit="Bool"/>
-	  </Condition>
+		<Type>Caution</Type>
+		<Text>CHIP DETECT</Text>
+		<Condition>
+			<Greater>
+				<Simvar name="L:XMLVAR_ChipDetectTimer" unit="Enum"/>
+				<Constant>240</Constant>
+			</Greater>
+		</Condition>
 	</Annunciation>
+	<!-- Indicates engine fatal failure -->
+	<Annunciation>
+      <Type>Warning</Type>
+      <Text>ENGINE FAILURE</Text>
+      <Condition>
+		<Simvar name="ENG FAILED:1" unit="bool"/>
+      </Condition>
+    </Annunciation>
 	<!--Indicates the starter-generator is operating in starter mode-->
 	<Annunciation>
 	  <Type>Caution</Type>
