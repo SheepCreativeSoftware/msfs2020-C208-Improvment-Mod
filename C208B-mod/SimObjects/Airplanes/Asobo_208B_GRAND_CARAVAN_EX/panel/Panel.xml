@@ -275,20 +275,16 @@
 	  <Text>GENERATOR AMPS</Text>
 		  <Condition>
 			<And>
+				<!-- With the engine running -->
 				<Greater>
 					<Simvar name="TURB ENG N1:1" unit="percent"/>
 					<Constant>50</Constant>
 				</Greater>
-				<Or>
-				<Lower>
-					<Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
-					<Constant>10</Constant>
-				</Lower>
 				<Greater>
-					<Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
+					<Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amps"/>
 					<Constant>200</Constant>
 				</Greater>
-				</Or>
+				<!-- it is impossible to get negative current to the alternator so the condition (Amps < -10) is skipped -->
 			</And>
 		  </Condition>
 	</Annunciation>
@@ -298,42 +294,16 @@
 	  <Text>ALTNR AMPS</Text>
 		  <Condition>
 			<And>
-                            <And> <!--If they are not equal then ALTNR should be 0-->
-                                   <Equal>
-                                          <Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
-                                          <Constant>0</Constant>
-                                   </Equal>
-                                   <Greater>
-                                          <Simvar name="ELECTRICAL MAIN BUS AMPS:1" unit="amp"/>
-                                          <Constant>0</Constant>
-                                   </Greater>
-                            </And>
-				<Not>
-					<Equal>
-						<Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
-						<Constant>0</Constant>
-					</Equal>
-				</Not>
+				<!-- With the engine running -->
 				<Greater>
 					<Simvar name="TURB ENG N1:1" unit="percent"/>
 					<Constant>50</Constant>
 				</Greater>
-				<Or>
-                                   <Lower>
-                                          <Add>
-                                                 <Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
-                                                 <Simvar name="ELECTRICAL MAIN BUS AMPS:1" unit="amp"/>
-                                          </Add>
-                                          <Constant>10</Constant>
-                                   </Lower>
-                                   <Greater>
-                                          <Add>
-                                                 <Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
-                                                 <Simvar name="ELECTRICAL MAIN BUS AMPS:1" unit="amp"/>
-                                          </Add>
-                                          <Constant>75</Constant>
-                                   </Greater>
-				</Or>
+				<Greater>
+					<Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amps"/>
+					<Constant>75</Constant>  
+				</Greater>
+				<!-- it is impossible to get negative current to the alternator so the condition (Amps < -10) is skipped -->
 			</And>
 		  </Condition>
 	</Annunciation>
@@ -343,20 +313,14 @@
 	  <Text>GENERATOR OFF</Text>
 		  <Condition>
 			<And>
-				<Or>
-					<Greater>
-						<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
-						<Constant>0</Constant>
-					</Greater>
-					<LowerEqual>
-						<Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
-						<Constant>0</Constant>
-					</LowerEqual>
-				</Or>
 				<Greater>
 					<Simvar name="TURB ENG N1:1" unit="percent"/>
 					<Constant>50</Constant>
 				</Greater>
+				<LowerEqual>
+					<Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
+					<Constant>0</Constant>
+				</LowerEqual>
 			</And>
 		  </Condition>
 	</Annunciation>
@@ -365,10 +329,18 @@
 	  <Type>Caution</Type>
 	  <Text>STBY PWR INOP</Text>
 		<Condition>
+		<Or>
+			<!-- it is impossible to judge by the current because simulator 
+			drains the current even if the engine is shutdown, it needs to check voltage as well  --> 
 			<Equal>
-				<Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
+				<Simvar name="ELECTRICAL GENALT BUS VOLTAGE:2" unit="volts"/>
 				<Constant>0</Constant>
 			</Equal>
+			<Equal>
+				<Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amps"/>
+				<Constant>0</Constant>
+			</Equal>
+		</Or>
 		</Condition>
 	</Annunciation>
 	<!--Indicates that the standby alternator is generating electrical power-->
@@ -376,28 +348,28 @@
 	  <Type>Advisory</Type>
 	  <Text>STBY PWR ON</Text>
 		<Condition>
-                     <And>
-                            <Greater>
-                                   <Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
-                                   <Constant>2</Constant>
-                            </Greater>
-                            <And>
-                                   <Or>
-                                          <Greater>
-                                                 <Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
-                                                 <Constant>0</Constant>
-                                          </Greater>
-                                          <LowerEqual>
-                                                 <Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
-                                                 <Constant>0</Constant>
-                                          </LowerEqual>
-                                   </Or>
-                                   <Greater>
-                                          <Simvar name="TURB ENG N1:1" unit="percent"/>
-                                          <Constant>50</Constant>
-                                   </Greater>
-                            </And>
-                     </And>
+			<And>
+				<Greater>
+					<Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amps"/>
+					<Constant>0</Constant>
+				</Greater>
+				<!-- there is no logic to disconnect stby when main gen is on, so additional check 
+					of the main generator state is needed -->
+				<Greater>
+					<Simvar name="TURB ENG N1:1" unit="percent"/>
+					<Constant>50</Constant>
+				</Greater>
+				<Or>
+					<LowerEqual>								
+					<Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amps"/>
+					<Constant>0</Constant>
+					</LowerEqual>
+					<Greater>
+					<Simvar name="ELECTRICAL GENALT LOAD:1" unit="percent"/>
+					<Constant>95</Constant>  
+					</Greater>
+				</Or>
+			</And>
 		</Condition>
 	</Annunciation>
 	<!--Indicates electrical power is being supplied to the engine ignition system-->		
