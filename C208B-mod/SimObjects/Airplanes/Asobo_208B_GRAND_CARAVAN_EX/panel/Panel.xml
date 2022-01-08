@@ -2070,6 +2070,31 @@
 	  <!-- Voices Alerts -->
   
   <VoicesAlerts>
+
+	<Alert>
+		<Type>Warning</Type>
+		<Text>TORQUE</Text>
+		<SoundEvent>tone_warning</SoundEvent>
+		<Condition>
+			<Greater>
+				<Simvar name="TURB ENG FREE TURBINE TORQUE:1" unit="foot pounds"/>
+				<Constant>2397</Constant>
+			</Greater>
+		</Condition>
+	</Alert>
+
+	<Alert>
+		<Type>Warning</Type>
+		<Text>ITT</Text>
+		<SoundEvent>tone_warning</SoundEvent>
+		<Condition>
+			<Greater>
+				<Simvar name="TURB ENG ITT:1" unit="celsius"/>
+				<Constant>825</Constant>
+			</Greater>
+		</Condition>
+	</Alert>
+
 	<Alert>
 		<Type>SoundOnly</Type>
 		<SoundEvent>aural_500ft</SoundEvent>
@@ -2279,6 +2304,7 @@
                </StateMachine>
              </Condition>
        </Alert>
+
 	<Alert>
 		<Type>SoundOnly</Type>
 		<SoundEvent>aural_stall</SoundEvent>
@@ -2408,7 +2434,7 @@
 			</And>
 		</Condition>
 	</Alert>
-	
+
 	<Alert>
 		<Type>SoundOnly</Type>
 		<SoundEvent>aural_landing_gear</SoundEvent>
