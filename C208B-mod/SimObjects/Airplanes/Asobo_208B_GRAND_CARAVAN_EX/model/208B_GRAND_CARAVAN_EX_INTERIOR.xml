@@ -28,6 +28,20 @@
 			<UseTemplate Name="ASOBO_GT_Update">
 				<UPDATE_CODE>
 					(A:ENG FAILED:1, Bool) ! if{
+						(A:PRESSURE ALTITUDE, feet) s12 2000 div s0
+					:0	-54 -54 -54 -54 -54 -54 -40 -22 -8 2 14 24 32 13
+						l0 case sp1 
+						1510 1640 1800 1980 2160 2350 2397 2397 2397 2397 2397 2397 2397 13
+						l0 case sp2 
+                        -7.5 -7.83333333 -9.0625 -10.1470588 -11.111111 -11.9736842 -13.1363636 -14.75 -16.5952381 -17.13888889 -19.1785714 -20.7727273 -20.9444444 13
+						l0 case sp3 
+
+						(A:AMBIENT TEMPERATURE, celsius) l1 - l3 * l2 +
+						l12 l0 2000 * - s1 0 >= if{ l1 sp13 l0 ++ sp0 s10 g0 }
+						l10 - l13 2000 / * + sp10
+						l10 #ENGINE_MAX_TORQUE# &gt; if{ #ENGINE_MAX_TORQUE# sp10 }
+						l10 (&gt;L:XMLVAR_EngineMaxTorque)
+
 						(A:TURB ENG FREE TURBINE TORQUE:1, Foot Pounds) #ENGINE_MAX_TORQUE# &gt; if{
 							(L:XMLVAR_ChipDetectTimer) 1 + s0 (&gt;L:XMLVAR_ChipDetectTimer)
 							l0 #ENGINE_RESISTANCE_TIME# &gt; l0 #TIME_CONST# &lt;= and if{
