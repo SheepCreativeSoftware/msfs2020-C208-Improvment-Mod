@@ -28,7 +28,7 @@
 			<UseTemplate Name="ASOBO_GT_Update">
 				<UPDATE_CODE>
 					(A:ENG FAILED:1, Bool) ! if{
-						(A:PRESSURE ALTITUDE, feet) s12 2000 div s0
+						(A:PRESSURE ALTITUDE, feet) s12 0 &lt; if{ 0 s12 s0 } els{ l12 2000 div s0 }
 					:0	-54 -54 -54 -54 -54 -54 -40 -22 -8 2 14 24 32 13
 						l0 case sp1 
 						1510 1640 1800 1980 2160 2350 2397 2397 2397 2397 2397 2397 2397 13
