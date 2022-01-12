@@ -1026,33 +1026,12 @@
 		<Text>
 			<Left fontsize="8">BAT AMPS</Left>
 			<Right id="Amperes" fontsize="9">
-				<If>
-					<Condition>
-                                          <And>
-                                                 <Greater>
-                                                        <Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
-                                                        <Constant>0</Constant>
-                                                 </Greater>
-                                                 <Greater>
-                                                        <Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
-                                                        <Constant>0</Constant>
-                                                 </Greater>
-                                          </And>
-					</Condition>
-					<Then>
-                                          <ToFixed precision="0">
-                                                 <Substract>
-                                                        <Simvar name="ELECTRICAL MAIN BUS AMPS:1" unit="amp"/>
-                                                        <Constant>64</Constant>
-                                                 </Substract>
-                                          </ToFixed>
-					</Then>
-					<Else>
-                                          <ToFixed precision="0">
-                                                 <Simvar name="ELECTRICAL MAIN BUS AMPS:1" unit="amp"/>
-                                          </ToFixed>
-					</Else>
-				</If>
+	    		<ToFixed precision="0">
+					<Substract>
+					<Constant>0</Constant>
+					<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+					</Substract>
+				</ToFixed>
 			</Right>
 		</Text>
 		
@@ -1060,10 +1039,11 @@
 			<Left fontsize="8">BUS VOLTS</Left>
 			<Right id="Volts" fontsize="9">
 				<ToFixed precision="1">
-					<Simvar name="ELECTRICAL MAIN BUS VOLTAGE:1" unit="Volts"/>
+					<Simvar name="ELECTRICAL MAIN BUS VOLTAGE:1" unit="volts"/>
 				</ToFixed>
 			</Right>
 		</Text>
+
 		<!-- Engine Page for WorkingTitle NXi-->
 		<EnginePage>
 			
@@ -1507,47 +1487,28 @@
 				</Right>
 			</Text>
 			
+
 			<Text>
 				<Left fontsize="8">BAT AMPS</Left>
 				<Right id="Amperes" fontsize="9">
-					<If>
-						<Condition>
-							<And>
-								<Greater>
-									<Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
-									<Constant>0</Constant>
-								</Greater>
-								<Greater>
-									<Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
-									<Constant>0</Constant>
-								</Greater>
-							</And>
-						</Condition>
-						<Then> <!-- if Generator porvide current then correct amps -->
-							<ToFixed precision="0">
-								<Substract>
-									<Simvar name="ELECTRICAL MAIN BUS AMPS:1" unit="amp"/>
-									<Constant>64</Constant>
-								</Substract>
-							</ToFixed>
-						</Then>
-						<Else> <!-- else use normal value -->
-							<ToFixed precision="0">
-								<Simvar name="ELECTRICAL MAIN BUS AMPS:1" unit="amp"/>
-							</ToFixed>
-						</Else>
-					</If>
-				</Right>
-			</Text>
-			
-			<Text> <!-- Don't use bat volts cause they negative -->
-				<Left fontsize="8">BUS VOLTS</Left>
-				<Right id="Volts" fontsize="9">
-					<ToFixed precision="1">
-						<Simvar name="ELECTRICAL MAIN BUS VOLTAGE:1" unit="Volts"/>
+	    			<ToFixed precision="0">
+						<Substract>
+						<Constant>0</Constant>
+						<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+						</Substract>
 					</ToFixed>
 				</Right>
 			</Text>
+		
+			<Text>
+				<Left fontsize="8">BUS VOLTS</Left>
+				<Right id="Volts" fontsize="9">
+					<ToFixed precision="1">
+						<Simvar name="ELECTRICAL MAIN BUS VOLTAGE:1" unit="volts"/>
+					</ToFixed>
+				</Right>
+			</Text>
+
 		</EnginePage>
 		<!--<LeanPage>...</LeanPage> Not exist -->
 		<!-- System Page for WorkingTitle NXi-->
@@ -1991,47 +1952,28 @@
 					</If>
 				</Right>
 			</Text>
+
 			<Text>
 				<Left fontsize="8">BAT AMPS</Left>
-				<Right fontsize="9">
-					<If>
-						<Condition>
-							<And>
-								<Greater>
-									<Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
-									<Constant>0</Constant>
-								</Greater>
-								<Greater>
-									<Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
-									<Constant>0</Constant>
-								</Greater>
-							</And>
-						</Condition>
-						<Then> <!-- if Generators provide power then correct value by factor of 74-->
-							<ToFixed precision="0">
-								<Substract>
-									<Simvar name="ELECTRICAL MAIN BUS AMPS:1" unit="amp"/>
-									<Constant>64</Constant>
-								</Substract>
-							</ToFixed>
-						</Then>
-						<Else> <!-- else use default main bus value-->
-							<ToFixed precision="0">
-								<Simvar name="ELECTRICAL MAIN BUS AMPS:1" unit="amp"/>
-							</ToFixed>
-						</Else>
-					</If>
+				<Right id="Amperes" fontsize="9">
+		    		<ToFixed precision="0">
+						<Substract>
+						<Constant>0</Constant>
+						<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+						</Substract>
+					</ToFixed>
 				</Right>
 			</Text>
+		
 			<Text>
 				<Left fontsize="8">BUS VOLTS</Left>
-				<Right fontsize="9">
+				<Right id="Volts" fontsize="9">
 					<ToFixed precision="1">
 						<Simvar name="ELECTRICAL MAIN BUS VOLTAGE:1" unit="volts"/>
 					</ToFixed>
 				</Right>
 			</Text>
-			
+
 		</SystemPage>
 	</EngineDisplay>
 	
