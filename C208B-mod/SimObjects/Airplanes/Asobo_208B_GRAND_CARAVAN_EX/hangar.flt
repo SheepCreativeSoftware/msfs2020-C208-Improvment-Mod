@@ -102,6 +102,7 @@ battery.1=True
 alternator.1=True
 alternator.2=False
 
+
 [AutoPilot.0]
 MasterSwitch=False
 WingLeveler=False
