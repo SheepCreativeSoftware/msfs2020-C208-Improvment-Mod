@@ -7,15 +7,11 @@
     <SyntheticVision>True</SyntheticVision>
 	<RadarAltitude>True</RadarAltitude>
     <Electric>
-		<Or>
-			<Simvar name="CIRCUIT ON:28" unit="Boolean"/>
-			<Simvar name="CIRCUIT ON:29" unit="Boolean"/>
-		</Or>
+		<Simvar name="CIRCUIT ON:28" unit="Boolean"/>
     </Electric>
-<!--	<ReversionaryMode>True</ReversionaryMode> -->
+	<ReversionaryMode>True</ReversionaryMode>
   </Instrument>
   
-  <!-- Second PFD
   <Instrument>
     <Name>AS1000_PFD_2</Name>
     <SyntheticVision>True</SyntheticVision>
@@ -23,7 +19,6 @@
 		<Simvar name="CIRCUIT ON:29" unit="Boolean"/>
     </Electric>
   </Instrument>
-  -->
   
   <Instrument>
     <Name>AS1000_MFD</Name>
@@ -32,13 +27,11 @@
     </Electric>
   </Instrument>
 
-<!--
   <Logic>
 	<Handler>Systems_AS1000</Handler>
 	<PFD>AS1000_PFD</PFD>
 	<MFD>AS1000_MFD</MFD>
   </Logic>
--->
 
   <Instrument>
     <Name>KR87</Name>
