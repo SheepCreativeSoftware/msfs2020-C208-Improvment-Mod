@@ -31,7 +31,7 @@
 	<!-- GYRO ========================================================================================== --> 	
 	  
 	<Sound WwiseData="true" WwiseEvent="gyro_sound" NodeName="INSTRUMENT_KNOB_ATTITUDEINDICATOR">
-      <WwiseRTPC SimVar="ELECTRICAL MASTER BATTERY" Units="BOOLEAN" Index="0" RTPCName="SIMVAR_ELECTRICAL_MASTER_BATTERY_INTERPOLATION_A20_R60"/>
+      <WwiseRTPC LocalVar="ELECTRICAL_POWER_BUS_SWITCH" Units="BOOLEAN" Index="1" RTPCName="SIMVAR_ELECTRICAL_MASTER_BATTERY_INTERPOLATION_A20_R60"/>
     </Sound> 
    
   </AlwaysPlaySounds>
@@ -220,8 +220,8 @@
     
     <!-- INSTRUMENTS  =========================================================================  -->  
     
-    <Sound WwiseData="true" WwiseEvent="battery_on" NodeName="AS1000_MFD_SCREEN" ContinuousStopDelay="0.2" FadeOutType="2" FadeOutTime="4" SimVar="ELECTRICAL MASTER BATTERY" Units="BOOL">
-	  <WwiseRTPC SimVar="ELECTRICAL MASTER BATTERY" Units="BOOL" Index="0" RTPCName="SIMVAR_ELECTRICAL_MASTER_BATTERY_INTERPOLATION_A4_R4" />
+    <Sound WwiseData="true" WwiseEvent="battery_on" NodeName="AS1000_MFD_SCREEN" ContinuousStopDelay="0.2" FadeOutType="2" FadeOutTime="4" LocalVar="ELECTRICAL_POWER_BUS_SWITCH" Units="BOOL">
+	  <WwiseRTPC LocalVar="ELECTRICAL_POWER_BUS_SWITCH" Units="BOOL" Index="1" RTPCName="SIMVAR_ELECTRICAL_MASTER_BATTERY_INTERPOLATION_A4_R4" />
       <Range LowerBound="1.0" />
     </Sound>   
 	
@@ -238,15 +238,15 @@
 	
 	<Sound WwiseData="true" WwiseEvent="ap_disengage_sound" Continuous="false" SimVar="AUTOPILOT DISENGAGED" Units="BOOL" Index="0">
 	  <Range LowerBound="1" />
-	  <Requires SimVar="ELECTRICAL MASTER BATTERY" Units="BOOL" Index="0">
-        <Range LowerBound="1" />
+	  <Requires SimVar="ELECTRICAL MAIN BUS VOLTAGE" Units="FLOAT" Index="1">
+        <Range LowerBound="20" />
       </Requires>
     </Sound>
 	
 	<Sound WwiseData="true" WwiseEvent="ap_disengage_sound" Continuous="false" SimVar="AUTOPILOT MASTER" Units="BOOL" Index="0">
 	  <Range UpperBound="0" />
-	  <Requires SimVar="ELECTRICAL MASTER BATTERY" Units="BOOL" Index="0">
-        <Range LowerBound="1" />
+	  <Requires SimVar="ELECTRICAL MAIN BUS VOLTAGE" Units="FLOAT" Index="1">
+        <Range LowerBound="20" />
       </Requires>
     </Sound>
 	
@@ -277,8 +277,8 @@
       <Requires SimVar="GENERAL ENG FUEL PUMP ON" Units="BOOLEAN" Index="1">
         <Range LowerBound="1" />
       </Requires>
-	  <Requires SimVar="ELECTRICAL MASTER BATTERY" Units="BOOLEAN" Index="1">
-        <Range LowerBound="1" />
+	  <Requires SimVar="ELECTRICAL MAIN BUS VOLTAGE" Units="FLOAT" Index="1">
+        <Range LowerBound="20" />
       </Requires>
 	  <WwiseRTPC SimVar="GENERAL ENG FUEL PUMP ON" Units="BOOLEAN" Index="1" RTPCName="SIMVAR_GENERAL_ENG_FUEL_PUMP_ON_INTERPOLATION_A1_R1"/>
     </Sound>
@@ -288,16 +288,16 @@
       <Requires SimVar="GENERAL ENG FUEL PRESSURE" Units="PSI" Index="1">
         <Range UpperBound="4.75" />
       </Requires>
-	  <Requires SimVar="ELECTRICAL MASTER BATTERY" Units="BOOLEAN" Index="1">
-        <Range LowerBound="1" />
+	  <Requires SimVar="ELECTRICAL MAIN BUS VOLTAGE" Units="FLOAT" Index="1">
+        <Range LowerBound="20" />
       </Requires>
 	  <WwiseRTPC SimVar="GENERAL ENG FUEL PUMP ON" Units="BOOLEAN" Index="1" RTPCName="SIMVAR_GENERAL_ENG_FUEL_PUMP_ON_INTERPOLATION_A1_R1"/>
     </Sound>
 	
 	<Sound WwiseData="true" WwiseEvent="ap_disengage_sound" NodeName="PUSH_CEILING_TESTLIGHT" Continuous="false" SimVar="AUTOPILOT MASTER" Units="BOOL" Index="0" ViewPoint="Inside">
 	  <Range UpperBound="0" />
-	  <Requires SimVar="ELECTRICAL MASTER BATTERY" Units="BOOL" Index="0">
-        <Range LowerBound="1" />
+	  <Requires SimVar="ELECTRICAL MAIN BUS VOLTAGE" Units="FLOAT" Index="1">
+        <Range LowerBound="20" />
       </Requires>
     </Sound>
 
@@ -481,5 +481,4 @@
 	<Sound WwiseData="true" WwiseEvent="adf_frequency_outer_knob" ViewPoint="Inside"/>
 
   </AnimationSounds> 
-  
 </SoundInfo>

@@ -96,8 +96,8 @@ GlareshieldLights=False
 PedestalLights=False
 
 [Electrical.0]
-bus.11 = bus.10:0
-bus.8 = bus.11:0, bus.9:0
+bus.1=bus.12:0
+bus.8=bus.9:0, bus.11:0
 battery.1=True
 alternator.1=True
 alternator.2=True
@@ -150,6 +150,3 @@ AileronTrimPct=0
 AileronTrimDisabled=False
 ElevatorTrimDisabled=False
 RudderTrimDisabled=False
-
-[LocalVars.0]
-Condition_Lever_CutOff_1=2

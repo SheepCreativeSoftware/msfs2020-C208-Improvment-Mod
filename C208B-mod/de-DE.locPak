@@ -1,0 +1,10 @@
+{
+  "LocalisationPackage": {
+    "Language": "de-DE",
+    "Strings": {
+      "AIRCRAFT.DESCRIPTION": "Ursprünglich als 208B Caravan bezeichnet, aber später als Grand Caravan vermarktet, wurde die erste Version dieses Cessna-Multitasker 1986 zertifiziert – wobei die modernere Grand Caravan EX erst 25 Jahre später, 2012, das Licht der Welt erblickte.<\/br><\/br>Speziell dafür designt, mit herausfordernden Missionen, großen Lademengen und kurzen und rauen Pisten fertigzuwerden, wurde die Grand Caravan EX ziemlich schnell zu einem der Lieblinge regulärer Airlines, Betreiber und Frachtunternehmen rund um den Globus.<\/br><\/br>Auf einer bewährten Flugzeugzelle basierend profitiert das Einzel-Triebwerk-Utility-Turboprop von verschiedenen Verbesserungen hinsichtlich des Avioniksystems Garming G1000, Innenraums und Enteisungssystems. Der größte Pluspunkt der EX ist allerdings ihre Leistung.<\/br><\/br>Der verbesserte Pratt-&-Whitney-Canada-PT6A-140-Motor erzeugt eine Stärke von 867 PS und sorgt so für eine erhöhte Geschwindigkeit, eine verbesserte Steigleistung und eine bessere Nutzlastleistung, während der Motor gleichzeitig durch seine überlegene Effizienz und Einfachheit überzeugt. Egal, wo auch immer Sie hinwollen – ob makellose Landebahnen oder raue Umgebung –, die Cessna 208B Grand Caravan EX ist genau das richtige Multimissionsflugzeug, um Sie dorthin zu bringen.",
+      "AIRCRAFT.UI_MANUFACTURER": "Textron Aviation",
+      "AIRCRAFT.UI_MODEL": "Cessna 208B GrandCaravan EX Mod"
+    }
+  }
+}

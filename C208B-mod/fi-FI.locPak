@@ -1,0 +1,10 @@
+{
+  "LocalisationPackage": {
+    "Language": "fi-FI",
+    "Strings": {
+      "AIRCRAFT.DESCRIPTION": "Tämä Cessnan monitoimikoneen aivan ensimmäinen versio — viralliselta nimeltään 208B Caravan ja markkinointinimeltään Grand Caravan — sertifioitiin vuonna 1986, ja nykyaikainen Grand Caravan EX tuli markkinoille yli 25 vuotta myöhemmin, vuonna 2012.<\/br><\/br>Karu mutta monipuolinen Grand Caravan EX on suunniteltu haastaviin töihin, suuriin kuormiin ja selviämään lyhyistä, huonokuntoisista kiitoradoista. Siitä onkin lyhyessä ajassa tullut paikallisten lentoyhtiöiden sekä tilaus- ja rahtilentojen suosikki ympäri maailmaa.<\/br><\/br>Tämä hyväksi havaittuun runkomalliin perustuva yksimoottorinen hyötyturbiinimoottorikone tarjoaa lukuisia parannuksia Garmin G1000 -avioniikkasarjaan, sisätiloihin ja jääsuojajärjestelmään. EX:n todellinen vetovoima on kuitenkin tehoissa.<\/br><\/br>Päivitetty Pratt & Whitney Canada PT6A-140 -moottori tuottaa 867 hevosvoimaa eli reilusti muskelia parantuneeseen nopeuteen, nousukykyyn ja hyötykuormasuorituskykyyn ja on samalla erinomaisen tehokas ja yksimoottorisena yksinkertainen. Cessna 208B Grand Caravan EX on vakaa monitoimi-ilma-alus, joka vie sinut määränpäähän puhtaan koskemattomilta kiitoradoilta aina hankalampiinkin ympäristöihin.",
+      "AIRCRAFT.UI_MANUFACTURER": "Textron Aviation",
+      "AIRCRAFT.UI_MODEL": "Cessna 208B GrandCaravan EX Mod"
+    }
+  }
+}
