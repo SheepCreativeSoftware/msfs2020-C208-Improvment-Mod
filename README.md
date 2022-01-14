@@ -24,6 +24,9 @@ Disscution about this mod, takes place in the [official forum](https://forums.fl
 - Autopilot and instrument fixes.  
 - More accurate start up.
 - Additional Voice Alerts
+- Changed the electric bus configuration to comply with POH
+- Additional changes in the sound configuration
+- Generator characteristics have been modified
 
 ***Miscellaneous***  
 - Improved lighting and textures.
