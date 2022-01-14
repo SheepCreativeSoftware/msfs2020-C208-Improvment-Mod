@@ -29,7 +29,7 @@ You can disable/enable engine failures in the MSFS Assistance Options.
 - More accurate start up.
 - Additional Voice Alerts
 - Changed the electric bus configuration to comply with POH
-- Additional changes in the sound configuration
+- Additional sounds
 - Generator characteristics have been modified
 
 ***Miscellaneous***  

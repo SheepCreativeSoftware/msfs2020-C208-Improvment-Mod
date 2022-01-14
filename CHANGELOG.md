@@ -1,5 +1,10 @@
 ## Changes
 
+**2201.0.1**
+- Metal chip detection after prolonged engine overstress (You can disable/enable engine failures in the MSFS Assistance Options)
+- sound warning about aircraft overstress
+- New dynamic maximum torque calculation
+
 **2201.0.0**
 - Changed the electric bus configuration to comply with POH. 
 - Cabin light connected directly to battery bus. 
