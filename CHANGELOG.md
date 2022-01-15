@@ -1,5 +1,41 @@
 ## Changes
 
+**2201.0.1**
+- Metal chip detection after prolonged engine overstress (You can disable/enable engine failures in the MSFS Assistance Options)
+- sound warning about aircraft overstress
+- New dynamic maximum torque calculation
+
+**2201.0.0**
+- Changed the electric bus configuration to comply with POH. 
+- Cabin light connected directly to battery bus. 
+- Battery switch disconnects battery bus instead of the battery itself
+- Changes in the sound configuration
+- fixes for default FLT configurations
+- fix for a problem with External Power switch. it did not reconnect starter to battery when external power was disconnected
+- Generator switch has been fixed. Right now it is possible to trip the main generator.
+- Generator characteristics have been modified: Workaround for now to simulate lack of power during the startup.
+- Fixed the panel emblem light knob
+- increase the brightness of the stby alternator light.
+- Fixed configuration of PFD and MFD - they properly initialize right now. Avionics 1 switch enables only PFD 1.
+- Improved CAS Annunciations
+- fix the battery load indication
+
+**2112.1.5**
+- Fixed wrong behaivor of the passenger cabin lights
+
+**2112.1.4**
+- Added Content Info
+
+**2112.1.3**
+- Power supply truck can be requested for external power supply
+
+**2112.1.2**
+- Activate Startup Screen for MFD
+
+**2112.1.1**
+- Removed yellow color range on the airspeed indicator
+- Added License info
+
 **2112.1**
 - Tested version
 

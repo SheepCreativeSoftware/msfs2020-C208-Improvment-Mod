@@ -1,5 +1,5 @@
 [Avionics.0]
-Comm1Active=127.850
+Comm1Active=124.850
 Comm1Standby=124.850
 Comm2Active=124.850
 Comm2Standby=124.850
@@ -11,7 +11,8 @@ OBS1=360
 Nav2Active=110.50
 Nav2Standby=113.90
 OBS2=360
-TransponderState=4
+
+TransponderState=0
 ADFActive=890
 ADF2Active=890
 DMESelected=1
@@ -26,34 +27,37 @@ AudioMarkerListen=True
 AudioDmeListen=False
 AudioAdfListen=False
 AudioAdf2Listen=False
-AvionicsSwitch=True
+AvionicsSwitch=False
 
 [Engine Parameters.1.0]
-ThrottleLeverPct=1
-PropellerLeverPct=0.99993896484375
-MixtureLeverPct=0.99993896484375
-Pct Engine RPM=0.99992644387881068901
-MaxReachedEngineRPM=33409.503488534865028
+ThrottleLeverPct=0
+PropellerLeverPct=0
+MixtureLeverPct=0.9998779296875
+Pct Engine RPM=0
+MaxReachedEngineRPM=0
 LeftMagneto=True
 RightMagneto=True
-GeneratorSwitch=True
-FuelValveOpen=True
+GeneratorSwitch=False
+FuelValveOpen=False
 CowlFlapPct=0
 FuelPumpSwitch=False
-FuelPumpSwitch_EX1=-1
-FuelValveOpen=True
+FuelPumpSwitch_EX1=0
 CarbHeat/DeiceSwitch=False
 EngineMasterSwitch=True
 GlowPlugTemperaturePct=1
-IgnitionSwitch=1
+IgnitionSwitch=0
 Afterburner=0
 
 [Propeller.1.0]
-prop_beta=0.54227909037301302853
-prop_max_rpm_percent=0.99992644387881068901
+prop_beta=0.017453292519943295474
+prop_max_rpm_percent=0
+
+[Fuel.0]
+TankSelector=Off
+TankSelector1=Off
 
 [Systems.0]
-BatterySwitch=True
+BatterySwitch=False
 StructuralDeiceSwitch=False
 PropDeiceSwitch=False
 Autobrakes=0
@@ -77,28 +81,30 @@ BleedAirSource=0
 
 [Switches.0]
 PitotHeat=False
-BeaconLights=True
-LandingLights=True
-LogoLights=True
-NavLights=True
-PanelLights=True
-RecognitionLights=True
-StrobeLights=True
+BeaconLights=False
+LandingLights=False
+LogoLights=False
+NavLights=False
+PanelLights=False
+RecognitionLights=False
+StrobeLights=False
 TaxiLights=False
-WingLights=True
+WingLights=False
 CabinLights=False
 GlareshieldLights=False
 PedestalLights=False
+Potentiometer.3 = 0
 
 [Electrical.0]
-bus.1=bus.12:0
-bus.8=bus.9:0, bus.11:0
+bus.1=bus.8:0, bus.9:0, bus.10:0, bus.11:0, bus.12:0
+bus.8=bus.1:0, bus.9:0, bus.11:0
 battery.1=True
 alternator.1=True
-alternator.2=True
+alternator.2=False
+
 
 [AutoPilot.0]
-MasterSwitch=True
+MasterSwitch=False
 WingLeveler=False
 Nav1Lock=False
 HeadingLock=False
@@ -120,25 +126,25 @@ BackCourseHold=False
 YawDamper=False
 ToGa=False
 AutoThrottleArm=False
-GPSdrivesNAV1=True
+GPSdrivesNAV1=False
 IsUsedForLesson=False
 ForceDisplayUI=False
 
 [Controls.0]
 SpoilersHandle=000.00
-FlapsHandle=100.00
-LeftFlap=100.00
-RightFlap=100.00
-GearsHandle=100.00
+FlapsHandle=000.00
+LeftFlap=000.00
+RightFlap=000.00
+GearsHandle=000.00
 Gear1=100.00
 Gear2=100.00
 Gear3=100.00
 YokeY=050.00
 YokeX=050.00
 Rudder=050.00
-LeftBrake=000.00
-RightBrake=000.00
-ParkingBrake=000.00
+LeftBrake=100.00
+RightBrake=100.00
+ParkingBrake=100.00
 
 RudderTrimPct=0
 AileronTrimPct=0

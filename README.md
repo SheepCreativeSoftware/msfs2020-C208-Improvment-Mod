@@ -7,6 +7,11 @@ Disscution about this mod, takes place in the [official forum](https://forums.fl
 ***Engine and Flight Model***  
 - Based on Vanila Sim Update 4 (SU4)
 - Corrected Different Values according to POH
+- 4 minutes of engine overstress (operating above max torque limit) cause CAS message about metal chips in the oil and increase probability of the engine failure.  
+The average time of engine failure after metal chips appearance is 100 minutes.  
+The event is random so you may not experience engine failure if you are gentle with throttle.  
+If the engine is kept overstressed the probability of the engine failure increases. Each second of keeping the engine above the torque limit decreases the expected enigne failure time by 8 second.  
+You can disable/enable engine failures in the MSFS Assistance Options.
 - ~~Higher thrust and greater braking force, allowing for short field ops.~~  
 - ~~Improved flight characteristics, more realistic climb, increased drag on approach and less float on landing.~~  
 - ~~More accurate cruise performance.~~
@@ -24,6 +29,9 @@ Disscution about this mod, takes place in the [official forum](https://forums.fl
 - Autopilot and instrument fixes.  
 - More accurate start up.
 - Additional Voice Alerts
+- Changed the electric bus configuration to comply with POH
+- Additional sounds
+- Generator characteristics have been modified
 
 ***Miscellaneous***  
 - Improved lighting and textures.
