@@ -60,7 +60,7 @@
       <Text>VOLTAGE LOW</Text>
       <Condition>
         <LowerEqual>
-          <Simvar name="ELECTRICAL BATTERY BUS VOLTAGE:1" unit="volts"/>
+          <Simvar name="ELECTRICAL MAIN BUS VOLTAGE:1" unit="volts"/>
           <Constant>24.5</Constant><!-- less 24.5 volts -->
         </LowerEqual>
       </Condition>
