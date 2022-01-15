@@ -60,7 +60,7 @@
       <Text>VOLTAGE LOW</Text>
       <Condition>
         <LowerEqual>
-          <Simvar name="ELECTRICAL BATTERY BUS VOLTAGE:1" unit="volts"/>
+          <Simvar name="ELECTRICAL MAIN BUS VOLTAGE:1" unit="volts"/>
           <Constant>24.5</Constant><!-- less 24.5 volts -->
         </LowerEqual>
       </Condition>
@@ -461,9 +461,26 @@
 <!-- Engine Display -->
 <!-- Set Override to "true" for WorkingTitle NXi when it is ready -->
 	<EngineDisplay override="true">
+
+		<!-- Battery load is incorrectly modeled in Sim, charging current is too high and does not drop to 0 when battery is fully loaded
+			 We need to help at least mimic this behaviour in simplified way (not physically correct) -->
+		<Function Name="BatteryCurrentEstimate">
+			<MultiDimensionsTable>
+				<Input>
+					<!-- current battery capacity -->
+					<References>0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1</References>
+					<Param>
+						<Simvar name="ELECTRICAL BATTERY ESTIMATED CAPACITY PCT" unit="number"/>
+					</Param>
+				</Input>
+				<Output>
+					0:-52; 1:-45; 2:-38; 3:-32; 4:-26; 5:-21; 6:-16; 7:-11; 8:-7; 9:-3; 10:-0.6
+				</Output>
+			</MultiDimensionsTable>
+		</Function>
+
 		<Function Name="MaximumCruiseTorqueBug">
 			<MultiDimensionsTable>
-				
 				<Input>
 					<!-- Temperature Indexes -->
 					<!--          0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21 -->
@@ -946,11 +963,40 @@
 		<Text>
 			<Left fontsize="8">BAT AMPS</Left>
 			<Right id="Amperes" fontsize="9">
-	    		<ToFixed precision="0">
-					<Substract>
-					<Constant>0</Constant>
-					<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
-					</Substract>
+    			<ToFixed precision="1">
+				<If>
+					<Condition>
+						<Greater>
+							<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+							<Constant>0</Constant>
+						</Greater>
+					</Condition>
+					<Then>
+						<Substract>
+						<Constant>0</Constant>
+						<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+						</Substract>
+					</Then>
+					<Else>
+						<If>
+							<Condition>
+								<Lower>
+									<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+									<Function Name="BatteryCurrentEstimate"/>							
+								</Lower>
+							</Condition>
+							<Then>
+								<Substract>
+								<Constant>0</Constant>
+								<Function Name="BatteryCurrentEstimate"/>
+								</Substract>
+							</Then>
+							<Else>
+								<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+							</Else>
+						</If>
+					</Else>
+				</If>
 				</ToFixed>
 			</Right>
 		</Text>
@@ -1411,11 +1457,40 @@
 			<Text>
 				<Left fontsize="8">BAT AMPS</Left>
 				<Right id="Amperes" fontsize="9">
-	    			<ToFixed precision="0">
-						<Substract>
-						<Constant>0</Constant>
-						<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
-						</Substract>
+	    			<ToFixed precision="1">
+					<If>
+						<Condition>
+							<Greater>
+								<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+								<Constant>0</Constant>
+							</Greater>
+						</Condition>
+						<Then>
+							<Substract>
+							<Constant>0</Constant>
+							<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+							</Substract>
+						</Then>
+						<Else>
+							<If>
+								<Condition>
+									<Lower>
+										<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+										<Function Name="BatteryCurrentEstimate"/>
+									</Lower>
+								</Condition>
+								<Then>
+									<Substract>
+									<Constant>0</Constant>
+									<Function Name="BatteryCurrentEstimate"/>
+									</Substract>
+								</Then>
+								<Else>
+									<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+								</Else>
+							</If>
+						</Else>
+					</If>
 					</ToFixed>
 				</Right>
 			</Text>
@@ -1842,6 +1917,7 @@
 					</If>
 				</Right>
 			</Text>
+
 			<Text>
 				<Left fontsize="8">ALT AMPS</Left>
 				<Right fontsize="9">
@@ -1876,11 +1952,40 @@
 			<Text>
 				<Left fontsize="8">BAT AMPS</Left>
 				<Right id="Amperes" fontsize="9">
-		    		<ToFixed precision="0">
-						<Substract>
-						<Constant>0</Constant>
-						<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
-						</Substract>
+	    			<ToFixed precision="1">
+					<If>
+						<Condition>
+							<Greater>
+								<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+								<Constant>0</Constant>
+							</Greater>
+						</Condition>
+						<Then>
+							<Substract>
+							<Constant>0</Constant>
+							<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+							</Substract>
+						</Then>
+						<Else>
+							<If>
+								<Condition>
+									<Lower>
+										<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+										<Function Name="BatteryCurrentEstimate"/>
+									</Lower>
+								</Condition>
+								<Then>
+									<Substract>
+									<Constant>0</Constant>
+									<Function Name="BatteryCurrentEstimate"/>
+									</Substract>
+								</Then>
+								<Else>
+									<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+								</Else>
+							</If>
+						</Else>
+					</If>
 					</ToFixed>
 				</Right>
 			</Text>
