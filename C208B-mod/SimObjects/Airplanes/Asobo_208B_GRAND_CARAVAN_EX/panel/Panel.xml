@@ -365,12 +365,12 @@
 				</Greater>
 				<Or>
 					<LowerEqual>								
-					<Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amps"/>
-					<Constant>0</Constant>
+						<Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amps"/>
+						<Constant>0</Constant>
 					</LowerEqual>
 					<Greater>
-					<Simvar name="ELECTRICAL GENALT LOAD:1" unit="percent"/>
-					<Constant>95</Constant>  
+						<Simvar name="ELECTRICAL GENALT LOAD:1" unit="percent"/>
+						<Constant>95</Constant>  
 					</Greater>
 				</Or>
 			</And>
@@ -427,35 +427,6 @@
               </Or>
 	  </Condition>
 	</Annunciation>
-       <!--The dynamic redline reverts to a static redline whenever the white TORQUE GAGE annunciation is shown on the PFD-->
-       <!--<Annunciation> Disabled for maybe someday
-	  <Type>Advisory</Type>
-	  <Text>TORQUE GAGE</Text>
-	  <Condition>
-              <Or>
-                     <Greater>
-				<Simvar name="PARTIAL PANEL AIRSPEED" unit="Enum"/>
-				<Constant>0</Constant>
-			</Greater>
-                     <Greater>
-				<Simvar name="PARTIAL PANEL ATTITUDE" unit="Enum"/>
-				<Constant>0</Constant>
-			</Greater>
-                     <Greater>
-				<Simvar name="PARTIAL PANEL ALTIMETER" unit="Enum"/>
-				<Constant>0</Constant>
-			</Greater>
-                     <Greater>
-				<Simvar name="PARTIAL PANEL PITOT" unit="Enum"/>
-				<Constant>0</Constant>
-			</Greater>
-			<Greater>
-				<Simvar name="PITOT ICE PCT" unit="percent"/>
-				<Constant>95</Constant>
-			</Greater>
-              </Or>
-	  </Condition>
-	</Annunciation>-->
   </Annunciations>
   
 <!-- Engine Display -->
@@ -946,12 +917,25 @@
 		<Text>
 			<Left fontsize="8">BAT AMPS</Left>
 			<Right id="Amperes" fontsize="9">
-	    		<ToFixed precision="0">
-					<Substract>
-					<Constant>0</Constant>
-					<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
-					</Substract>
-				</ToFixed>
+				<If>
+					<Condition><!--if battery is fully charged-->
+						<Equal>
+							<Simvar name="ELECTRICAL BATTERY ESTIMATED CAPACITY PCT" unit="percent"/>
+							<Constant>100</Constant>
+						</Equal>
+					</Condition>
+					<Then><!--then current is Zero-->
+						<Constant>0</Constant>
+					</Then>
+					<Else><!--else return current but inverted to be positive-->
+						<ToFixed precision="0">
+							<Substract>
+								<Constant>0</Constant>
+								<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+							</Substract>
+						</ToFixed>
+					</Else>
+				</If>	
 			</Right>
 		</Text>
 		
@@ -1411,12 +1395,25 @@
 			<Text>
 				<Left fontsize="8">BAT AMPS</Left>
 				<Right id="Amperes" fontsize="9">
-	    			<ToFixed precision="0">
-						<Substract>
-						<Constant>0</Constant>
-						<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
-						</Substract>
-					</ToFixed>
+					<If>
+						<Condition><!--if battery is fully charged-->
+							<Equal>
+								<Simvar name="ELECTRICAL BATTERY ESTIMATED CAPACITY PCT" unit="percent"/>
+								<Constant>100</Constant>
+							</Equal>
+						</Condition>
+						<Then><!--then current is Zero-->
+							<Constant>0</Constant>
+						</Then>
+						<Else><!--else return current but inverted to be positive-->
+							<ToFixed precision="0">
+								<Substract>
+									<Constant>0</Constant>
+									<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+								</Substract>
+							</ToFixed>
+						</Else>
+					</If>	
 				</Right>
 			</Text>
 		
@@ -1783,8 +1780,8 @@
 				<Left fontsize="8">GEN AMPS</Left>
 				<Right fontsize="9">
 					<If>
-						<Condition>
-							<And>
+						<Condition> <!--if generator provides power-->
+							<And><!--And battery not dis charging-->
 								<Lower>
 									<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
 									<Constant>0</Constant>
@@ -1795,48 +1792,65 @@
 								</Greater>
 							</And>
 						</Condition>
-						<Then> <!-- if Generator provide power and battery is not zero-->
+						<Then>
 							<If>
-								<Condition>
-									<And>
-										<Greater>
-											<Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
-											<Constant>0</Constant>
-										</Greater>
-										<Greater>
-											<Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
-											<Constant>0</Constant>
-										</Greater>
-									</And>
+								<Condition><!--if battery is fully charged-->
+									<Equal>
+										<Simvar name="ELECTRICAL BATTERY ESTIMATED CAPACITY PCT" unit="percent"/>
+										<Constant>100</Constant>
+									</Equal>
 								</Condition>
-								<Then> <!--if both generators provide power then correct GEN amps cause Alternator only provides power when Generator does not -->
+								<Then><!--provide normal value-->
 									<ToFixed precision="0">
-										<Add>
-											<Add> 
-												<Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
-												<Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
-											</Add>
-											<Substract> <!-- correct value by the factor of 74-->
-												<Simvar name="ELECTRICAL MAIN BUS AMPS:1" unit="amp"/>
-												<Constant>64</Constant>
-											</Substract>
+										<Add><!--correct current from Alernator cause Alernator should not provide power-->
+											<Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
+											<Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
 										</Add>
 									</ToFixed>
 								</Then>
-								<Else> <!-- else if only one Generator provide power then only correct value-->
-									<ToFixed precision="0">
-										<Add>
-											<Add>
-												<Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
+								<Else><!--corrected it by battery load-->
+									<If><!--if Alternator is off-->
+										<Condition>
+											<Equal>
 												<Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
-											</Add>
-											<Simvar name="ELECTRICAL MAIN BUS AMPS:1" unit="amp"/>
-										</Add>
-									</ToFixed>
+												<Constant>0</Constant>
+											</Equal>
+										</Condition>
+										<Then>
+											<ToFixed precision="0">
+												<Add>
+													<Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
+													<Substract><!--inverted to be positive-->
+														<Constant>0</Constant>
+														<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+													</Substract>
+												</Add>
+											</ToFixed>
+										</Then>
+										<Else>
+											<ToFixed precision="0">
+												<Add>
+													<Multiply>
+														<Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
+														<Constant>2</Constant>
+													</Multiply>
+													<Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
+													<Substract><!--correct Battery load by Alternator in this case-->
+														<Multiply>
+															<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+															<Constant>-1</Constant>
+														</Multiply>
+														<Constant>74</Constant>
+													</Substract>
+												</Add>
+											</ToFixed>
+										</Else>
+									</If>
+
 								</Else>
 							</If>
 						</Then>
-						<Else> <!--else set to zero-->
+						<Else>
 							<Constant>0</Constant>
 						</Else>
 					</If>
@@ -1848,25 +1862,43 @@
 					<If>
 						<Condition> 
 							<And>
-								<Equal>
+								<Equal> <!-- if Generator does not provide power-->
 									<Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
 									<Constant>0</Constant>
 								</Equal>
-								<Greater>
-									<Simvar name="ELECTRICAL MAIN BUS AMPS:1" unit="amp"/>
+								<Greater> <!-- if Alterator does provide power-->
+									<Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
 									<Constant>0</Constant>
 								</Greater>
 							</And>
 						</Condition>
-						<Then> <!-- if Generator does not provide power and power ist provided then correct value with Alternator Amps-->
-							<ToFixed precision="0">
-								<Add>
-									<Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
-									<Simvar name="ELECTRICAL MAIN BUS AMPS:1" unit="amp"/>
-								</Add>
-							</ToFixed>
+						<Then> <!--then show Alternator current-->
+							<If>
+								<Condition><!--if battery is fully charged-->
+									<Equal>
+										<Simvar name="ELECTRICAL BATTERY ESTIMATED CAPACITY PCT" unit="percent"/>
+										<Constant>100</Constant>
+									</Equal>
+								</Condition>
+								<Then><!--provide normal value-->
+									<ToFixed precision="0">
+										<Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
+									</ToFixed>
+								</Then>
+								<Else><!--corrected it by battery load-->
+									<ToFixed precision="0">
+										<Add>
+											<Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
+											<Substract><!--inverted to be positive-->
+												<Constant>0</Constant>
+												<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+											</Substract>
+										</Add>
+									</ToFixed>
+								</Else>
+							</If>
 						</Then>
-						<Else> <!-- else set to zero -->
+						<Else> <!-- else set to zero cause Alternator does not provide power if Generator does-->
 							<Constant>0</Constant>
 						</Else>
 					</If>
@@ -1876,12 +1908,25 @@
 			<Text>
 				<Left fontsize="8">BAT AMPS</Left>
 				<Right id="Amperes" fontsize="9">
-		    		<ToFixed precision="0">
-						<Substract>
-						<Constant>0</Constant>
-						<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
-						</Substract>
-					</ToFixed>
+					<If>
+						<Condition><!--if battery is fully charged-->
+							<Equal>
+								<Simvar name="ELECTRICAL BATTERY ESTIMATED CAPACITY PCT" unit="percent"/>
+								<Constant>100</Constant>
+							</Equal>
+						</Condition>
+						<Then><!--then current is Zero-->
+							<Constant>0</Constant>
+						</Then>
+						<Else><!--else return current but inverted to be positive-->
+							<ToFixed precision="0">
+								<Substract>
+									<Constant>0</Constant>
+									<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+								</Substract>
+							</ToFixed>
+						</Else>
+					</If>		
 				</Right>
 			</Text>
 		
