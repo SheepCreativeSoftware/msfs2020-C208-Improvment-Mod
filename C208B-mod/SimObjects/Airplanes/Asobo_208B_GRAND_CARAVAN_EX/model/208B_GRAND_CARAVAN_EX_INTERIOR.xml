@@ -209,7 +209,6 @@
     				</SET_STATE_2>
     				<TOOLTIP_TITLE>@TT_Package.ELECTRICAL_EXTERNAL_POWER_TITLE</TOOLTIP_TITLE>
     				<TOOLTIP_ENTRY_0>ELECTRICAL_#BTN_ID#</TOOLTIP_ENTRY_0>
-<!--					<TT_DESCRIPTION_ID>@TT_Package.ELECTRICAL_EXTERNAL_POWER_ACTION</TT_DESCRIPTION_ID>  -->
        				<TT_DESCRIPTION_ID>@TT_Package.ELECTRICAL_EXTERNAL_POWER_ACTION_SET</TT_DESCRIPTION_ID>
     				<ON_BEFORE_SET_CODE>#GET_STATE_EXTERNAL# </ON_BEFORE_SET_CODE>
     				<ENUM_VAL_TO_POS_EXTERNAL>(A:EXTERNAL POWER ON:#ID#, Bool) if{ l1 l2 ! and l3 and if{ 0 sp4 g2 } els{ 1 sp4 g2 } } els{ 2 sp4 g2 } :2 l4</ENUM_VAL_TO_POS_EXTERNAL>
@@ -944,6 +943,22 @@
 			<NODE_ID>SWITCH_POWEROUTLET_CREW</NODE_ID>
 			<ANIM_NAME>SWITCH_POWEROUTLET_CREW</ANIM_NAME>
 		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Switch_Dummy">
+			<NODE_ID>PUSH_CH_MIXINGAIR_1</NODE_ID>
+			<ANIM_NAME>PUSH_CH_MIXINGAIR_1</ANIM_NAME>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Switch_Dummy">
+			<NODE_ID>PUSH_CH_DEFROST_1</NODE_ID>
+			<ANIM_NAME>PUSH_CH_DEFROST_1</ANIM_NAME>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Switch_Dummy">
+			<NODE_ID>PUSH_CH_CABIN_1</NODE_ID>
+			<ANIM_NAME>PUSH_CH_CABIN_1</ANIM_NAME>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_GT_Switch_Dummy">
+			<NODE_ID>PRESSURIZATION_Switch_Oxygen</NODE_ID>
+			<ANIM_NAME>PRESSURIZATION_Switch_Oxygen</ANIM_NAME>
+		</UseTemplate>
 		<CameraTitle>Pilot</CameraTitle>
 	</Component>
 
@@ -1018,19 +1033,10 @@
 			<NODE_ID>PUSH_CH_MIXINGAIR_2</NODE_ID>
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
-			<NODE_ID>PUSH_CH_MIXINGAIR_1</NODE_ID>
-		</UseTemplate>
-		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
 			<NODE_ID>PUSH_CH_DEFROST_2</NODE_ID>
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
-			<NODE_ID>PUSH_CH_DEFROST_1</NODE_ID>
-		</UseTemplate>
-		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
 			<NODE_ID>PUSH_CH_CABIN_2</NODE_ID>
-		</UseTemplate>
-		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
-			<NODE_ID>PUSH_CH_CABIN_1</NODE_ID>
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
 			<NODE_ID>KNOB_TOPPANEL_FUELSELECTOR</NODE_ID>
@@ -1049,9 +1055,6 @@
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
 			<NODE_ID>LOCK_TOPPANEL_STBYFLAP_NORMAL</NODE_ID>
-		</UseTemplate>
-		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
-			<NODE_ID>PRESSURIZATION_Switch_Oxygen</NODE_ID>
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
 			<NODE_ID>SWITCH_TOPPANEL_STBYFLAP_DOWN</NODE_ID>
