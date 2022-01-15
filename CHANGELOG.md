@@ -1,5 +1,12 @@
 ## Changes
 
+**2201.0.2**
+- fix: reverse thrust is too small and has no effect on the plane
+- fix: add dummy interaction point for ground power unit.
+- fix: prevent reference cruise torque bug disappear if RPMS are slightly above 1900
+- fix: make a few iop controls movable: pressurization lever, heating and ventilation pulling knobs (They still do not impact the model though).
+- fix: Changed the default look of Stby Alternator LED to make it more distinguashable between on and off states
+
 **2201.0.1**
 - Metal chip detection after prolonged engine overstress (You can disable/enable engine failures in the MSFS Assistance Options)
 - sound warning about aircraft overstress
