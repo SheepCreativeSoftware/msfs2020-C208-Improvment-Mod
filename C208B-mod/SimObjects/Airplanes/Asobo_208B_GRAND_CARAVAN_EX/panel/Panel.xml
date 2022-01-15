@@ -581,7 +581,7 @@
 						</GreaterEqual>
 						<LowerEqual>
 							<Simvar name="PROP RPM:1" unit="rpm"/>
-							<Constant>1900</Constant>
+							<Constant>1950</Constant>
 						</LowerEqual>
 					</And>
 				</DisplayLogic>
@@ -1021,7 +1021,7 @@
 							</GreaterEqual>
 							<LowerEqual>
 								<Simvar name="PROP RPM:1" unit="rpm"/>
-								<Constant>1900</Constant>
+								<Constant>1950</Constant>
 							</LowerEqual>
 						</And>
 					</DisplayLogic>
@@ -1487,7 +1487,7 @@
 							</GreaterEqual>
 							<LowerEqual>
 								<Simvar name="PROP RPM:1" unit="rpm"/>
-								<Constant>1900</Constant>
+								<Constant>1950</Constant>
 							</LowerEqual>
 						</And>
 					</DisplayLogic>
