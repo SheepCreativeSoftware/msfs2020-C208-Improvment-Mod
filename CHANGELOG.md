@@ -1,5 +1,8 @@
 ## Changes
 
+**2201.2**
+Fixed: wrong gauge for standby torque
+
 **2201.1**
 - Tested version
 - Improved BAT, GEN and ALT AMPS to be shown most correct
