@@ -445,7 +445,7 @@
 					</Param>
 				</Input>
 				<Output>
-					0:-52; 1:-45; 2:-38; 3:-32; 4:-26; 5:-21; 6:-16; 7:-11; 8:-7; 9:-3; 10:-0.6
+					0:-152; 1:-145; 2:-138; 3:-132; 4:-116; 5:-100; 6:-86; 7:-65; 8:-42; 9:-21; 10:-0.4
 				</Output>
 			</MultiDimensionsTable>
 		</Function>
@@ -503,18 +503,7 @@
 				</Output>
 			</MultiDimensionsTable>
 		</Function>
-		
-		<!-- <Text> -->
-			<!-- <Left>TEST</Left> -->
-			<!-- <Right> -->
-				<!-- <Content> -->
-					<!-- <ToFixed precision="1"> -->
-						<!-- <Function Name="MaximumCruiseTorqueBug"/> -->
-					<!-- </ToFixed> -->
-				<!-- </Content> -->
-			<!-- </Right> -->
-		<!-- </Text> -->
-		
+				
 		<Gauge>
 			<Type>Circular</Type>
 			<Style>
@@ -934,7 +923,7 @@
 		<Text>
 			<Left fontsize="8">BAT AMPS</Left>
 			<Right id="Amperes" fontsize="9">
-<ToFixed precision="1">
+				<ToFixed precision="0">
 					<If>
 						<Condition><!--if battery discharged-->
 							<Greater>
@@ -944,8 +933,8 @@
 						</Condition>
 						<Then><!--then show normal value-->
 							<Substract>
-							<Constant>0</Constant><!--return current but inverted to be negative-->
-							<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+								<Constant>0</Constant><!--return current but inverted to be negative-->
+								<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
 							</Substract>
 						</Then>
 						<Else><!--else if charged-->
@@ -958,20 +947,20 @@
 								</Condition>
 								<Then><!--then limit it-->
 									<Substract>
-									<Constant>0</Constant>
-									<Function Name="BatteryCurrentEstimate"/>
+										<Constant>0</Constant>
+										<Function Name="BatteryCurrentEstimate"/>
 									</Substract>
 								</Then>
 								<Else><!--else show normal value-->
-                  <Substract>
-							      <Constant>0</Constant><!--return current but inverted to be positive-->
-									  <Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
-                  </Substract>
+									<Substract>
+										<Constant>0</Constant><!--return current but inverted to be positive-->
+										<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+									</Substract>
 								</Else>
 							</If>
 						</Else>
 					</If>
-					</ToFixed>
+				</ToFixed>
 			</Right>
 		</Text>
 		
@@ -1431,43 +1420,43 @@
 			<Text>
 				<Left fontsize="8">BAT AMPS</Left>
 				<Right id="Amperes" fontsize="9">
-	    			<ToFixed precision="1">
-					<If>
-						<Condition><!--if battery discharged-->
-							<Greater>
-								<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
-								<Constant>0</Constant>
-							</Greater>
-						</Condition>
-						<Then><!--then show normal value-->
-							<Substract>
-							<Constant>0</Constant><!--return current but inverted to be negative-->
-							<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
-							</Substract>
-						</Then>
-						<Else><!--else if charged-->
-							<If>
-								<Condition><!--if battery current is too high-->
-									<Lower>
-										<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
-										<Function Name="BatteryCurrentEstimate"/>
-									</Lower>
-								</Condition>
-								<Then><!--then limit it-->
-									<Substract>
+					<ToFixed precision="0">
+						<If>
+							<Condition><!--if battery discharged-->
+								<Greater>
+									<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
 									<Constant>0</Constant>
-									<Function Name="BatteryCurrentEstimate"/>
-									</Substract>
-								</Then>
-								<Else><!--else show normal value-->
-                  <Substract>
-							      <Constant>0</Constant><!--return current but inverted to be positive-->
-									  <Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
-                  </Substract>
-								</Else>
-							</If>
-						</Else>
-					</If>
+								</Greater>
+							</Condition>
+							<Then><!--then show normal value-->
+								<Substract>
+									<Constant>0</Constant><!--return current but inverted to be negative-->
+									<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+								</Substract>
+							</Then>
+							<Else><!--else if charged-->
+								<If>
+									<Condition><!--if battery current is too high-->
+										<Lower>
+											<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+											<Function Name="BatteryCurrentEstimate"/>
+										</Lower>
+									</Condition>
+									<Then><!--then limit it-->
+										<Substract>
+											<Constant>0</Constant>
+											<Function Name="BatteryCurrentEstimate"/>
+										</Substract>
+									</Then>
+									<Else><!--else show normal value-->
+										<Substract>
+											<Constant>0</Constant><!--return current but inverted to be positive-->
+											<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+										</Substract>
+									</Else>
+								</If>
+							</Else>
+						</If>
 					</ToFixed>
 				</Right>
 			</Text>
@@ -1875,10 +1864,26 @@
 											<ToFixed precision="0">
 												<Add>
 													<Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
-													<Substract><!--inverted to be positive-->
-														<Constant>0</Constant>
-														<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
-													</Substract>
+													<If>
+														<Condition><!--if battery current is too high-->
+															<Lower>
+																<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+																<Function Name="BatteryCurrentEstimate"/>
+															</Lower>
+														</Condition>
+														<Then><!--then limit it-->
+															<Multiply>
+																<Constant>-1</Constant>
+																<Function Name="BatteryCurrentEstimate"/>
+															</Multiply>
+														</Then>
+														<Else><!--else show normal value-->
+															<Multiply>
+																<Constant>-1</Constant><!--return current but inverted to be positive-->
+																<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+															</Multiply>
+														</Else>
+													</If>
 												</Add>
 											</ToFixed>
 										</Then>
@@ -1889,14 +1894,26 @@
 														<Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
 														<Constant>2</Constant>
 													</Multiply>
-													<Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
-													<Substract><!--correct Battery load by Alternator in this case-->
-														<Multiply>
-															<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
-															<Constant>-1</Constant>
-														</Multiply>
-														<Constant>74</Constant>
-													</Substract>
+													<If>
+														<Condition><!--if battery current is too high-->
+															<Lower>
+																<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+																<Function Name="BatteryCurrentEstimate"/>
+															</Lower>
+														</Condition>
+														<Then><!--then limit it-->
+															<Multiply>
+																<Constant>-1</Constant>
+																<Function Name="BatteryCurrentEstimate"/>
+															</Multiply>
+														</Then>
+														<Else><!--else show normal value-->
+															<Multiply>
+																<Constant>-1</Constant><!--return current but inverted to be positive-->
+																<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+															</Multiply>
+														</Else>
+													</If>
 												</Add>
 											</ToFixed>
 										</Else>
@@ -1906,7 +1923,38 @@
 							</If>
 						</Then>
 						<Else>
-							<Constant>0</Constant>
+							<If>
+								<Condition><!--If Battery is disconected-->
+									<Equal>
+										<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+										<Constant>0</Constant>
+									</Equal>
+								</Condition>
+								<Then><!--Only show Generator-->
+									<If>
+										<Condition><!--If Alternator is off-->
+											<Equal>
+												<Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
+												<Constant>0</Constant>
+											</Equal>
+										</Condition>
+										<Then><!--Only show Generator-->
+											<Constant>0</Constant>
+										</Then>
+										<Else><!--else -->
+											<ToFixed precision="0">
+												<Add><!--correct current from Alernator cause Alernator should not provide power-->
+													<Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
+													<Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
+												</Add>
+											</ToFixed>
+										</Else>
+									</If>
+								</Then>
+								<Else>
+									<Constant>0</Constant>
+								</Else>
+							</If>
 						</Else>
 					</If>
 				</Right>
@@ -1926,6 +1974,10 @@
 									<Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
 									<Constant>0</Constant>
 								</Greater>
+								<Lower><!--And battery not dis charging-->
+									<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+									<Constant>0</Constant>
+								</Lower>
 							</And>
 						</Condition>
 						<Then> <!--then show Alternator current-->
@@ -1945,17 +1997,55 @@
 									<ToFixed precision="0">
 										<Add>
 											<Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
-											<Substract><!--inverted to be positive-->
-												<Constant>0</Constant>
-												<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
-											</Substract>
+											<If>
+												<Condition><!--if battery current is too high-->
+													<Lower>
+														<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+														<Function Name="BatteryCurrentEstimate"/>
+													</Lower>
+												</Condition>
+												<Then><!--then limit it-->
+													<Multiply>
+														<Constant>-1</Constant>
+														<Function Name="BatteryCurrentEstimate"/>
+													</Multiply>
+												</Then>
+												<Else><!--else show normal value-->
+													<Multiply>
+														<Constant>-1</Constant><!--return current but inverted to be positive-->
+														<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+													</Multiply>
+												</Else>
+											</If>
 										</Add>
 									</ToFixed>
 								</Else>
 							</If>
 						</Then>
 						<Else> <!-- else set to zero cause Alternator does not provide power if Generator does-->
-							<Constant>0</Constant>
+							<If>
+								<Condition><!--If Battery is disconected-->
+									<And>
+										<Equal>
+											<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+											<Constant>0</Constant>
+										</Equal>
+										<Equal> <!-- if Generator does not provide power-->
+											<Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
+											<Constant>0</Constant>
+										</Equal>
+									</And>
+								</Condition>
+								<Then><!--Only show Generator-->
+									<ToFixed precision="0">
+										<!--correct current from Alernator cause Alernator should not provide power-->
+										<Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
+									</ToFixed>
+								</Then>
+								<Else>
+									<Constant>0</Constant>
+								</Else>
+							</If>
 						</Else>
 					</If>
 				</Right>
@@ -1964,43 +2054,43 @@
 			<Text>
 				<Left fontsize="8">BAT AMPS</Left>
 				<Right id="Amperes" fontsize="9">
-<ToFixed precision="1">
-					<If>
-						<Condition><!--if battery discharged-->
-							<Greater>
-								<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
-								<Constant>0</Constant>
-							</Greater>
-						</Condition>
-						<Then><!--then show normal value-->
-							<Substract>
-							<Constant>0</Constant><!--return current but inverted to be negative-->
-							<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
-							</Substract>
-						</Then>
-						<Else><!--else if charged-->
-							<If>
-								<Condition><!--if battery current is too high-->
-									<Lower>
-										<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
-										<Function Name="BatteryCurrentEstimate"/>
-									</Lower>
-								</Condition>
-								<Then><!--then limit it-->
-									<Substract>
+					<ToFixed precision="0">
+						<If>
+							<Condition><!--if battery discharged-->
+								<Greater>
+									<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
 									<Constant>0</Constant>
-									<Function Name="BatteryCurrentEstimate"/>
-									</Substract>
-								</Then>
-								<Else><!--else show normal value-->
-                  <Substract>
-							      <Constant>0</Constant><!--return current but inverted to be positive-->
-									  <Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
-                  </Substract>
-								</Else>
-							</If>
-						</Else>
-					</If>
+								</Greater>
+							</Condition>
+							<Then><!--then show normal value-->
+								<Substract>
+									<Constant>0</Constant><!--return current but inverted to be negative-->
+									<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+								</Substract>
+							</Then>
+							<Else><!--else if charged-->
+								<If>
+									<Condition><!--if battery current is too high-->
+										<Lower>
+											<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+											<Function Name="BatteryCurrentEstimate"/>
+										</Lower>
+									</Condition>
+									<Then><!--then limit it-->
+										<Substract>
+											<Constant>0</Constant>
+											<Function Name="BatteryCurrentEstimate"/>
+										</Substract>
+									</Then>
+									<Else><!--else show normal value-->
+										<Substract>
+											<Constant>0</Constant><!--return current but inverted to be positive-->
+											<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
+										</Substract>
+									</Else>
+								</If>
+							</Else>
+						</If>
 					</ToFixed>
 				</Right>
 			</Text>
