@@ -887,7 +887,7 @@
 		<UseTemplate Name="ASOBO_INSTRUMENT_Needle_Torque_Template">
 			<NODE_ID>ENGINE_Needle_Torque_1</NODE_ID>
 			<ANIM_NAME>ENGINE_Needle_Torque_1</ANIM_NAME>
-			<MAX_VALUE>2500</MAX_VALUE>
+			<MAX_VALUE>3000</MAX_VALUE>
 		</UseTemplate>
 		<CameraTitle>Pilot</CameraTitle>
 	</Component>
