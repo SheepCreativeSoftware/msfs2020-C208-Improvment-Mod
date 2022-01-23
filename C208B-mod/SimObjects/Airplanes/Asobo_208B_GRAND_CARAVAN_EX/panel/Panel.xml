@@ -278,16 +278,10 @@
 	  <Type>Caution</Type>
 	  <Text>GENERATOR AMPS</Text>
 		  <Condition>
-			<And>
-				<!-- With the engine running -->
-				<Greater>
-					<Simvar name="TURB ENG N1:1" unit="percent"/>
-					<Constant>50</Constant>
-				</Greater>
-				<Greater>
-					<Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amps"/>
-					<Constant>200</Constant>
-				</Greater>
+			<Greater>
+				<Simvar name="L:XMLVAR_Generator_Current" unit="amps"/>
+				<Constant>200</Constant>
+			</Greater>
 				<!-- it is impossible to get negative current to the alternator so the condition (Amps < -10) is skipped -->
 			</And>
 		  </Condition>
@@ -297,16 +291,10 @@
 	  <Type>Caution</Type>
 	  <Text>ALTNR AMPS</Text>
 		  <Condition>
-			<And>
-				<!-- With the engine running -->
-				<Greater>
-					<Simvar name="TURB ENG N1:1" unit="percent"/>
-					<Constant>50</Constant>
-				</Greater>
-				<Greater>
-					<Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amps"/>
-					<Constant>75</Constant>  
-				</Greater>
+			<Greater>
+				<Simvar name="L:XMLVAR_Alternator_Current" unit="amps"/>
+				<Constant>70</Constant>
+			</Greater>
 				<!-- it is impossible to get negative current to the alternator so the condition (Amps < -10) is skipped -->
 			</And>
 		  </Condition>
@@ -316,64 +304,39 @@
 	  <Type>Caution</Type>
 	  <Text>GENERATOR OFF</Text>
 		  <Condition>
-			<And>
-				<Greater>
-					<Simvar name="TURB ENG N1:1" unit="percent"/>
-					<Constant>50</Constant>
-				</Greater>
-				<LowerEqual>
-					<Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
-					<Constant>0</Constant>
-				</LowerEqual>
-			</And>
+			<Equal>
+				<Simvar name="L:XMLVAR_Generator_Current" unit="amps"/>
+				<Constant>0</Constant>
+			</Equal>
 		  </Condition>
 	</Annunciation>
-	<!--Indicates electrical power is not available from the standby alternator-->
+	<!-- Indicates electrical power is not available from the standby alternator-->
+	<!-- Stby alternator is inop when stby alternator is turned off or the engine is not reved up --> 
 	<Annunciation>
 	  <Type>Caution</Type>
 	  <Text>STBY PWR INOP</Text>
 		<Condition>
 		<Or>
-			<!-- it is impossible to judge by the current because simulator 
-			drains the current even if the engine is shutdown, it needs to check voltage as well  --> 
-			<Equal>
-				<Simvar name="ELECTRICAL GENALT BUS VOLTAGE:2" unit="volts"/>
-				<Constant>0</Constant>
-			</Equal>
-			<Equal>
-				<Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amps"/>
-				<Constant>0</Constant>
-			</Equal>
+			<Not>
+				<Simvar name="GENERAL ENG MASTER ALTERNATOR:2" unit="bool"/>
+			</Not>
+			<Lower>
+				<Simvar name="TURB ENG N1:1" unit="percent"/>
+				<Constant>46</Constant>
+			</Lower>
 		</Or>
 		</Condition>
 	</Annunciation>
-	<!--Indicates that the standby alternator is generating electrical power-->
+	<!-- Indicates that the standby alternator is generating electrical power-->
+	<!-- Stby alternator is connected by ACU only if the main generator is overloaded or turned off -->
 	<Annunciation>
 	  <Type>Advisory</Type>
 	  <Text>STBY PWR ON</Text>
 		<Condition>
-			<And>
-				<Greater>
-					<Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amps"/>
-					<Constant>0</Constant>
-				</Greater>
-				<!-- there is no logic to disconnect stby when main gen is on, so additional check 
-					of the main generator state is needed -->
-				<Greater>
-					<Simvar name="TURB ENG N1:1" unit="percent"/>
-					<Constant>50</Constant>
-				</Greater>
-				<Or>
-					<LowerEqual>								
-						<Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amps"/>
-						<Constant>0</Constant>
-					</LowerEqual>
-					<Greater>
-						<Simvar name="ELECTRICAL GENALT LOAD:1" unit="percent"/>
-						<Constant>95</Constant>  
-					</Greater>
-				</Or>
-			</And>
+			<Greater>
+				<Simvar name="L:XMLVAR_Alternator_Current" unit="amps"/>
+				<Constant>0</Constant>
+			</Greater>
 		</Condition>
 	</Annunciation>
 	<!--Indicates electrical power is being supplied to the engine ignition system-->		
@@ -398,8 +361,8 @@
 	  <Type>Caution</Type>
 	  <Text>ALT MISCOMP</Text>
 	  <Condition>
-              <Or>
-                     <Greater>
+		<Or>
+			<Greater>
 				<Simvar name="PARTIAL PANEL ALTIMETER" unit="Enum"/>
 				<Constant>0</Constant>
 			</Greater>
@@ -407,7 +370,7 @@
 				<Simvar name="PITOT ICE PCT" unit="percent"/>
 				<Constant>99</Constant>
 			</Greater>
-              </Or>
+		</Or>
 	  </Condition>
 	</Annunciation>
        <!--Indicates Airspeed is not working-->
@@ -415,8 +378,8 @@
 	  <Type>Caution</Type>
 	  <Text>IAS MISCOMP</Text>
 	  <Condition>
-              <Or>
-                     <Greater>
+		<Or>
+			<Greater>
 				<Simvar name="PARTIAL PANEL AIRSPEED" unit="Enum"/>
 				<Constant>0</Constant>
 			</Greater>
@@ -424,7 +387,7 @@
 				<Simvar name="PITOT ICE PCT" unit="percent"/>
 				<Constant>91</Constant>
 			</Greater>
-              </Or>
+		</Or>
 	  </Condition>
 	</Annunciation>
   </Annunciations>
@@ -432,23 +395,6 @@
 <!-- Engine Display -->
 <!-- Set Override to "true" for WorkingTitle NXi when it is ready -->
 	<EngineDisplay override="true">
-
-		<!-- Battery load is incorrectly modeled in Sim, charging current is too high and does not drop to 0 when battery is fully loaded
-			 We need to help at least mimic this behaviour in simplified way (not physically correct) -->
-		<Function Name="BatteryCurrentEstimate">
-			<MultiDimensionsTable>
-				<Input>
-					<!-- current battery capacity -->
-					<References>0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1</References>
-					<Param>
-						<Simvar name="ELECTRICAL BATTERY ESTIMATED CAPACITY PCT" unit="number"/>
-					</Param>
-				</Input>
-				<Output>
-					0:-52; 1:-45; 2:-38; 3:-32; 4:-26; 5:-21; 6:-16; 7:-11; 8:-7; 9:-3; 10:-0.6
-				</Output>
-			</MultiDimensionsTable>
-		</Function>
 
 		<Function Name="MaximumCruiseTorqueBug">
 			<MultiDimensionsTable>
@@ -934,44 +880,9 @@
 		<Text>
 			<Left fontsize="8">BAT AMPS</Left>
 			<Right id="Amperes" fontsize="9">
-<ToFixed precision="1">
-					<If>
-						<Condition><!--if battery discharged-->
-							<Greater>
-								<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
-								<Constant>0</Constant>
-							</Greater>
-						</Condition>
-						<Then><!--then show normal value-->
-							<Substract>
-							<Constant>0</Constant><!--return current but inverted to be negative-->
-							<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
-							</Substract>
-						</Then>
-						<Else><!--else if charged-->
-							<If>
-								<Condition><!--if battery current is too high-->
-									<Lower>
-										<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
-										<Function Name="BatteryCurrentEstimate"/>
-									</Lower>
-								</Condition>
-								<Then><!--then limit it-->
-									<Substract>
-									<Constant>0</Constant>
-									<Function Name="BatteryCurrentEstimate"/>
-									</Substract>
-								</Then>
-								<Else><!--else show normal value-->
-                  <Substract>
-							      <Constant>0</Constant><!--return current but inverted to be positive-->
-									  <Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
-                  </Substract>
-								</Else>
-							</If>
-						</Else>
-					</If>
-					</ToFixed>
+			<ToFixed precision="1">
+				<Simvar name="L:XMLVAR_Battery_Current" unit="amps"/>
+			</ToFixed>
 			</Right>
 		</Text>
 		
@@ -1432,42 +1343,7 @@
 				<Left fontsize="8">BAT AMPS</Left>
 				<Right id="Amperes" fontsize="9">
 	    			<ToFixed precision="1">
-					<If>
-						<Condition><!--if battery discharged-->
-							<Greater>
-								<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
-								<Constant>0</Constant>
-							</Greater>
-						</Condition>
-						<Then><!--then show normal value-->
-							<Substract>
-							<Constant>0</Constant><!--return current but inverted to be negative-->
-							<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
-							</Substract>
-						</Then>
-						<Else><!--else if charged-->
-							<If>
-								<Condition><!--if battery current is too high-->
-									<Lower>
-										<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
-										<Function Name="BatteryCurrentEstimate"/>
-									</Lower>
-								</Condition>
-								<Then><!--then limit it-->
-									<Substract>
-									<Constant>0</Constant>
-									<Function Name="BatteryCurrentEstimate"/>
-									</Substract>
-								</Then>
-								<Else><!--else show normal value-->
-                  <Substract>
-							      <Constant>0</Constant><!--return current but inverted to be positive-->
-									  <Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
-                  </Substract>
-								</Else>
-							</If>
-						</Else>
-					</If>
+					<Simvar name="L:XMLVAR_Battery_Current" unit="amps"/>
 					</ToFixed>
 				</Right>
 			</Text>
@@ -1665,7 +1541,7 @@
 				</RedBlink>
 				<GraduationLength>50</GraduationLength>
 			</Gauge>
-			
+
 			<Gauge>
 				<Type>Circular</Type>
 				<Style>
@@ -1715,7 +1591,7 @@
 			<Text> <!--Adjust with a brake-->
 				<Center>---------------------------------</Center>
 			</Text>
-			
+
 			<Text>
 				<Left>PROP RPM</Left>
 				<Right id="Turbo_RPMGauge">
@@ -1827,180 +1703,33 @@
 			
 			<Text>
 				<Left>------</Left>
-				<Center>ELECTRICAL</Center>
+				<Center> ELECTRICAL </Center>
 				<Right>------</Right>
 			</Text>
-			
+	
 			<Text>
 				<Left fontsize="8">GEN AMPS</Left>
 				<Right fontsize="9">
-					<If>
-						<Condition> <!--if generator provides power-->
-							<And><!--And battery not dis charging-->
-								<Lower>
-									<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
-									<Constant>0</Constant>
-								</Lower>
-								<Greater>
-									<Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
-									<Constant>0</Constant>
-								</Greater>
-							</And>
-						</Condition>
-						<Then>
-							<If>
-								<Condition><!--if battery is fully charged-->
-									<Equal>
-										<Simvar name="ELECTRICAL BATTERY ESTIMATED CAPACITY PCT" unit="percent"/>
-										<Constant>100</Constant>
-									</Equal>
-								</Condition>
-								<Then><!--provide normal value-->
-									<ToFixed precision="0">
-										<Add><!--correct current from Alernator cause Alernator should not provide power-->
-											<Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
-											<Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
-										</Add>
-									</ToFixed>
-								</Then>
-								<Else><!--corrected it by battery load-->
-									<If><!--if Alternator is off-->
-										<Condition>
-											<Equal>
-												<Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
-												<Constant>0</Constant>
-											</Equal>
-										</Condition>
-										<Then>
-											<ToFixed precision="0">
-												<Add>
-													<Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
-													<Substract><!--inverted to be positive-->
-														<Constant>0</Constant>
-														<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
-													</Substract>
-												</Add>
-											</ToFixed>
-										</Then>
-										<Else>
-											<ToFixed precision="0">
-												<Add>
-													<Multiply>
-														<Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
-														<Constant>2</Constant>
-													</Multiply>
-													<Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
-													<Substract><!--correct Battery load by Alternator in this case-->
-														<Multiply>
-															<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
-															<Constant>-1</Constant>
-														</Multiply>
-														<Constant>74</Constant>
-													</Substract>
-												</Add>
-											</ToFixed>
-										</Else>
-									</If>
-
-								</Else>
-							</If>
-						</Then>
-						<Else>
-							<Constant>0</Constant>
-						</Else>
-					</If>
-				</Right>
+					<ToFixed precision="1">
+						<Simvar name="L:XMLVAR_Generator_Current" unit="amps"/>
+					</ToFixed>
+    			</Right>
 			</Text>
 
 			<Text>
 				<Left fontsize="8">ALT AMPS</Left>
 				<Right fontsize="9">
-					<If>
-						<Condition> 
-							<And>
-								<Equal> <!-- if Generator does not provide power-->
-									<Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amp"/>
-									<Constant>0</Constant>
-								</Equal>
-								<Greater> <!-- if Alterator does provide power-->
-									<Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
-									<Constant>0</Constant>
-								</Greater>
-							</And>
-						</Condition>
-						<Then> <!--then show Alternator current-->
-							<If>
-								<Condition><!--if battery is fully charged-->
-									<Equal>
-										<Simvar name="ELECTRICAL BATTERY ESTIMATED CAPACITY PCT" unit="percent"/>
-										<Constant>100</Constant>
-									</Equal>
-								</Condition>
-								<Then><!--provide normal value-->
-									<ToFixed precision="0">
-										<Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
-									</ToFixed>
-								</Then>
-								<Else><!--corrected it by battery load-->
-									<ToFixed precision="0">
-										<Add>
-											<Simvar name="ELECTRICAL GENALT BUS AMPS:2" unit="amp"/>
-											<Substract><!--inverted to be positive-->
-												<Constant>0</Constant>
-												<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
-											</Substract>
-										</Add>
-									</ToFixed>
-								</Else>
-							</If>
-						</Then>
-						<Else> <!-- else set to zero cause Alternator does not provide power if Generator does-->
-							<Constant>0</Constant>
-						</Else>
-					</If>
+					<ToFixed precision="1">
+						<Simvar name="L:XMLVAR_Alternator_Current" unit="amps"/>
+					</ToFixed>
 				</Right>
 			</Text>
 
 			<Text>
 				<Left fontsize="8">BAT AMPS</Left>
 				<Right id="Amperes" fontsize="9">
-<ToFixed precision="1">
-					<If>
-						<Condition><!--if battery discharged-->
-							<Greater>
-								<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
-								<Constant>0</Constant>
-							</Greater>
-						</Condition>
-						<Then><!--then show normal value-->
-							<Substract>
-							<Constant>0</Constant><!--return current but inverted to be negative-->
-							<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
-							</Substract>
-						</Then>
-						<Else><!--else if charged-->
-							<If>
-								<Condition><!--if battery current is too high-->
-									<Lower>
-										<Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
-										<Function Name="BatteryCurrentEstimate"/>
-									</Lower>
-								</Condition>
-								<Then><!--then limit it-->
-									<Substract>
-									<Constant>0</Constant>
-									<Function Name="BatteryCurrentEstimate"/>
-									</Substract>
-								</Then>
-								<Else><!--else show normal value-->
-                  <Substract>
-							      <Constant>0</Constant><!--return current but inverted to be positive-->
-									  <Simvar name="ELECTRICAL BATTERY LOAD:1" unit="amps"/>
-                  </Substract>
-								</Else>
-							</If>
-						</Else>
-					</If>
+					<ToFixed precision="1">
+						<Simvar name="L:XMLVAR_Battery_Current" unit="amps"/>
 					</ToFixed>
 				</Right>
 			</Text>
