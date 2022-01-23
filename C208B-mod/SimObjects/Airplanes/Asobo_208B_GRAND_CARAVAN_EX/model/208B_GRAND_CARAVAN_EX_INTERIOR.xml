@@ -112,11 +112,14 @@
 				</Parameters>
 				<UseInputEvent ID="ELECTRICAL_MOD">
 				</UseInputEvent>
+				<UseTemplate Name="ASOBO_GT_Update">
+					<UPDATE_CODE>
+						1 0 (A:ELECTRICAL MAIN BUS VOLTAGE:1, volts) 5 > ? (&gt;L:#INPUT_EVENT_ID_SOURCE#_#IE_NAME#)
+					</UPDATE_CODE>
+		        </UseTemplate>	
 				<UseTemplate Name="ASOBO_GT_Switch_Code">
 					<ANIM_CODE>(B:#INPUT_EVENT_ID_SOURCE#_#IE_NAME#) 100 *</ANIM_CODE>
-					<LEFT_SINGLE_CODE>(&gt;B:#INPUT_EVENT_ID_SOURCE#_#IE_NAME#_Toggle)
-									  (B:#INPUT_EVENT_ID_SOURCE#_#IE_NAME#) (&gt;L:#INPUT_EVENT_ID_SOURCE#_#IE_NAME#)
-					</LEFT_SINGLE_CODE>
+					<LEFT_SINGLE_CODE>(&gt;B:#INPUT_EVENT_ID_SOURCE#_#IE_NAME#_Toggle)</LEFT_SINGLE_CODE>
 				</UseTemplate>
 			</Component>		
         </Template>	
