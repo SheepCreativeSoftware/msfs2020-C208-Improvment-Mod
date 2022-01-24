@@ -31,7 +31,7 @@
 	<!-- GYRO ========================================================================================== --> 	
 	  
 	<Sound WwiseData="true" WwiseEvent="gyro_sound" NodeName="INSTRUMENT_KNOB_ATTITUDEINDICATOR">
-      <WwiseRTPC LocalVar="ELECTRICAL_POWER_BUS_SWITCH" Units="BOOLEAN" Index="1" RTPCName="SIMVAR_ELECTRICAL_MASTER_BATTERY_INTERPOLATION_A20_R60"/>
+      <WwiseRTPC LocalVar="XMLVAR_Power_Distr_Bus" Units="BOOLEAN" Index="1" RTPCName="SIMVAR_ELECTRICAL_MASTER_BATTERY_INTERPOLATION_A20_R60"/>
     </Sound> 
    
   </AlwaysPlaySounds>
@@ -221,7 +221,7 @@
     <!-- INSTRUMENTS  =========================================================================  -->  
     
     <Sound WwiseData="true" WwiseEvent="battery_on" NodeName="AS1000_MFD_SCREEN" ContinuousStopDelay="0.2" FadeOutType="2" FadeOutTime="4" LocalVar="XMLVAR_Power_Distr_Bus" Units="BOOL">
-	  <WwiseRTPC LocalVar="ELECTRICAL_POWER_BUS_SWITCH" Units="BOOL" Index="1" RTPCName="SIMVAR_ELECTRICAL_MASTER_BATTERY_INTERPOLATION_A4_R4" />
+	  <WwiseRTPC LocalVar="XMLVAR_Power_Distr_Bus" Units="BOOL" Index="1" RTPCName="SIMVAR_ELECTRICAL_MASTER_BATTERY_INTERPOLATION_A4_R4" />
       <Range LowerBound="1.0" />
     </Sound>   
 	

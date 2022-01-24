@@ -120,10 +120,9 @@
 							(A:ELECTRICAL BATTERY ESTIMATED CAPACITY PCT, percent) s12 10 div sp0
 							:0	0 -3 -6 -10 -15 -21 -28 -36 -45 -55 -67 11
 							l0 case sp1 l12 10 / l0 - s2 0 > if{ l1 sp11 l0 ++ sp0 l2 sp10 g0 }
-							l2 0 == if{ l1 } els{ l11 l10 l1 l11 - * + } max 
-						} neg (&gt;L:XMLVAR_Battery_Current)
+							l2 0 == if{ l1 } els{ l11 l10 l1 l11 - * + } max
+						} neg s0 d (&gt;L:XMLVAR_Battery_Current) 0 &lt;= if{ 0 sp0 } 
 
-						(L:XMLVAR_Battery_Current) s0 0 &lt;= if{ 0 sp0 } 
 						(A:TURB ENG N1:1, percent) 46 >= (A:ELECTRICAL GENALT BUS AMPS:1, amps) s1 0 > and s3
 						(A:TURB ENG N1:1, percent) 46 >= (A:ELECTRICAL GENALT BUS AMPS:2, amps) s2 0 > and s4
 						and if{ l0 2 / sp0 }
@@ -219,9 +218,9 @@
     			<COVER_NODE_ID>#NODE_ID#_Cover</COVER_NODE_ID>
     			<COVER_ANIM_NAME>#ANIM_NAME#_Cover</COVER_ANIM_NAME>
     			<GET_STATE_EXTERNAL>
-    								12 (&gt;A:BUS LOOKUP INDEX, Number) (A:BUS CONNECTION ON:1, Bool) sp1
-    								12 (&gt;A:BUS LOOKUP INDEX, Number) (A:CIRCUIT CONNECTION ON:11, Bool) sp2
-    								1 (&gt;A:BUS LOOKUP INDEX, Number) (A:CIRCUIT CONNECTION ON:11, Bool) sp3
+					12 (&gt;A:BUS LOOKUP INDEX, Number) (A:BUS CONNECTION ON:1, Bool) sp1
+					12 (&gt;A:BUS LOOKUP INDEX, Number) (A:CIRCUIT CONNECTION ON:11, Bool) sp2
+					1 (&gt;A:BUS LOOKUP INDEX, Number) (A:CIRCUIT CONNECTION ON:11, Bool) sp3
     			</GET_STATE_EXTERNAL>
     			<SET_EXTPWR_MAIN_BUS_CONNECTION>l1 != if{ 1 12 (&gt;K:2:ELECTRICAL_BUS_TO_BUS_CONNECTION_TOGGLE) }</SET_EXTPWR_MAIN_BUS_CONNECTION>
     			<SET_EXTPWR_STARTER_CONNECTION>l2 != if{ 11 12 (&gt;K:2:ELECTRICAL_BUS_TO_CIRCUIT_CONNECTION_TOGGLE) }</SET_EXTPWR_STARTER_CONNECTION>

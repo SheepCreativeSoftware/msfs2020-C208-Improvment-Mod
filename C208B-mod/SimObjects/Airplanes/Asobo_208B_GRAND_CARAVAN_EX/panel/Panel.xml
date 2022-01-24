@@ -42,8 +42,8 @@
 
 <!-- Annuntiations -->
 
-  <Annunciations>
-    <!--Indicates engine oil pressure is less than 40 psi-->
+	<Annunciations>
+	<!--Indicates engine oil pressure is less than 40 psi-->
     <Annunciation>
       <Type>Warning</Type>
       <Text>OIL PRESS LOW</Text>
@@ -95,10 +95,10 @@
       <Type>Warning</Type>
       <Text>RSVR FUEL LOW</Text>
       <Condition>
-        <LowerEqual>
-          <Simvar name="FUEL TOTAL QUANTITY" unit="gallon"/>
-          <Constant>10</Constant>
-        </LowerEqual>
+			<LowerEqual>
+				<Simvar name="FUEL TOTAL QUANTITY" unit="gallon"/>
+				<Constant>10</Constant>
+			</LowerEqual>
       </Condition>
     </Annunciation>
 	<!--both OFF at any time, or one fuel selector is OFF when other tank is low  or that either left or right selectors are OFF when starter switch is ON-->
@@ -152,16 +152,16 @@
       <Type>Caution</Type>
       <Text>R FUEL LOW</Text>
       <Condition>
-       <And>
-              <Greater>
-                     <Simvar name="FUEL TOTAL QUANTITY" unit="gallon"/>
-                     <Constant>25</Constant>
-              </Greater>
-              <LowerEqual>
-                     <Simvar name="FUEL RIGHT QUANTITY" unit="gallon"/>
-                     <Constant>25</Constant>
-              </LowerEqual>
-       </And>
+		<And>
+			<Greater>
+				<Simvar name="FUEL TOTAL QUANTITY" unit="gallon"/>
+				<Constant>25</Constant>
+			</Greater>
+			<LowerEqual>
+				<Simvar name="FUEL RIGHT QUANTITY" unit="gallon"/>
+				<Constant>25</Constant>
+			</LowerEqual>
+		</And>
       </Condition>
     </Annunciation>
 	<!--Indicates fuel quantity in left tank is 25 gallons or less-->
@@ -169,27 +169,27 @@
       <Type>Caution</Type>
       <Text>L FUEL LOW</Text>
       <Condition>
-       <And>
-              <Greater>
-                     <Simvar name="FUEL TOTAL QUANTITY" unit="gallon"/>
-                     <Constant>25</Constant>
-              </Greater>
-              <LowerEqual>
-                     <Simvar name="FUEL LEFT QUANTITY" unit="gallon"/>
-                     <Constant>25</Constant>
-              </LowerEqual>
-       </And>
+		<And>
+			<Greater>
+				<Simvar name="FUEL TOTAL QUANTITY" unit="gallon"/>
+				<Constant>25</Constant>
+			</Greater>
+			<LowerEqual>
+				<Simvar name="FUEL LEFT QUANTITY" unit="gallon"/>
+				<Constant>25</Constant>
+			</LowerEqual>
+		</And>
       </Condition>
-    </Annunciation>
+	</Annunciation>
 	<!--Indicates fuel quantity in both tanks is 25 gallons or less-->
 	<Annunciation>
       <Type>Caution</Type>
       <Text>L-R FUEL LOW</Text>
       <Condition>
-        <LowerEqual>
-          <Simvar name="FUEL TOTAL QUANTITY" unit="gallon"/>
-          <Constant>25</Constant>
-        </LowerEqual>
+			<LowerEqual>
+				<Simvar name="FUEL TOTAL QUANTITY" unit="gallon"/>
+				<Constant>25</Constant>
+			</LowerEqual>
       </Condition>
     </Annunciation>
     <!--Indicates the auxiliary fuel boost pump is operating. Switch is placed in the ON position or is in the NORM position and fuel pressure drops below 4.75 psi-->
@@ -254,7 +254,7 @@
       <Type>Warning</Type>
       <Text>ENGINE FAILURE</Text>
       <Condition>
-		<Simvar name="ENG FAILED:1" unit="bool"/>
+			<Simvar name="ENG FAILED:1" unit="bool"/>
       </Condition>
     </Annunciation>
 	<!--Indicates the starter-generator is operating in starter mode-->
@@ -282,8 +282,7 @@
 				<Simvar name="L:XMLVAR_Generator_Current" unit="amps"/>
 				<Constant>200</Constant>
 			</Greater>
-				<!-- it is impossible to get negative current to the alternator so the condition (Amps < -10) is skipped -->
-			</And>
+			<!-- it is impossible to get negative current to the alternator so the condition (Amps < -10) is skipped -->
 		  </Condition>
 	</Annunciation>
 	<!--Indicates that the generator output is less than -10 amps or greater than 200 amps-->
@@ -295,8 +294,7 @@
 				<Simvar name="L:XMLVAR_Alternator_Current" unit="amps"/>
 				<Constant>70</Constant>
 			</Greater>
-				<!-- it is impossible to get negative current to the alternator so the condition (Amps < -10) is skipped -->
-			</And>
+			<!-- it is impossible to get negative current to the alternator so the condition (Amps < -10) is skipped -->
 		  </Condition>
 	</Annunciation>
 	<!--Indicates that the generator is not connected to the aircraft bus-->
@@ -356,8 +354,8 @@
 			<Constant>1</Constant>
 	  </Condition>
 	</Annunciation>
-       <!--Indicates Altimeter is not working-->
-       <Annunciation>
+	<!--Indicates Altimeter is not working-->
+	<Annunciation>
 	  <Type>Caution</Type>
 	  <Text>ALT MISCOMP</Text>
 	  <Condition>
@@ -371,11 +369,11 @@
 				<Constant>99</Constant>
 			</Greater>
 		</Or>
-	  </Condition>
+	</Condition>
 	</Annunciation>
-       <!--Indicates Airspeed is not working-->
-       <Annunciation>
-	  <Type>Caution</Type>
+    <!--Indicates Airspeed is not working-->
+	<Annunciation>
+	<Type>Caution</Type>
 	  <Text>IAS MISCOMP</Text>
 	  <Condition>
 		<Or>
@@ -449,17 +447,6 @@
 				</Output>
 			</MultiDimensionsTable>
 		</Function>
-		
-		<!-- <Text> -->
-			<!-- <Left>TEST</Left> -->
-			<!-- <Right> -->
-				<!-- <Content> -->
-					<!-- <ToFixed precision="1"> -->
-						<!-- <Function Name="MaximumCruiseTorqueBug"/> -->
-					<!-- </ToFixed> -->
-				<!-- </Content> -->
-			<!-- </Right> -->
-		<!-- </Text> -->
 		
 		<Gauge>
 			<Type>Circular</Type>
@@ -567,7 +554,7 @@
 				<Color>green</Color>
 				<Begin>100</Begin>
 				<End>
-                                   <StateMachine>
+					<StateMachine>
 						<State id="Start" value="870">
 							<Transition to="Normal">
 								<Greater>
@@ -585,7 +572,7 @@
 							</Transition>
 						</State>
 					</StateMachine>
-                            </End>
+				</End>
 			</ColorZone>
 			<ColorZone>
 				<Color>yellow</Color>
@@ -687,7 +674,7 @@
 				</Greater>
 			</RedBlink>
 		</Gauge>
-		
+
 		<Text>
 			<Left>PROP RPM</Left>
 			<Right id="Turbo_RPMGauge">
@@ -1358,7 +1345,7 @@
 			</Text>
 
 		</EnginePage>
-		<!--<LeanPage>...</LeanPage> Not exist -->
+<!--	<LeanPage></LeanPage> -->
 		<!-- System Page for WorkingTitle NXi-->
 		<SystemPage>
 			<Gauge>
@@ -1633,9 +1620,9 @@
 			</Text>
 
 			<Text>
-			<Left>------------</Left>
-			<Center>FUEL</Center>
-			<Right>------------</Right>
+				<Left>-----------</Left>
+				<Center fontsize="8.5">FUEL</Center>
+				<Right>-----------</Right>
 			</Text>
 			
 			<Text>
@@ -1673,7 +1660,9 @@
 			
 			<Text>
 				<Left>--</Left>
-				<Center>FUEL TOTALIZER</Center>
+		        <ForceTextColor>Red</ForceTextColor>
+
+				<Center fontsize="8.5">FUEL TOTALIZER</Center>
 				<Right>--</Right>
 			</Text>
 
@@ -1702,9 +1691,9 @@
 			</Text>
 			
 			<Text>
-				<Left>------</Left>
-				<Center> ELECTRICAL </Center>
-				<Right>------</Right>
+				<Left>-----</Left>
+				<Center fontsize="8.5">ELECTRICAL</Center>
+				<Right>-----</Right>
 			</Text>
 	
 			<Text>
@@ -1746,8 +1735,7 @@
 		</SystemPage>
 	</EngineDisplay>
 	
-	  <!-- Voices Alerts -->
-  
+  <!-- Voices Alerts -->
   <VoicesAlerts>
 
 	<Alert>
