@@ -34,6 +34,8 @@ You can disable/enable engine failures in the MSFS Assistance Options.
 ***Miscellaneous***
 - Improved lighting and textures
 - All panel potentiometers work
+- Added some inoperative Switches
+- Fixed Cabin lights
 
 Based on the work of [C208-MSFS2020-Fix](https://github.com/Exp232/C208-MSFS2020-Fix), [msfs2020-C208-Improvment-Mod](https://github.com/SheepCreativeSoftware/msfs2020-C208-Improvment-Mod) and [dgtlanlg/C208B-mod](https://github.com/dgtlanlg/C208B-mod)
 
@@ -57,7 +59,7 @@ Thanks to everyone who has contributed, and to PilotTrev for sharing his knowled
 
 ## Download
 
-***[Latest Release v2112.1](https://github.com/SheepCreativeSoftware/msfs2020-C208-Improvment-Mod/releases/latest)***
+***[Latest Release v2201.2](https://github.com/SheepCreativeSoftware/msfs2020-C208-Improvment-Mod/releases/latest)***
 
 ### How to install
 
