@@ -1,5 +1,10 @@
 ## Changes
 
+**2201.2.1**
+- Fixed: Gyro hum does not cease when the battery run down.
+- Fixed: Stby Alternator led should light when ACU is powered with battery disconnected
+- Fixed: Master battery set button does not work on honeycomb volant
+
 **2201.2**
 - Fixed: wrong gauge for standby torque
 
