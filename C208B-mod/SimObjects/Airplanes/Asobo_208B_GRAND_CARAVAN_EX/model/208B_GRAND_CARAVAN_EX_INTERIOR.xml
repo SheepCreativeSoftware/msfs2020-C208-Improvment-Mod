@@ -118,25 +118,48 @@
 				</Parameters>
 				<UseInputEvent ID="ELECTRICAL_MOD">
 				</UseInputEvent>
+				<UseTemplate Name="ASOBO_GT_Update">
+					<UPDATE_CODE>
+						1 0 (A:ELECTRICAL MAIN BUS VOLTAGE:1, volts) 5 > ? (&gt;L:XMLVAR_Power_Distr_Bus)
+
+						(A:ELECTRICAL BATTERY LOAD:1, amps) d 0 &lt; if{
+							(A:ELECTRICAL BATTERY ESTIMATED CAPACITY PCT, percent) s12 10 div sp0
+							:0	0 -3 -6 -10 -15 -21 -28 -36 -45 -55 -67 11
+							l0 case sp1 l12 10 / l0 - s2 0 > if{ l1 sp11 l0 ++ sp0 l2 sp10 g0 }
+							l2 0 == if{ l1 } els{ l11 l10 l1 l11 - * + } max
+						} neg s0 d (&gt;L:XMLVAR_Battery_Current) 0 &lt;= if{ 0 sp0 } 
+
+						(A:TURB ENG N1:1, percent) 46 >= (A:ELECTRICAL GENALT BUS AMPS:1, amps) s1 0 > and s3
+						(A:TURB ENG N1:1, percent) 46 >= (A:ELECTRICAL GENALT BUS AMPS:2, amps) s2 0 > and s4
+						and if{ l0 2 / sp0 }
+						l3 if{ l1 l0 + } els{ 0 } (&gt;L:XMLVAR_Generator_Current)
+						l4 if{ l2 l0 + } els{ 0 } (&gt;L:XMLVAR_Alternator_Current)
+					</UPDATE_CODE>
+		        </UseTemplate>	
 				<UseTemplate Name="ASOBO_GT_Switch_Code">
 					<ANIM_CODE>(B:#INPUT_EVENT_ID_SOURCE#_#IE_NAME#) 100 *</ANIM_CODE>
-					<LEFT_SINGLE_CODE>(&gt;B:#INPUT_EVENT_ID_SOURCE#_#IE_NAME#_Toggle)
-									  (B:#INPUT_EVENT_ID_SOURCE#_#IE_NAME#) (&gt;L:#INPUT_EVENT_ID_SOURCE#_#IE_NAME#)
-					</LEFT_SINGLE_CODE>
+					<LEFT_SINGLE_CODE>(&gt;B:#INPUT_EVENT_ID_SOURCE#_#IE_NAME#_Toggle)</LEFT_SINGLE_CODE>
 				</UseTemplate>
 			</Component>		
         </Template>	
 
         <Template Name="ASOBO_ELECTRICAL_Switch_Alternator_Template_Mod">
-            <Component ID="ELECTRICAL_Switch_Alternator" Node="ELECTRICAL_Switch_Alternator_#ID#">
+			<Parameters Type="Default">
+				<GEN_ID>1</GEN_ID>
+                <WWISE_EVENT>alternator_switch</WWISE_EVENT>
+				<AUDIO_DIRECTION>Both</AUDIO_DIRECTION>
+				<!-- This is the normalized time of the animation from which the sound will play. It's going from 0 to 1.  -->
+				<NORMALIZED_TIME>0.1</NORMALIZED_TIME>
+			</Parameters>
+            <Component ID="#PART_ID#" Node="#NODE_ID#">
 	            <UseTemplate Name="ASOBO_GT_Switch_3States">
 	                <MOMENTARY_SWITCH/>
     	            <STATE_MAX_TIMER>0.5</STATE_MAX_TIMER>
         	        <STATE0_TIMER>0.5</STATE0_TIMER>
 
-					<CODE_POS_0>(*RESET*) (A:GENERAL ENG MASTER ALTERNATOR:#ID#, bool) ! if{ (&gt;K:TOGGLE_ALTERNATOR#ID#) } </CODE_POS_0>
+					<CODE_POS_0>(*RESET*) (A:GENERAL ENG MASTER ALTERNATOR:#GEN_ID#, bool) ! if{ (&gt;K:TOGGLE_ALTERNATOR#GEN_ID#) } </CODE_POS_0>
 					<CODE_POS_1>(*ON   *) </CODE_POS_1>
-					<CODE_POS_2>(*TRIP *) (A:GENERAL ENG MASTER ALTERNATOR:#ID#, bool) if{ (&gt;K:TOGGLE_ALTERNATOR#ID#) } </CODE_POS_2>
+					<CODE_POS_2>(*TRIP *) (A:GENERAL ENG MASTER ALTERNATOR:#GEN_ID#, bool) if{ (&gt;K:TOGGLE_ALTERNATOR#GEN_ID#) } </CODE_POS_2>
 
 	                <TOOLTIP_ENTRY_0>ELECTRICAL_Alternator_#ID#</TOOLTIP_ENTRY_0>
     	            <TOOLTIP_TITLE>@TT_Package.ELECTRICAL_ALTERNATOR_TITLE</TOOLTIP_TITLE>
@@ -146,15 +169,54 @@
 	                <TT_VALUE_0>@TT_Package.GT_STATE_RESET</TT_VALUE_0>
     	            <TT_VALUE_1>@TT_Package.GT_STATE_ON</TT_VALUE_1>
 	                <TT_VALUE_2>@TT_Package.GT_STATE_TRIP</TT_VALUE_2>
-
-	                <WWISE_EVENT>alternator_switch</WWISE_EVENT>
-					<AUDIO_DIRECTION>Both</AUDIO_DIRECTION>
-
-		   	        <ANIM_NAME>ELECTRICAL_Switch_Alternator_#ID#</ANIM_NAME>
-					<!-- This is the normalized time of the animation from which the sound will play. It's going from 0 to 1.  -->                       
-					<NORMALIZED_TIME>0.1</NORMALIZED_TIME>
                 </UseTemplate>
             </Component>
+        </Template>	
+
+		<Template Name="ASOBO_ELECTRICAL_Switch_Alternator_STBY_Template_Mod">
+			<Parameters Type="Default">
+				<ALT_ID>2</ALT_ID>
+				<!-- min N1  which activates ACU. Below it the stby alternator is disconnected -->
+				<ENG_N1_THREASHOLD>46</ENG_N1_THREASHOLD>
+				<!-- generator utilisation margin which activates stby alternator -->
+				<!-- right now aircraft current consumption will not trigger stby alternator unless the main gen is tripped -->
+				<GEN_CURRENT>100</GEN_CURRENT>
+			</Parameters>
+			<Component ID="#PART_ID#" Node="#NODE_ID#">
+				<UseTemplate Name="ASOBO_GT_Update">
+					<FREQUENCY>5</FREQUENCY>
+					<UPDATE_CODE>
+					    #ENG_N1_THREASHOLD# (A:TURB ENG N1:1, percent) &lt; #GEN_CURRENT# (A:ELECTRICAL MAIN BUS AMPS, amps) &gt; and if{
+							#POWER_BUS_ID# (>A:BUS LOOKUP INDEX, Number) (A:BUS CONNECTION ON:#STBY_ALT_BUS_ID#, Bool) ! if{
+								#POWER_BUS_ID# #STBY_ALT_BUS_ID# (&gt;K:2:ELECTRICAL_BUS_TO_BUS_CONNECTION_TOGGLE) }
+						} els{
+							#POWER_BUS_ID# (>A:BUS LOOKUP INDEX, Number) (A:BUS CONNECTION ON:#STBY_ALT_BUS_ID#, Bool) if{
+    							#POWER_BUS_ID# #STBY_ALT_BUS_ID# (&gt;K:2:ELECTRICAL_BUS_TO_BUS_CONNECTION_TOGGLE) }
+						}			
+					</UPDATE_CODE>
+				</UseTemplate>
+				<UseTemplate Name="ASOBO_GT_Switch_Code">
+					<TT_DESCRIPTION_ID>@TT_Package.ELECTRICAL_ALTERNATOR_STANBY_ACTION_SET</TT_DESCRIPTION_ID>
+					<TOOLTIP_TITLE>@TT_Package.ELECTRICAL_ALTERNATOR_STANBY_TITLE</TOOLTIP_TITLE>
+	                <TOOLTIP_ENTRY_0>ELECTRICAL_Alternator_#ALT_ID#</TOOLTIP_ENTRY_0>
+		  			<ANIM_CODE>(A:GENERAL ENG MASTER ALTERNATOR:#ALT_ID#, Bool) 100 *</ANIM_CODE>
+					<LEFT_SINGLE_CODE>#ALT_ID# (&gt;K:TOGGLE_MASTER_ALTERNATOR)</LEFT_SINGLE_CODE>
+    				<WWISE_EVENT_1>alternator_switch_on</WWISE_EVENT_1>
+					<NORMALIZED_TIME_1>0.1</NORMALIZED_TIME_1>
+					<WWISE_EVENT_2>alternator_switch_off</WWISE_EVENT_2>
+					<NORMALIZED_TIME_2>0.5</NORMALIZED_TIME_2>
+				</UseTemplate>
+			</Component>
+			<Component ID="#LIGHT_PART_ID#" Node="#LIGHT_NODE_ID#">
+				<Parameters Type="Default">
+					<DEFAULT_EMISSIVE>5</DEFAULT_EMISSIVE>
+					<DONT_OVERRIDE_BASE_EMISSIVE>True</DONT_OVERRIDE_BASE_EMISSIVE>
+					<FAILURE>(A:ELECTRICAL BATTERY ESTIMATED CAPACITY PCT, percent over 100) 10 * 1 min</FAILURE>
+				</Parameters>
+				<UseTemplate Name="ASOBO_GT_Emissive_Gauge">
+					<EMISSIVE_CODE>(B:ELECTRICAL_Power_Bus_Switch, bool) ! (A:GENERAL ENG MASTER ALTERNATOR:#ALT_ID#, bool) * #DEFAULT_EMISSIVE# *</EMISSIVE_CODE>
+				</UseTemplate>
+			</Component>
         </Template>	
 
         <Template Name="ASOBO_ELECTRICAL_Switch_ExternalPower_Template_Mod">
@@ -162,9 +224,9 @@
     			<COVER_NODE_ID>#NODE_ID#_Cover</COVER_NODE_ID>
     			<COVER_ANIM_NAME>#ANIM_NAME#_Cover</COVER_ANIM_NAME>
     			<GET_STATE_EXTERNAL>
-    								12 (&gt;A:BUS LOOKUP INDEX, Number) (A:BUS CONNECTION ON:1, Bool) sp1
-    								12 (&gt;A:BUS LOOKUP INDEX, Number) (A:CIRCUIT CONNECTION ON:11, Bool) sp2
-    								1 (&gt;A:BUS LOOKUP INDEX, Number) (A:CIRCUIT CONNECTION ON:11, Bool) sp3
+					12 (&gt;A:BUS LOOKUP INDEX, Number) (A:BUS CONNECTION ON:1, Bool) sp1
+					12 (&gt;A:BUS LOOKUP INDEX, Number) (A:CIRCUIT CONNECTION ON:11, Bool) sp2
+					1 (&gt;A:BUS LOOKUP INDEX, Number) (A:CIRCUIT CONNECTION ON:11, Bool) sp3
     			</GET_STATE_EXTERNAL>
     			<SET_EXTPWR_MAIN_BUS_CONNECTION>l1 != if{ 1 12 (&gt;K:2:ELECTRICAL_BUS_TO_BUS_CONNECTION_TOGGLE) }</SET_EXTPWR_MAIN_BUS_CONNECTION>
     			<SET_EXTPWR_STARTER_CONNECTION>l2 != if{ 11 12 (&gt;K:2:ELECTRICAL_BUS_TO_CIRCUIT_CONNECTION_TOGGLE) }</SET_EXTPWR_STARTER_CONNECTION>
@@ -393,14 +455,18 @@
 			<PART_ID>ELECTRICAL_Switch_Avionics_Master_2</PART_ID>
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_ELECTRICAL_Switch_Alternator_Template_Mod">
-			<ID>1</ID>
+			<NODE_ID>ELECTRICAL_Switch_Alternator_1</NODE_ID>
+			<ANIM_NAME>ELECTRICAL_Switch_Alternator_1</ANIM_NAME>
+			<PART_ID>ELECTRICAL_Switch_Alternator</PART_ID>
 		</UseTemplate>
-		<UseTemplate Name="ASOBO_ELECTRICAL_Switch_Alternator_STBY_Template">
+		<UseTemplate Name="ASOBO_ELECTRICAL_Switch_Alternator_STBY_Template_Mod">
+			<NODE_ID>ELECTRICAL_Switch_Alternator_STBY_1</NODE_ID>
+			<PART_ID>ELECTRICAL_Switch_Alternator_STBY</PART_ID>
+			<ANIM_NAME>ELECTRICAL_Switch_Alternator_STBY_1</ANIM_NAME>
 			<LIGHT_NODE_ID>ELECTRICAL_Light_Alternator_STBY</LIGHT_NODE_ID>
-			<SOURCE_BUS_ID>11</SOURCE_BUS_ID>
-			<DESTINATION_BUS>1</DESTINATION_BUS>
-			<DONT_OVERRIDE_BASE_EMISSIVE>True</DONT_OVERRIDE_BASE_EMISSIVE>
-			<DEFAULT_EMISSIVE>5</DEFAULT_EMISSIVE>
+			<LIGHT_PART_ID>ELECTRICAL_Light_Alternator_STBY</LIGHT_PART_ID>
+			<POWER_BUS_ID>1</POWER_BUS_ID>
+			<STBY_ALT_BUS_ID>11</STBY_ALT_BUS_ID>
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_ELECTRICAL_Switch_Avionics_STBY_Power_Template">
 			<SOURCE_BUS_ID>8</SOURCE_BUS_ID>
