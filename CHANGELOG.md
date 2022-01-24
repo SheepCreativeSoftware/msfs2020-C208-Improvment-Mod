@@ -1,13 +1,14 @@
 ## Changes
 
 **2201.2**
-Fixed: wrong gauge for standby torque
+- Fixed: wrong gauge for standby torque
 
 **2201.1**
 - Tested version
 - Improved BAT, GEN and ALT AMPS to be shown most correct
 - Increased Battery Current
 - corrected Stall Speed to be in KIAS on ASI in G1000
+- Fixed: Fuel consumption is not zero when engine isn't started
 
 **2201.0.2**
 - fix: reverse thrust is too small and has no effect on the plane
