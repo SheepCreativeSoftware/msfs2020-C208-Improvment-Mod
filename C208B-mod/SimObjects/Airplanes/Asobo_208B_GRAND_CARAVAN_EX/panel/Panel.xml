@@ -393,7 +393,6 @@
 <!-- Engine Display -->
 <!-- Set Override to "true" for WorkingTitle NXi when it is ready -->
 	<EngineDisplay override="true">
-
 		<Function Name="MaximumCruiseTorqueBug">
 			<MultiDimensionsTable>
 				<Input>
@@ -447,7 +446,6 @@
 				</Output>
 			</MultiDimensionsTable>
 		</Function>
-		
 		<Gauge>
 			<Type>Circular</Type>
 			<Style>
@@ -859,7 +857,20 @@
 			<Left fontsize="8">FFLOW PPH</Left>
 			<Right id="FuelFlow" fontsize="9">
 				<ToFixed precision="0">
-					<Simvar name="ENG FUEL FLOW PPH:1" unit="Pounds per hour"/>
+					<If>
+						<Condition>
+							<Greater>
+								<Simvar name="TURB ENG N1:1" unit="percent"/>
+								<Constant>12</Constant>
+							</Greater>
+						</Condition>
+						<Then>
+							<Simvar name="ENG FUEL FLOW PPH:1" unit="Pounds per hour"/>
+						</Then>
+						<Else>
+							<Constant>0</Constant>
+						</Else>
+					</If>
 				</ToFixed>
 			</Right>
 		</Text>
@@ -1320,7 +1331,20 @@
 				<Left fontsize="8">FFLOW PPH</Left>
 				<Right id="FuelFlow" fontsize="9">
 					<ToFixed precision="0">
-						<Simvar name="ENG FUEL FLOW PPH:1" unit="Pounds per hour"/>
+						<If>
+							<Condition>
+								<Greater>
+									<Simvar name="TURB ENG N1:1" unit="percent"/>
+									<Constant>12</Constant>
+								</Greater>
+							</Condition>
+							<Then>
+								<Simvar name="ENG FUEL FLOW PPH:1" unit="Pounds per hour"/>
+							</Then>
+							<Else>
+								<Constant>0</Constant>
+							</Else>
+						</If>
 					</ToFixed>
 				</Right>
 			</Text>
@@ -1653,7 +1677,20 @@
 				<Left fontsize="8">FFLOW PPH</Left>
 				<Right fontsize="9">
 					<ToFixed precision="0">
-						<Simvar name="ENG FUEL FLOW PPH:1" unit="Pounds per hour"/>
+						<If>
+							<Condition>
+								<Greater>
+									<Simvar name="TURB ENG N1:1" unit="percent"/>
+									<Constant>12</Constant>
+								</Greater>
+							</Condition>
+							<Then>
+								<Simvar name="ENG FUEL FLOW PPH:1" unit="Pounds per hour"/>
+							</Then>
+							<Else>
+								<Constant>0</Constant>
+							</Else>
+						</If>
 					</ToFixed>
 				</Right>
 			</Text>
