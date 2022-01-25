@@ -235,7 +235,13 @@
 	  <Type>Caution</Type>
 	  <Text>STARTER ON</Text>
 	  <Condition>
+		<And>
 			<Simvar name="GENERAL ENG STARTER:1" unit="Bool"/>
+			<Equal><!-- goes off if starter-generator switch to generator mode-->
+				<Simvar name="L:XMLVAR_Generator_Current" unit="amps"/>
+				<Constant>0</Constant>
+			</Equal>
+		</And>	
 	  </Condition>
 	</Annunciation>
 	<!--Indicates that metal chips are present in one or both of the chip detectors.-->
@@ -297,15 +303,21 @@
 			<!-- it is impossible to get negative current to the alternator so the condition (Amps < -10) is skipped -->
 		  </Condition>
 	</Annunciation>
-	<!--Indicates that the generator is not connected to the aircraft bus-->
+	<!--Indicates that the generator is not connected to the aircraft bus with engine running-->
 	<Annunciation>
 	  <Type>Caution</Type>
 	  <Text>GENERATOR OFF</Text>
 		  <Condition>
-			<Equal>
-				<Simvar name="L:XMLVAR_Generator_Current" unit="amps"/>
-				<Constant>0</Constant>
-			</Equal>
+			<And>
+				<Greater>
+					<Simvar name="TURB ENG N1:1" unit="percent"/>
+					<Constant>49</Constant><!-- A little bit higher then 46% to prevent from coming on when starter-generator is switching mode-->
+				</Greater>
+				<Equal>
+					<Simvar name="L:XMLVAR_Generator_Current" unit="amps"/>
+					<Constant>0</Constant>
+				</Equal>
+			</And>
 		  </Condition>
 	</Annunciation>
 	<!-- Indicates electrical power is not available from the standby alternator-->
