@@ -1,5 +1,15 @@
 ## Changes
 
+**2201.3**
+- Fixed: Gyro hum does not cease when the battery run down.
+- Fixed: Stby Alternator led should light when ACU is powered with battery disconnected
+- Fixed: Master battery set button does not work on honeycomb volant
+- Reworked CAS Annunciation for STARTER ON and GENERATOR OFF
+GENERATOR OFF (AMBER) - Indicates that the generator is not
+connected to the electrical bus with engine running.
+STARTER ON (AMBER) - Indicates the starter-generator is
+operating in starter mode.
+
 **2201.2**
 - Fixed: wrong gauge for standby torque
 
