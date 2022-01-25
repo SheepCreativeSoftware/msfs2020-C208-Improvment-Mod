@@ -27,7 +27,7 @@ You can disable/enable engine failures in the MSFS Assistance Options.
 - Autopilot and instrument fixes
 - Yaw Damper Working
 - Changed the electric bus configuration to comply with POH
-- Generator characteristic has been corrected
+- Generator/Alternator characteristic has been corrected
 - Generator trip and reset button works
 - More accurate start up
 
