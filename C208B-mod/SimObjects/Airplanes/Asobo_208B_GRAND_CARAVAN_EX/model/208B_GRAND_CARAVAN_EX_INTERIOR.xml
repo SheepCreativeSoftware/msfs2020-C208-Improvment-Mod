@@ -60,10 +60,10 @@
 				<Parameters Type="Default">
 					<VALUE_UNITS>Bool</VALUE_UNITS>
 					<VALUE_CODE>
-						 #POWER_BUS_ID# (>A:BUS LOOKUP INDEX, Number) (A:BUS CONNECTION ON:#BATTERY_BUS_ID#, Bool) 
+						 #POWER_BUS_ID# (&gt;A:BUS LOOKUP INDEX, Number) (A:BUS CONNECTION ON:#BATTERY_BUS_ID#, Bool) 
 					</VALUE_CODE>
 					<INIT_CODE>
-						#POWER_BUS_ID# (>A:BUS LOOKUP INDEX, Number) (A:BUS CONNECTION ON:#BATTERY_BUS_ID#, Bool)
+						#POWER_BUS_ID# (&gt;A:BUS LOOKUP INDEX, Number) (A:BUS CONNECTION ON:#BATTERY_BUS_ID#, Bool)
 						(A:ELECTRICAL MASTER BATTERY:#MASTER_BATTERY_ID#, Bool) ! s0 and if{ 
 							#POWER_BUS_ID# #BATTERY_BUS_ID# (&gt;K:2:ELECTRICAL_BUS_TO_BUS_CONNECTION_TOGGLE) }
 						l0 if{ #MASTER_BATTERY_ID# (&gt;K:TOGGLE_MASTER_BATTERY) }
@@ -71,7 +71,7 @@
 					<INC_CODE/>
 					<DEC_CODE/>
 					<SET_CODE>
-						#POWER_BUS_ID# (>A:BUS LOOKUP INDEX, Number) (A:BUS CONNECTION ON:#BATTERY_BUS_ID#, Bool) p0
+						#POWER_BUS_ID# (&gt;A:BUS LOOKUP INDEX, Number) (A:BUS CONNECTION ON:#BATTERY_BUS_ID#, Bool) p0
 						!= if{ #POWER_BUS_ID# #BATTERY_BUS_ID# (&gt;K:2:ELECTRICAL_BUS_TO_BUS_CONNECTION_TOGGLE) } 
 					</SET_CODE>
 					<SET_ARG_COUNT>1</SET_ARG_COUNT>
@@ -132,17 +132,17 @@
 				</UseInputEvent>
 				<UseTemplate Name="ASOBO_GT_Update">
 					<UPDATE_CODE>
-						1 0 (A:ELECTRICAL MAIN BUS VOLTAGE:1, volts) 5 > ? (&gt;L:XMLVAR_Power_Distr_Bus)
+						1 0 (A:ELECTRICAL MAIN BUS VOLTAGE:1, volts) 5 &gt; ? (&gt;L:XMLVAR_Power_Distr_Bus)
 
 						(A:ELECTRICAL BATTERY LOAD:1, amps) d 0 &lt; if{
 							(A:ELECTRICAL BATTERY ESTIMATED CAPACITY PCT, percent) s12 10 div sp0
 							:0	0 -3 -6 -10 -15 -21 -28 -36 -45 -55 -67 11
-							l0 case sp1 l12 10 / l0 - s2 0 > if{ l1 sp11 l0 ++ sp0 l2 sp10 g0 }
+							l0 case sp1 l12 10 / l0 - s2 0 &gt; if{ l1 sp11 l0 ++ sp0 l2 sp10 g0 }
 							l2 0 == if{ l1 } els{ l11 l10 l1 l11 - * + } max
 						} neg s0 d (&gt;L:XMLVAR_Battery_Current) 0 &lt;= if{ 0 sp0 } 
 
-						(A:TURB ENG N1:1, percent) 46 >= (A:ELECTRICAL GENALT BUS AMPS:1, amps) s1 0 > and s3
-						(A:TURB ENG N1:1, percent) 46 >= (A:ELECTRICAL GENALT BUS AMPS:2, amps) s2 0 > and s4
+						(A:TURB ENG N1:1, percent) 46 &gt; (A:ELECTRICAL GENALT BUS AMPS:1, amps) s1 0 &gt; and s3
+						(A:TURB ENG N1:1, percent) 46 &gt; (A:ELECTRICAL GENALT BUS AMPS:2, amps) s2 0 &gt; and s4
 						and if{ l0 2 / sp0 }
 						l3 if{ l1 l0 + } els{ 0 } (&gt;L:XMLVAR_Generator_Current)
 						l4 if{ l2 l0 + } els{ 0 } (&gt;L:XMLVAR_Alternator_Current)
@@ -199,10 +199,10 @@
 					<FREQUENCY>5</FREQUENCY>
 					<UPDATE_CODE>
 					    #ENG_N1_THREASHOLD# (A:TURB ENG N1:1, percent) &lt; #GEN_CURRENT# (A:ELECTRICAL MAIN BUS AMPS, amps) &gt; and if{
-							#POWER_BUS_ID# (>A:BUS LOOKUP INDEX, Number) (A:BUS CONNECTION ON:#STBY_ALT_BUS_ID#, Bool) ! if{
+							#POWER_BUS_ID# (&gt;A:BUS LOOKUP INDEX, Number) (A:BUS CONNECTION ON:#STBY_ALT_BUS_ID#, Bool) ! if{
 								#POWER_BUS_ID# #STBY_ALT_BUS_ID# (&gt;K:2:ELECTRICAL_BUS_TO_BUS_CONNECTION_TOGGLE) }
 						} els{
-							#POWER_BUS_ID# (>A:BUS LOOKUP INDEX, Number) (A:BUS CONNECTION ON:#STBY_ALT_BUS_ID#, Bool) if{
+							#POWER_BUS_ID# (&gt;A:BUS LOOKUP INDEX, Number) (A:BUS CONNECTION ON:#STBY_ALT_BUS_ID#, Bool) if{
     							#POWER_BUS_ID# #STBY_ALT_BUS_ID# (&gt;K:2:ELECTRICAL_BUS_TO_BUS_CONNECTION_TOGGLE) }
 						}			
 					</UPDATE_CODE>
