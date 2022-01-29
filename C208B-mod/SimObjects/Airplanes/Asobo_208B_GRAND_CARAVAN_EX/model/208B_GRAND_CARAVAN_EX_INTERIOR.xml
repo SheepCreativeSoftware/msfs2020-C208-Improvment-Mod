@@ -716,15 +716,6 @@
 			<KNOB_TURN_SPEED>5</KNOB_TURN_SPEED>
 			<DONT_OVERRIDE_BASE_EMISSIVE>false</DONT_OVERRIDE_BASE_EMISSIVE>
 		</DefaultTemplateParameters>
-		<UseTemplate Name="ASOBO_LIGHTING_Ambient_Template">
-			<BOUNCE_POTENTIOMETER_PERCENT>
-				(A:LIGHT CABIN ON:3, Bool)
-				(A:LIGHT CABIN ON:4, Bool) + 
-				2 / 100 *
-			</BOUNCE_POTENTIOMETER_PERCENT>
-			<POTENTIOMETER>14</POTENTIOMETER>
-			<ID>3</ID>
-		</UseTemplate>
 		
 		<!-- Decals emissive -->
 		<UseTemplate Name="ASOBO_LIGHTING_Panel_Emissive_Template">
@@ -805,7 +796,7 @@
 		</UseTemplate>
 
 		<Component ID="LIGHTING_Flood_Lights">
-			<!-- Left Cabin Flood light -->
+			<!-- Left Cockpit Flood light -->
 			<UseTemplate Name="ASOBO_LIGHTING_Knob_Template_Mod">
 				<PART_ID>LIGHTING_KNOB_Flood_Left</PART_ID>
 				<NODE_ID>KNOB_PEDESTAL</NODE_ID>
@@ -826,7 +817,7 @@
 				<TT_DESCRIPTION_INDEX>(R:1:@TT_Package.GT_STATE_LEFT)</TT_DESCRIPTION_INDEX>	
 			</UseTemplate>
 
-			<!-- Right Cabin Flood light -->
+			<!-- Right Cockpit Flood light -->
 			<UseTemplate Name="ASOBO_LIGHTING_Knob_Template_Mod">
 				<PART_ID>LIGHTING_KNOB_Flood_Right</PART_ID>
 				<NODE_ID>KNOB_CABIN</NODE_ID>
@@ -847,7 +838,7 @@
 				<TT_DESCRIPTION_INDEX>(R:1:@TT_Package.GT_STATE_RIGHT)</TT_DESCRIPTION_INDEX>	
 			</UseTemplate>
 			
-			<!-- Canter Cabin Flood light -->
+			<!-- Canter Cockpit Flood light -->
 			<UseTemplate Name="ASOBO_LIGHTING_Knob_Template_Mod">
 				<PART_ID>LIGHTING_KNOB_Flood_Center</PART_ID>
 				<NODE_ID>KNOB_CABIN_1</NODE_ID>
@@ -865,9 +856,13 @@
 
 			<UseTemplate Name="ASOBO_LIGHTING_Ambient_Template">
 				<BOUNCE_POTENTIOMETER_PERCENT>
-					(A:LIGHT CABIN ON:1, Bool) (A:LIGHT POTENTIOMETER:12, percent) * 2 /
-					(A:LIGHT CABIN ON:2, Bool) (A:LIGHT POTENTIOMETER:13, percent) * 2 / +
+					(A:CIRCUIT ON:28, bool) (A:CIRCUIT ON:29, bool) (A:CIRCUIT ON:30, bool) + + 3 / 
+			        (A:LIGHT POTENTIOMETER:30, percent) *
 				</BOUNCE_POTENTIOMETER_PERCENT>
+				<FAILURE>
+					(A:ELECTRICAL BATTERY BUS AMPS, amps) 0 &lt;
+					(A:ELECTRICAL BATTERY ESTIMATED CAPACITY PCT, percent over 100) 10 * 1 min max
+				</FAILURE>
 				<POTENTIOMETER>18</POTENTIOMETER>
 				<ID>Flood_Lights</ID>
 			</UseTemplate>
@@ -909,21 +904,31 @@
 		<UseTemplate Name="ASOBO_LIGHTING_Switch_Light_Cabin_Template">
 			<NODE_ID>LIGHTING_Switch_Light_Cabin_1</NODE_ID>
 			<ANIM_NAME>LIGHTING_Switch_Light_Cabin_1</ANIM_NAME>
-			<TYPE>OnOff_TwoSimvars</TYPE>
-			<LIGHT_TYPE>CABIN</LIGHT_TYPE>
 			<SIMVAR_INDEX>3</SIMVAR_INDEX>
-			<LIGHT_TYPE_2>CABIN</LIGHT_TYPE_2>
-			<SIMVAR_INDEX_2>4</SIMVAR_INDEX_2>
 			<TT_STATE_1ST>(R:1:@TT_Package.GT_STATE_LEFT)</TT_STATE_1ST>
 			<TT_STATE_2ND>(R:1:@TT_Package.GT_STATE_RIGHT)</TT_STATE_2ND>
 			<TT_DESCRIPTION_ID>@TT_Package.LIGHTING_SWITCH_CABIN_ACTION_SET</TT_DESCRIPTION_ID>
 			<TOOLTIP_TITLE>@TT_Package.LIGHTING_KNOB_CABIN_TITLE</TOOLTIP_TITLE>
 		</UseTemplate>
-		<UseTemplate Name="ASOBO_GT_Component_Emissive_Gauge">
+		<UseTemplate Name="ASOBO_LIGHTING_Cabin_Emissive_Template">
 			<NODE_ID>LIGHTING_Light_Cabin</NODE_ID>
-			<FAILURE>(A:LIGHT CABIN ON:3, Bool) (A:LIGHT CABIN ON:4, Bool) and</FAILURE>
-			<EMISSIVE_CODE>1</EMISSIVE_CODE>
+			<POTENTIOMETER>14</POTENTIOMETER>
+			<SIMVAR_INDEX>3</SIMVAR_INDEX>
+			<FAILURE>
+				(A:ELECTRICAL BATTERY BUS AMPS, amps) 0 &lt;
+				(A:ELECTRICAL BATTERY ESTIMATED CAPACITY PCT, percent over 100) 10 * 1 min max
+			</FAILURE>
 		</UseTemplate>
+		<UseTemplate Name="ASOBO_LIGHTING_Ambient_Template">
+			<ID>3</ID>
+			<POTENTIOMETER>14</POTENTIOMETER>
+			<BOUNCE_POTENTIOMETER_PERCENT>(A:LIGHT CABIN ON:3, Bool) 100 *</BOUNCE_POTENTIOMETER_PERCENT>
+			<FAILURE>
+				(A:ELECTRICAL BATTERY BUS AMPS, amps) 0 &lt;
+				(A:ELECTRICAL BATTERY ESTIMATED CAPACITY PCT, percent over 100) 10 * 1 min max
+			</FAILURE>
+		</UseTemplate>
+
 		<CameraTitle>PFD</CameraTitle>
 	</Component>
 	
