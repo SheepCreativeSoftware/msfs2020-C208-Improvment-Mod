@@ -118,6 +118,19 @@
 				</Parameters>
 			</Extend>
 			</True>
+			<False>
+			<Extend Target="ASOBO_GIE_Base">
+				<Parameters Type="Default">
+					<VALUE_UNITS/>
+					<VALUE_CODE/>
+					<INIT_CODE/>
+					<INC_CODE/>
+					<DEC_CODE/>
+					<SET_CODE/>
+					<SET_ARG_COUNT/>
+				</Parameters>
+			</Extend>
+			</False>
 			</Condition>
 			</Presets>
 		</InputEvent>
@@ -129,6 +142,13 @@
 					<IE_NAME>Switch</IE_NAME>
 				</Parameters>
 				<UseInputEvent ID="ELECTRICAL_MOD">
+					<TT_DESCRIPTION>(R:1:@TT_Package.ELECTRICAL_BATTERY_MASTER_ACTION_SET) @sprintf</TT_DESCRIPTION>
+					<TT_DESCRIPTION_IS_DYNAMIC>True</TT_DESCRIPTION_IS_DYNAMIC>
+					<TT_VALUE>(B:#INPUT_EVENT_ID_SOURCE#_#IE_NAME#) 1 == if{ @TT_On } els{ @TT_Off }</TT_VALUE>
+                    <TT_VALUE_IS_DYNAMIC>True</TT_VALUE_IS_DYNAMIC>
+					<TT_INTERACTION>PRIMARY_DOWN</TT_INTERACTION>
+					<TT_INTERACTION_LOCKABLE>LOCK</TT_INTERACTION_LOCKABLE>
+					<TT_ICON>MOVE_Y</TT_ICON>
 				</UseInputEvent>
 				<UseTemplate Name="ASOBO_GT_Update">
 					<UPDATE_CODE>
@@ -151,6 +171,8 @@
 				<UseTemplate Name="ASOBO_GT_Switch_Code">
 					<ANIM_CODE>(B:#INPUT_EVENT_ID_SOURCE#_#IE_NAME#) 100 *</ANIM_CODE>
 					<LEFT_SINGLE_CODE>(&gt;B:#INPUT_EVENT_ID_SOURCE#_#IE_NAME#_Toggle)</LEFT_SINGLE_CODE>
+    	            <TOOLTIP_TITLE>@TT_Package.ELECTRICAL_BATTERY_TITLE</TOOLTIP_TITLE>
+					<TOOLTIP_ENTRY_0>#INPUT_EVENT_ID_SOURCE#_#IE_NAME#</TOOLTIP_ENTRY_0>
 				</UseTemplate>
 			</Component>		
         </Template>	
@@ -158,12 +180,28 @@
         <Template Name="ASOBO_ELECTRICAL_Switch_Alternator_Template_Mod">
 			<Parameters Type="Default">
 				<GEN_ID>1</GEN_ID>
-                <WWISE_EVENT>alternator_switch</WWISE_EVENT>
-				<AUDIO_DIRECTION>Both</AUDIO_DIRECTION>
-				<!-- This is the normalized time of the animation from which the sound will play. It's going from 0 to 1.  -->
-				<NORMALIZED_TIME>0.1</NORMALIZED_TIME>
 			</Parameters>
+
             <Component ID="#PART_ID#" Node="#NODE_ID#">
+				<Parameters Type="Override">
+					<INPUT_EVENT_ID_SOURCE>ELECTRICAL_Generator</INPUT_EVENT_ID_SOURCE>
+					<IE_NAME>Switch</IE_NAME>
+				</Parameters>
+
+				<UseInputEvent ID="ELECTRICAL_MOD">
+					<TT_DESCRIPTION>(R:1:@TT_Package.ELECTRICAL_ALTERNATOR_ACTION_SET_SOLO) @sprintf</TT_DESCRIPTION>
+					<TT_DESCRIPTION_IS_DYNAMIC>True</TT_DESCRIPTION_IS_DYNAMIC>
+					<TT_ICON>MOVE_Y</TT_ICON>
+					<TT_VALUE>
+							(A:GENERAL ENG MASTER ALTERNATOR:#GEN_ID#, bool)
+							s0 0 == if{ (R:1:@TT_Package.GT_STATE_TRIP) @sprintf quit }
+							l0 1 == if{ (R:1:@TT_Package.GT_STATE_ON) @sprintf quit }
+					</TT_VALUE>
+                    <TT_VALUE_IS_DYNAMIC>True</TT_VALUE_IS_DYNAMIC>
+					<TT_INTERACTION>PRIMARY_DOWN+Y_AXIS</TT_INTERACTION>
+					<TT_INTERACTION_LOCKABLE>Y_AXIS</TT_INTERACTION_LOCKABLE>
+				</UseInputEvent>
+
 	            <UseTemplate Name="ASOBO_GT_Switch_3States">
 	                <MOMENTARY_SWITCH/>
     	            <STATE_MAX_TIMER>0.5</STATE_MAX_TIMER>
@@ -173,14 +211,12 @@
 					<CODE_POS_1>(*ON   *) </CODE_POS_1>
 					<CODE_POS_2>(*TRIP *) (A:GENERAL ENG MASTER ALTERNATOR:#GEN_ID#, bool) if{ (&gt;K:TOGGLE_ALTERNATOR#GEN_ID#) } </CODE_POS_2>
 
-	                <TOOLTIP_ENTRY_0>ELECTRICAL_Alternator_#ID#</TOOLTIP_ENTRY_0>
-    	            <TOOLTIP_TITLE>@TT_Package.ELECTRICAL_ALTERNATOR_TITLE</TOOLTIP_TITLE>
+           		    <WWISE_EVENT>alternator_switch</WWISE_EVENT>
+					<AUDIO_DIRECTION>Both</AUDIO_DIRECTION>
+					<NORMALIZED_TIME>0.1</NORMALIZED_TIME>
 
-	                <TT_DESCRIPTION_ID>@TT_Package.ELECTRICAL_ALTERNATOR_ACTION_SET_SOLO</TT_DESCRIPTION_ID>
-    	            <TT_ICON>MOVE_Y</TT_ICON>
-	                <TT_VALUE_0>@TT_Package.GT_STATE_RESET</TT_VALUE_0>
-    	            <TT_VALUE_1>@TT_Package.GT_STATE_ON</TT_VALUE_1>
-	                <TT_VALUE_2>@TT_Package.GT_STATE_TRIP</TT_VALUE_2>
+    	            <TOOLTIP_TITLE>@TT_Package.ELECTRICAL_ALTERNATOR_TITLE</TOOLTIP_TITLE>
+					<TOOLTIP_ENTRY_0>#INPUT_EVENT_ID_SOURCE#_#IE_NAME#</TOOLTIP_ENTRY_0>
                 </UseTemplate>
             </Component>
         </Template>	
@@ -194,7 +230,13 @@
 				<!-- right now aircraft current consumption will not trigger stby alternator unless the main gen is tripped -->
 				<GEN_CURRENT>100</GEN_CURRENT>
 			</Parameters>
+
 			<Component ID="#PART_ID#" Node="#NODE_ID#">
+				<Parameters Type="Override">
+					<INPUT_EVENT_ID_SOURCE>ELECTRICAL_Stby_Alternator</INPUT_EVENT_ID_SOURCE>
+					<IE_NAME>Switch</IE_NAME>
+				</Parameters>
+
 				<UseTemplate Name="ASOBO_GT_Update">
 					<FREQUENCY>5</FREQUENCY>
 					<UPDATE_CODE>
@@ -207,18 +249,32 @@
 						}			
 					</UPDATE_CODE>
 				</UseTemplate>
+
+				<UseInputEvent ID="ELECTRICAL_MOD">
+					<TT_DESCRIPTION>(R:1:@TT_Package.ELECTRICAL_ALTERNATOR_STANBY_ACTION_SET) @sprintf</TT_DESCRIPTION>
+					<TT_DESCRIPTION_IS_DYNAMIC>True</TT_DESCRIPTION_IS_DYNAMIC>
+					<TT_ICON>MOVE_Y</TT_ICON>
+					<TT_VALUE>(A:GENERAL ENG MASTER ALTERNATOR:#ALT_ID#, Bool) 1 == if{ @TT_On } els{ @TT_Off }</TT_VALUE>
+                    <TT_VALUE_IS_DYNAMIC>True</TT_VALUE_IS_DYNAMIC>
+					<TT_INTERACTION>PRIMARY_DOWN</TT_INTERACTION>
+					<TT_INTERACTION_LOCKABLE>LOCK</TT_INTERACTION_LOCKABLE>
+					<TT_ICON>MOVE_Y</TT_ICON>
+				</UseInputEvent>
+
 				<UseTemplate Name="ASOBO_GT_Switch_Code">
-					<TT_DESCRIPTION_ID>@TT_Package.ELECTRICAL_ALTERNATOR_STANBY_ACTION_SET</TT_DESCRIPTION_ID>
-					<TOOLTIP_TITLE>@TT_Package.ELECTRICAL_ALTERNATOR_STANBY_TITLE</TOOLTIP_TITLE>
-	                <TOOLTIP_ENTRY_0>ELECTRICAL_Alternator_#ALT_ID#</TOOLTIP_ENTRY_0>
 		  			<ANIM_CODE>(A:GENERAL ENG MASTER ALTERNATOR:#ALT_ID#, Bool) 100 *</ANIM_CODE>
 					<LEFT_SINGLE_CODE>#ALT_ID# (&gt;K:TOGGLE_MASTER_ALTERNATOR)</LEFT_SINGLE_CODE>
+
     				<WWISE_EVENT_1>alternator_switch_on</WWISE_EVENT_1>
 					<NORMALIZED_TIME_1>0.1</NORMALIZED_TIME_1>
 					<WWISE_EVENT_2>alternator_switch_off</WWISE_EVENT_2>
 					<NORMALIZED_TIME_2>0.5</NORMALIZED_TIME_2>
+
+					<TOOLTIP_TITLE>@TT_Package.ELECTRICAL_ALTERNATOR_STANBY_TITLE</TOOLTIP_TITLE>
+					<TOOLTIP_ENTRY_0>#INPUT_EVENT_ID_SOURCE#_#IE_NAME#</TOOLTIP_ENTRY_0>
 				</UseTemplate>
 			</Component>
+
 			<Component ID="#LIGHT_PART_ID#" Node="#LIGHT_NODE_ID#">
 				<Parameters Type="Default">
 					<DEFAULT_EMISSIVE>5</DEFAULT_EMISSIVE>
