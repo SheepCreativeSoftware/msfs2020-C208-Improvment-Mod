@@ -303,6 +303,20 @@
 				<ANIMTIP_1_ON_CURSOR>TurnRight</ANIMTIP_1_ON_CURSOR>
 				<WWISE_EVENT>lighting_knob_generic</WWISE_EVENT>
             </Parameters>
+            <Parameters Type="Overflow">
+				<Condition Check="INIT_VALUE">
+					<True>
+						<INIT_CODE>
+							#INIT_VALUE# s0	#POTENTIOMETER# (&gt;K:2:LIGHT_POTENTIOMETER_SET)
+						</INIT_CODE> 
+					</True>
+					<False>
+			            <INIT_CODE>
+							(A:LIGHT POTENTIOMETER:#POTENTIOMETER#, percent) sp0
+						</INIT_CODE>
+					</False>
+				</Condition>
+			</Parameters>
 			<Component ID="#PART_ID#" Node="#NODE_ID#">
 				<Parameters Type="Override">
 				<Loop>
@@ -333,8 +347,7 @@
 								d #CURRENT_CIRCUIT# (&gt;K:2:ELECTRICAL_CIRCUIT_POWER_SETTING_SET)
 							</ANTICLOCKWISE_CODE_T>
 							<INIT_CODE_T>
-								#INIT_CODE_T#
-								l0 #CURRENT_CIRCUIT# (&gt;K:2:ELECTRICAL_CIRCUIT_POWER_SETTING_SET)
+								#INIT_CODE_T# l0 #CURRENT_CIRCUIT# (&gt;K:2:ELECTRICAL_CIRCUIT_POWER_SETTING_SET)
 							</INIT_CODE_T>
 						</Parameters>
 						<Parameters Type="Override" Lifetime="Loop">
@@ -348,9 +361,11 @@
 										#ANTICLOCKWISE_CODE_T#
 										(A:CIRCUIT SWITCH ON:#CURRENT_CIRCUIT#,Bool) ! if{ #CURRENT_CIRCUIT# (&gt;K:ELECTRICAL_CIRCUIT_TOGGLE) }
 									</ANTICLOCKWISE_CODE_T>
+									<!-- sim overwrites circuit initialisation setting after new flight load. 
+										 it needs more investigation if it is a sim bug or conflict with other components 
+										 right now usefull only for debugging -->
 									<INIT_CODE_T>
-										#INIT_CODE_T#
-										(A:CIRCUIT SWITCH ON:#CURRENT_CIRCUIT#,Bool) ! if{ #CURRENT_CIRCUIT# (&gt;K:ELECTRICAL_CIRCUIT_TOGGLE) }
+										#INIT_CODE_T# (A:CIRCUIT SWITCH ON:#CURRENT_CIRCUIT#,Bool) ! if{ #CURRENT_CIRCUIT# (&gt;K:ELECTRICAL_CIRCUIT_TOGGLE) }
 									</INIT_CODE_T>
 								</Case>
 								<Case Value="ENABLE_DISABLE">
@@ -362,45 +377,43 @@
 										#ANTICLOCKWISE_CODE_T#
 										d ! (A:CIRCUIT SWITCH ON:#CURRENT_CIRCUIT#,Bool) and if{ #CURRENT_CIRCUIT# (&gt;K:ELECTRICAL_CIRCUIT_TOGGLE) }
 									</ANTICLOCKWISE_CODE_T>
+									<!-- sim overwrites circuit initialisation setting after new flight load. 
+										 it needs more investigation if it is a sim bug or conflict with other components 
+										 right now usefull only for debugging -->
 									<INIT_CODE_T>
-										#INIT_CODE_T#
-										(A:CIRCUIT SWITCH ON:#CURRENT_CIRCUIT#,Bool) s1 l0 ! and l0 l1 ! and or if{ #CURRENT_CIRCUIT# (&gt;K:ELECTRICAL_CIRCUIT_TOGGLE) }
+										#INIT_CODE_T# (A:CIRCUIT SWITCH ON:#CURRENT_CIRCUIT#,Bool) s1 l0 ! and l0 l1 ! and or if{ #CURRENT_CIRCUIT# (&gt;K:ELECTRICAL_CIRCUIT_TOGGLE) }
 									</INIT_CODE_T>
 								</Case>
 							</Switch>
-		
 						</Parameters>
 					</Do>
 					<Then>
+						<INIT_CODE>
+							#INIT_CODE# #INIT_CODE_T#
+						</INIT_CODE>
 						<CLOCKWISE_CODE>
-							(A:LIGHT POTENTIOMETER:#POTENTIOMETER#, percent) 10 + 100 min d #POTENTIOMETER# (&gt;K:2:LIGHT_POTENTIOMETER_SET) 
+							(A:LIGHT POTENTIOMETER:#POTENTIOMETER#, percent) #KNOB_TURN_SPEED# + 100 min d #POTENTIOMETER# (&gt;K:2:LIGHT_POTENTIOMETER_SET) 
 							#CLOCKWISE_CODE_T# p
 						</CLOCKWISE_CODE>
 						<ANTICLOCKWISE_CODE>
-							(A:LIGHT POTENTIOMETER:#POTENTIOMETER#, percent) 10 - 0 max d #POTENTIOMETER# (&gt;K:2:LIGHT_POTENTIOMETER_SET)
+							(A:LIGHT POTENTIOMETER:#POTENTIOMETER#, percent) #KNOB_TURN_SPEED# - 0 max d #POTENTIOMETER# (&gt;K:2:LIGHT_POTENTIOMETER_SET)
 							#ANTICLOCKWISE_CODE_T# p
 						</ANTICLOCKWISE_CODE>
-						<Condition Check="INIT_VALUE">
-							<INIT_CODE>
-								#INIT_VALUE# s0 #POTENTIOMETER# (&gt;K:2:LIGHT_POTENTIOMETER_SET) 
-								#INIT_CODE_T#
-							</INIT_CODE>
-						</Condition>
 					</Then>
 				</Loop>
-
 				</Parameters>
-				<Condition Check="INIT_VALUE">
-					<Update Once="True">
-						#INIT_CODE#
-					</Update>
-				</Condition>
-	
+
+				<UseTemplate Name="ASOBO_GT_Update">
+					<UPDATE_ONCE>True</UPDATE_ONCE>
+					<UPDATE_CODE>#INIT_CODE#</UPDATE_CODE>
+				</UseTemplate>
+
 				<UseTemplate Name="ASOBO_GT_Knob_Finite_Code">
 					<COUNT>10</COUNT> 
 					<ANIM_CODE>(A:LIGHT POTENTIOMETER:#POTENTIOMETER#, percent)</ANIM_CODE>
 				</UseTemplate>
 			</Component>
+
 		</Template>
     
 	<!-- HANDLING #######################################-->
@@ -710,44 +723,49 @@
 	
 	<!-- LIGHTING #######################################-->
 	<Component ID="LIGHTING_Knobs">
-		<DefaultTemplateParameters>
+		<Parameters Type="Default">
 			<ANIM_WRAP>False</ANIM_WRAP>
 			<KNOB_EMISSIVE_POTENTIOMETER>3</KNOB_EMISSIVE_POTENTIOMETER>
-			<KNOB_TURN_SPEED>5</KNOB_TURN_SPEED>
+			<KNOB_TURN_SPEED>10</KNOB_TURN_SPEED>
 			<DONT_OVERRIDE_BASE_EMISSIVE>false</DONT_OVERRIDE_BASE_EMISSIVE>
-		</DefaultTemplateParameters>
+		</Parameters>
+		
 		
 		<!-- Decals emissive -->
-		<UseTemplate Name="ASOBO_LIGHTING_Panel_Emissive_Template">
-			<NODE_ID>DECALS_Emissive</NODE_ID>
-			<POTENTIOMETER>3</POTENTIOMETER>
-			<EMISSIVE_CODE>0.1</EMISSIVE_CODE>
-			<NO_SIMVAR_LIGHT/>
-			<DONT_OVERRIDE_BASE_EMISSIVE>False</DONT_OVERRIDE_BASE_EMISSIVE>
-			<TT_DESCRIPTION_ID>@TT_Package.LIGHTING_KNOB_STDYINSTRUBRIGHTNESS_ACTION_SET</TT_DESCRIPTION_ID>
-			<TOOLTIP_TITLE>@TT_Package.LIGHTING_KNOB_STDYINSTRUBRIGHTNESS_TITLE</TOOLTIP_TITLE> 
-		</UseTemplate>
-		
 		<Component ID="LIGHTING_Knobs_Emissives">
 			<Parameters Type="Default">
 				<POTENTIOMETER>3</POTENTIOMETER>
 			</Parameters>
+			<UseTemplate Name="ASOBO_LIGHTING_Panel_Emissive_Template">
+				<NODE_ID>DECALS_Emissive</NODE_ID>
+				<EMISSIVE_CODE>0.1</EMISSIVE_CODE>
+				<NO_SIMVAR_LIGHT/>
+				<DONT_OVERRIDE_BASE_EMISSIVE>False</DONT_OVERRIDE_BASE_EMISSIVE>
+				<TT_DESCRIPTION_ID>@TT_Package.LIGHTING_KNOB_STDYINSTRUBRIGHTNESS_ACTION_SET</TT_DESCRIPTION_ID>
+				<TOOLTIP_TITLE>@TT_Package.LIGHTING_KNOB_STDYINSTRUBRIGHTNESS_TITLE</TOOLTIP_TITLE> 
+			</UseTemplate>
 			<UseTemplate Name="ASOBO_GT_Component_Emissive_Gauge">
+				<COMPONENT_ID>KNOB_Emmisive_Decal_Avionics</COMPONENT_ID>
 				<NODE_ID>LIGHTING_KNOB_AVIONICS</NODE_ID>
 			</UseTemplate>
 			<UseTemplate Name="ASOBO_GT_Component_Emissive_Gauge">
+				<COMPONENT_ID>KNOB_Emmisive_Decal_PilotFlood</COMPONENT_ID>
 				<NODE_ID>LIGHTING_KNOB_CABIN_1</NODE_ID>
 			</UseTemplate>
 			<UseTemplate Name="ASOBO_GT_Component_Emissive_Gauge">
+				<COMPONENT_ID>KNOB_Emmisive_Decal_CoPilotFlood</COMPONENT_ID>
 				<NODE_ID>LIGHTING_KNOB_CABIN_2</NODE_ID>
 			</UseTemplate>
 			<UseTemplate Name="ASOBO_GT_Component_Emissive_Gauge">
+				<COMPONENT_ID>KNOB_Emmisive_Decal_Pannel</COMPONENT_ID>
 				<NODE_ID>LIGHTING_KNOB_PANEL</NODE_ID>
 			</UseTemplate>
 			<UseTemplate Name="ASOBO_GT_Component_Emissive_Gauge">
+				<COMPONENT_ID>KNOB_Emmisive_Decal_Pedestal</COMPONENT_ID>
 				<NODE_ID>LIGHTING_KNOB_PEDESTAL</NODE_ID>
 			</UseTemplate>
 			<UseTemplate Name="ASOBO_GT_Component_Emissive_Gauge">
+				<COMPONENT_ID>KNOB_Emmisive_Decal_Stby_Gauges</COMPONENT_ID>
 				<NODE_ID>LIGHTING_KNOB_POTENTIOMETER</NODE_ID>
 			</UseTemplate>
 		</Component>
@@ -764,7 +782,6 @@
 			<CIRCUIT_NO3>29</CIRCUIT_NO3>
 			<CIRCUIT_NO4>30</CIRCUIT_NO4>
 			<CIRCUIT_INTERACTION>DO_NOT_SWITCH</CIRCUIT_INTERACTION>
-			<INIT_VALUE>100</INIT_VALUE>
 			<TT_DESCRIPTION_ID>@TT_Package.LIGHTING_KNOB_AVIONICSBRIGHTNESS_ACTION_SET</TT_DESCRIPTION_ID>
 			<TOOLTIP_TITLE>@TT_Package.LIGHTING_KNOB_AVIONICSBRIGHTNESS_TITLE</TOOLTIP_TITLE>
 		</UseTemplate>
@@ -777,7 +794,6 @@
 			<POTENTIOMETER>2</POTENTIOMETER>
 			<CIRCUIT_NO0>18</CIRCUIT_NO0>
 			<CIRCUIT_INTERACTION>ENABLE_DISABLE</CIRCUIT_INTERACTION>
-			<INIT_VALUE>60</INIT_VALUE>
 			<TT_DESCRIPTION_ID>@TT_Package.LIGHTING_KNOB_STDYINSTRUBRIGHTNESS_ACTION_SET</TT_DESCRIPTION_ID>
 			<TOOLTIP_TITLE>@TT_Package.LIGHTING_KNOB_STDYINSTRUBRIGHTNESS_TITLE</TOOLTIP_TITLE>
 		</UseTemplate>
@@ -790,28 +806,26 @@
 			<POTENTIOMETER>3</POTENTIOMETER>
 			<CIRCUIT_NO0>1</CIRCUIT_NO0>
 			<CIRCUIT_INTERACTION>ALWAYS_ENABLED</CIRCUIT_INTERACTION>
-			<INIT_VALUE>60</INIT_VALUE>
 			<TT_DESCRIPTION_ID>@TT_Package.LIGHTING_SWITCH_LIGHT_PANEL_ACTION</TT_DESCRIPTION_ID>
 			<TOOLTIP_TITLE>@TT_Package.LIGHTING_SWITCH_LIGHT_PANEL_TITLE</TOOLTIP_TITLE>
 		</UseTemplate>
 
-		<Component ID="LIGHTING_Flood_Lights">
+		<Component ID="LIGHTING_Knob_Flood_Lights">
 			<!-- Left Cockpit Flood light -->
 			<UseTemplate Name="ASOBO_LIGHTING_Knob_Template_Mod">
 				<PART_ID>LIGHTING_KNOB_Flood_Left</PART_ID>
 				<NODE_ID>KNOB_PEDESTAL</NODE_ID>
 				<ANIM_NAME>LIGHTING_Knob_Pedestal</ANIM_NAME>
-				<POTENTIOMETER>13</POTENTIOMETER>
-				<CIRCUIT_NO0>23</CIRCUIT_NO0>
+				<POTENTIOMETER>12</POTENTIOMETER>
+				<CIRCUIT_NO0>22</CIRCUIT_NO0>
 				<CIRCUIT_INTERACTION>ENABLE_DISABLE</CIRCUIT_INTERACTION>
-				<INIT_VALUE>2</INIT_VALUE>
 				<TT_DESCRIPTION_ID>@TT_Package.LIGHTING_KNOB_LIGHT_FLOODLIGHT_BRIGHTNESS_ACTION</TT_DESCRIPTION_ID>
 				<TOOLTIP_TITLE>@TT_Package.LIGHTING_KNOB_LIGHT_FLOODLIGHT_BRIGHTNESS_TITLE</TOOLTIP_TITLE>
 			</UseTemplate>
 			<UseTemplate Name="ASOBO_LIGHTING_Cabin_Emissive_Template">
 				<NODE_ID>LIGHTING_Light_FloodPilot</NODE_ID>
-				<POTENTIOMETER>13</POTENTIOMETER>
-				<SIMVAR_INDEX>2</SIMVAR_INDEX>
+				<POTENTIOMETER>12</POTENTIOMETER>
+				<SIMVAR_INDEX>1</SIMVAR_INDEX>
 				<TT_DESCRIPTION_ID>@TT_Package.LIGHTING_KNOB_CABIN_ACTION</TT_DESCRIPTION_ID>
 				<TOOLTIP_TITLE>@TT_Package.LIGHTING_KNOB_CABIN_TITLE</TOOLTIP_TITLE>
 				<TT_DESCRIPTION_INDEX>(R:1:@TT_Package.GT_STATE_LEFT)</TT_DESCRIPTION_INDEX>	
@@ -822,17 +836,16 @@
 				<PART_ID>LIGHTING_KNOB_Flood_Right</PART_ID>
 				<NODE_ID>KNOB_CABIN</NODE_ID>
 				<ANIM_NAME>LIGHTING_Knob_Cabin_2</ANIM_NAME>
-				<POTENTIOMETER>12</POTENTIOMETER>
-				<CIRCUIT_NO0>22</CIRCUIT_NO0>
+				<POTENTIOMETER>13</POTENTIOMETER>
+				<CIRCUIT_NO0>23</CIRCUIT_NO0>
 				<CIRCUIT_INTERACTION>ENABLE_DISABLE</CIRCUIT_INTERACTION>
-				<INIT_VALUE>2</INIT_VALUE>
 				<TT_DESCRIPTION_ID>@TT_Package.LIGHTING_KNOB_LIGHT_FLOODLIGHT_BRIGHTNESS_ACTION</TT_DESCRIPTION_ID>
 				<TOOLTIP_TITLE>@TT_Package.LIGHTING_KNOB_LIGHT_FLOODLIGHT_BRIGHTNESS_TITLE</TOOLTIP_TITLE>
 			</UseTemplate>
 			<UseTemplate Name="ASOBO_LIGHTING_Cabin_Emissive_Template">
 				<NODE_ID>LIGHTING_Light_FloodCopilot</NODE_ID>
-				<POTENTIOMETER>12</POTENTIOMETER>
-   				<SIMVAR_INDEX>1</SIMVAR_INDEX>
+				<POTENTIOMETER>13</POTENTIOMETER>
+   				<SIMVAR_INDEX>2</SIMVAR_INDEX>
 				<TT_DESCRIPTION_ID>@TT_Package.LIGHTING_KNOB_CABIN_ACTION</TT_DESCRIPTION_ID>
 				<TOOLTIP_TITLE>@TT_Package.LIGHTING_KNOB_CABIN_TITLE</TOOLTIP_TITLE>
 				<TT_DESCRIPTION_INDEX>(R:1:@TT_Package.GT_STATE_RIGHT)</TT_DESCRIPTION_INDEX>	
@@ -846,7 +859,6 @@
 				<POTENTIOMETER>6</POTENTIOMETER>
 				<CIRCUIT_NO0>24</CIRCUIT_NO0>
 				<CIRCUIT_INTERACTION>ENABLE_DISABLE</CIRCUIT_INTERACTION>
-				<INIT_VALUE>2</INIT_VALUE>
 				<TT_DESCRIPTION_ID>@TT_Package.LIGHTING_SWITCH_LIGHT_PEDESTAL_BRIGHTNESS_ACTION</TT_DESCRIPTION_ID>
 				<TOOLTIP_TITLE>@TT_Package.LIGHTING_KNOB_PEDESTAL_TITLE</TOOLTIP_TITLE>
 			</UseTemplate>
@@ -1272,6 +1284,6 @@
 			<NODE_ID>SWITCH_TOPPANEL_STBYFLAP_NORMAL</NODE_ID>
 		</UseTemplate>
 	</Component>
-	
+
 	</Behaviors>
 </ModelInfo>
