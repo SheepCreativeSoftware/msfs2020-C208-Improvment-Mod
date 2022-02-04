@@ -48,10 +48,13 @@
       <Type>Warning</Type>
       <Text>OIL PRESS LOW</Text>
 		<Condition>
-			<LowerEqual>
-				<Simvar name="GENERAL ENG OIL PRESSURE:1" unit="psi"/>
-				<Constant>40</Constant>
-			</LowerEqual>
+			<And>
+				<Simvar name="ENG COMBUSTION:1" unit="Boolean"/>
+				<LowerEqual>
+					<Simvar name="GENERAL ENG OIL PRESSURE:1" unit="psi"/>
+					<Constant>40</Constant>
+				</LowerEqual>
+			</And>
 		</Condition>
     </Annunciation>	
     <!--Indicates electrical system bus voltage is less than 24.5 volts-->
@@ -192,6 +195,14 @@
 			</LowerEqual>
       </Condition>
     </Annunciation>
+	<!--Indicates the starter-generator is operating in starter mode-->
+	<Annunciation>
+	  <Type>Caution</Type>
+	  <Text>STARTER ON</Text>
+	  <Condition>
+			<Simvar name="GENERAL ENG STARTER:1" unit="Bool"/>
+	  </Condition>
+	</Annunciation>
     <!--Indicates the auxiliary fuel boost pump is operating. Switch is placed in the ON position or is in the NORM position and fuel pressure drops below 4.75 psi-->
 	<Annunciation>
       <Type>Caution</Type>
@@ -230,14 +241,6 @@
 			</Lower>
 		  </Condition>
     </Annunciation>
-	<!--Indicates the starter-generator is operating in starter mode-->
-	<Annunciation>
-	  <Type>Caution</Type>
-	  <Text>STARTER ON</Text>
-	  <Condition>
-			<Simvar name="GENERAL ENG STARTER:1" unit="Bool"/>
-	  </Condition>
-	</Annunciation>
 	<!--Indicates that metal chips are present in one or both of the chip detectors.-->
 	<Annunciation>
 		<Type>Caution</Type>
@@ -302,10 +305,14 @@
 	  <Type>Caution</Type>
 	  <Text>GENERATOR OFF</Text>
 		  <Condition>
-			<Equal>
-				<Simvar name="L:XMLVAR_Generator_Current" unit="amps"/>
-				<Constant>0</Constant>
-			</Equal>
+			<And>
+				<!--Announciation appears only when the engine is running-->
+				<Simvar name="ENG COMBUSTION:1" unit="Boolean"/>
+				<Equal>
+					<Simvar name="L:XMLVAR_Generator_Current" unit="amps"/>
+					<Constant>0</Constant>
+				</Equal>
+			</And>
 		  </Condition>
 	</Annunciation>
 	<!-- Indicates electrical power is not available from the standby alternator-->
