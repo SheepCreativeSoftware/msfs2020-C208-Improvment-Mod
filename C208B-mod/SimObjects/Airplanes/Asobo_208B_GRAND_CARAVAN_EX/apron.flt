@@ -44,8 +44,6 @@ PropellerLeverPct=-0.25
 MixtureLeverPct=0
 Pct Engine RPM=0
 MaxReachedEngineRPM=0
-LeftMagneto=True
-RightMagneto=True
 GeneratorSwitch=False
 FuelValveOpen=False
 CowlFlapPct=0
@@ -54,7 +52,7 @@ FuelPumpSwitch_EX1=0
 CarbHeat/DeiceSwitch=False
 EngineMasterSwitch=True
 GlowPlugTemperaturePct=1
-IgnitionSwitch=1
+IgnitionSwitch=0
 Afterburner=0
 
 [Propeller.1.0]
