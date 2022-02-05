@@ -19,6 +19,20 @@
 	<Include ModelBehaviorFile="Asobo\NAVCOM\ADF.xml"/>
 	<Include RelativeFile="208B_GRAND_CARAVAN_EX_templates.xml"/>
 
+	<Component ID="C208_SYSTEM">
+		<UseInputEvent ID="PROCEDURE">
+			<PROCEDURE_ID>AUTOSTART</PROCEDURE_ID>
+			<ON_AUTOSTART>
+				1 (&gt;B:ELECTRICAL_Power_Bus_Switch_Set)
+				1 (&gt;K:ENGINE_AUTO_START)
+			</ON_AUTOSTART>
+			<ON_AUTOSTOP>
+				1 (&gt;K:ENGINE_AUTO_STOP)
+				0 (&gt;B:ELECTRICAL_Power_Bus_Switch_Set)
+			</ON_AUTOSTOP>
+		</UseInputEvent>
+	</Component>
+
 	<!-- HANDLING #######################################-->
 	<Component ID="ADF">
 		<UseTemplate Name="ASOBO_ADF_AS87_Template">
