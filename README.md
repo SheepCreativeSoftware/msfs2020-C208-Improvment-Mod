@@ -27,7 +27,7 @@ You can disable/enable engine failures in the MSFS Assistance Options.
 - Autopilot and instrument fixes
 - Yaw Damper Working
 - Changed the electric bus configuration to comply with POH
-- Generator characteristic has been corrected
+- Generator/Alternator characteristic has been corrected
 - Generator trip and reset button works
 - More accurate start up
 
@@ -59,7 +59,7 @@ Thanks to everyone who has contributed, and to PilotTrev for sharing his knowled
 
 ## Download
 
-***[Latest Release v2201.2](https://github.com/SheepCreativeSoftware/msfs2020-C208-Improvment-Mod/releases/latest)***
+***[Latest Release v2201.3](https://github.com/SheepCreativeSoftware/msfs2020-C208-Improvment-Mod/releases/latest)***
 
 ### How to install
 

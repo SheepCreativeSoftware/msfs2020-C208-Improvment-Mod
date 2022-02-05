@@ -300,7 +300,7 @@
 			<!-- it is impossible to get negative current to the alternator so the condition (Amps < -10) is skipped -->
 		  </Condition>
 	</Annunciation>
-	<!--Indicates that the generator is not connected to the aircraft bus-->
+	<!--Indicates that the generator is not connected to the aircraft bus with engine running-->
 	<Annunciation>
 	  <Type>Caution</Type>
 	  <Text>GENERATOR OFF</Text>
