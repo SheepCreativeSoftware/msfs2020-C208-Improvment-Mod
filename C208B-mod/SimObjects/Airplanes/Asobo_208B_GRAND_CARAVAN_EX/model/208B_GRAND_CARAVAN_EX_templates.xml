@@ -1,0 +1,456 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ModelBehaviors>
+
+	<InputEvent ID="ELECTRICAL_MOD">
+	<Presets>
+		<Switch Param="INPUT_EVENT_ID_SOURCE">
+        <Case Value="ELECTRICAL_Power_Bus">
+			<Extend Target="ASOBO_GIE_Base">
+				<Parameters Type="Default">
+					<VALUE_UNITS>Bool</VALUE_UNITS>
+					<VALUE_CODE>
+						 #POWER_BUS_ID# (&gt;A:BUS LOOKUP INDEX, Number) (A:BUS CONNECTION ON:#BATTERY_BUS_ID#, Bool) 
+					</VALUE_CODE>
+					<INIT_CODE>
+						#POWER_BUS_ID# (&gt;A:BUS LOOKUP INDEX, Number) (A:BUS CONNECTION ON:#BATTERY_BUS_ID#, Bool)
+						(A:ELECTRICAL MASTER BATTERY:#MASTER_BATTERY_ID#, Bool) ! s0 and if{ 
+							#POWER_BUS_ID# #BATTERY_BUS_ID# (&gt;K:2:ELECTRICAL_BUS_TO_BUS_CONNECTION_TOGGLE) }
+						l0 if{ #MASTER_BATTERY_ID# (&gt;K:TOGGLE_MASTER_BATTERY) }
+					</INIT_CODE>
+					<INC_CODE/>
+					<DEC_CODE/>
+					<SET_CODE>
+						#POWER_BUS_ID# (&gt;A:BUS LOOKUP INDEX, Number) (A:BUS CONNECTION ON:#BATTERY_BUS_ID#, Bool) p0
+						!= if{ #POWER_BUS_ID# #BATTERY_BUS_ID# (&gt;K:2:ELECTRICAL_BUS_TO_BUS_CONNECTION_TOGGLE) } 
+					</SET_CODE>
+					<SET_ARG_COUNT>1</SET_ARG_COUNT>
+
+					<BINDING_SET_0>Toggle</BINDING_SET_0>
+					<BINDING_SET_0_PARAM_0>(B:#INPUT_EVENT_ID_SOURCE#_#IE_NAME#) !</BINDING_SET_0_PARAM_0>
+					<BINDING_SET_0_PARAM_0_IS_DYNAMIC>TRUE</BINDING_SET_0_PARAM_0_IS_DYNAMIC>
+
+					<BINDING_SET_1>EVENT1</BINDING_SET_1>
+					<BINDING_SET_1_EVENT_ID>TOGGLE_MASTER_BATTERY</BINDING_SET_1_EVENT_ID>
+					<BINDING_SET_1_EVENT_ID_ONLY>TRUE</BINDING_SET_1_EVENT_ID_ONLY>
+					<BINDING_SET_1_PARAM_0>(B:#INPUT_EVENT_ID_SOURCE#_#IE_NAME#) !</BINDING_SET_1_PARAM_0>
+					<BINDING_SET_1_PARAM_0_IS_DYNAMIC>TRUE</BINDING_SET_1_PARAM_0_IS_DYNAMIC>
+
+					<BINDING_SET_2>EVENT2</BINDING_SET_2>
+					<BINDING_SET_2_EVENT_ID>MASTER_BATTERY_SET</BINDING_SET_2_EVENT_ID>
+					<BINDING_SET_2_EVENT_ID_ONLY>TRUE</BINDING_SET_2_EVENT_ID_ONLY>
+					<BINDING_SET_2_PARAM_0>p0</BINDING_SET_2_PARAM_0>
+					<BINDING_SET_2_PARAM_0_IS_DYNAMIC>TRUE</BINDING_SET_2_PARAM_0_IS_DYNAMIC>
+
+					<BINDING_SET_3>EVENT3</BINDING_SET_3>
+					<BINDING_SET_3_EVENT_ID>MASTER_BATTERY_ON</BINDING_SET_3_EVENT_ID>
+					<BINDING_SET_3_EVENT_ID_ONLY>TRUE</BINDING_SET_3_EVENT_ID_ONLY>
+					<BINDING_SET_3_PARAM_0>1</BINDING_SET_3_PARAM_0>
+					<BINDING_SET_3_PARAM_0_IS_DYNAMIC>TRUE</BINDING_SET_3_PARAM_0_IS_DYNAMIC>
+
+					<BINDING_SET_4>EVENT4</BINDING_SET_4>
+					<BINDING_SET_4_EVENT_ID>MASTER_BATTERY_OFF</BINDING_SET_4_EVENT_ID>
+					<BINDING_SET_4_EVENT_ID_ONLY>TRUE</BINDING_SET_4_EVENT_ID_ONLY>
+					<BINDING_SET_4_PARAM_0>0</BINDING_SET_4_PARAM_0>
+					<BINDING_SET_4_PARAM_0_IS_DYNAMIC>TRUE</BINDING_SET_4_PARAM_0_IS_DYNAMIC>
+
+					<BINDING_SET_5>EVENT5</BINDING_SET_5>
+					<BINDING_SET_5_EVENT_ID>ENGINE_AUTO_START</BINDING_SET_5_EVENT_ID>
+					<BINDING_SET_5_EVENT_ID_ONLY>TRUE</BINDING_SET_5_EVENT_ID_ONLY>
+					<BINDING_SET_5_PARAM_0>(&gt;K:ENGINE_AUTO_START) 1</BINDING_SET_5_PARAM_0>
+					<BINDING_SET_5_PARAM_0_IS_DYNAMIC>TRUE</BINDING_SET_5_PARAM_0_IS_DYNAMIC>
+
+					<BINDING_SET_6>EVENT6</BINDING_SET_6>
+					<BINDING_SET_6_EVENT_ID>ENGINE_AUTO_SHUTDOWN</BINDING_SET_6_EVENT_ID>
+					<BINDING_SET_6_EVENT_ID_ONLY>TRUE</BINDING_SET_6_EVENT_ID_ONLY>
+					<BINDING_SET_6_PARAM_0>(&gt;K:ENGINE_AUTO_SHUTDOWN) 0</BINDING_SET_6_PARAM_0>
+					<BINDING_SET_6_PARAM_0_IS_DYNAMIC>TRUE</BINDING_SET_6_PARAM_0_IS_DYNAMIC>
+				</Parameters>
+			</Extend>
+		</Case>
+		<Default>
+			<Extend Target="ASOBO_GIE_Base">
+				<Parameters Type="Default">
+					<VALUE_UNITS/>
+					<VALUE_CODE/>
+					<INIT_CODE/>
+					<INC_CODE/>
+					<DEC_CODE/>
+					<SET_CODE/>
+					<SET_ARG_COUNT/>
+				</Parameters>
+			</Extend>
+		</Default>
+		</Switch>
+	</Presets>
+	</InputEvent>
+
+	<Template Name="ASOBO_ENGINE_MetalChipDetector_Template_Mod">
+		<Parameters Type="Default">
+			<ENGINE_MAX_TORQUE>2397</ENGINE_MAX_TORQUE> <!-- max torque above which engine is overstressed -->
+			<ENGINE_RESISTANCE_TIME>240</ENGINE_RESISTANCE_TIME> <!-- 4 minutes of the engine overstress is without penalty -->
+			<MAX_PROBABILITY>0.125</MAX_PROBABILITY> <!-- max probability of engine failure in one second -->
+			<TIME_CONST>1000</TIME_CONST>  <!-- Number of seconds after which the overstress causes max engine failure probability -->
+		</Parameters>
+		<Component ID="ENGINE_MetalChipDetector">
+			<UseTemplate Name="ASOBO_GT_Update">
+				<UPDATE_CODE>
+					(A:ENG FAILED:1, Bool) ! if{
+						(A:PRESSURE ALTITUDE, feet) s12 0 &lt; if{ 0 s12 s0 } els{ l12 2000 div s0 }
+						:0	-54 -54 -54 -54 -54 -54 -40 -22 -8 2 14 24 32 13
+						l0 case sp1 
+						1510 1640 1800 1980 2160 2350 2397 2397 2397 2397 2397 2397 2397 13
+						l0 case sp2 
+	                       -7.5 -7.83333333 -9.0625 -10.1470588 -11.111111 -11.9736842 -13.1363636 -14.75 -16.5952381 -17.13888889 -19.1785714 -20.7727273 -20.9444444 13
+						l0 case sp3 
+
+						(A:AMBIENT TEMPERATURE, celsius) l1 - l3 * l2 +
+						l12 l0 2000 * - s1 0 >= if{ l1 sp13 l0 ++ sp0 s10 g0 }
+						l10 - l13 2000 / * + sp10
+						l10 #ENGINE_MAX_TORQUE# &gt; if{ #ENGINE_MAX_TORQUE# sp10 }
+						l10 (&gt;L:XMLVAR_EngineMaxTorque)
+
+						(A:TURB ENG FREE TURBINE TORQUE:1, Foot Pounds) #ENGINE_MAX_TORQUE# &gt; if{
+							(L:XMLVAR_ChipDetectTimer) 1 + s0 (&gt;L:XMLVAR_ChipDetectTimer)
+							l0 #ENGINE_RESISTANCE_TIME# &gt; l0 #TIME_CONST# &lt;= and if{
+								#MAX_PROBABILITY# #TIME_CONST# l0 - / (&gt;O:EngineFailureProb) } } 
+						rand (O:EngineFailureProb) &lt; if{ (&gt;K:TOGGLE_ENGINE1_FAILURE) } }		
+				</UPDATE_CODE>
+			</UseTemplate>
+   		</Component>
+	</Template>	
+
+	<Template Name="ASOBO_ELECTRICAL_Switch_Battery_Master_Template_Mod">
+		<Component ID="#PART_ID#" Node="#NODE_ID#">
+			<Parameters Type="Override">
+				<INPUT_EVENT_ID_SOURCE>ELECTRICAL_Power_Bus</INPUT_EVENT_ID_SOURCE>
+				<IE_NAME>Switch</IE_NAME>
+			</Parameters>
+			<UseInputEvent ID="ELECTRICAL_MOD">
+				<TT_DESCRIPTION>@TT_Package.ELECTRICAL_BATTERY_MASTER_ACTION_SET</TT_DESCRIPTION>
+				<TT_DESCRIPTION_IS_DYNAMIC>False</TT_DESCRIPTION_IS_DYNAMIC>
+				<TT_VALUE>(B:#INPUT_EVENT_ID_SOURCE#_#IE_NAME#) 1 == if{ @TT_On } els{ @TT_Off }</TT_VALUE>
+				<TT_VALUE_IS_DYNAMIC>True</TT_VALUE_IS_DYNAMIC>
+				<TT_INTERACTION>PRIMARY_DOWN</TT_INTERACTION>
+				<TT_INTERACTION_LOCKABLE>LOCK</TT_INTERACTION_LOCKABLE>
+				<TT_ICON>PUSH</TT_ICON>
+			</UseInputEvent>
+			<UseTemplate Name="ASOBO_GT_Update">
+				<UPDATE_CODE>
+					1 0 (A:ELECTRICAL MAIN BUS VOLTAGE:1, volts) 5 &gt; ? (&gt;L:XMLVAR_Power_Distr_Bus)
+
+					(A:ELECTRICAL BATTERY LOAD:1, amps) d 0 &lt; if{
+						(A:ELECTRICAL BATTERY ESTIMATED CAPACITY PCT, percent) s12 10 div sp0
+						:0	0 -3 -6 -10 -15 -21 -28 -36 -45 -55 -67 11
+						l0 case sp1 l12 10 / l0 - s2 0 &gt; if{ l1 sp11 l0 ++ sp0 l2 sp10 g0 }
+						l2 0 == if{ l1 } els{ l11 l10 l1 l11 - * + } max
+					} neg s0 d (&gt;L:XMLVAR_Battery_Current) 0 &lt;= if{ 0 sp0 } 
+
+					(A:TURB ENG N1:1, percent) 46 &gt; (A:ELECTRICAL GENALT BUS AMPS:1, amps) s1 0 &gt; and s3
+					(A:TURB ENG N1:1, percent) 46 &gt; (A:ELECTRICAL GENALT BUS AMPS:2, amps) s2 0 &gt; and s4
+					and if{ l0 2 / sp0 }
+					l3 if{ l1 l0 + } els{ 0 } (&gt;L:XMLVAR_Generator_Current)
+					l4 if{ l2 l0 + } els{ 0 } (&gt;L:XMLVAR_Alternator_Current)
+				</UPDATE_CODE>
+	        </UseTemplate>	
+			<UseTemplate Name="ASOBO_GT_Switch_Code">
+				<ANIM_CODE>(B:#INPUT_EVENT_ID_SOURCE#_#IE_NAME#) 100 *</ANIM_CODE>
+				<LEFT_SINGLE_CODE>(&gt;B:#INPUT_EVENT_ID_SOURCE#_#IE_NAME#_Toggle)</LEFT_SINGLE_CODE>
+   	            <TOOLTIP_TITLE>@TT_Package.ELECTRICAL_BATTERY_TITLE</TOOLTIP_TITLE>
+				<TOOLTIP_ENTRY_0>#INPUT_EVENT_ID_SOURCE#_#IE_NAME#</TOOLTIP_ENTRY_0>
+			</UseTemplate>
+		</Component>		
+	</Template>	
+
+	<Template Name="ASOBO_ELECTRICAL_Switch_Alternator_Template_Mod">
+		<Parameters Type="Default">
+			<GEN_ID>1</GEN_ID>
+		</Parameters>
+
+		<Component ID="#PART_ID#" Node="#NODE_ID#">
+			<Parameters Type="Override">
+				<INPUT_EVENT_ID_SOURCE>ELECTRICAL_Generator</INPUT_EVENT_ID_SOURCE>
+				<IE_NAME>Switch</IE_NAME>
+			</Parameters>
+
+			<UseInputEvent ID="ELECTRICAL_MOD">
+				<TT_DESCRIPTION>@TT_Package.ELECTRICAL_ALTERNATOR_ACTION_SET_SOLO</TT_DESCRIPTION>
+				<TT_DESCRIPTION_IS_DYNAMIC>False</TT_DESCRIPTION_IS_DYNAMIC>
+				<TT_VALUE>
+					(A:GENERAL ENG MASTER ALTERNATOR:#GEN_ID#, bool)
+					s0 0 == if{ (R:1:@TT_Package.GT_STATE_TRIP) @sprintf quit }
+					l0 1 == if{ (R:1:@TT_Package.GT_STATE_ON) @sprintf quit }
+				</TT_VALUE>
+				<TT_VALUE_IS_DYNAMIC>True</TT_VALUE_IS_DYNAMIC>
+				<TT_INTERACTION>PRIMARY_DOWN+Y_AXIS</TT_INTERACTION>
+				<TT_INTERACTION_LOCKABLE>Y_AXIS</TT_INTERACTION_LOCKABLE>
+				<TT_ICON>MOVE_Y</TT_ICON>
+			</UseInputEvent>
+
+            <UseTemplate Name="ASOBO_GT_Switch_3States">
+                <MOMENTARY_SWITCH/>
+   	            <STATE_MAX_TIMER>0.5</STATE_MAX_TIMER>
+       	        <STATE0_TIMER>0.5</STATE0_TIMER>
+
+				<CODE_POS_0>(*RESET*) (A:GENERAL ENG MASTER ALTERNATOR:#GEN_ID#, bool) ! if{ (&gt;K:TOGGLE_ALTERNATOR#GEN_ID#) } </CODE_POS_0>
+				<CODE_POS_1>(* ON  *) </CODE_POS_1>
+				<CODE_POS_2>(*TRIP *) (A:GENERAL ENG MASTER ALTERNATOR:#GEN_ID#, bool) if{ (&gt;K:TOGGLE_ALTERNATOR#GEN_ID#) } </CODE_POS_2>
+
+				<WWISE_EVENT>alternator_switch</WWISE_EVENT>
+				<AUDIO_DIRECTION>Both</AUDIO_DIRECTION>
+				<NORMALIZED_TIME>0.1</NORMALIZED_TIME>
+
+   	            <TOOLTIP_TITLE>@TT_Package.ELECTRICAL_ALTERNATOR_TITLE</TOOLTIP_TITLE>
+				<TOOLTIP_ENTRY_0>#INPUT_EVENT_ID_SOURCE#_#IE_NAME#</TOOLTIP_ENTRY_0>
+			</UseTemplate>
+		</Component>
+	</Template>	
+    
+	<Template Name="ASOBO_ELECTRICAL_Switch_Alternator_STBY_Template_Mod">
+		<Parameters Type="Default">
+			<ALT_ID>2</ALT_ID>
+			<!-- min N1  which activates ACU. Below it the stby alternator is disconnected -->
+			<ENG_N1_THREASHOLD>46</ENG_N1_THREASHOLD>
+			<!-- generator utilisation margin which activates stby alternator -->
+			<!-- right now aircraft current consumption will not trigger stby alternator unless the main gen is tripped -->
+			<GEN_CURRENT>100</GEN_CURRENT>
+		</Parameters>
+
+		<Component ID="#PART_ID#" Node="#NODE_ID#">
+			<Parameters Type="Override">
+				<INPUT_EVENT_ID_SOURCE>ELECTRICAL_Stby_Alternator</INPUT_EVENT_ID_SOURCE>
+				<IE_NAME>Switch</IE_NAME>
+			</Parameters>
+
+			<UseTemplate Name="ASOBO_GT_Update">
+				<FREQUENCY>5</FREQUENCY>
+				<UPDATE_CODE>
+				    #ENG_N1_THREASHOLD# (A:TURB ENG N1:1, percent) &lt; #GEN_CURRENT# (A:ELECTRICAL MAIN BUS AMPS, amps) &gt; and if{
+						#POWER_BUS_ID# (&gt;A:BUS LOOKUP INDEX, Number) (A:BUS CONNECTION ON:#STBY_ALT_BUS_ID#, Bool) ! if{
+							#POWER_BUS_ID# #STBY_ALT_BUS_ID# (&gt;K:2:ELECTRICAL_BUS_TO_BUS_CONNECTION_TOGGLE) }
+					} els{
+						#POWER_BUS_ID# (&gt;A:BUS LOOKUP INDEX, Number) (A:BUS CONNECTION ON:#STBY_ALT_BUS_ID#, Bool) if{
+   							#POWER_BUS_ID# #STBY_ALT_BUS_ID# (&gt;K:2:ELECTRICAL_BUS_TO_BUS_CONNECTION_TOGGLE) }
+					}			
+				</UPDATE_CODE>
+			</UseTemplate>
+
+			<UseInputEvent ID="ELECTRICAL_MOD">
+				<TT_DESCRIPTION>@TT_Package.ELECTRICAL_ALTERNATOR_STANBY_ACTION_SET</TT_DESCRIPTION>
+				<TT_DESCRIPTION_IS_DYNAMIC>False</TT_DESCRIPTION_IS_DYNAMIC>
+				<TT_VALUE>(A:GENERAL ENG MASTER ALTERNATOR:#ALT_ID#, Bool) 1 == if{ @TT_On } els{ @TT_Off }</TT_VALUE>
+				<TT_VALUE_IS_DYNAMIC>True</TT_VALUE_IS_DYNAMIC>
+				<TT_INTERACTION>PRIMARY_DOWN</TT_INTERACTION>
+				<TT_INTERACTION_LOCKABLE>LOCK</TT_INTERACTION_LOCKABLE>
+				<TT_ICON>PUSH</TT_ICON>
+			</UseInputEvent>
+
+			<UseTemplate Name="ASOBO_GT_Switch_Code">
+	  			<ANIM_CODE>(A:GENERAL ENG MASTER ALTERNATOR:#ALT_ID#, Bool) 100 *</ANIM_CODE>
+				<LEFT_SINGLE_CODE>#ALT_ID# (&gt;K:TOGGLE_MASTER_ALTERNATOR)</LEFT_SINGLE_CODE>
+
+   				<WWISE_EVENT_1>alternator_switch_on</WWISE_EVENT_1>
+				<NORMALIZED_TIME_1>0.1</NORMALIZED_TIME_1>
+				<WWISE_EVENT_2>alternator_switch_off</WWISE_EVENT_2>
+				<NORMALIZED_TIME_2>0.5</NORMALIZED_TIME_2>
+
+				<TOOLTIP_TITLE>@TT_Package.ELECTRICAL_ALTERNATOR_STANBY_TITLE</TOOLTIP_TITLE>
+				<TOOLTIP_ENTRY_0>#INPUT_EVENT_ID_SOURCE#_#IE_NAME#</TOOLTIP_ENTRY_0>
+			</UseTemplate>
+		</Component>
+
+		<Component ID="#LIGHT_PART_ID#" Node="#LIGHT_NODE_ID#">
+			<Parameters Type="Default">
+				<DEFAULT_EMISSIVE>5</DEFAULT_EMISSIVE>
+				<DONT_OVERRIDE_BASE_EMISSIVE>True</DONT_OVERRIDE_BASE_EMISSIVE>
+				<FAILURE>(A:ELECTRICAL BATTERY ESTIMATED CAPACITY PCT, percent over 100) 10 * 1 min</FAILURE>
+			</Parameters>
+			<UseTemplate Name="ASOBO_GT_Emissive_Gauge">
+				<EMISSIVE_CODE>(B:ELECTRICAL_Power_Bus_Switch, bool) ! (A:GENERAL ENG MASTER ALTERNATOR:#ALT_ID#, bool) * #DEFAULT_EMISSIVE# *</EMISSIVE_CODE>
+			</UseTemplate>
+		</Component>
+	</Template>	
+
+	<Template Name="ASOBO_ELECTRICAL_Switch_ExternalPower_Template_Mod">
+		<Parameters Type="Default">
+   			<COVER_NODE_ID>#NODE_ID#_Cover</COVER_NODE_ID>
+   			<COVER_ANIM_NAME>#ANIM_NAME#_Cover</COVER_ANIM_NAME>
+   			<GET_STATE_EXTERNAL>
+				12 (&gt;A:BUS LOOKUP INDEX, Number) (A:BUS CONNECTION ON:1, Bool) sp1
+				12 (&gt;A:BUS LOOKUP INDEX, Number) (A:CIRCUIT CONNECTION ON:11, Bool) sp2
+				1 (&gt;A:BUS LOOKUP INDEX, Number) (A:CIRCUIT CONNECTION ON:11, Bool) sp3
+   			</GET_STATE_EXTERNAL>
+   			<SET_EXTPWR_MAIN_BUS_CONNECTION>l1 != if{ 1 12 (&gt;K:2:ELECTRICAL_BUS_TO_BUS_CONNECTION_TOGGLE) }</SET_EXTPWR_MAIN_BUS_CONNECTION>
+   			<SET_EXTPWR_STARTER_CONNECTION>l2 != if{ 11 12 (&gt;K:2:ELECTRICAL_BUS_TO_CIRCUIT_CONNECTION_TOGGLE) }</SET_EXTPWR_STARTER_CONNECTION>
+   			<SET_STARTER_MAIN_BUS_CONNECTION>l3 != if{ 11 1 (&gt;K:2:ELECTRICAL_BUS_TO_CIRCUIT_CONNECTION_TOGGLE) }</SET_STARTER_MAIN_BUS_CONNECTION>
+		</Parameters>
+		<Parameters Type="Override">
+			<SWITCH_NODE_ID>#NODE_ID#</SWITCH_NODE_ID>
+   			<SWITCH_ANIM_NAME>#ANIM_NAME#</SWITCH_ANIM_NAME>
+   			<COVER_VAR_NAME>XMLVAR_ELECTRICAL_ExternalPower_#ID#_Cover_Opened</COVER_VAR_NAME>
+   			<WWISE_EVENT>externalpower_switch</WWISE_EVENT>
+   			<BTN_ID>ExternalPower_#ID#</BTN_ID>
+   		</Parameters>
+		<Component ID="ELECTRICAL_ExternalPower">
+   			<UseTemplate Name="ASOBO_GT_Switch_Covered">
+   				<NUM_STATES>3</NUM_STATES>
+   				<INPUT_EVENT_ID>ELECTRICAL</INPUT_EVENT_ID>
+   				<COVER_IE_NAME>#BTN_ID#_Cover</COVER_IE_NAME>
+   				<COVER_IE_ID_SOURCE>ELECTRICAL</COVER_IE_ID_SOURCE>
+   				<CODE_POS_0>(&gt;B:ELECTRICAL_#BTN_ID#_Bus)</CODE_POS_0>
+   				<CODE_POS_1>(&gt;B:ELECTRICAL_#BTN_ID#_Starter)</CODE_POS_1>
+   				<CODE_POS_2>(&gt;B:ELECTRICAL_#BTN_ID#_Off)</CODE_POS_2>
+   				<STATE0_TEST>(B:ELECTRICAL_#BTN_ID#, Number) 0 ==</STATE0_TEST>
+   				<STATE1_TEST>(B:ELECTRICAL_#BTN_ID#, Number) 1 ==</STATE1_TEST>
+   				<STATE2_TEST>(B:ELECTRICAL_#BTN_ID#, Number) 2 ==</STATE2_TEST>
+   				<STR_STATE_0>Bus</STR_STATE_0>
+   				<STR_STATE_1>Starter</STR_STATE_1>
+   				<STR_STATE_2>Off</STR_STATE_2>
+   				<TT_VALUE_0>@TT_Package.GT_STATE_BUS</TT_VALUE_0>
+   				<TT_VALUE_1>@TT_Package.GT_STATE_STARTER</TT_VALUE_1>
+   				<TT_VALUE_2>@TT_Package.GT_STATE_OFF</TT_VALUE_2>
+   				<SET_STATE_0>
+   					(A:EXTERNAL POWER ON:#ID#, Bool) ! if{ #ID# (&gt;K:TOGGLE_EXTERNAL_POWER) }
+   					1 #SET_EXTPWR_MAIN_BUS_CONNECTION#
+   					0 #SET_EXTPWR_STARTER_CONNECTION#
+   					1 #SET_STARTER_MAIN_BUS_CONNECTION#
+   				</SET_STATE_0>
+   				<SET_STATE_1>
+   					(A:EXTERNAL POWER ON:#ID#, Bool) ! if{ #ID# (&gt;K:TOGGLE_EXTERNAL_POWER) }
+   					0 #SET_EXTPWR_MAIN_BUS_CONNECTION#
+   					1 #SET_EXTPWR_STARTER_CONNECTION#
+   					0 #SET_STARTER_MAIN_BUS_CONNECTION#
+   				</SET_STATE_1>
+   				<SET_STATE_2>
+   					(A:EXTERNAL POWER ON:#ID#, Bool) if{ #ID# (&gt;K:TOGGLE_EXTERNAL_POWER) }
+   					0 #SET_EXTPWR_MAIN_BUS_CONNECTION#
+   					0 #SET_EXTPWR_STARTER_CONNECTION#
+   					1 #SET_STARTER_MAIN_BUS_CONNECTION#
+   				</SET_STATE_2>
+   				<TOOLTIP_TITLE>@TT_Package.ELECTRICAL_EXTERNAL_POWER_TITLE</TOOLTIP_TITLE>
+   				<TOOLTIP_ENTRY_0>ELECTRICAL_#BTN_ID#</TOOLTIP_ENTRY_0>
+				<TT_DESCRIPTION_ID>@TT_Package.ELECTRICAL_EXTERNAL_POWER_ACTION_SET</TT_DESCRIPTION_ID>
+   				<ON_BEFORE_SET_CODE>#GET_STATE_EXTERNAL# </ON_BEFORE_SET_CODE>
+   				<ENUM_VAL_TO_POS_EXTERNAL>(A:EXTERNAL POWER ON:#ID#, Bool) if{ l1 l2 ! and l3 and if{ 0 sp4 g2 } els{ 1 sp4 g2 } } els{ 2 sp4 g2 } :2 l4</ENUM_VAL_TO_POS_EXTERNAL>
+   				<SIMVAR_TO_WATCH_0>EXTERNAL POWER ON:#ID#</SIMVAR_TO_WATCH_0>
+   			</UseTemplate>
+   		</Component>
+	</Template>	
+
+	<Template Name="ASOBO_LIGHTING_Knob_Template_Mod">
+		<Parameters Type="Default">
+			<ANIMTIP_0_ON_CURSOR>TurnLeft</ANIMTIP_0_ON_CURSOR>
+			<ANIMTIP_1_ON_CURSOR>TurnRight</ANIMTIP_1_ON_CURSOR>
+			<WWISE_EVENT>lighting_knob_generic</WWISE_EVENT>
+		</Parameters>
+		<Parameters Type="Overflow">
+			<Condition Check="INIT_VALUE">
+				<True>
+					<INIT_CODE>
+						#INIT_VALUE# s0	#POTENTIOMETER# (&gt;K:2:LIGHT_POTENTIOMETER_SET)
+					</INIT_CODE> 
+				</True>
+				<False>
+		            <INIT_CODE>
+						(A:LIGHT POTENTIOMETER:#POTENTIOMETER#, percent) sp0
+					</INIT_CODE>
+				</False>
+			</Condition>
+		</Parameters>
+		<Component ID="#PART_ID#" Node="#NODE_ID#">
+			<Parameters Type="Override">
+			<Loop>
+				<Setup>
+					<Param>CUR_ID</Param>
+					<From>0</From>
+					<Inc>1</Inc>
+					<While><Arg NotEmpty="CIRCUIT_NO#CUR_ID#"/></While>
+				</Setup>
+				<Do>
+					<Parameters Type="Default" Lifetime="Loop">
+						<INIT_CODE_T/>
+						<CLOCKWISE_CODE_T/>
+						<ANTICLOCKWISE_CODE_T/>
+					</Parameters>
+					<Parameters Type="Override" Lifetime="Loop">
+						<CURRENT_CIRCUIT Process="Param">CIRCUIT_NO#CUR_ID#</CURRENT_CIRCUIT>
+					</Parameters>
+					<Parameters Type="Override" Lifetime="Loop">
+						<CLOCKWISE_CODE_T>
+							#CLOCKWISE_CODE_T#
+							d #CURRENT_CIRCUIT# (&gt;K:2:ELECTRICAL_CIRCUIT_POWER_SETTING_SET)
+						</CLOCKWISE_CODE_T>
+						<ANTICLOCKWISE_CODE_T>
+							#ANTICLOCKWISE_CODE_T#
+							d #CURRENT_CIRCUIT# (&gt;K:2:ELECTRICAL_CIRCUIT_POWER_SETTING_SET)
+						</ANTICLOCKWISE_CODE_T>
+						<INIT_CODE_T>
+							#INIT_CODE_T# l0 #CURRENT_CIRCUIT# (&gt;K:2:ELECTRICAL_CIRCUIT_POWER_SETTING_SET)
+						</INIT_CODE_T>
+					</Parameters>
+					<Parameters Type="Override" Lifetime="Loop">
+						<Switch Param="CIRCUIT_INTERACTION">
+							<Case Value="ALWAYS_ENABLED">
+								<CLOCKWISE_CODE_T>
+									#CLOCKWISE_CODE_T#
+									(A:CIRCUIT SWITCH ON:#CURRENT_CIRCUIT#,Bool) ! if{ #CURRENT_CIRCUIT# (&gt;K:ELECTRICAL_CIRCUIT_TOGGLE) }
+								</CLOCKWISE_CODE_T>
+								<ANTICLOCKWISE_CODE_T>
+									#ANTICLOCKWISE_CODE_T#
+									(A:CIRCUIT SWITCH ON:#CURRENT_CIRCUIT#,Bool) ! if{ #CURRENT_CIRCUIT# (&gt;K:ELECTRICAL_CIRCUIT_TOGGLE) }
+								</ANTICLOCKWISE_CODE_T>
+								<!-- sim overwrites circuit initialisation setting after new flight load. 
+									 it needs more investigation if it is a sim bug or conflict with other components 
+									 right now usefull only for debugging -->
+								<INIT_CODE_T>
+									#INIT_CODE_T# (A:CIRCUIT SWITCH ON:#CURRENT_CIRCUIT#,Bool) ! if{ #CURRENT_CIRCUIT# (&gt;K:ELECTRICAL_CIRCUIT_TOGGLE) }
+								</INIT_CODE_T>
+							</Case>
+							<Case Value="ENABLE_DISABLE">
+								<CLOCKWISE_CODE_T>
+									#CLOCKWISE_CODE_T#
+									(A:CIRCUIT SWITCH ON:#CURRENT_CIRCUIT#,Bool) ! if{ #CURRENT_CIRCUIT# (&gt;K:ELECTRICAL_CIRCUIT_TOGGLE) }
+								</CLOCKWISE_CODE_T>
+								<ANTICLOCKWISE_CODE_T>
+									#ANTICLOCKWISE_CODE_T#
+									d ! (A:CIRCUIT SWITCH ON:#CURRENT_CIRCUIT#,Bool) and if{ #CURRENT_CIRCUIT# (&gt;K:ELECTRICAL_CIRCUIT_TOGGLE) }
+								</ANTICLOCKWISE_CODE_T>
+								<!-- sim overwrites circuit initialisation setting after new flight load. 
+									 it needs more investigation if it is a sim bug or conflict with other components 
+									 right now usefull only for debugging -->
+								<INIT_CODE_T>
+									#INIT_CODE_T# (A:CIRCUIT SWITCH ON:#CURRENT_CIRCUIT#,Bool) s1 l0 ! and l0 l1 ! and or 
+									if{ #CURRENT_CIRCUIT# (&gt;K:ELECTRICAL_CIRCUIT_TOGGLE) }
+								</INIT_CODE_T>
+							</Case>
+						</Switch>
+					</Parameters>
+				</Do>
+				<Then>
+					<INIT_CODE>
+						#INIT_CODE# #INIT_CODE_T#
+					</INIT_CODE>
+					<CLOCKWISE_CODE>
+						(A:LIGHT POTENTIOMETER:#POTENTIOMETER#, percent) #KNOB_TURN_SPEED# + 100 min d #POTENTIOMETER# (&gt;K:2:LIGHT_POTENTIOMETER_SET) 
+						#CLOCKWISE_CODE_T# p
+					</CLOCKWISE_CODE>
+					<ANTICLOCKWISE_CODE>
+						(A:LIGHT POTENTIOMETER:#POTENTIOMETER#, percent) #KNOB_TURN_SPEED# - 0 max d #POTENTIOMETER# (&gt;K:2:LIGHT_POTENTIOMETER_SET)
+						#ANTICLOCKWISE_CODE_T# p
+					</ANTICLOCKWISE_CODE>
+				</Then>
+			</Loop>
+			</Parameters>
+
+			<UseTemplate Name="ASOBO_GT_Update">
+				<UPDATE_ONCE>True</UPDATE_ONCE>
+				<UPDATE_CODE>#INIT_CODE#</UPDATE_CODE>
+			</UseTemplate>
+
+			<UseTemplate Name="ASOBO_GT_Knob_Finite_Code">
+				<COUNT>10</COUNT> 
+				<ANIM_CODE>(A:LIGHT POTENTIOMETER:#POTENTIOMETER#, percent)</ANIM_CODE>
+			</UseTemplate>
+		</Component>
+	</Template>
+
+</ModelBehaviors>
