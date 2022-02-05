@@ -264,22 +264,15 @@
 
 	<!-- ENGINE START ###################################-->
 	<Component ID="ENGINE">
-		<UseTemplate Name="ASOBO_ENGINE_Switch_Starter_Template">
-			<WWISE_EVENT>electrical_switch_battery_master</WWISE_EVENT>
-			<AUDIO_DIRECTION>Both</AUDIO_DIRECTION>
-			<ANIM_EVENT_EFFECT_NAME>CAM_ENGINE_START</ANIM_EVENT_EFFECT_NAME>
-			<NORMALIZED_TIME>0.01</NORMALIZED_TIME>
-			<DIRECTION>Forward</DIRECTION>
-			<TYPE>3Values_StarterIgnition</TYPE>
+		<UseTemplate Name="ASOBO_ENGINE_Switch_Starter_Template_Mod">
+			<PART_ID>ENGINE_Switch_Starter</PART_ID>
 			<NODE_ID>ENGINE_Switch_Starter</NODE_ID>
 			<ANIM_NAME>ENGINE_Switch_Starter</ANIM_NAME>
-			<TT_DESCRIPTION_ID>@TT_Package.ENGINE_STARTER_ACTION_SET_1ENG</TT_DESCRIPTION_ID>
 		</UseTemplate>
-		<UseTemplate Name="ASOBO_ENGINE_Switch_Ignition_Template">
+		<UseTemplate Name="ASOBO_ENGINE_Switch_Ignition_Template_Mod">
+			<PART_ID>ENGINE_Switch_Ignition</PART_ID>
 			<NODE_ID>ENGINE_Switch_Ignition</NODE_ID>
 			<ANIM_NAME>ENGINE_Switch_Ignition</ANIM_NAME>
-			<NUM_STATES>2</NUM_STATES>
-			<TT_DESCRIPTION_ID>@TT_Package.ENGINE_IGNITION_ACTION_SET_1ENG</TT_DESCRIPTION_ID>
 		</UseTemplate>
 		<Component ID="Throttle_1_Visibility" Node="ENGINE_LEVER_THROTTLE_1">
 			<UseTemplate Name="ASOBO_GT_Visibility_Code">
