@@ -116,10 +116,15 @@
 					<INC_CODE/>
 					<DEC_CODE/>
 					<SET_CODE>
-						p0 #STATE_OFF# == 
-							if{ (A:ALTERNATOR CONNECTION ON:#ENGINE_ID#, bool) ! if{ #ENGINE_ID# (&gt;K:ELECTRICAL_BUS_TO_ALTERNATOR_CONNECTION_TOGGLE) } 0 (&gt;K:STARTER1_SET) } 
-							els{ (A:ALTERNATOR CONNECTION ON:#ENGINE_ID#, bool) if{ #ENGINE_ID# (&gt;K:ELECTRICAL_BUS_TO_ALTERNATOR_CONNECTION_TOGGLE) } 1 (&gt;K:STARTER1_SET) }
-						p0 #STATE_MOTOR# == if{ 0 } els{ (B:Engine_Ignition_Switch, bool) }
+						p0 #STATE_OFF# == if{ 
+							0 (&gt;K:STARTER1_SET) 
+							(B:Engine_Ignition_Switch, bool)
+							(A:ALTERNATOR CONNECTION ON:#ENGINE_ID#, bool) ! if{ #ENGINE_ID# (&gt;K:ELECTRICAL_BUS_TO_ALTERNATOR_CONNECTION_TOGGLE) }
+						 } els{ 
+							(A:TURB ENG N1:#ENGINE_ID#, percent) 46 &gt; if{ quit }
+							(A:ALTERNATOR CONNECTION ON:#ENGINE_ID#, bool) if{ #ENGINE_ID# (&gt;K:ELECTRICAL_BUS_TO_ALTERNATOR_CONNECTION_TOGGLE) }
+							p0 #STATE_MOTOR# == if{ 0 } els{ (B:Engine_Ignition_Switch, bool) }
+                            1 (&gt;K:STARTER1_SET) }
 						(&gt;B:Engine_Ignition_Switch_Set)
 					</SET_CODE>
 					<SET_ARG_COUNT>1</SET_ARG_COUNT>
