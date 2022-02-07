@@ -155,3 +155,6 @@ AileronTrimPct=0
 AileronTrimDisabled=False
 ElevatorTrimDisabled=False
 RudderTrimDisabled=False
+
+[LocalVars.0]
+XMLVAR_Aice_Fluid_Level=20.8
