@@ -69,8 +69,7 @@
 						(#SWITCH_POSITION_TYPE#:#SWITCH_POSITION_VAR#, bool)
 					</VALUE_CODE>
 					<INIT_CODE>
-						(#SWITCH_POSITION_TYPE#:#SWITCH_POSITION_VAR#, bool) 
-						(L:#STARTER_SWITCH_LOCAL_VAR#, bool) ! or (&gt;K:TURBINE_IGNITION_SWITCH_SET#ENGINE_ID#)
+						(A:TURB ENG IGNITION SWITCH EX1:#ENGINE_ID#, enum) 0 > (&gt;#SWITCH_POSITION_TYPE#:#SWITCH_POSITION_VAR#, bool)
 					</INIT_CODE>
 					<INC_CODE/>
 					<DEC_CODE/>
@@ -112,15 +111,20 @@
 						(#SWITCH_POSITION_TYPE#:#SWITCH_POSITION_VAR#, enum)
 					</VALUE_CODE>
 					<INIT_CODE>
-						#SWITCH_POSITION_INIT# (&gt;#SWITCH_POSITION_TYPE#:#SWITCH_POSITION_VAR#)
+						#STATE_OFF# (&gt;#SWITCH_POSITION_TYPE#:#SWITCH_POSITION_VAR#)
 					</INIT_CODE>
 					<INC_CODE/>
 					<DEC_CODE/>
 					<SET_CODE>
-						p0 #STATE_OFF# == 
-							if{ (A:ALTERNATOR CONNECTION ON:#ENGINE_ID#, bool) ! if{ #ENGINE_ID# (&gt;K:ELECTRICAL_BUS_TO_ALTERNATOR_CONNECTION_TOGGLE) } 0 (&gt;K:STARTER1_SET) } 
-							els{ (A:ALTERNATOR CONNECTION ON:#ENGINE_ID#, bool) if{ #ENGINE_ID# (&gt;K:ELECTRICAL_BUS_TO_ALTERNATOR_CONNECTION_TOGGLE) } 1 (&gt;K:STARTER1_SET) }
-						p0 #STATE_MOTOR# == if{ 0 } els{ (B:Engine_Ignition_Switch, bool) }
+						p0 #STATE_OFF# == if{ 
+							0 (&gt;K:STARTER1_SET) 
+							(B:Engine_Ignition_Switch, bool)
+							(A:ALTERNATOR CONNECTION ON:#ENGINE_ID#, bool) ! if{ #ENGINE_ID# (&gt;K:ELECTRICAL_BUS_TO_ALTERNATOR_CONNECTION_TOGGLE) }
+						 } els{ 
+							(A:TURB ENG N1:#ENGINE_ID#, percent) 46 &gt; if{ quit }
+							(A:ALTERNATOR CONNECTION ON:#ENGINE_ID#, bool) if{ #ENGINE_ID# (&gt;K:ELECTRICAL_BUS_TO_ALTERNATOR_CONNECTION_TOGGLE) }
+							p0 #STATE_MOTOR# == if{ 0 } els{ (B:Engine_Ignition_Switch, bool) }
+                            1 (&gt;K:STARTER1_SET) }
 						(&gt;B:Engine_Ignition_Switch_Set)
 					</SET_CODE>
 					<SET_ARG_COUNT>1</SET_ARG_COUNT>
@@ -195,6 +199,61 @@
 	</Presets>
 	</InputEvent>
 
+	<Template Name="ASOBO_SYSTEM_Simulation_Template_Mod">
+		<Component ID="SYSTEM_Simulation">
+			<UseInputEvent ID="PROCEDURE">
+				<PROCEDURE_ID>AUTOSTART</PROCEDURE_ID>
+				<ON_AUTOSTART>
+					1 (&gt;B:ELECTRICAL_Power_Bus_Switch_Set)
+					1 (&gt;K:ENGINE_AUTO_START)
+				</ON_AUTOSTART>
+				<ON_AUTOSTOP>
+					1 (&gt;K:ENGINE_AUTO_STOP)
+					0 (&gt;B:ELECTRICAL_Power_Bus_Switch_Set)
+				</ON_AUTOSTOP>
+			</UseInputEvent>
+			<UseTemplate Name="ASOBO_GT_Update">
+				<UPDATE_CODE>
+					1 0 (A:ELECTRICAL MAIN BUS VOLTAGE:1, volts) 5 &gt; ? (&gt;L:XMLVAR_Power_Distr_Bus)
+
+					(A:ELECTRICAL BATTERY LOAD:1, amps) d 0 &lt; if{
+						(A:ELECTRICAL BATTERY ESTIMATED CAPACITY PCT, percent) s12 10 div sp0
+						:0	0 -3 -6 -10 -15 -21 -28 -36 -45 -55 -67 11
+						l0 case sp1 l12 10 / l0 - s2 0 &gt; if{ l1 sp11 l0 ++ sp0 l2 sp10 g0 }
+						l2 0 == if{ l1 } els{ l11 l10 l1 l11 - * + } max
+					} neg s0 d (&gt;L:XMLVAR_Battery_Current) 0 &lt;= if{ 0 sp0 } 
+
+					(A:TURB ENG N1:1, percent) 46 &gt; (A:ELECTRICAL GENALT BUS AMPS:1, amps) s1 0 &gt; and s3
+					(A:TURB ENG N1:1, percent) 46 &gt; (A:ELECTRICAL GENALT BUS AMPS:2, amps) s2 0 &gt; and s4
+					and if{ l0 2 / sp0 }
+					l3 if{ l1 l0 + } els{ 0 } (&gt;L:XMLVAR_Generator_Current)
+					l4 if{ l2 l0 + } els{ 0 } (&gt;L:XMLVAR_Alternator_Current)
+				</UPDATE_CODE>
+	        </UseTemplate>	
+		</Component>
+	</Template>
+
+	<Template Name="ASOBO_SYSTEM_AntiIce_Template_Mod">
+		<Parameters Type="Default">
+			<!-- Anti ice fluid usage in gal/s -->
+			<USE_RATE_MAX>0.0086666666666667</USE_RATE_MAX>
+			<USE_RATE_HIGH>0.0043333333333333</USE_RATE_HIGH>
+			<USE_RATE_NORMAL>0.0016910569105691</USE_RATE_NORMAL>
+		</Parameters>
+		<Component ID="SYSTEM_StructuralAice">
+			<UseTemplate Name="ASOBO_GT_Update">
+				<UPDATE_CODE>
+					(A:STRUCTURAL DEICE SWITCH, Bool) if{
+						0 (L:XMLVAR_Aice_Fluid_Level)
+						(L:XMLVAR_IsDeiceAirFrame) if{ #USE_RATE_HIGH# } els{ #USE_RATE_NORMAL# }
+						(E:SIMULATION TIME, second) s0 (O:LastUpdateTime) - * - max (&gt;L:XMLVAR_Aice_Fluid_Level) l0
+					} els{ (E:SIMULATION TIME, second) }
+					(&gt;O:LastUpdateTime)
+				</UPDATE_CODE>
+			</UseTemplate>
+   		</Component>
+	</Template>	
+
 	<Template Name="ASOBO_ENGINE_MetalChipDetector_Template_Mod">
 		<Parameters Type="Default">
 			<ENGINE_MAX_TORQUE>2397</ENGINE_MAX_TORQUE> <!-- max torque above which engine is overstressed -->
@@ -245,24 +304,6 @@
 				<TT_INTERACTION_LOCKABLE>LOCK</TT_INTERACTION_LOCKABLE>
 				<TT_ICON>PUSH</TT_ICON>
 			</UseInputEvent>
-			<UseTemplate Name="ASOBO_GT_Update">
-				<UPDATE_CODE>
-					1 0 (A:ELECTRICAL MAIN BUS VOLTAGE:1, volts) 5 &gt; ? (&gt;L:XMLVAR_Power_Distr_Bus)
-
-					(A:ELECTRICAL BATTERY LOAD:1, amps) d 0 &lt; if{
-						(A:ELECTRICAL BATTERY ESTIMATED CAPACITY PCT, percent) s12 10 div sp0
-						:0	0 -3 -6 -10 -15 -21 -28 -36 -45 -55 -67 11
-						l0 case sp1 l12 10 / l0 - s2 0 &gt; if{ l1 sp11 l0 ++ sp0 l2 sp10 g0 }
-						l2 0 == if{ l1 } els{ l11 l10 l1 l11 - * + } max
-					} neg s0 d (&gt;L:XMLVAR_Battery_Current) 0 &lt;= if{ 0 sp0 } 
-
-					(A:TURB ENG N1:1, percent) 46 &gt; (A:ELECTRICAL GENALT BUS AMPS:1, amps) s1 0 &gt; and s3
-					(A:TURB ENG N1:1, percent) 46 &gt; (A:ELECTRICAL GENALT BUS AMPS:2, amps) s2 0 &gt; and s4
-					and if{ l0 2 / sp0 }
-					l3 if{ l1 l0 + } els{ 0 } (&gt;L:XMLVAR_Generator_Current)
-					l4 if{ l2 l0 + } els{ 0 } (&gt;L:XMLVAR_Alternator_Current)
-				</UPDATE_CODE>
-	        </UseTemplate>	
 			<UseTemplate Name="ASOBO_GT_Switch_Code">
 				<ANIM_CODE>(B:#INPUT_EVENT_ID_SOURCE#_#IE_NAME#) 100 *</ANIM_CODE>
 				<LEFT_SINGLE_CODE>(&gt;B:#INPUT_EVENT_ID_SOURCE#_#IE_NAME#_Toggle)</LEFT_SINGLE_CODE>
@@ -319,7 +360,6 @@
 	<Template Name="ASOBO_ENGINE_Switch_Starter_Template_Mod">
 		<Parameters Type="Default">
 			<ENGINE_ID>1</ENGINE_ID>
-			<SWITCH_POSITION_INIT>1</SWITCH_POSITION_INIT>
 			<DIRECTION>Forward</DIRECTION>
 			<ANIM_EVENT_EFFECT_NAME>CAM_ENGINE_START</ANIM_EVENT_EFFECT_NAME>
 		</Parameters>
