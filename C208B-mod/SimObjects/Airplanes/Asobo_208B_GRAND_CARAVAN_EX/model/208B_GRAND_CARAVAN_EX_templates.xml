@@ -124,6 +124,7 @@
 							(A:TURB ENG N1:#ENGINE_ID#, percent) 46 &gt; if{ quit }
 							(A:ALTERNATOR CONNECTION ON:#ENGINE_ID#, bool) if{ #ENGINE_ID# (&gt;K:ELECTRICAL_BUS_TO_ALTERNATOR_CONNECTION_TOGGLE) }
 							p0 #STATE_MOTOR# == if{ 0 } els{ (B:Engine_Ignition_Switch, bool) }
+							20 (A:AMBIENT TEMPERATURE, celsius) - 0 max 0.4 / 100 min #STARTER_CIRCUIT# (&gt;K:2:ELECTRICAL_CIRCUIT_POWER_SETTING_SET)
                             1 (&gt;K:STARTER1_SET) }
 						(&gt;B:Engine_Ignition_Switch_Set)
 					</SET_CODE>
@@ -360,8 +361,9 @@
 	<Template Name="ASOBO_ENGINE_Switch_Starter_Template_Mod">
 		<Parameters Type="Default">
 			<ENGINE_ID>1</ENGINE_ID>
-			<DIRECTION>Forward</DIRECTION>
+			<STARTER_CIRCUIT>11</STARTER_CIRCUIT>
 			<ANIM_EVENT_EFFECT_NAME>CAM_ENGINE_START</ANIM_EVENT_EFFECT_NAME>
+			<DIRECTION>Forward</DIRECTION>
 		</Parameters>
 		<Component ID="#PART_ID#" Node="#NODE_ID#">
 			<Parameters Type="Override">

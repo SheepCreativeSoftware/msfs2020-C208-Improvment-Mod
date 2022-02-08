@@ -261,6 +261,8 @@
 			<PART_ID>ENGINE_Switch_Starter</PART_ID>
 			<NODE_ID>ENGINE_Switch_Starter</NODE_ID>
 			<ANIM_NAME>ENGINE_Switch_Starter</ANIM_NAME>
+			<STARTER_CIRCUIT>11</STARTER_CIRCUIT>
+			<ENGINE_ID>1</ENGINE_ID>
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_ENGINE_Switch_Ignition_Template_Mod">
 			<PART_ID>ENGINE_Switch_Ignition</PART_ID>
