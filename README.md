@@ -18,17 +18,23 @@ You can disable/enable engine failures in the MSFS Assistance Options.
 - More control while taxiing
 - Tighter turning circle
 
+***Electric System***
+- Electric system of Cessna has been modified to reflect the real aircraft configuration. The battery is connected to an always-hot battery bus. The Master Battery Switch disconnects the battery bus from the main power distribution bus of the aircraft.
+- Interior cabin lights are connected directly to the battery bus and are powered independently of the master battery switch position. Pilot is able to switch on the cabin lights and there should be enough ambient light in the cockpit to operate without a torch.
+- Cessna is equipped with combined started-generator unit. The unit works in starter mode if the engine is below 46% Ng, and in generator mode for Ng above 46%. The generator is connected to the power distribution bus of the aircraft through a contactor. The gen switch allows disconnecting the generator's contactor if required by emergency procedure or to check the operation of standby alternator during the runup.
+- Startup switch allows initiation of the engine startup procedure. Start switch operates only if engine is below 46% Ng, if engine operates above 46% starter switch does not interact with any aircraft systems. Putting it to start position powers engine igniters, disconnects the generator contractor and powers the engine starter. Starter is disabled automatically when the engine reaches 46% Ng. After reaching stable engine opreation pilot can put the starter switch to off position. It disables ignition system and connects the generator contractor.
+- Starter is one of the most power demanding component on the aricraft. The battery provides the power to start the engine in most real scenarios. The current drawn by the starter depend on the external teamperature. For temperatures below -20C the starter takes 3500W while above 20C the consuption drops to 2500W. The minimum voltage required to run starter is 24V.
+- The Mod improves the battery, generator and stby alternator current indications on PFD/MFD. The negative value of the battery current indicates that battery is discharging. Positive battery current means the battery is charging. The charging current is dependent on the battery current capacity. The inicated charging current decreases to zero with the battery reaching full capacity. However, for simplicity the charging time is not adeqate and is usually much shorter.
+- All knobs used to regulate the light intensity also impact the light current consumption. The dimmer the light the less current is drawn from battery or generators.
+
 ***Systems & Avionics***
 - Works with Stock G1000 and WT G1000 NXi Avionics
-- Added CAS annunciations, Systems Page, improved engine readouts
+- Added CAS annunciations, Systems Page, improved engine readouts, fuel indication
 - Cruize torque bug does not longer disappear for RPMS slightly above 1900 
 - Reversionary Mode Enabled
 - Additional Voice Alerts
 - Autopilot and instrument fixes
 - Yaw Damper Working
-- Changed the electric bus configuration to comply with POH
-- Generator/Alternator characteristic has been corrected
-- Generator trip and reset button works
 - More accurate start up
 
 ***Miscellaneous***
