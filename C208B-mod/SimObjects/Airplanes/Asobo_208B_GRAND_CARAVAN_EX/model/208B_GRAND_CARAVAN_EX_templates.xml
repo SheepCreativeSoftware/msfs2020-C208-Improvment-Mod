@@ -197,32 +197,35 @@
 					<INC_CODE/>
 					<DEC_CODE/>
 					<SET_CODE>
+						p0 #STATE_WINDSHIELD# == if{
+							1 (&gt;L:XMLVAR_Deice_Windshield)
+							1 (&gt;K:WINDSHIELD_DEICE_SET)
+							(E:SIMULATION TIME, second) (&gt;O:WindshieldPumpStarted)
+							quit }
+
 						(E:SIMULATION TIME, second) (&gt;O:LastPumpStateChange)
 
 						p0 #STATE_BACKUP# == if{ 
-							(L:XMLVAR_Deice_Backup_Switch) ! d (&gt;L:XMLVAR_Deice_Backup_Switch) 
-							if{ 
+							(L:XMLVAR_Deice_Backup_Switch) ! d (&gt;L:XMLVAR_Deice_Backup_Switch) if{ 
 								0 (&gt;L:XMLVAR_Deice_MaxFlow)
+								1 (&gt;L:XMLVAR_Deice_Windshield)
+								1 (&gt;K:WINDSHIELD_DEICE_SET)
 								1 (&gt;O:DeicePumpOn)
 								1 (&gt;O:DeicePumpState)
 							} els{
 								0 (&gt;L:XMLVAR_Deice_MaxFlow)
+								0 (&gt;L:XMLVAR_Deice_Windshield)
+								0 (&gt;K:WINDSHIELD_DEICE_SET)
 								0 (&gt;O:DeicePumpOn)
 								0 (&gt;O:DeicePumpState)
 							}
-							quit
-						}
+							quit }
 
 						p0 #STATE_MAXFLOW# == (L:XMLVAR_Deice_Airframe, enum) and (L:XMLVAR_Deice_Backup_Switch) ! and if{
 							1 (&gt;L:XMLVAR_Deice_MaxFlow)
 							1 (&gt;O:DeicePumpOn)
 							0 (&gt;O:DeicePumpState)
-							quit
-						}
-
-						p0 #STATE_WINDSHIELD# == if{
-							quit
-						}
+							quit }
 
 						p0 (L:XMLVAR_Deice_Airframe) != if{ (&gt;L:XMLVAR_Deice_Airframe) }
 
@@ -231,6 +234,8 @@
 							1 (&gt;O:DeicePumpState)
 						} else {
 							0 (&gt;L:XMLVAR_Deice_MaxFlow)
+							0 (&gt;L:XMLVAR_Deice_Windshield)
+							0 (&gt;K:WINDSHIELD_DEICE_SET)
 						}	
 						
 					</SET_CODE>
@@ -256,6 +261,12 @@
 						d (&gt;#SWITCH_POSITION_TYPE#:#SWITCH_POSITION_VAR#)
 					</BINDING_SET_3_PARAM_0>
 					<BINDING_SET_3_PARAM_0_IS_DYNAMIC>TRUE</BINDING_SET_3_PARAM_0_IS_DYNAMIC>
+
+					<BINDING_SET_4>EVENT0</BINDING_SET_4>
+					<BINDING_SET_4_EVENT_ID>WINDSHIELD_DEICE_TOGGLE</BINDING_SET_4_EVENT_ID>
+					<BINDING_SET_4_EVENT_ID_ONLY>TRUE</BINDING_SET_4_EVENT_ID_ONLY>
+					<BINDING_SET_4_PARAM_0>STATE_WINDSHIELD</BINDING_SET_4_PARAM_0>
+					<BINDING_SET_4_PARAM_0_IS_DYNAMIC>TRUE</BINDING_SET_4_PARAM_0_IS_DYNAMIC>
 				</Parameters>
 			</Extend>
 		</Case>
@@ -317,6 +328,7 @@
 			<USE_RATE_HIGH>0.0043333333333333</USE_RATE_HIGH>
 			<USE_RATE_NORMAL>0.0016910569105691</USE_RATE_NORMAL>
 			<USE_RATE_WINDSHIELD>0.0016910569105691</USE_RATE_WINDSHIELD>
+			<WINDSHIELD_ON_TIME>10</WINDSHIELD_ON_TIME>
 			<PUMP_MAX_FLOW_TIME>10</PUMP_MAX_FLOW_TIME>
 			<PUMP_ON_TIME>3</PUMP_ON_TIME>
 			<PUMP_OFF_TIME>3</PUMP_OFF_TIME>
@@ -342,10 +354,16 @@
 					(L:XMLVAR_Aice_Fluid_Level) 0 == if{ quit }
 
 					(E:SIMULATION TIME, second) s10
-					(O:DeicePumpOn) if{ 0 (L:XMLVAR_Aice_Fluid_Level) (O:DeiceFluidFlow) l10 (O:LastUpdateTime) - * - max (&gt;L:XMLVAR_Aice_Fluid_Level) } 
+					(O:DeicePumpOn) if{ 0 (L:XMLVAR_Aice_Fluid_Level) (O:DeiceFluidFlow)
+					#USE_RATE_WINDSHIELD# 0 (L:XMLVAR_Deice_Windshield) ? +
+					l10 (O:LastUpdateTime) - * - max (&gt;L:XMLVAR_Aice_Fluid_Level) } 
 					(&gt;O:LastUpdateTime)
 
 					(L:XMLVAR_Deice_Backup_Switch) if{ g9 }
+					(L:XMLVAR_Deice_Windshield) if {
+						l10 (O:WindshieldPumpStarted) #WINDSHIELD_ON_TIME# + &gt; if{
+							0 (&gt;L:XMLVAR_Deice_Windshield)
+							0 (&gt;K:WINDSHIELD_DEICE_SET) } }
 					(L:XMLVAR_Deice_Airframe, enum) 0 == if{
 						0 (&gt;O:DeicePumpOn)
 					} els{
@@ -378,7 +396,7 @@
 						}
 					}
 					:12 (O:DeicePumpOn) (A:STRUCTURAL DEICE SWITCH, bool) != if{ (&gt;K:TOGGLE_STRUCTURAL_DEICE) }
-					(A:WINDSHIELD DEICE SWITCH, bool) != if{ (&gt;K:WINDSHIELD_DEICE_TOGGLE) }
+
 				</UPDATE_CODE>
 			</UseTemplate>
    		</Component>
