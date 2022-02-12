@@ -20,9 +20,11 @@
 	<Include RelativeFile="208B_GRAND_CARAVAN_EX_templates.xml"/>
 
 	<Component ID="SYSTEM">
-		<UseTemplate Name="ASOBO_SYSTEM_Simulation_Template_Mod">
+		<UseTemplate Name="ASOBO_SYSTEM_Electric_Template_Mod">
+			<PART_ID>SYSTEM_Electric</PART_ID>
 		</UseTemplate>
-		<UseTemplate Name="ASOBO_SYSTEM_AntiIce_Template_Mod">
+		<UseTemplate Name="ASOBO_SYSTEM_Antiice_Template_Mod">
+			<PART_ID>SYSTEM_Structural_AntiIce</PART_ID>
         </UseTemplate>	
 	</Component>
 
@@ -261,6 +263,8 @@
 			<PART_ID>ENGINE_Switch_Starter</PART_ID>
 			<NODE_ID>ENGINE_Switch_Starter</NODE_ID>
 			<ANIM_NAME>ENGINE_Switch_Starter</ANIM_NAME>
+			<STARTER_CIRCUIT>11</STARTER_CIRCUIT>
+			<ENGINE_ID>1</ENGINE_ID>
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_ENGINE_Switch_Ignition_Template_Mod">
 			<PART_ID>ENGINE_Switch_Ignition</PART_ID>
@@ -633,19 +637,25 @@
 
 	<!-- DEICE ##########################################-->	
 	<Component ID="DEICE">
-		<UseTemplate Name="ASOBO_DEICE_Switch_Windshield_Template">
+		<UseTemplate Name="ASOBO_DEICE_Switch_Windshield_Template_Mod">
+			<PART_ID>DEICE_Switch_Windshield</PART_ID>
 			<ANIM_NAME>DEICE_Switch_Windshield</ANIM_NAME>
 			<NODE_ID>DEICE_Switch_Windshield</NODE_ID>
-			<ANIMTIP_0>TT:COCKPIT.TOOLTIPS.C208_DEICE_MAX_FLOW_SET_WINDHIELD</ANIMTIP_0>
-			<ANIMTIP_1>TT:COCKPIT.TOOLTIPS.C208_DEICE_MAX_FLOW_SET_AIRFRAME</ANIMTIP_1>
 		</UseTemplate>
-		<UseTemplate Name="ASOBO_DEICE_Switch_Airframe_Template">
-			<ANIM_EVENT_EFFECT_NAME>CAM_Deice</ANIM_EVENT_EFFECT_NAME>
-			<NORMALIZED_TIME>0.01</NORMALIZED_TIME>
-			<SWITCH_TYPE>ON_NORM_OFF</SWITCH_TYPE>
-			<TT_POS_0>(R:1:@TT_Package.GT_STATE_HIGH)</TT_POS_0>
-			<TT_POS_1>(R:1:@TT_Package.GT_STATE_MODENORM)</TT_POS_1>
-			<TT_POS_2>(R:1:@TT_Package.GT_STATE_OFF)</TT_POS_2>
+		<UseTemplate Name="ASOBO_DEICE_Switch_Airframe_Template_Mod">
+			<ANIM_NAME>DEICE_Switch_Airframe</ANIM_NAME>
+			<NODE_ID>DEICE_Switch_Airframe</NODE_ID>
+			<PART_ID>DEICE_Switch_Airframe</PART_ID>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_DEICE_Switch_Backup_Template_Mod">
+			<PART_ID>SWITCH_ANTIICE_BACKUP</PART_ID>
+			<NODE_ID>SWITCH_ANTIICE_BACKUP</NODE_ID>
+			<ANIM_NAME>SWITCH_ANTIICE_BACKUP</ANIM_NAME>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_DEICE_Switch_Stall_Heat_Template_Mod">
+			<PART_ID>SWITCH_ANTIICE_STALLHEAT</PART_ID>
+			<NODE_ID>SWITCH_ANTIICE_STALLHEAT</NODE_ID>
+			<ANIM_NAME>SWITCH_ANTIICE_AWARE</ANIM_NAME>
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_DEICE_Switch_Pitot_Template">
 		</UseTemplate>
@@ -694,12 +704,6 @@
 			<ANIM_NAME>SWITCH_LIGHTS_SEATBELT</ANIM_NAME>
 			<ANIMTIP_0>TT:COCKPIT.TOOLTIPS.LIGHTS_SEATBELT_OFF</ANIMTIP_0>
 			<ANIMTIP_1>TT:COCKPIT.TOOLTIPS.LIGHTS_SEATBELT_ON</ANIMTIP_1>
-		</UseTemplate>
-		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
-			<NODE_ID>SWITCH_ANTIICE_BACKUP</NODE_ID>
-		</UseTemplate>
-		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
-			<NODE_ID>SWITCH_ANTIICE_STALLHEAT</NODE_ID>
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
 			<NODE_ID>SWITCH_TESTSWITCH_FIREDETECT</NODE_ID>
