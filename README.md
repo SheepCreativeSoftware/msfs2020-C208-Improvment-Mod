@@ -27,13 +27,14 @@ You can disable/enable engine failures in the MSFS Assistance Options.
 - The Mod improves the battery, generator, and stand-by alternator current indications on PFD/MFD. The negative value of the battery current indicates that the battery is discharging. Positive battery current means the battery is charging. The charging current is dependent on the battery current capacity. The indicated charging current decreases to zero with the battery reaching full capacity. However, for simplicity, the charging time is not adequate and is usually much shorter.
 - All knobs used to regulate the light intensity also impact the light current consumption. The dimmer the light the less current is drawn from the battery or generators.
 
-***Anti Ice System***
+***Anti Ice System***  Alpha state - testing needed
 - Anti Ice system has been extended. The Cessna simulates the existence of the fluid-based anti-ice system which is distributed over an aircraft body to prevent or minimize ice formation.
 - The tank for anti-ice fluid can hold 20.8 gallons of the liquid and its level can be monitored on PFD/MFD below other engine parameters
 - Anti ice system can be put to normal, high, and max anti-ice mode which gradually increases the amount of anti-ice fluid distribution. The first switch allows putting the system into Normal or High mode. Max flow can be enabled by a spring-loaded momentary switch. It works for 120 seconds and then the system returns to either normal or high mode. Similarly, the Windshield switch allows to enables the distribution of anti-ice fluid on the front glass. Unlike in a real airplane, the windshield anti-ice system works for 120 seconds when triggered.
-- In the norm and high anti-ice mode the anti-ice fluid pumps work in cycles of being 10 seconds on followed by 10 seconds off. In high icing conditions, the anti-ice system does not affect the aircraft to simulate the need of switching the icing to high mode. In the Max flow mode, the system operates continuously consuming most anti-ice fluid per minute.
+- In the norm and high anti-ice mode the anti-ice fluid pumps work in cycles of being 10 seconds on followed by 10 seconds off. In high icing conditions, putting the anti-ice system does not affect the aircraft. It is to simulate the need of switching the icing to high mode. The high icing condition area has been presested below on the chart as gray area. In the Max flow mode, the system operates continuously consuming most anti-ice fluid per minute.
 - In case of failure of the primary system the backup switch allows to use of a backup pump. If the backup switch is turned on the two primary anti-ice switches do not affect the aircraft. The system works in the high mode with the additional distribution of fluid on the windshield.
 ![image](https://user-images.githubusercontent.com/27411874/153745793-37f19d22-9daf-4f3b-ab1e-8e6420392ac3.png)
+https://www.researchgate.net/publication/269212570_Overview_and_risk_assessment_of_icing_for_transport_category_aircraft_and_components
 
 ***Systems & Avionics***
 - Works with Stock G1000 and WT G1000 NXi Avionics
