@@ -8,10 +8,10 @@ Disscution about this mod, takes place in the [official forum](https://forums.fl
 
 ***Engine and Flight Model***
 - Corrected Different Values according to POH
-- Reverse thrust is stregthened and has noticible effect on the plane
+- Reverse thrust is strengthened and has a noticeable effect on the plane
 - 4 minutes of engine overstress (operating above max torque limit) cause CAS message about metal chips in the oil and increase probability of the engine failure.
-The average time of engine failure after metal chips appearance is 100 minutes. The event is random so you may not experience engine failure if you are gentle with throttle.
-If the engine is kept overstressed the probability of the engine failure increases. Each second of keeping the engine above the torque limit decreases the expected enigne failure time by 8 second.  
+The average time of engine failure after metal chips appearance is 100 minutes. The event is random so you may not experience engine failure if you are gentle with the throttle.
+If the engine is kept overstressed the probability of the engine failure increases. Each second of keeping the engine above the torque limit decreases the expected engine failure time by 8 seconds.  
 You can disable/enable engine failures in the MSFS Assistance Options.
 
 ***Ground Handling***
@@ -20,12 +20,20 @@ You can disable/enable engine failures in the MSFS Assistance Options.
 
 ***Electric System***
 - Electric system of Cessna has been modified to reflect the real aircraft configuration. The battery is connected to an always-hot battery bus. The Master Battery Switch disconnects the battery bus from the main power distribution bus of the aircraft.
-- Interior cabin lights are connected directly to the battery bus and are powered independently of the master battery switch position. Pilot is able to switch on the cabin lights and there should be enough ambient light in the cockpit to operate without a torch.
-- Cessna is equipped with combined started-generator unit. The unit works in starter mode if the engine is below 46% Ng, and in generator mode for Ng above 46%. The generator is connected to the power distribution bus of the aircraft through a contactor. The gen switch allows disconnecting the generator's contactor if required by emergency procedure or to check the operation of standby alternator during the runup.
-- Startup switch allows initiation of the engine startup procedure. Start switch operates only if engine is below 46% Ng, if engine operates above 46% starter switch does not interact with any aircraft systems. Putting it to start position powers engine igniters, disconnects the generator contractor and powers the engine starter. Starter is disabled automatically when the engine reaches 46% Ng. After reaching stable engine opreation pilot can put the starter switch to off position. It disables ignition system and connects the generator contractor.
-- Starter is one of the most power demanding component on the aricraft. The battery provides the power to start the engine in most real scenarios. The current drawn by the starter depend on the external teamperature. For temperatures below -20C the starter takes 3500W while above 20C the consuption drops to 2500W. The minimum voltage required to run starter is 24V.
-- The Mod improves the battery, generator and stby alternator current indications on PFD/MFD. The negative value of the battery current indicates that battery is discharging. Positive battery current means the battery is charging. The charging current is dependent on the battery current capacity. The inicated charging current decreases to zero with the battery reaching full capacity. However, for simplicity the charging time is not adeqate and is usually much shorter.
-- All knobs used to regulate the light intensity also impact the light current consumption. The dimmer the light the less current is drawn from battery or generators.
+- Interior cabin lights are connected directly to the battery bus and are powered independently of the master battery switch position. A pilot can switch on the cabin lights and there should be enough ambient light in the cockpit to operate without a torch.
+- Cessna is equipped with a combined started-generator unit. The unit works in starter mode if the engine is below 46% Ng, and in generator mode for Ng above 46%. The generator is connected to the power distribution bus of the aircraft through a contactor. The gen switch allows disconnecting the generator's contactor if required by emergency procedure or to check the operation of the standby alternator during the runup.
+- Startup switch allows initiation of the engine startup procedure. Start switch operates only if the engine is below 46% Ng, if the engine operates above 46% starter switch does not interact with any aircraft systems. Putting it to start position powers engine igniters, disconnects the generator contractor, and powers the engine starter. The starter is disabled automatically when the engine reaches 46% Ng. After reaching stable engine operation pilot can put the starter switch to the off position. It disables the ignition system and connects the generator contractor.
+- Starter is one of the most power-demanding components on the aircraft. The battery provides the power to start the engine in most realistic scenarios. The current drawn by the starter depends on the external temperature. For temperatures below -20C the starter takes 3500W while above 20C the consumption drops to 2500W. The minimum voltage required to run the starter is 24V.
+- The Mod improves the battery, generator, and stand-by alternator current indications on PFD/MFD. The negative value of the battery current indicates that the battery is discharging. Positive battery current means the battery is charging. The charging current is dependent on the battery current capacity. The indicated charging current decreases to zero with the battery reaching full capacity. However, for simplicity, the charging time is not adequate and is usually much shorter.
+- All knobs used to regulate the light intensity also impact the light current consumption. The dimmer the light the less current is drawn from the battery or generators.
+
+***Anti Ice System***
+- Anti Ice system has been extended. The Cessna simulates the existence of the fluid-based anti-ice system which is distributed over an aircraft body to prevent or minimize ice formation.
+- The tank for anti-ice fluid can hold 20.8 gallons of the liquid and its level can be monitored on PFD/MFD below other engine parameters
+- Anti ice system can be put to normal, high, and max anti-ice mode which gradually increases the amount of anti-ice fluid distribution. The first switch allows putting the system into Normal or High mode. Max flow can be enabled by a spring-loaded momentary switch. It works for 120 seconds and then the system returns to either normal or high mode. Similarly, the Windshield switch allows to enables the distribution of anti-ice fluid on the front glass. Unlike in a real airplane, the windshield anti-ice system works for 120 seconds when triggered.
+- In the norm and high anti-ice mode the anti-ice fluid pumps work in cycles of being 10 seconds on followed by 10 seconds off. In high icing conditions, the anti-ice system does not affect the aircraft to simulate the need of switching the icing to high mode. In the Max flow mode, the system operates continuously consuming most anti-ice fluid per minute.
+- In case of failure of the primary system the backup switch allows to use of a backup pump. If the backup switch is turned on the two primary anti-ice switches do not affect the aircraft. The system works in the high mode with the additional distribution of fluid on the windshield.
+![image](https://user-images.githubusercontent.com/27411874/153745793-37f19d22-9daf-4f3b-ab1e-8e6420392ac3.png)
 
 ***Systems & Avionics***
 - Works with Stock G1000 and WT G1000 NXi Avionics
