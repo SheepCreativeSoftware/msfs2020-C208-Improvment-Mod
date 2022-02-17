@@ -362,7 +362,10 @@
 		<Type>Advisory</Type>
 		<Text>A-ICE ON</Text>
 		<Condition>
-			<Simvar name="STRUCTURAL DEICE SWITCH:1" unit="bool"/>
+			<Or>
+				<Simvar name="L:XMLVAR_Deice_Backup_Switch" unit="bool"/>
+				<Simvar name="L:XMLVAR_Deice_Airframe" unit="bool"/>
+			</Or>
 	  </Condition>
 	</Annunciation>
 	<!--Indicates anti-ice is ON; should indicate NORM and HIGH-->

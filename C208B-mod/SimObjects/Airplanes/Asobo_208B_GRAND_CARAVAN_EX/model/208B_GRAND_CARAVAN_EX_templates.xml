@@ -192,6 +192,7 @@
 						@Disable_deice_pump1
 						@Disable_deice_pump2
 						@Disable_deice_pump3
+						(E:ABSOLUTE TIME, second) seed
 					</INIT_CODE>
 					<INC_CODE/>
 					<DEC_CODE/>
@@ -369,10 +370,10 @@
 			<USE_RATE_HIGH>0.0043333333333333</USE_RATE_HIGH>
 			<USE_RATE_NORMAL>0.0016910569105691</USE_RATE_NORMAL>
 			<USE_RATE_WINDSHIELD>0.0016910569105691</USE_RATE_WINDSHIELD>
-			<WINDSHIELD_ON_TIME>10</WINDSHIELD_ON_TIME>
-			<PUMP_MAXFLOW_TIME>10</PUMP_MAXFLOW_TIME>
-			<PUMP_ON_TIME>3</PUMP_ON_TIME>
-			<PUMP_OFF_TIME>3</PUMP_OFF_TIME>
+			<WINDSHIELD_ON_TIME>120</WINDSHIELD_ON_TIME>
+			<PUMP_MAXFLOW_TIME>120</PUMP_MAXFLOW_TIME>
+			<PUMP_ON_TIME>10</PUMP_ON_TIME>
+			<PUMP_OFF_TIME>5</PUMP_OFF_TIME>
 			<CIRCUIT_DEICE_PUMP1>53</CIRCUIT_DEICE_PUMP1>
 			<CIRCUIT_DEICE_PUMP2>54</CIRCUIT_DEICE_PUMP2>
 			<CIRCUIT_DEICE_PUMP3>55</CIRCUIT_DEICE_PUMP3>
@@ -403,7 +404,7 @@
 					(A:CIRCUIT ON:#CIRCUIT_DEICE_STALL_HEATER#, Bool) if{
 						(O:StallSensorIce) 3 - 0 max (&gt;O:StallSensorIce)
 					} els{ (L:XMLVAR_HighIcingCondition) if{
-							(O:StallSensorIce) 5 + 400 min (&gt;O:StallSensorIce)
+							(O:StallSensorIce) 5 + 360 min (&gt;O:StallSensorIce)
 							(L:XMLVAR_Deice_Stall_Sensor_Ionp) ! if{
 								(O:StallSensorIce) 300 &gt; if{					
 									1 (&gt;L:XMLVAR_Deice_Stall_Sensor_Ionp)
@@ -411,10 +412,10 @@
 								}
 							}
 							quit
-						} els{ (O:StallSensorIce) (A:AMBIENT TEMPERATURE, celsius) 10 / ceil 0 max - (&gt;O:StallSensorIce) }
+						} els{ (O:StallSensorIce) (A:AMBIENT TEMPERATURE, celsius) 10 / ceil - 0 max (&gt;O:StallSensorIce) }
 					}
 					(L:XMLVAR_Deice_Stall_Sensor_Ionp) if{
-						(O:StallSensorIce) 200 &lt; if{
+						(O:StallSensorIce) 240 &lt; if{
 							0 (&gt;L:XMLVAR_Deice_Stall_Sensor_Ionp)
 							(A:STALL WARNING, Bool) (&gt;L:XMLVAR_Stall_Warning)
 						}
