@@ -59,7 +59,6 @@
   </GroundSounds>
   
   <MiscellaneousSounds>
-    <Sound WwiseEvent="STALL_WARNING" WwiseData="true" />
 	<Sound WwiseEvent="OVERSPEED_WARNING_SOUND" WwiseData="true" />
     <Sound WwiseEvent="AP_PREFLIGHT_CHECK_OVER" ViewPoint="Inside" WwiseData="true" />		
   </MiscellaneousSounds>
@@ -107,9 +106,12 @@
 
 <!-- SimvarSounds ========================================================================================== --> 
 
-   <SimVarSounds>
-   
-       <!-- ENGINE SOUNDS ========================================================================================== -->    
+    <SimVarSounds>
+    <Sound WwiseEvent="STALL_WARNING" WwiseData="true" Continuous="true" LocalVar="XMLVAR_Stall_Warning" Units="BOOLEAN">
+		<Range LowerBound="1"/>
+	</Sound>
+
+<!-- ENGINE SOUNDS ========================================================================================== -->    
   
     <Sound WwiseData="true" WwiseEvent="eng1_ignition" NodeName="HYDROLIC_01_CENTER" SimVar="TURB ENG IS IGNITING" Units="BOOL" Index="1">
       <Range LowerBound="1.0" />
