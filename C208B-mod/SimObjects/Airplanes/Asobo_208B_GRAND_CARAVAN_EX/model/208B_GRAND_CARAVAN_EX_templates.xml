@@ -214,7 +214,7 @@
 								@Disable_deice_pump3
 							}
 							(E:SIMULATION TIME, second) d (&gt;O:LastCycleStateChange) (&gt;O:LastUpdateTime)
-							quit 
+							quit
 						}
 
 						(O:DeicePumpState) #STATE_BACKUP# == if{ quit }
@@ -232,24 +232,24 @@
 
 						(O:DeicePumpState) #STATE_OFF# != if{ 
 							(A:ELECTRICAL MAIN BUS VOLTAGE, bool) if{
-						p0 #STATE_WINDSHIELD# == if{
-							1 (&gt;O:DeiceWindshieldState)
+								p0 #STATE_WINDSHIELD# == if{
+									1 (&gt;O:DeiceWindshieldState)
 									@Enable_deice_pump3
-							(E:SIMULATION TIME, second) (&gt;O:WindshieldPumpStarted)
-							quit
-						}
+									(E:SIMULATION TIME, second) (&gt;O:WindshieldPumpStarted)
+									quit
+								}
 								p0 #STATE_MAXFLOW# == if{
 									#STATE_MAXFLOW# (&gt;O:DeicePumpState)
 									#USE_RATE_MAX# (&gt;O:DeiceFluidFlow)
-							@Enable_deice_pump1
+									@Enable_deice_pump1
 									100 #CIRCUIT_DEICE_PUMP1# (&gt;K:2:ELECTRICAL_CIRCUIT_POWER_SETTING_SET)
-							(E:SIMULATION TIME, second) (&gt;O:MaxFlowPumpStarted)
+									(E:SIMULATION TIME, second) (&gt;O:MaxFlowPumpStarted)
 									quit
 								}
 							}
 							p0 #STATE_HIGH# == if{ 
 								#STATE_HIGH# (&gt;O:DeicePumpState)
-							#USE_RATE_HIGH# (&gt;O:DeiceFluidFlow)
+								#USE_RATE_HIGH# (&gt;O:DeiceFluidFlow)
 								100 #CIRCUIT_DEICE_PUMP1# (&gt;K:2:ELECTRICAL_CIRCUIT_POWER_SETTING_SET)
 								quit
 							}
@@ -261,7 +261,7 @@
 							0 #CIRCUIT_DEICE_PUMP1# (&gt;K:2:ELECTRICAL_CIRCUIT_POWER_SETTING_SET)
 							(O:DeicePumpState) #STATE_OFF# == if{
 								1 (&gt;O:DeiceCycleState)
-							@Enable_deice_pump1
+								@Enable_deice_pump1
 								(E:SIMULATION TIME, second) d (&gt;O:LastCycleStateChange) (&gt;O:LastUpdateTime)
 							}
     					}
@@ -351,8 +351,8 @@
 
 	<macro Name="is_pump1_circuit_on">(A:CIRCUIT ON:#CIRCUIT_DEICE_PUMP1#, bool)</macro>
 	<macro Name="is_pump1_switch_on">(A:CIRCUIT SWITCH ON:#CIRCUIT_DEICE_PUMP1#, bool)</macro>
-	<macro Name="Enable_deice_pump1">(A:CIRCUIT SWITCH ON:#CIRCUIT_DEICE_PUMP1#, bool) ! if{ #CIRCUIT_DEICE_PUMP1# (&gt;K:ELECTRICAL_CIRCUIT_TOGGLE) } </macro>
-	<macro Name="Disable_deice_pump1">(A:CIRCUIT SWITCH ON:#CIRCUIT_DEICE_PUMP1#,bool) if{ #CIRCUIT_DEICE_PUMP1# (&gt;K:ELECTRICAL_CIRCUIT_TOGGLE) } </macro>
+	<macro Name="Enable_deice_pump1">(A:CIRCUIT SWITCH ON:#CIRCUIT_DEICE_PUMP1#, bool) ! if{ #CIRCUIT_DEICE_PUMP1# (&gt;K:ELECTRICAL_CIRCUIT_TOGGLE) }</macro>
+	<macro Name="Disable_deice_pump1">(A:CIRCUIT SWITCH ON:#CIRCUIT_DEICE_PUMP1#,bool) if{ #CIRCUIT_DEICE_PUMP1# (&gt;K:ELECTRICAL_CIRCUIT_TOGGLE) }</macro>
 	<macro Name="is_pump2_circuit_on">(A:CIRCUIT ON:#CIRCUIT_DEICE_PUMP2#, bool)</macro>
 	<macro Name="is_pump2_switch_on">(A:CIRCUIT SWITCH ON:#CIRCUIT_DEICE_PUMP2#, bool)</macro>
 	<macro Name="Enable_deice_pump2">(A:CIRCUIT SWITCH ON:#CIRCUIT_DEICE_PUMP2#, bool) ! if{ #CIRCUIT_DEICE_PUMP2# (&gt;K:ELECTRICAL_CIRCUIT_TOGGLE) }</macro>
@@ -376,6 +376,7 @@
 			<CIRCUIT_DEICE_PUMP1>53</CIRCUIT_DEICE_PUMP1>
 			<CIRCUIT_DEICE_PUMP2>54</CIRCUIT_DEICE_PUMP2>
 			<CIRCUIT_DEICE_PUMP3>55</CIRCUIT_DEICE_PUMP3>
+			<CIRCUIT_DEICE_STALL_HEATER>56</CIRCUIT_DEICE_STALL_HEATER>
 		</Parameters>
 		<Component ID="#PART_ID#">
 			<Parameters Type="Override">
@@ -390,6 +391,36 @@
 			</Parameters>
 			<UseInputEvent ID="CESSNA_MOD">
 			</UseInputEvent>
+			<UseTemplate Name="ASOBO_GT_Update">
+				<FREQUENCY>3</FREQUENCY>
+				<UPDATE_CODE>
+					(L:XMLVAR_Deice_Stall_Sensor_Ionp) if{ (O:False_Stall_Warning) } els{ (A:STALL WARNING, Bool) }
+					(A:CIRCUIT GENERAL PANEL ON:1, Bool) and (&gt;L:XMLVAR_Stall_Warning)
+				</UPDATE_CODE>
+			</UseTemplate>
+			<UseTemplate Name="ASOBO_GT_Update">
+				<UPDATE_CODE>
+					(A:CIRCUIT ON:#CIRCUIT_DEICE_STALL_HEATER#, Bool) if{
+						(O:StallSensorIce) 3 - 0 max (&gt;O:StallSensorIce)
+					} els{ (L:XMLVAR_HighIcingCondition) if{
+							(O:StallSensorIce) 5 + 400 min (&gt;O:StallSensorIce)
+							(L:XMLVAR_Deice_Stall_Sensor_Ionp) ! if{
+								(O:StallSensorIce) 300 &gt; if{					
+									1 (&gt;L:XMLVAR_Deice_Stall_Sensor_Ionp)
+									1 0 rand 0.5 &gt; ? (&gt;O:False_Stall_Warning)
+								}
+							}
+							quit
+						} els{ (O:StallSensorIce) (A:AMBIENT TEMPERATURE, celsius) 10 / ceil 0 max - (&gt;O:StallSensorIce) }
+					}
+					(L:XMLVAR_Deice_Stall_Sensor_Ionp) if{
+						(O:StallSensorIce) 200 &lt; if{
+							0 (&gt;L:XMLVAR_Deice_Stall_Sensor_Ionp)
+							(A:STALL WARNING, Bool) (&gt;L:XMLVAR_Stall_Warning)
+						}
+					}
+				</UPDATE_CODE>
+			</UseTemplate>
 			<UseTemplate Name="ASOBO_GT_Update">
 				<UPDATE_CODE>
 					(A:AMBIENT TEMPERATURE, celsius) s0 0 &gt; l0 -15 &lt; or if{ 0 g0 }
@@ -407,7 +438,7 @@
 					(E:SIMULATION TIME, second) s10
 					0 l0 (O:DeiceFluidFlow) 0 @is_pump1_circuit_on @is_pump2_circuit_on or ?
 					#USE_RATE_WINDSHIELD# 0 @is_pump3_circuit_on ? +
-					l10 (O:LastUpdateTime) - * - max (&gt;L:XMLVAR_Aice_Fluid_Level) 
+					l10 (O:LastUpdateTime) - * - max (&gt;L:XMLVAR_Aice_Fluid_Level)
 					(&gt;O:LastUpdateTime)
 
 					(O:DeiceWindshieldState) if{
@@ -892,11 +923,20 @@
 	</Template>	
 
 	<Template Name="ASOBO_DEICE_Switch_Stall_Heat_Template_Mod">
+		<Parameters Type="Default">
+			<CIRCUIT_DEICE_STALL_HEATER>56</CIRCUIT_DEICE_STALL_HEATER>
+		</Parameters>
 		<Component ID="#PART_ID#" Node="#NODE_ID#">
 			<Parameters Type="Override">
 				<INPUT_EVENT_ID_SOURCE>DEICE_Stall_Heat</INPUT_EVENT_ID_SOURCE>
 				<IE_NAME>Switch</IE_NAME>
 			</Parameters>
+			<UseTemplate Name="ASOBO_GT_Update">
+				<UPDATE_ONCE>True</UPDATE_ONCE>
+				<UPDATE_CODE>
+					(A:CIRCUIT SWITCH ON:#CIRCUIT_DEICE_STALL_HEATER#, bool) if{ #CIRCUIT_DEICE_STALL_HEATER# (&gt;K:ELECTRICAL_CIRCUIT_TOGGLE) }
+				</UPDATE_CODE>
+			</UseTemplate>
 			<UseInputEvent ID="CESSNA_MOD">
 				<TT_DESCRIPTION>@TT_Package.DEICE_SWITCH_ANTIICE_STALLHEAT_ACTION_SET</TT_DESCRIPTION>
 				<TT_DESCRIPTION_IS_DYNAMIC>False</TT_DESCRIPTION_IS_DYNAMIC>
@@ -907,8 +947,11 @@
 				<TT_ICON>MOVE_Y</TT_ICON>
 			</UseInputEvent>
 			<UseTemplate Name="ASOBO_GT_Switch_Code">
-				<ANIM_CODE>(L:XMLVAR_Deice_Stall_Heat_Switch) 100 *</ANIM_CODE>
-				<LEFT_SINGLE_CODE>(L:XMLVAR_Deice_Stall_Heat_Switch) ! (&gt;L:XMLVAR_Deice_Stall_Heat_Switch)</LEFT_SINGLE_CODE>
+				<ANIM_CODE>(A:CIRCUIT SWITCH ON:#CIRCUIT_DEICE_STALL_HEATER#, bool) 100 *</ANIM_CODE>
+				<LEFT_SINGLE_CODE>
+					(L:XMLVAR_Deice_Stall_Heat_Switch) ! d (&gt;L:XMLVAR_Deice_Stall_Heat_Switch)
+					(A:CIRCUIT SWITCH ON:#CIRCUIT_DEICE_STALL_HEATER#, bool) != if{ #CIRCUIT_DEICE_STALL_HEATER# (&gt;K:ELECTRICAL_CIRCUIT_TOGGLE) }
+				</LEFT_SINGLE_CODE>
    	            <TOOLTIP_TITLE>@TT_Package.DEICE_SWITCH_ANTIICE_STALLHEAT_TITLE</TOOLTIP_TITLE>
 				<TOOLTIP_ENTRY_0>#INPUT_EVENT_ID_SOURCE#_#IE_NAME#</TOOLTIP_ENTRY_0>
 			</UseTemplate>
