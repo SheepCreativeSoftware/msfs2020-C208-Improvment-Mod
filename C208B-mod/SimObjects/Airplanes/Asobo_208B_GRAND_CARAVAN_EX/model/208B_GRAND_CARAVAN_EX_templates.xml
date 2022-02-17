@@ -187,57 +187,85 @@
 			<Extend Target="ASOBO_GIE_Base">
 				<Parameters Type="Default">
 					<VALUE_UNITS>enum</VALUE_UNITS>
-					<VALUE_CODE>
-						(L:XMLVAR_Deice_Backup_Switch) if{ STATE_BACKUP quit }
-						(L:XMLVAR_Deice_MaxFlow, bool) if{ STATE_MAXFLOW quit }
-						(L:XMLVAR_Deice_Airframe, enum)
-					</VALUE_CODE>
+					<VALUE_CODE>(O:DeicePumpState)</VALUE_CODE>
 					<INIT_CODE>
+						@Disable_deice_pump1
+						@Disable_deice_pump2
+						@Disable_deice_pump3
 					</INIT_CODE>
 					<INC_CODE/>
 					<DEC_CODE/>
 					<SET_CODE>
-						p0 #STATE_WINDSHIELD# == if{
-							1 (&gt;L:XMLVAR_Deice_Windshield)
-							1 (&gt;K:WINDSHIELD_DEICE_SET)
-							(E:SIMULATION TIME, second) (&gt;O:WindshieldPumpStarted)
-							quit }
-
-						(E:SIMULATION TIME, second) (&gt;O:LastPumpStateChange)
-
 						p0 #STATE_BACKUP# == if{ 
 							(L:XMLVAR_Deice_Backup_Switch) ! d (&gt;L:XMLVAR_Deice_Backup_Switch) if{ 
-								0 (&gt;L:XMLVAR_Deice_MaxFlow)
-								1 (&gt;L:XMLVAR_Deice_Windshield)
-								1 (&gt;K:WINDSHIELD_DEICE_SET)
-								1 (&gt;O:DeicePumpOn)
-								1 (&gt;O:DeicePumpState)
+								#STATE_BACKUP# (&gt;O:DeicePumpState)
+								#USE_RATE_HIGH# (&gt;O:DeiceFluidFlow)
+								1 (&gt;O:DeiceCycleState)
+								0 (&gt;O:DeiceWindshieldState)
+								@Disable_deice_pump1
+								@Enable_deice_pump2
+								@Enable_deice_pump3
 							} els{
-								0 (&gt;L:XMLVAR_Deice_MaxFlow)
-								0 (&gt;L:XMLVAR_Deice_Windshield)
-								0 (&gt;K:WINDSHIELD_DEICE_SET)
-								0 (&gt;O:DeicePumpOn)
-								0 (&gt;O:DeicePumpState)
+								(L:XMLVAR_Deice_Airframe, enum) d (&gt;O:DeicePumpState)
+								#STATE_HIGH# == if{ #USE_RATE_HIGH# (&gt;O:DeiceFluidFlow) } 
+												els{ #USE_RATE_NORMAL# (&gt;O:DeiceFluidFlow) }
+								0 (&gt;O:DeiceCycleState)
+								@Disable_deice_pump2
+								@Disable_deice_pump3
 							}
-							quit }
+							(E:SIMULATION TIME, second) d (&gt;O:LastCycleStateChange) (&gt;O:LastUpdateTime)
+							quit 
+						}
 
-						p0 #STATE_MAXFLOW# == (L:XMLVAR_Deice_Airframe, enum) and (L:XMLVAR_Deice_Backup_Switch) ! and if{
-							1 (&gt;L:XMLVAR_Deice_MaxFlow)
-							1 (&gt;O:DeicePumpOn)
-							0 (&gt;O:DeicePumpState)
-							quit }
+						(O:DeicePumpState) #STATE_BACKUP# == if{ quit }
 
-						p0 (L:XMLVAR_Deice_Airframe) != if{ (&gt;L:XMLVAR_Deice_Airframe) }
+						p0 #STATE_MAXFLOW# &lt; p0 (L:XMLVAR_Deice_Airframe) != and if{ p0 (&gt;L:XMLVAR_Deice_Airframe) quit }
 
-						p0 #STATE_OFF# != if{
-							1 (&gt;O:DeicePumpOn)
-							1 (&gt;O:DeicePumpState)
-						} else {
-							0 (&gt;L:XMLVAR_Deice_MaxFlow)
-							0 (&gt;L:XMLVAR_Deice_Windshield)
+						p0 #STATE_OFF# == if{
+							#STATE_OFF# (&gt;O:DeicePumpState)
+							0 (&gt;O:DeiceWindshieldState)
+							@Disable_deice_pump1
+							@Disable_deice_pump3
 							0 (&gt;K:WINDSHIELD_DEICE_SET)
-						}	
-						
+							(A:STRUCTURAL DEICE SWITCH, bool) if{ (&gt;K:TOGGLE_STRUCTURAL_DEICE) }
+						}
+
+						(O:DeicePumpState) #STATE_OFF# != if{ 
+							(A:ELECTRICAL MAIN BUS VOLTAGE, bool) if{
+						p0 #STATE_WINDSHIELD# == if{
+							1 (&gt;O:DeiceWindshieldState)
+									@Enable_deice_pump3
+							(E:SIMULATION TIME, second) (&gt;O:WindshieldPumpStarted)
+							quit
+						}
+								p0 #STATE_MAXFLOW# == if{
+									#STATE_MAXFLOW# (&gt;O:DeicePumpState)
+									#USE_RATE_MAX# (&gt;O:DeiceFluidFlow)
+							@Enable_deice_pump1
+									100 #CIRCUIT_DEICE_PUMP1# (&gt;K:2:ELECTRICAL_CIRCUIT_POWER_SETTING_SET)
+							(E:SIMULATION TIME, second) (&gt;O:MaxFlowPumpStarted)
+									quit
+								}
+							}
+							p0 #STATE_HIGH# == if{ 
+								#STATE_HIGH# (&gt;O:DeicePumpState)
+							#USE_RATE_HIGH# (&gt;O:DeiceFluidFlow)
+								100 #CIRCUIT_DEICE_PUMP1# (&gt;K:2:ELECTRICAL_CIRCUIT_POWER_SETTING_SET)
+								quit
+							}
+						}
+
+						p0 #STATE_NORM# == if{
+							#STATE_NORM# (&gt;O:DeicePumpState)
+							#USE_RATE_NORMAL# (&gt;O:DeiceFluidFlow) 
+							0 #CIRCUIT_DEICE_PUMP1# (&gt;K:2:ELECTRICAL_CIRCUIT_POWER_SETTING_SET)
+							(O:DeicePumpState) #STATE_OFF# == if{
+								1 (&gt;O:DeiceCycleState)
+							@Enable_deice_pump1
+								(E:SIMULATION TIME, second) d (&gt;O:LastCycleStateChange) (&gt;O:LastUpdateTime)
+							}
+    					}
+
 					</SET_CODE>
 					<SET_ARG_COUNT>1</SET_ARG_COUNT>
 
@@ -321,6 +349,19 @@
 		</Component>
 	</Template>
 
+	<macro Name="is_pump1_circuit_on">(A:CIRCUIT ON:#CIRCUIT_DEICE_PUMP1#, bool)</macro>
+	<macro Name="is_pump1_switch_on">(A:CIRCUIT SWITCH ON:#CIRCUIT_DEICE_PUMP1#, bool)</macro>
+	<macro Name="Enable_deice_pump1">(A:CIRCUIT SWITCH ON:#CIRCUIT_DEICE_PUMP1#, bool) ! if{ #CIRCUIT_DEICE_PUMP1# (&gt;K:ELECTRICAL_CIRCUIT_TOGGLE) } </macro>
+	<macro Name="Disable_deice_pump1">(A:CIRCUIT SWITCH ON:#CIRCUIT_DEICE_PUMP1#,bool) if{ #CIRCUIT_DEICE_PUMP1# (&gt;K:ELECTRICAL_CIRCUIT_TOGGLE) } </macro>
+	<macro Name="is_pump2_circuit_on">(A:CIRCUIT ON:#CIRCUIT_DEICE_PUMP2#, bool)</macro>
+	<macro Name="is_pump2_switch_on">(A:CIRCUIT SWITCH ON:#CIRCUIT_DEICE_PUMP2#, bool)</macro>
+	<macro Name="Enable_deice_pump2">(A:CIRCUIT SWITCH ON:#CIRCUIT_DEICE_PUMP2#, bool) ! if{ #CIRCUIT_DEICE_PUMP2# (&gt;K:ELECTRICAL_CIRCUIT_TOGGLE) }</macro>
+	<macro Name="Disable_deice_pump2">(A:CIRCUIT SWITCH ON:#CIRCUIT_DEICE_PUMP2#, bool) if{ #CIRCUIT_DEICE_PUMP2# (&gt;K:ELECTRICAL_CIRCUIT_TOGGLE) }</macro>
+	<macro Name="is_pump3_circuit_on">(A:CIRCUIT ON:#CIRCUIT_DEICE_PUMP3#, bool)</macro>
+	<macro Name="is_pump3_switch_on">(A:CIRCUIT SWITCH ON:#CIRCUIT_DEICE_PUMP3#, bool)</macro>
+	<macro Name="Enable_deice_pump3">(A:CIRCUIT SWITCH ON:#CIRCUIT_DEICE_PUMP3#, bool) ! if{ #CIRCUIT_DEICE_PUMP3# (&gt;K:ELECTRICAL_CIRCUIT_TOGGLE) }</macro>
+	<macro Name="Disable_deice_pump3">(A:CIRCUIT SWITCH ON:#CIRCUIT_DEICE_PUMP3#,bool) if{ #CIRCUIT_DEICE_PUMP3# (&gt;K:ELECTRICAL_CIRCUIT_TOGGLE) } </macro>
+
 	<Template Name="ASOBO_SYSTEM_AntiIce_Template_Mod">
 		<Parameters Type="Default">
 			<!-- Anti ice fluid usage in gal/s -->
@@ -329,17 +370,22 @@
 			<USE_RATE_NORMAL>0.0016910569105691</USE_RATE_NORMAL>
 			<USE_RATE_WINDSHIELD>0.0016910569105691</USE_RATE_WINDSHIELD>
 			<WINDSHIELD_ON_TIME>10</WINDSHIELD_ON_TIME>
-			<PUMP_MAX_FLOW_TIME>10</PUMP_MAX_FLOW_TIME>
+			<PUMP_MAXFLOW_TIME>10</PUMP_MAXFLOW_TIME>
 			<PUMP_ON_TIME>3</PUMP_ON_TIME>
 			<PUMP_OFF_TIME>3</PUMP_OFF_TIME>
+			<CIRCUIT_DEICE_PUMP1>53</CIRCUIT_DEICE_PUMP1>
+			<CIRCUIT_DEICE_PUMP2>54</CIRCUIT_DEICE_PUMP2>
+			<CIRCUIT_DEICE_PUMP3>55</CIRCUIT_DEICE_PUMP3>
 		</Parameters>
 		<Component ID="#PART_ID#">
 			<Parameters Type="Override">
 				<INPUT_EVENT_ID_SOURCE>DEICE_System</INPUT_EVENT_ID_SOURCE>
 				<IE_NAME>Controller</IE_NAME>
-				<STATE_BACKUP>5</STATE_BACKUP>
-				<STATE_WINDSHIELD>4</STATE_WINDSHIELD>
-				<STATE_MAXFLOW>3</STATE_MAXFLOW>
+				<STATE_WINDSHIELD>5</STATE_WINDSHIELD>
+				<STATE_MAXFLOW>4</STATE_MAXFLOW>
+				<STATE_BACKUP>3</STATE_BACKUP>
+				<STATE_HIGH>2</STATE_HIGH>
+				<STATE_NORM>1</STATE_NORM>
 				<STATE_OFF>0</STATE_OFF>
 			</Parameters>
 			<UseInputEvent ID="CESSNA_MOD">
@@ -351,52 +397,57 @@
 					(A:AMBIENT IN CLOUD, bool) ! (A:AMBIENT PRECIP RATE, millimeters of water) 5 &lt; and if{ 0 g0 }
 					1 :0 (&gt;L:XMLVAR_HighIcingCondition)
 
-					(L:XMLVAR_Aice_Fluid_Level) 0 == if{ quit }
+					(O:DeicePumpState) #STATE_OFF# == if{ quit }
+
+					(L:XMLVAR_Aice_Fluid_Level) s0 0 == if{ 
+						(A:STRUCTURAL DEICE SWITCH, bool) if{ (&gt;K:TOGGLE_STRUCTURAL_DEICE) }
+						0 (&gt;K:WINDSHIELD_DEICE_SET) quit
+					 }
 
 					(E:SIMULATION TIME, second) s10
-					(O:DeicePumpOn) if{ 0 (L:XMLVAR_Aice_Fluid_Level) (O:DeiceFluidFlow)
-					#USE_RATE_WINDSHIELD# 0 (L:XMLVAR_Deice_Windshield) ? +
-					l10 (O:LastUpdateTime) - * - max (&gt;L:XMLVAR_Aice_Fluid_Level) } 
+					0 l0 (O:DeiceFluidFlow) 0 @is_pump1_circuit_on @is_pump2_circuit_on or ?
+					#USE_RATE_WINDSHIELD# 0 @is_pump3_circuit_on ? +
+					l10 (O:LastUpdateTime) - * - max (&gt;L:XMLVAR_Aice_Fluid_Level) 
 					(&gt;O:LastUpdateTime)
 
-					(L:XMLVAR_Deice_Backup_Switch) if{ g9 }
-					(L:XMLVAR_Deice_Windshield) if {
+					(O:DeiceWindshieldState) if{
 						l10 (O:WindshieldPumpStarted) #WINDSHIELD_ON_TIME# + &gt; if{
-							0 (&gt;L:XMLVAR_Deice_Windshield)
-							0 (&gt;K:WINDSHIELD_DEICE_SET) } }
-					(L:XMLVAR_Deice_Airframe, enum) 0 == if{
-						0 (&gt;O:DeicePumpOn)
-					} els{
-						(L:XMLVAR_Deice_MaxFlow, bool) if{
-							l10 (O:LastPumpStateChange) #PUMP_MAX_FLOW_TIME# + &lt; if{ g12 }
-							0 (&gt;L:XMLVAR_Deice_MaxFlow) g10
-						} els{
-							:9 (O:DeicePumpState) if{
-								l10 (O:LastPumpStateChange) #PUMP_ON_TIME# + &gt; if{
-									:10	0 (&gt;O:DeicePumpOn)
-									0 (&gt;O:DeicePumpState)
-   									0 (&gt;O:DeiceFluidFlow)
-									l10 (&gt;O:LastPumpStateChange)
-								} els{
-									:11 (L:XMLVAR_Deice_Backup_Switch) (L:XMLVAR_Deice_Airframe, enum) 2 == or if{
-	    								#USE_RATE_HIGH# (&gt;O:DeiceFluidFlow)
-									} els{
-										0 1 (L:XMLVAR_HighIcingCondition) ? (&gt;O:DeicePumpOn)
-										#USE_RATE_NORMAL# (&gt;O:DeiceFluidFlow)
-									}
-								}
-							} els{
-								l10 (O:LastPumpStateChange) #PUMP_OFF_TIME# + &gt; if{
-									1 (&gt;O:DeicePumpOn)
-									1 (&gt;O:DeicePumpState) 
-									l10 (&gt;O:LastPumpStateChange)
-									g11
-								} 
-							}
+							@Disable_deice_pump3
+							0 (&gt;O:DeiceWindshieldState)
 						}
 					}
-					:12 (O:DeicePumpOn) (A:STRUCTURAL DEICE SWITCH, bool) != if{ (&gt;K:TOGGLE_STRUCTURAL_DEICE) }
 
+					(O:DeicePumpState) #STATE_MAXFLOW# == if{
+						l10 (O:MaxFlowPumpStarted) #PUMP_MAXFLOW_TIME# + &gt; if{ 
+							(L:XMLVAR_Deice_Airframe, enum) d (&gt;O:DeicePumpState)
+							#STATE_HIGH# == if{ #USE_RATE_HIGH# (&gt;O:DeiceFluidFlow) } 
+											els{ #USE_RATE_NORMAL# (&gt;O:DeiceFluidFlow) 
+											0 #CIRCUIT_DEICE_PUMP1# (&gt;K:2:ELECTRICAL_CIRCUIT_POWER_SETTING_SET) }
+							g11
+						}
+						quit
+					} 
+
+					(O:DeiceCycleState) if{
+						l10 (O:LastCycleStateChange) #PUMP_ON_TIME# + &gt; if{
+:11							(O:DeicePumpState) #STATE_BACKUP# == if{ @Disable_deice_pump2 }
+																els{ @Disable_deice_pump1 }
+							0 (&gt;O:DeiceCycleState)
+							l10 (&gt;O:LastCycleStateChange)
+						}
+					} els{
+						l10 (O:LastCycleStateChange) #PUMP_OFF_TIME# + &gt; if{
+							(O:DeicePumpState) #STATE_BACKUP# == if{ @Enable_deice_pump2 }
+																els{ @Enable_deice_pump1 }
+							1 (&gt;O:DeiceCycleState)
+							l10 (&gt;O:LastCycleStateChange)
+						}
+					}
+
+					(O:DeicePumpState) #STATE_NORM# == (L:XMLVAR_HighIcingCondition) and ! @is_pump1_circuit_on and
+					(O:DeicePumpState) #STATE_BACKUP# == @is_pump2_circuit_on and or
+					(A:STRUCTURAL DEICE SWITCH, bool) != if{ (&gt;K:TOGGLE_STRUCTURAL_DEICE) }
+					@is_pump3_circuit_on (&gt;K:WINDSHIELD_DEICE_SET)
 				</UPDATE_CODE>
 			</UseTemplate>
    		</Component>
