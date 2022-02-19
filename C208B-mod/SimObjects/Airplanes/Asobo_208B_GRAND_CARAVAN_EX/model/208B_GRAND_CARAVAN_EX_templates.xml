@@ -299,6 +299,108 @@
 				</Parameters>
 			</Extend>
 		</Case>
+		<Case Value="ENGINE_Propeller">
+			<Preset ID="#INPUT_EVENT_ID_SOURCE#_#IE_NAME#">
+				<Parameters Type="Default">
+					<INCREMENT>256</INCREMENT>
+					<UPPER_LIMIT>16384</UPPER_LIMIT>
+					<LOWER_LIMIT Process="Int">@FeatherPropPos 16384 * 0 (A:THROTTLE LOWER LIMIT, position 16k) 0 &lt; ?</LOWER_LIMIT>
+					<AXIS_SCALE Process="Float">1 @FeatherPropPos - 2 /</AXIS_SCALE>
+				</Parameters>
+				<Parameters Type="Override">
+					<AXIS_SHIFT Process="Float">1 #AXIS_SCALE# -</AXIS_SHIFT>
+					<LOWER_POSITION_PCT_OVER_100 Process="Float">#LOWER_LIMIT# #UPPER_LIMIT# /</LOWER_POSITION_PCT_OVER_100>
+				</Parameters>
+				<Tooltip>
+					<Icon>MOVE_AXIS_Y</Icon>
+					<Interaction>PRIMARY_DOWN+Y_AXIS</Interaction>
+					<InteractionLockable>Y_AXIS</InteractionLockable>
+					<TTDescription RPN="#TT_DESCRIPTION_IS_DYNAMIC#">#TT_DESCRIPTION#</TTDescription>
+					<TTValue RPN="True">(O:ENGINE_Propeller_#ENGINE_ID#_Position) 163.84 / '%.1f%%' @sprintf</TTValue>
+				</Tooltip>
+				<Value>
+					<Units>percent</Units>
+					<Code>(O:ENGINE_Propeller_#ENGINE_ID#_Position) #LOWER_LIMIT# - #UPPER_LIMIT# #LOWER_LIMIT# - / 100 *</Code>
+					<Init>(A:GENERAL ENG PROPELLER LEVER POSITION:#ENGINE_ID#, position 16k) #LOWER_LIMIT# max #UPPER_LIMIT# min (&gt;O:ENGINE_Propeller_#ENGINE_ID#_Position)</Init>
+					<WatchVars>
+						<Simvar ID="GENERAL ENG PROPELLER LEVER POSITION:#ENGINE_ID#"/>
+					</WatchVars>
+				</Value>
+				<Inc>
+					<Code>(O:ENGINE_Propeller_#ENGINE_ID#_Position) p0 + 16384 / (&gt;B:#INPUT_EVENT_ID_SOURCE#_#IE_NAME#_Set)</Code>
+					<Parameters>
+						<Param Type="Float" RPN="True">p0 #INCREMENT# *</Param>
+					</Parameters>
+					<Bindings>
+						<Binding EventID="PROP_PITCH_INCR"><!-- event manipulating all propellers -->
+							<Param>1</Param>
+						</Binding>
+						<Binding EventID="PROP_PITCH_INCR_SMALL"><!-- event manipulating all propellers -->
+							<Param>0.5</Param>
+						</Binding>
+						<Binding EventID="PROP_PITCH#ENGINE_ID#_INCR">
+							<Param>1</Param>
+						</Binding>
+						<Binding EventID="PROP_PITCH#ENGINE_ID#_INCR_SMALL">
+							<Param>0.5</Param>
+						</Binding>
+					</Bindings>
+				</Inc>
+				<Dec>
+					<Code>(O:ENGINE_Propeller_#ENGINE_ID#_Position) p0 - 16384 / (&gt;B:#INPUT_EVENT_ID_SOURCE#_#IE_NAME#_Set)</Code>
+					<Parameters>
+						<Param Type="Float" RPN="True">p0 #INCREMENT# *</Param>
+					</Parameters>
+					<Bindings>
+						<Binding EventID="PROP_PITCH_DECR"><!-- event manipulating all propellers -->
+							<Param>1</Param>
+						</Binding>
+						<Binding EventID="PROP_PITCH_DECR_SMALL"><!-- event manipulating all propellers -->
+							<Param>0.5</Param>
+						</Binding>
+						<Binding EventID="PROP_PITCH#ENGINE_ID#_DECR">
+							<Param>1</Param>
+						</Binding>
+						<Binding EventID="PROP_PITCH#ENGINE_ID#_DECR_SMALL">
+							<Param>0.5</Param>
+						</Binding>
+					</Bindings>
+				</Dec>
+				<Set>                                                            
+					<Code>p0 #LOWER_LIMIT# max #UPPER_LIMIT# min (L:XMLVAR_Overspeed_Test) ! if{ s0 (&gt;K:PROP_PITCH#ENGINE_ID#_SET) l0 } (&gt;O:ENGINE_Propeller_#ENGINE_ID#_Position)</Code>
+					<Parameters>
+						<Param Type="Float" RPN="True">p0 16384 *</Param>
+					</Parameters>
+					<Bindings>
+						<Binding EventID="PROP_PITCH_AXIS_SET_EX1"> <!-- event manipulating all propellers -->
+							<Param RPN="True">p0 #AXIS_SCALE# * #AXIS_SHIFT# +</Param>
+						</Binding>
+						<Binding EventID="PROP_PITCH1_AXIS_SET_EX1">
+							<Param RPN="True">p0 #AXIS_SCALE# * #AXIS_SHIFT# +</Param>
+						</Binding>
+						<!-- Aliases -->
+						<Binding Alias="ENGINE_All_Propeller_Full_Forward"><!-- event manipulating all propellers -->
+							<Param>1</Param>
+						</Binding>
+						<Binding Alias="ENGINE_All_Propeller_Full_Backward"><!-- event manipulating all propellers -->
+							<Param>#LOWER_POSITION_PCT_OVER_100#</Param>
+						</Binding>
+						<Binding Alias="ENGINE_All_Propeller_Idle"><!-- event manipulating all propellers -->
+							<Param>0</Param>
+						</Binding>
+						<Binding Alias="ENGINE_Propeller_#ENGINE_ID#_Full_Forward">
+							<Param>1</Param>
+						</Binding>
+						<Binding Alias="ENGINE_Propeller_#ENGINE_ID#_Full_Backward">
+							<Param>#LOWER_POSITION_PCT_OVER_100#</Param>
+						</Binding>
+						<Binding Alias="ENGINE_Propeller_#ENGINE_ID#_Idle">
+							<Param>0</Param>
+						</Binding>
+					</Bindings>
+				</Set>
+			</Preset>
+		</Case>
 		<Default>
 			<Extend Target="ASOBO_GIE_Base">
 				<Parameters Type="Default">
@@ -492,7 +594,7 @@
 			<MAX_PROBABILITY>0.125</MAX_PROBABILITY> <!-- max probability of engine failure in one second -->
 			<TIME_CONST>1000</TIME_CONST>  <!-- Number of seconds after which the overstress causes max engine failure probability -->
 		</Parameters>
-		<Component ID="ENGINE_MetalChipDetector">
+		<Component ID="#PART_ID#">
 			<UseTemplate Name="ASOBO_GT_Update">
 				<UPDATE_CODE>
 					(A:ENG FAILED:1, Bool) ! if{
