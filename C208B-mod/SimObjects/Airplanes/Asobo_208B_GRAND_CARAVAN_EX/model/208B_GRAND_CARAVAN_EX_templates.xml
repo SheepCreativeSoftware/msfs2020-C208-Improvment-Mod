@@ -184,19 +184,21 @@
 			</Extend>
 		</Case>
         <Case Value="DEICE_System">
-			<Extend Target="ASOBO_GIE_Base">
-				<Parameters Type="Default">
-					<VALUE_UNITS>enum</VALUE_UNITS>
-					<VALUE_CODE>(O:DeicePumpState)</VALUE_CODE>
-					<INIT_CODE>
+			<Preset ID="#INPUT_EVENT_ID_SOURCE#_#IE_NAME#">
+				<Value> 
+					<Units>enum</Units>
+					<Code>(O:DeicePumpState)</Code>
+					<Init>
 						@Disable_deice_pump1
 						@Disable_deice_pump2
 						@Disable_deice_pump3
 						(E:ABSOLUTE TIME, second) seed
-					</INIT_CODE>
-					<INC_CODE/>
-					<DEC_CODE/>
-					<SET_CODE>
+					</Init>
+				</Value>
+                <Inc><Code/></Inc>
+                <Dec><Code/></Dec>
+				<Set>
+					<Code>
 						p0 #STATE_BACKUP# == if{ 
 							(L:XMLVAR_Deice_Backup_Switch) ! d (&gt;L:XMLVAR_Deice_Backup_Switch) if{ 
 								#STATE_BACKUP# (&gt;O:DeicePumpState)
@@ -266,38 +268,31 @@
 								(E:SIMULATION TIME, second) d (&gt;O:LastCycleStateChange) (&gt;O:LastUpdateTime)
 							}
     					}
-
-					</SET_CODE>
-					<SET_ARG_COUNT>1</SET_ARG_COUNT>
-
-					<BINDING_SET_0>Backup_Toggle</BINDING_SET_0>
-					<BINDING_SET_0_PARAM_0>#STATE_BACKUP#</BINDING_SET_0_PARAM_0>
-					<BINDING_SET_0_PARAM_0_IS_DYNAMIC>TRUE</BINDING_SET_0_PARAM_0_IS_DYNAMIC>
-
-					<BINDING_SET_1>Set_MaxFlow</BINDING_SET_1>
-					<BINDING_SET_1_PARAM_0>#STATE_MAXFLOW#</BINDING_SET_1_PARAM_0>
-					<BINDING_SET_1_PARAM_0_IS_DYNAMIC>TRUE</BINDING_SET_1_PARAM_0_IS_DYNAMIC>
-
-					<BINDING_SET_2>Set_Windshield</BINDING_SET_2>
-					<BINDING_SET_2_PARAM_0>#STATE_WINDSHIELD#</BINDING_SET_2_PARAM_0>
-					<BINDING_SET_2_PARAM_0_IS_DYNAMIC>TRUE</BINDING_SET_2_PARAM_0_IS_DYNAMIC>
-
-					<BINDING_SET_3>EVENT0</BINDING_SET_3>
-					<BINDING_SET_3_EVENT_ID>TOGGLE_STRUCTURAL_DEICE</BINDING_SET_3_EVENT_ID>
-					<BINDING_SET_3_EVENT_ID_ONLY>TRUE</BINDING_SET_3_EVENT_ID_ONLY>
-					<BINDING_SET_3_PARAM_0>
-						#STATE_OFF# #STATE_HIGH# (#SWITCH_POSITION_TYPE#:#SWITCH_POSITION_VAR#) #STATE_HIGH# == ?
-						d (&gt;#SWITCH_POSITION_TYPE#:#SWITCH_POSITION_VAR#)
-					</BINDING_SET_3_PARAM_0>
-					<BINDING_SET_3_PARAM_0_IS_DYNAMIC>TRUE</BINDING_SET_3_PARAM_0_IS_DYNAMIC>
-
-					<BINDING_SET_4>EVENT0</BINDING_SET_4>
-					<BINDING_SET_4_EVENT_ID>WINDSHIELD_DEICE_TOGGLE</BINDING_SET_4_EVENT_ID>
-					<BINDING_SET_4_EVENT_ID_ONLY>TRUE</BINDING_SET_4_EVENT_ID_ONLY>
-					<BINDING_SET_4_PARAM_0>STATE_WINDSHIELD</BINDING_SET_4_PARAM_0>
-					<BINDING_SET_4_PARAM_0_IS_DYNAMIC>TRUE</BINDING_SET_4_PARAM_0_IS_DYNAMIC>
-				</Parameters>
-			</Extend>
+					</Code>
+					<Parameters>
+						<Param Type="Int" RPN="True">p0</Param>
+					</Parameters>
+					<Bindings>
+						<Binding Alias="#INPUT_EVENT_ID_SOURCE#_#IE_NAME#_Backup_Toggle">
+							<Param RPN="True">#STATE_BACKUP#</Param>
+						</Binding>
+						<Binding Alias="#INPUT_EVENT_ID_SOURCE#_#IE_NAME#_Set_MaxFlow">
+							<Param RPN="True">#STATE_MAXFLOW#</Param>
+						</Binding>
+						<Binding Alias="#INPUT_EVENT_ID_SOURCE#_#IE_NAME#_Set_Windshield">
+							<Param RPN="True">#STATE_WINDSHIELD#</Param>
+						</Binding>
+						<Binding EventID="TOGGLE_STRUCTURAL_DEICE">
+							<Param RPN="True">
+								#STATE_OFF# #STATE_HIGH# (L:XMLVAR_Deice_Airframe) #STATE_HIGH# == ? d (&gt;L:XMLVAR_Deice_Airframe)
+							</Param>
+						</Binding>
+						<Binding EventID="WINDSHIELD_DEICE_TOGGLE">
+							<Param RPN="True">#STATE_WINDSHIELD#</Param>
+						</Binding>
+					</Bindings>
+				</Set>
+			</Preset>
 		</Case>
 		<Case Value="ENGINE_Propeller">
 			<Preset ID="#INPUT_EVENT_ID_SOURCE#_#IE_NAME#">
@@ -936,13 +931,13 @@
 				<ANIMTIP_1>TT:COCKPIT.TOOLTIPS.C208_DEICE_MAX_FLOW_SET_AIRFRAME</ANIMTIP_1>
 			</Parameters>
 			<UseInputEvent ID="CESSNA_MOD">
-				<TT_DESCRIPTION>@TT_Package.DEICE_SWITCH_WINDSHIELD_ACTION_SET</TT_DESCRIPTION>
+				<TT_DESCRIPTION>@TT_Package.DEICE_PUSH_MAX_MOMENTARY_TITLE</TT_DESCRIPTION>
 				<TT_DESCRIPTION_IS_DYNAMIC>False</TT_DESCRIPTION_IS_DYNAMIC>
 				<TT_VALUE>
 					(#SWITCH_POSITION_TYPE#:#SWITCH_POSITION_VAR#)
-					s0 2 == if{ (R:1:@TT_Package.DEICE_SWITCH_WINDSHIELD_ACTION_SET) quit }
+					s0 2 == if{ (R:1:@TT_Package.DEICE_SWITCH_AIRFRAME_ACTION_SET) quit }
 					l0 1 == if{ (R:1:@TT_Package.GT_STATE_OFF) quit }
-					l0 0 == if{ (R:1:@TT_Package.DEICE_SWITCH_AIRFRAME_ACTION_SET) quit }
+					l0 0 == if{ (R:1:@TT_Package.DEICE_SWITCH_WINDSHIELD_PILOT_ACTION_SET) quit }
 				</TT_VALUE>
 				<TT_VALUE_IS_DYNAMIC>True</TT_VALUE_IS_DYNAMIC>
     			<TT_INTERACTION>PRIMARY_DOWN+Y_AXIS</TT_INTERACTION>
@@ -963,7 +958,7 @@
 				<NORMALIZED_TIME>0.1</NORMALIZED_TIME>
 				<AUDIO_DIRECTION>Both</AUDIO_DIRECTION>
 
-				<TOOLTIP_TITLE>@TT_Package.DEICE_SWITCH_PUMP_ACTION</TOOLTIP_TITLE>
+				<TOOLTIP_TITLE>@TT_Package.DEICE_SWITCH_AIRFRAME_TITLE</TOOLTIP_TITLE>
 				<TOOLTIP_ENTRY_0>#INPUT_EVENT_ID_SOURCE#_#IE_NAME#</TOOLTIP_ENTRY_0>
 			</UseTemplate>
 		</Component>
@@ -982,7 +977,7 @@
 				<STATE_OFF>0</STATE_OFF>
 			</Parameters>
 			<UseInputEvent ID="CESSNA_MOD">
-				<TT_DESCRIPTION>@TT_Package.DEICE_SWITCH_AIRFRAME_ACTION_SET</TT_DESCRIPTION>
+				<TT_DESCRIPTION>@TT_Package.DEICE_SWITCH_PUMP_ACTION</TT_DESCRIPTION>
 				<TT_DESCRIPTION_IS_DYNAMIC>False</TT_DESCRIPTION_IS_DYNAMIC>
 				<TT_VALUE>
 					(#SWITCH_POSITION_TYPE#:#SWITCH_POSITION_VAR#)
@@ -1008,7 +1003,7 @@
 				<NORMALIZED_TIME>0.1</NORMALIZED_TIME>
 				<AUDIO_DIRECTION>Both</AUDIO_DIRECTION>
 
-				<TOOLTIP_TITLE>@TT_Package.DEICE_SWITCH_AIRFRAME_TITLE</TOOLTIP_TITLE>
+				<TOOLTIP_TITLE>@TT_Package.DEICE_SWITCH_PUMP_TITLE</TOOLTIP_TITLE>
 				<TOOLTIP_ENTRY_0>#INPUT_EVENT_ID_SOURCE#_#IE_NAME#</TOOLTIP_ENTRY_0>
 			</UseTemplate>
 		</Component>
