@@ -18,6 +18,7 @@
 	<Include ModelBehaviorFile="Asobo\GlassCockpit\AS1000.xml"/>
 	<Include ModelBehaviorFile="Asobo\NAVCOM\ADF.xml"/>
 	<Include RelativeFile="208B_GRAND_CARAVAN_EX_templates.xml"/>
+	<Include RelativeFile="208B_GRAND_CARAVAN_EX_propeller.xml"/>
 
 	<Component ID="SYSTEM">
 		<UseTemplate Name="ASOBO_SYSTEM_Electric_Template_Mod">
@@ -26,6 +27,9 @@
 		<UseTemplate Name="ASOBO_SYSTEM_Antiice_Template_Mod">
 			<PART_ID>SYSTEM_Structural_AntiIce</PART_ID>
         </UseTemplate>	
+		<UseTemplate Name="ASOBO_ENGINE_MetalChipDetector_Template_Mod">
+			<PART_ID>ENGINE_MetalChipDetector</PART_ID>
+		</UseTemplate>
 	</Component>
 
 	<!-- HANDLING #######################################-->
@@ -195,6 +199,11 @@
   			<ANIM_NAME>ELECTRICAL_Switch_ExternalPower_1</ANIM_NAME>
    			<NODE_ID>ELECTRICAL_Switch_ExternalPower_1</NODE_ID>
 		</UseTemplate>
+		<UseTemplate Name="ASOBO_ELECTRICAL_Switch_PropGovTest_Template_Mod">
+			<PART_ID>PUSH_OVERSPEEDGOVERNOR</PART_ID>
+			<NODE_ID>PUSH_OVERSPEEDGOVERNOR</NODE_ID>
+			<ANIM_NAME>PUSH_OVERSPEEDGOVERNOR</ANIM_NAME>
+		</UseTemplate>
 		<CameraTitle>Engines</CameraTitle>
 	</Component>	
 
@@ -286,11 +295,10 @@
 				<VISIBILITY_CODE>(L:XMLVAR_LeverPropellerHidden1) !</VISIBILITY_CODE>
 			</UseTemplate> 
 		</Component>
-		<UseTemplate Name="ASOBO_ENGINE_Lever_Propeller_Template">
-			<IDLE_GATE_ANIM_POS>0.25</IDLE_GATE_ANIM_POS>
-			<LEVER_TYPE>REVERSE_IDLE_FULL</LEVER_TYPE>
-		</UseTemplate>
-		<UseTemplate Name="ASOBO_ENGINE_MetalChipDetector_Template_Mod">
+		<UseTemplate Name="ASOBO_ENGINE_Lever_Propeller_Template_Mod">
+			<PART_ID>ENGINE_Lever_Propeller</PART_ID>
+			<NODE_ID>ENGINE_Lever_Propeller_1</NODE_ID>
+			<ANIM_NAME>ENGINE_Lever_Propeller_1</ANIM_NAME>
 		</UseTemplate>
 		<CameraTitle>Engines</CameraTitle>
 	</Component>
@@ -804,9 +812,6 @@
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
 			<NODE_ID>PUSH_VENT_L1</NODE_ID>
-		</UseTemplate>
-		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
-			<NODE_ID>PUSH_OVERSPEEDGOVERNOR</NODE_ID>
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_GT_Interaction_Tooltip">
 			<NODE_ID>PUSH_CABINHEATFIREWALL</NODE_ID>
