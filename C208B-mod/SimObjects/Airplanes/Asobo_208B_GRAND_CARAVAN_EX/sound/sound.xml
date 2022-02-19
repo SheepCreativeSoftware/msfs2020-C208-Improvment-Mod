@@ -206,8 +206,8 @@
     </Sound>
 	
 	<Sound WwiseData="true" WwiseEvent="propeller_lever" ViewPoint="Inside" NodeName="ENGINE_LEVER_PROPELLER_1" ContinuousStopDelay="1.0" SimVar="GENERAL ENG PROPELLER LEVER POSITION" Units="PERCENT" Index="1">
-      <WwiseRTPC SimVar="GENERAL ENG PROPELLER LEVER POSITION" Units="PERCENT" Index="1" RTPCName="SIMVAR_GENERAL_ENG_PROPELLER_LEVER_POSITION" />
-	  <WwiseRTPC SimVar="GENERAL ENG PROPELLER LEVER POSITION" Units="PERCENT" Index="1" Derived="true" RTPCName="SIMVAR_GENERAL_ENG_PROPELLER_LEVER_POSITION_DERIVED" />
+      <WwiseRTPC LocalVar="XMLVAR_Propeller_Lever_Position1" Units="PERCENT" Index="1" RTPCName="SIMVAR_GENERAL_ENG_PROPELLER_LEVER_POSITION" />
+	  <WwiseRTPC LocalVar="XMLVAR_Propeller_Lever_Position1" Units="PERCENT" Index="1" Derived="true" RTPCName="SIMVAR_GENERAL_ENG_PROPELLER_LEVER_POSITION_DERIVED" />
     </Sound>
 	
 	<Sound WwiseData="true" WwiseEvent="mixture_lever" ViewPoint="Inside" NodeName="FUEL_LEVER_MIXTURE_1" SimVar="GENERAL ENG MIXTURE LEVER POSITION" Units="PERCENT" Index="1">

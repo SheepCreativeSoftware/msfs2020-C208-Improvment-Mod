@@ -6,19 +6,21 @@
 		<ENGINE_ID>1</ENGINE_ID>
 		<INPUT_EVENT_ID_SOURCE>ENGINE_Propeller</INPUT_EVENT_ID_SOURCE>
 		<IE_NAME>Lever</IE_NAME>
-		<MIN_POS_16K Process="Int">@FeatherPropPos 16384 * 0 (A:THROTTLE LOWER LIMIT, position 16k) 0 &lt; ?</MIN_POS_16K>
+		<IDLE>0.25</IDLE> <!-- ANIMATION MIN POSITION -->
+		<UPPER_LIMIT>16384</UPPER_LIMIT>
+		<UPPER_LIMIT_PCT>100</UPPER_LIMIT_PCT>
+		<LOWER_LIMIT Process="Int">@FeatherPropPos 16384 * 0 (A:THROTTLE LOWER LIMIT, position 16k) 0 &lt; ?</LOWER_LIMIT>
+		<LOWER_LIMIT_PCT Process="Float">@FeatherPropPos 100 *</LOWER_LIMIT_PCT>
 	</Parameters>
 	<Parameters Type="Default">
-		<IDLE>0.25</IDLE> <!-- IDLE_GATE_ANIM_POS  -->
-		<MAIN_LEVER_REVERSE_POSITION Process="Int">@FeatherPropPos 16384 * 0 #MIN_POS_16K# 0 &lt; ?</MAIN_LEVER_REVERSE_POSITION>
-		<MAIN_LEVER_REVERSE_POSITION_PCT Process="Int">@FeatherPropPos 100 * 0 #MIN_POS_16K# 0 &lt; ?</MAIN_LEVER_REVERSE_POSITION_PCT>
-		<LOWER_LIMIT>#MIN_POS_16K#</LOWER_LIMIT>
+		<MAIN_LEVER_REVERSE_POSITION Process="Int">@FeatherPropPos 16384 * 0 #LOWER_LIMIT# 0 &lt; ?</MAIN_LEVER_REVERSE_POSITION>
+		<MAIN_LEVER_REVERSE_POSITION_PCT Process="Int">@FeatherPropPos 100 * 0 #LOWER_LIMIT# 0 &lt; ?</MAIN_LEVER_REVERSE_POSITION_PCT>
 	</Parameters>
 	<Parameters Type="Default">
 		<TRUE_IDLE_01 Process="Float">0 #MAIN_LEVER_REVERSE_POSITION_PCT# - 100 #MAIN_LEVER_REVERSE_POSITION_PCT# - /</TRUE_IDLE_01>
 	</Parameters>
 	<Parameters Type="Default">
-		<INCREMENT>163.84</INCREMENT>
+		<INCREMENT>1</INCREMENT>
 		<DELTA_MIN>0.00025</DELTA_MIN>
 		<!-- adjust drag value based on anim value (positive range) -->
 		<LERP_IDLE_FULL>l0 #IDLE# - 1 #IDLE# - / 1 #TRUE_IDLE_01# - * #TRUE_IDLE_01# +</LERP_IDLE_FULL>
@@ -28,16 +30,16 @@
 	</Parameters>
 	<Parameters Type="Default">
 		<ADJUST_RAW_DRAG_VALUE>sp0 #LERP_IDLE_FULL# #LERP_IDLE_REVERSE# l0 #IDLE# &gt; ?</ADJUST_RAW_DRAG_VALUE>	
-		<MIN_DIFF_POS_16K>819.2</MIN_DIFF_POS_16K>
+		<MIN_DIFF_POS>5</MIN_DIFF_POS>
 		<DRAG_VALUE_OVERRIDE/>
 	</Parameters>
 	<Parameters Type="Override">
 		<DRAG_MIN_VALUE>#MAIN_LEVER_REVERSE_POSITION# (O:XMLVAR_MIN_Limit) max</DRAG_MIN_VALUE>
-		<DRAG_MAX_VALUE>16384 (O:XMLVAR_MAX_Limit) min</DRAG_MAX_VALUE>
+		<DRAG_MAX_VALUE>#UPPER_LIMIT# (O:XMLVAR_MAX_Limit) min</DRAG_MAX_VALUE>
 		<PROCESS_LIMITS>
-			(O:ENGINE_Propeller_#ENGINE_ID#_Position) 0 &gt; if{
+			(L:XMLVAR_Propeller_Lever_Position#ENGINE_ID#) 0 &gt; if{
 				0 (&gt;O:XMLVAR_MIN_Limit)
-				16384 (&gt;O:XMLVAR_MAX_Limit)
+				#UPPER_LIMIT# (&gt;O:XMLVAR_MAX_Limit)
 			} els{
 				#MAIN_LEVER_REVERSE_POSITION# (&gt;O:XMLVAR_MIN_Limit)
 				0 (&gt;O:XMLVAR_MAX_Limit)
@@ -45,7 +47,7 @@
 		</PROCESS_LIMITS>
 		<RESET_LIMITS>
 			#MAIN_LEVER_REVERSE_POSITION# (&gt;O:XMLVAR_MIN_Limit)
-			16384 (&gt;O:XMLVAR_MAX_Limit)
+			#UPPER_LIMIT# (&gt;O:XMLVAR_MAX_Limit)
 		</RESET_LIMITS>
 	</Parameters>
 
@@ -79,7 +81,7 @@
 			<TOOLTIP_TITLE>@TT_Package.ENGINE_PROPELLER_TITLE</TOOLTIP_TITLE>
 			<TOOLTIP_ENTRY_0>#INPUT_EVENT_ID_SOURCE#_#IE_NAME#</TOOLTIP_ENTRY_0>
 			<DOWN_CODE>
-				(O:ENGINE_Propeller_#ENGINE_ID#_Position) 0 == if{
+				(L:XMLVAR_Propeller_Lever_Position#ENGINE_ID#) 0 == if{
 					1 (&gt;O:XMLVAR_Limits_Needs_Recalculation)
 				} els{
 					#PROCESS_LIMITS#
@@ -93,7 +95,7 @@
 			<DRAG_CODE>
 				(M:InputType) 1 == if{
 					(O:_ResetLimitsTime) (E:SIMULATION TIME, second) &lt; if{
-							(O:ENGINE_Propeller_#ENGINE_ID#_Position) abs #MIN_DIFF_POS_16K# &lt; if{
+							(L:XMLVAR_Propeller_Lever_Position#ENGINE_ID#) abs #MIN_DIFF_POS# &lt; if{
 							#RESET_LIMITS#
 							1 (&gt;O:XMLVAR_Limits_Needs_Recalculation)
 						}
@@ -104,7 +106,7 @@
 				#DRAG_VALUE_OVERRIDE#
 				l0 #DRAG_MAX_VALUE# min #DRAG_MIN_VALUE# max 16384 / (&gt;B:#INPUT_EVENT_ID_SOURCE#_#IE_NAME#_Set)
 				(O:XMLVAR_Limits_Needs_Recalculation) if{
-						(O:ENGINE_Propeller_#ENGINE_ID#_Position) abs #MIN_DIFF_POS_16K# &gt; if{
+						(L:XMLVAR_Propeller_Lever_Position#ENGINE_ID#) abs #MIN_DIFF_POS# &gt; if{
 						#PROCESS_LIMITS#
 						0 (&gt;O:XMLVAR_Limits_Needs_Recalculation)
 					}
@@ -125,7 +127,7 @@
 		<UseTemplate Name="ASOBO_GT_Push_Button_Held_Simple">
 			<LEFT_SINGLE_CODE>
 				1 (&gt;L:XMLVAR_Overspeed_Test)
-				0.3 (&gt;K:PROP_PITCH1_SET)
+				9200 (&gt;K:PROP_PITCH1_SET)
 			</LEFT_SINGLE_CODE>
 			<LEFT_LEAVE_CODE>
 				0 (&gt;L:XMLVAR_Overspeed_Test)
