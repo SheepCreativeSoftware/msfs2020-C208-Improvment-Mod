@@ -2141,38 +2141,23 @@
   <VoicesAlerts>
 
 	<Alert>
-		<Type>Warning</Type>
-		<Text>ENGINE FIRE</Text>
-		<SoundEvent>tone_warning</SoundEvent>
-    	<Condition>
-			<Equal>
-				<Simvar name="L:XMLVAR_FireTest_Switch" unit="enum"/>
-				<Constant>0</Constant>
-			</Equal>
-		</Condition>
-	</Alert>
-
-	<Alert>
-		<Type>Warning</Type>
-		<Text>TORQUE</Text>
+		<Type>SoundOnly</Type>
 		<SoundEvent>tone_warning</SoundEvent>
 		<Condition>
-			<Greater>
-				<Simvar name="TURB ENG FREE TURBINE TORQUE:1" unit="foot pounds"/>
-				<Simvar name="L:XMLVAR_EngineMaxTorque" unit="foot pounds"/>
-			</Greater>
-		</Condition>
-	</Alert>
-
-	<Alert>
-		<Type>Warning</Type>
-		<Text>ITT</Text>
-		<SoundEvent>tone_warning</SoundEvent>
-		<Condition>
-			<Greater>
-				<Simvar name="TURB ENG ITT:1" unit="celsius"/>
-				<Constant>825</Constant>
-			</Greater>
+			<Or>
+				<Greater>
+					<Simvar name="TURB ENG FREE TURBINE TORQUE:1" unit="foot pounds"/>
+					<Simvar name="L:XMLVAR_EngineMaxTorque" unit="foot pounds"/>
+				</Greater>
+				<Greater>
+					<Simvar name="TURB ENG ITT:1" unit="celsius"/>
+					<Constant>825</Constant>
+				</Greater>
+	  			<Equal>
+  					<Simvar name="L:XMLVAR_FireTest_Switch" unit="enum"/>
+  					<Constant>0</Constant>
+	  			</Equal>
+			</Or>
 		</Condition>
 	</Alert>
 
@@ -2205,6 +2190,7 @@
 			</StateMachine>
 		</Condition>
 	</Alert>
+
 	<Alert>
            <Type>SoundOnly</Type>
            <SoundEvent>tone_altitude_alert_default</SoundEvent>
