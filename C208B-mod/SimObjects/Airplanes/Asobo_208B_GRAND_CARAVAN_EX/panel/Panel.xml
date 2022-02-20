@@ -85,6 +85,10 @@
       <Text>ENGINE FIRE</Text>
       <Condition>
 		<Or>
+			<Equal>
+				<Simvar name="L:XMLVAR_FireTest_Switch" unit="enum"/>
+				<Constant>0</Constant>
+			</Equal>
 			<Simvar name="ENG ON FIRE" unit="bool"/>
 			<GreaterEqual>
 				<Simvar name="TURB ENG1 ITT" unit="celsius"/>
@@ -110,6 +114,10 @@
 	  <Text>FUEL SELECT OFF</Text>
 	  <Condition>
 		<Or>
+			<Equal>
+				<Simvar name="L:XMLVAR_FireTest_Switch" unit="enum"/>
+				<Constant>2</Constant>
+			</Equal>
 			<Equal>
 				<Simvar name="FUEL TANK SELECTOR:1" unit="number"/>
 				<Constant>0</Constant><!--both closed-->
@@ -2134,6 +2142,18 @@
 
 	<Alert>
 		<Type>Warning</Type>
+		<Text>ENGINE FIRE</Text>
+		<SoundEvent>tone_warning</SoundEvent>
+    	<Condition>
+			<Equal>
+				<Simvar name="L:XMLVAR_FireTest_Switch" unit="enum"/>
+				<Constant>0</Constant>
+			</Equal>
+		</Condition>
+	</Alert>
+
+	<Alert>
+		<Type>Warning</Type>
 		<Text>TORQUE</Text>
 		<SoundEvent>tone_warning</SoundEvent>
 		<Condition>
@@ -2370,7 +2390,7 @@
 		<Type>SoundOnly</Type>
 		<SoundEvent>aural_stall</SoundEvent>
 		<Condition>
-			<Simvar name="STALL WARNING" unit="Bool"/>
+			<Simvar name="L:XMLVAR_Stall_Warning" unit="Bool"/>
 		</Condition>
 	</Alert>
 	
