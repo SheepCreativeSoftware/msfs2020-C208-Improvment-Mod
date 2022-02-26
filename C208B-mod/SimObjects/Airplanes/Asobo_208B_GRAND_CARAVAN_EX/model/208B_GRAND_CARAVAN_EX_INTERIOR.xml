@@ -258,15 +258,17 @@
 				<IS_VALID_ENUM_VAL_TEST_EXTERNAL>#IS_VALID_ENUM_VAL_TEST_EXTERNAL# l0 2 == or</IS_VALID_ENUM_VAL_TEST_EXTERNAL>
 			</UseTemplate>
 		</Component>
-		<UseTemplate Name="ASOBO_FUEL_Switch_Cutoff_Template">
-			<CONDITION_LEVER>True</CONDITION_LEVER>
-		</UseTemplate>
 		<UseTemplate Name="ASOBO_FUEL_Condition_Lever_Template">
 			<ID>1</ID>
 			<HIDE_NODE>True</HIDE_NODE>
 			<VALVE_NODE>True</VALVE_NODE>
 			<NODE_ID>FUEL_LEVER_MIXTURE_1</NODE_ID>
 			<ANIM_NAME>FUEL_LEVER_MIXTURE_1</ANIM_NAME>
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_FUEL_Switch_Cutoff_Template_Mod">
+			<ANIM_NAME>FUEL_Switch_Cutoff_1</ANIM_NAME>
+			<NODE_ID>FUEL_Switch_Cutoff_1</NODE_ID>
+			<PART_ID>FUEL_Switch_Cutoff</PART_ID>
 		</UseTemplate>
 		<CameraTitle>Overhead</CameraTitle>
 	</Component>

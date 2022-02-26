@@ -166,4 +166,5 @@ RudderTrimDisabled=False
 
 [LocalVars.0]
 Condition_Lever_CutOff_1=0
+ENG FUEL VALVE:1=1
 XMLVAR_Aice_Fluid_Level=20.8

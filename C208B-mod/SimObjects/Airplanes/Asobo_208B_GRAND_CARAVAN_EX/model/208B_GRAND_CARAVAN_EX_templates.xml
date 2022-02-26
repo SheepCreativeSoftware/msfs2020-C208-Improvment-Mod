@@ -1224,4 +1224,46 @@
 		</Component>
 	</Template>
 
+	<Template Name="ASOBO_FUEL_Switch_Cutoff_Template_Mod">
+		<Parameters Type="Default">
+			<CONDITION_LEVER>True</CONDITION_LEVER>
+		</Parameters>
+		<Component ID="#PART_ID#" Node="#NODE_ID#">
+			<Parameters Type="Override">
+				<INPUT_EVENT_ID_SOURCE>FUEL_Cutoff</INPUT_EVENT_ID_SOURCE>
+				<IE_NAME>Switch</IE_NAME>
+			</Parameters>
+			<UseTemplate Name="ASOBO_GT_Update">
+				<UPDATE_ONCE>True</UPDATE_ONCE>
+				<UPDATE_CODE>
+					(A:GENERAL ENG FUEL VALVE:1, Bool) 0 != (L:Condition_Lever_CutOff_1) 0 != and if{ 1 (&gt;L:ENG FUEL VALVE:1) }
+				</UPDATE_CODE>
+			</UseTemplate>
+			<UseInputEvent ID="CESSNA_MOD">
+				<TT_DESCRIPTION>@TT_Package.FUEL_SWITCH_OPENCLOSED_ACTION_SET</TT_DESCRIPTION>
+				<TT_DESCRIPTION_IS_DYNAMIC>False</TT_DESCRIPTION_IS_DYNAMIC>
+				<TT_VALUE>(L:ENG FUEL VALVE:1) == if{ @TT_On } els{ @TT_Off }</TT_VALUE>
+				<TT_VALUE_IS_DYNAMIC>True</TT_VALUE_IS_DYNAMIC>
+				<TT_INTERACTION>PRIMARY_DOWN</TT_INTERACTION>
+				<TT_INTERACTION_LOCKABLE>LOCK</TT_INTERACTION_LOCKABLE>
+				<TT_ICON>MOVE_Y</TT_ICON>
+			</UseInputEvent>
+			<UseTemplate Name="ASOBO_GT_Switch_Code">
+				<LEFT_SINGLE_CODE>
+					(L:ENG FUEL VALVE:1, Bool) ! d (&gt;L:ENG FUEL VALVE:1, Bool) (A:GENERAL ENG FUEL VALVE:1, Bool) != 0 (L:Condition_Lever_CutOff_1) != and if{ (&gt;K:TOGGLE_FUEL_VALVE_ENG1) }
+				</LEFT_SINGLE_CODE>
+
+				<ANIM_CODE>(L:ENG FUEL VALVE:1, bool) 100 *</ANIM_CODE>
+
+				<WWISE_EVENT_1>fuel_cutoff_switch_on</WWISE_EVENT_1>
+				<NORMALIZED_TIME_1>0.1</NORMALIZED_TIME_1>
+				<WWISE_EVENT_2>fuel_cutoff_switch_off</WWISE_EVENT_2>
+				<NORMALIZED_TIME_2>0.5</NORMALIZED_TIME_2>
+
+				<TOOLTIP_TITLE>@TT_Package.FUEL_SWITCH_OPENCLOSED_TITLE</TOOLTIP_TITLE>
+				<TOOLTIP_ENTRY_0>#INPUT_EVENT_ID_SOURCE#_#IE_NAME#</TOOLTIP_ENTRY_0>
+			</UseTemplate>
+		</Component>		
+	</Template>	
+
 </ModelBehaviors>
