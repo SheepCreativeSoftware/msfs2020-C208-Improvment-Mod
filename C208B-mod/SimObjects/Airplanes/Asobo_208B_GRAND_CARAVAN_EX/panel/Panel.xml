@@ -85,6 +85,10 @@
       <Text>ENGINE FIRE</Text>
       <Condition>
 		<Or>
+			<Equal>
+				<Simvar name="L:XMLVAR_FireTest_Switch" unit="enum"/>
+				<Constant>0</Constant>
+			</Equal>
 			<Simvar name="ENG ON FIRE" unit="bool"/>
 			<GreaterEqual>
 				<Simvar name="TURB ENG1 ITT" unit="celsius"/>
@@ -110,6 +114,10 @@
 	  <Text>FUEL SELECT OFF</Text>
 	  <Condition>
 		<Or>
+			<Equal>
+				<Simvar name="L:XMLVAR_FireTest_Switch" unit="enum"/>
+				<Constant>2</Constant>
+			</Equal>
 			<Equal>
 				<Simvar name="FUEL TANK SELECTOR:1" unit="number"/>
 				<Constant>0</Constant><!--both closed-->
@@ -2133,26 +2141,23 @@
   <VoicesAlerts>
 
 	<Alert>
-		<Type>Warning</Type>
-		<Text>TORQUE</Text>
+		<Type>SoundOnly</Type>
 		<SoundEvent>tone_warning</SoundEvent>
 		<Condition>
-			<Greater>
-				<Simvar name="TURB ENG FREE TURBINE TORQUE:1" unit="foot pounds"/>
-				<Simvar name="L:XMLVAR_EngineMaxTorque" unit="foot pounds"/>
-			</Greater>
-		</Condition>
-	</Alert>
-
-	<Alert>
-		<Type>Warning</Type>
-		<Text>ITT</Text>
-		<SoundEvent>tone_warning</SoundEvent>
-		<Condition>
-			<Greater>
-				<Simvar name="TURB ENG ITT:1" unit="celsius"/>
-				<Constant>825</Constant>
-			</Greater>
+			<Or>
+				<Greater>
+					<Simvar name="TURB ENG FREE TURBINE TORQUE:1" unit="foot pounds"/>
+					<Simvar name="L:XMLVAR_EngineMaxTorque" unit="foot pounds"/>
+				</Greater>
+				<Greater>
+					<Simvar name="TURB ENG ITT:1" unit="celsius"/>
+					<Constant>825</Constant>
+				</Greater>
+	  			<Equal>
+  					<Simvar name="L:XMLVAR_FireTest_Switch" unit="enum"/>
+  					<Constant>0</Constant>
+	  			</Equal>
+			</Or>
 		</Condition>
 	</Alert>
 
@@ -2185,6 +2190,7 @@
 			</StateMachine>
 		</Condition>
 	</Alert>
+
 	<Alert>
            <Type>SoundOnly</Type>
            <SoundEvent>tone_altitude_alert_default</SoundEvent>
@@ -2370,7 +2376,7 @@
 		<Type>SoundOnly</Type>
 		<SoundEvent>aural_stall</SoundEvent>
 		<Condition>
-			<Simvar name="STALL WARNING" unit="Bool"/>
+			<Simvar name="L:XMLVAR_Stall_Warning" unit="Bool"/>
 		</Condition>
 	</Alert>
 	
