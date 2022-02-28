@@ -236,21 +236,6 @@
 	  <WwiseRTPC SimVar="CIRCUIT ON" Units="BOOLEAN" Index="32" RTPCName="SIMVAR_CIRCUIT_ON_A2_R2" />
       <Range LowerBound="1.0" />
     </Sound> 
-    <!-- MISCELLANEOUS SOUNDS ========================================================================================== -->  
-	
-	<Sound WwiseData="true" WwiseEvent="ap_disengage_sound" Continuous="false" SimVar="AUTOPILOT DISENGAGED" Units="BOOL" Index="0">
-	  <Range LowerBound="1" />
-	  <Requires SimVar="ELECTRICAL MAIN BUS VOLTAGE" Units="FLOAT" Index="1">
-        <Range LowerBound="20" />
-      </Requires>
-    </Sound>
-	
-	<Sound WwiseData="true" WwiseEvent="ap_disengage_sound" Continuous="false" SimVar="AUTOPILOT MASTER" Units="BOOL" Index="0">
-	  <Range UpperBound="0" />
-	  <Requires SimVar="ELECTRICAL MAIN BUS VOLTAGE" Units="FLOAT" Index="1">
-        <Range LowerBound="20" />
-      </Requires>
-    </Sound>
 	
     <!-- RATTLES ==========================================================================================  -->
     
@@ -295,20 +280,29 @@
       </Requires>
 	  <WwiseRTPC SimVar="GENERAL ENG FUEL PUMP ON" Units="BOOLEAN" Index="1" RTPCName="SIMVAR_GENERAL_ENG_FUEL_PUMP_ON_INTERPOLATION_A1_R1"/>
     </Sound>
-	
-	<Sound WwiseData="true" WwiseEvent="ap_disengage_sound" NodeName="PUSH_CEILING_TESTLIGHT" Continuous="false" SimVar="AUTOPILOT MASTER" Units="BOOL" Index="0" ViewPoint="Inside">
-	  <Range UpperBound="0" />
-	  <Requires SimVar="ELECTRICAL MAIN BUS VOLTAGE" Units="FLOAT" Index="1">
-        <Range LowerBound="20" />
-      </Requires>
-    </Sound>
 
 	<Sound WwiseEvent="ELT_warning" WwiseData="true" NodeName="PUSH_CEILING_TESTLIGHT" BreakOnStop="true" LocalVar="XMLVAR_ELT_STATE" ViewPoint="Inside">
 	  <Range LowerBound="2" />
     </Sound>
-	
-		
-	
+
+	<Sound WwiseData="true" WwiseEvent="ap_disengage_sound" Continuous="false" SimVar="AUTOPILOT DISENGAGED" Units="BOOL" Index="0">
+	  <Requires SimVar="AUTOPILOT DISENGAGED" Units="BOOL" Index="0">
+		<Range LowerBound="1" />
+	  </Requires>
+	  <Requires SimVar="CIRCUIT AUTOPILOT ON" Units="BOOL" Index="0">
+        <Range LowerBound="1" />
+      </Requires>
+    </Sound>
+
+	<Sound WwiseData="true" WwiseEvent="ap_disengage_sound" NodeName="PUSH_CEILING_TESTLIGHT" Continuous="false" SimVar="AUTOPILOT MASTER" Units="BOOL" Index="0">
+	  <Requires SimVar="AUTOPILOT MASTER" Units="BOOL" Index="0">
+		<Range UpperBound="0" />
+	  </Requires>
+	  <Requires SimVar="CIRCUIT AUTOPILOT ON" Units="BOOL" Index="0">
+        <Range LowerBound="1" />
+      </Requires>
+    </Sound>
+
 	<!-- PROPELLER WIND ========================================================================================== --> 
 	
 	<Sound WwiseData="true" WwiseEvent="propeller_wind" ConeHeading="180" SimVar="PROP RPM" Units="RPM" ViewPoint="Outside" Index="1">  
