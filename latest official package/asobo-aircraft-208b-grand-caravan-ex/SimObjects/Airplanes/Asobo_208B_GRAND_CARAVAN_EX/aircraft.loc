@@ -20,8 +20,8 @@
     "Strings": {
       "AIRCRAFT.DESCRIPTION": {
         "UUID": "5e870834-c55c-436a-b845-2168725239ee",
-        "LastModifiedBy": "jreynaud",
-        "LastModifiedDate": "2021-04-30 16:44:43",
+        "LastModifiedBy": "jdebarry",
+        "LastModifiedDate": "2022-01-24 14:37:08",
         "LocalizationStatus": "TranslationNeeded",
         "Languages": {
           "en-US": {
@@ -68,8 +68,8 @@
       },
       "AIRCRAFT.UI_MANUFACTURER": {
         "UUID": "3c9665a5-1b33-4371-8823-24da0c73beda",
-        "LastModifiedBy": "jreynaud",
-        "LastModifiedDate": "2021-04-30 16:44:51",
+        "LastModifiedBy": "jdebarry",
+        "LastModifiedDate": "2022-01-24 14:37:09",
         "LocalizationStatus": "TranslationNeeded",
         "Languages": {
           "en-US": {
@@ -116,8 +116,8 @@
       },
       "AIRCRAFT.UI_MODEL": {
         "UUID": "451c9009-af61-489d-8123-e1ed10f5988b",
-        "LastModifiedBy": "jreynaud",
-        "LastModifiedDate": "2021-04-30 16:44:51",
+        "LastModifiedBy": "jdebarry",
+        "LastModifiedDate": "2022-01-24 14:37:09",
         "LocalizationStatus": "TranslationNeeded",
         "Languages": {
           "en-US": {
