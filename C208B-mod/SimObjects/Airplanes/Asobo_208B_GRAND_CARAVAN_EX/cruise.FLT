@@ -39,8 +39,6 @@ PropellerLeverPct=0.99993896484375
 MixtureLeverPct=0.99993896484375
 Pct Engine RPM=1.0001455439463831087
 MaxReachedEngineRPM=33409.503488534865028
-LeftMagneto=True
-RightMagneto=True
 GeneratorSwitch=True
 FuelValveOpen=True
 CowlFlapPct=0
@@ -49,7 +47,7 @@ FuelPumpSwitch_EX1=-1
 CarbHeat/DeiceSwitch=False
 EngineMasterSwitch=True
 GlowPlugTemperaturePct=1
-IgnitionSwitch=1
+IgnitionSwitch=0
 Afterburner=0
 
 [Propeller.1.0]
@@ -85,21 +83,28 @@ BeaconLights=True
 LandingLights=False
 LogoLights=True
 NavLights=True
-PanelLights=True
 RecognitionLights=True
 StrobeLights=True
 TaxiLights=False
-WingLights=True
-CabinLights=True
-GlareshieldLights=False
-PedestalLights=False
+WingLights=False
+Potentiometer.2  = 1    ; default value for Kob Stby Gauges brightness 
+Potentiometer.3  = 0.6  ; default value for Kob Decals brightness 
+Potentiometer.6  = 0.7  ; default value for Kob Central flood light brightness
+Potentiometer.12 = 0.7  ; default value for Kob Pilot flood light brightness
+Potentiometer.13 = 0.7  ; default value for Kob Copilot flood light brightness
+Potentiometer.30 = 1    ; default value for Kob Avionics brightness
 
 [Electrical.0]
-bus.1=bus.12:0
+bus.1=bus.8:1, bus.9:1, bus.10:1, bus.11:0, bus.12:0
 bus.8=bus.9:0, bus.11:0
 battery.1=True
 alternator.1=True
 alternator.2=True
+circuit.18=1 ; Stby gauges light
+circuit.22=1 ; cockpit pilot floodlight
+circuit.23=1 ; cockpit copilot floodlight
+circuit.24=1 ; cockpit central floodlight
+circuit.52=1 ; cabin lights
 
 [AutoPilot.0]
 MasterSwitch=True
@@ -149,3 +154,6 @@ AileronTrimPct=0
 AileronTrimDisabled=False
 ElevatorTrimDisabled=False
 RudderTrimDisabled=False
+
+[LocalVars.0]
+XMLVAR_Aice_Fluid_Level=20.8

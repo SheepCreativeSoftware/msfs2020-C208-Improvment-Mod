@@ -48,10 +48,13 @@
       <Type>Warning</Type>
       <Text>OIL PRESS LOW</Text>
 		<Condition>
-			<LowerEqual>
-				<Simvar name="GENERAL ENG OIL PRESSURE:1" unit="psi"/>
-				<Constant>40</Constant>
-			</LowerEqual>
+			<And>
+				<Simvar name="ENG COMBUSTION:1" unit="Boolean"/>
+				<LowerEqual>
+					<Simvar name="GENERAL ENG OIL PRESSURE:1" unit="psi"/>
+					<Constant>40</Constant>
+				</LowerEqual>
+			</And>
 		</Condition>
     </Annunciation>	
     <!--Indicates electrical system bus voltage is less than 24.5 volts-->
@@ -82,6 +85,10 @@
       <Text>ENGINE FIRE</Text>
       <Condition>
 		<Or>
+			<Equal>
+				<Simvar name="L:XMLVAR_FireTest_Switch" unit="enum"/>
+				<Constant>0</Constant>
+			</Equal>
 			<Simvar name="ENG ON FIRE" unit="bool"/>
 			<GreaterEqual>
 				<Simvar name="TURB ENG1 ITT" unit="celsius"/>
@@ -107,6 +114,10 @@
 	  <Text>FUEL SELECT OFF</Text>
 	  <Condition>
 		<Or>
+			<Equal>
+				<Simvar name="L:XMLVAR_FireTest_Switch" unit="enum"/>
+				<Constant>2</Constant>
+			</Equal>
 			<Equal>
 				<Simvar name="FUEL TANK SELECTOR:1" unit="number"/>
 				<Constant>0</Constant><!--both closed-->
@@ -192,6 +203,14 @@
 			</LowerEqual>
       </Condition>
     </Annunciation>
+	<!--Indicates the starter-generator is operating in starter mode-->
+	<Annunciation>
+	  <Type>Caution</Type>
+	  <Text>STARTER ON</Text>
+	  <Condition>
+			<Simvar name="GENERAL ENG STARTER:1" unit="Bool"/>
+	  </Condition>
+	</Annunciation>
     <!--Indicates the auxiliary fuel boost pump is operating. Switch is placed in the ON position or is in the NORM position and fuel pressure drops below 4.75 psi-->
 	<Annunciation>
       <Type>Caution</Type>
@@ -230,20 +249,6 @@
 			</Lower>
 		  </Condition>
     </Annunciation>
-	<!--Indicates the starter-generator is operating in starter mode-->
-	<Annunciation>
-	  <Type>Caution</Type>
-	  <Text>STARTER ON</Text>
-	  <Condition>
-		<And>
-			<Simvar name="GENERAL ENG STARTER:1" unit="Bool"/>
-			<Equal><!-- goes off if starter-generator switch to generator mode-->
-				<Simvar name="L:XMLVAR_Generator_Current" unit="amps"/>
-				<Constant>0</Constant>
-			</Equal>
-		</And>	
-	  </Condition>
-	</Annunciation>
 	<!--Indicates that metal chips are present in one or both of the chip detectors.-->
 	<Annunciation>
 		<Type>Caution</Type>
@@ -281,50 +286,53 @@
 	</Annunciation>
 	<!--Indicates that the generator output is less than -10 amps or greater than 200 amps-->
 	<Annunciation>
-	  <Type>Caution</Type>
-	  <Text>GENERATOR AMPS</Text>
-		  <Condition>
+		<Type>Caution</Type>
+		<Text>GENERATOR AMPS</Text>
+		<Condition>
 			<Greater>
 				<Simvar name="L:XMLVAR_Generator_Current" unit="amps"/>
 				<Constant>200</Constant>
 			</Greater>
 			<!-- it is impossible to get negative current to the alternator so the condition (Amps < -10) is skipped -->
-		  </Condition>
+		</Condition>
 	</Annunciation>
 	<!--Indicates that the generator output is less than -10 amps or greater than 200 amps-->
 	<Annunciation>
-	  <Type>Caution</Type>
-	  <Text>ALTNR AMPS</Text>
-		  <Condition>
+		<Type>Caution</Type>
+		<Text>ALTNR AMPS</Text>
+		<Condition>
 			<Greater>
 				<Simvar name="L:XMLVAR_Alternator_Current" unit="amps"/>
 				<Constant>70</Constant>
 			</Greater>
 			<!-- it is impossible to get negative current to the alternator so the condition (Amps < -10) is skipped -->
-		  </Condition>
+		</Condition>
 	</Annunciation>
-	<!--Indicates that the generator is not connected to the aircraft bus with engine running-->
+	<!--Indicates that the generator is delivering power with the engine running-->
 	<Annunciation>
-	  <Type>Caution</Type>
-	  <Text>GENERATOR OFF</Text>
-		  <Condition>
+		<Type>Caution</Type>
+		<Text>GENERATOR OFF</Text>
+		<Condition>
 			<And>
-				<Greater>
-					<Simvar name="TURB ENG N1:1" unit="percent"/>
-					<Constant>49</Constant><!-- A little bit higher then 46% to prevent from coming on when starter-generator is switching mode-->
-				</Greater>
+				<!--Announciation appears only when the engine is running-->
+				<Simvar name="ENG COMBUSTION:1" unit="bool"/>
+				<!--Check the generator is not in starter mode-->
 				<Equal>
-					<Simvar name="L:XMLVAR_Generator_Current" unit="amps"/>
+					<Simvar name="L:XMLVAR_Starter1" unit="enum"/>
+					<Constant>1</Constant>
+				</Equal>
+				<Equal>
+					<Simvar name="ELECTRICAL GENALT BUS AMPS:1" unit="amps"/>
 					<Constant>0</Constant>
 				</Equal>
 			</And>
-		  </Condition>
+		</Condition>
 	</Annunciation>
 	<!-- Indicates electrical power is not available from the standby alternator-->
 	<!-- Stby alternator is inop when stby alternator is turned off or the engine is not reved up --> 
 	<Annunciation>
-	  <Type>Caution</Type>
-	  <Text>STBY PWR INOP</Text>
+		<Type>Caution</Type>
+		<Text>STBY PWR INOP</Text>
 		<Condition>
 		<Or>
 			<Not>
@@ -340,8 +348,8 @@
 	<!-- Indicates that the standby alternator is generating electrical power-->
 	<!-- Stby alternator is connected by ACU only if the main generator is overloaded or turned off -->
 	<Annunciation>
-	  <Type>Advisory</Type>
-	  <Text>STBY PWR ON</Text>
+		<Type>Advisory</Type>
+		<Text>STBY PWR ON</Text>
 		<Condition>
 			<Greater>
 				<Simvar name="L:XMLVAR_Alternator_Current" unit="amps"/>
@@ -351,20 +359,47 @@
 	</Annunciation>
 	<!--Indicates electrical power is being supplied to the engine ignition system-->		
 	<Annunciation>
-	  <Type>Advisory</Type>
-	  <Text>IGNITION ON</Text>
-	  <Condition>
-			<Simvar name="TURB ENG IS IGNITING:1" unit="Bool"/>
-	  </Condition>
+		<Type>Advisory</Type>
+		<Text>IGNITION ON</Text>
+		<Condition>
+			<Simvar name="TURB ENG IS IGNITING:1" unit="bool"/>
+		</Condition>
 	</Annunciation>	
 	<!--Indicates anti-ice is ON; should indicate NORM and HIGH-->
 	<Annunciation>
-	  <Type>Advisory</Type>
-	  <Text>A-ICE ON</Text>
-	  <Condition>
-			<Simvar name="STRUCTURAL DEICE SWITCH:1" unit="Bool"/>
-			<Constant>1</Constant>
+		<Type>Advisory</Type>
+		<Text>A-ICE ON</Text>
+		<Condition>
+			<Or>
+				<Simvar name="L:XMLVAR_Deice_Backup_Switch" unit="bool"/>
+				<Simvar name="L:XMLVAR_Deice_Airframe" unit="bool"/>
+			</Or>
 	  </Condition>
+	</Annunciation>
+	<!--Indicates anti-ice is ON; should indicate NORM and HIGH-->
+	<Annunciation>
+		<Type>Caution</Type>
+		<Text>A-ICE FLUID LOW</Text>
+		<Condition>
+			<Lower>
+				<Simvar name="L:XMLVAR_Aice_Fluid_Level" unit="gal"/>
+				<Constant>2</Constant>
+			</Lower>
+		</Condition>
+	</Annunciation>
+	<!--Indicates system pressure on either side is too low for normal system operation and potential substandard ice protection -->
+	<Annunciation>
+		<Type>Warning</Type>
+		<Text>A-ICE PRESS LOW</Text>
+		<Condition>
+			<And>
+				<Simvar name="STRUCTURAL DEICE SWITCH:1" unit="bool"/>
+				<Equal>
+					<Simvar name="L:XMLVAR_Aice_Fluid_Level" unit="gal"/>
+					<Constant>0</Constant>
+				</Equal>
+			</And>
+		</Condition>
 	</Annunciation>
 	<!--Indicates Altimeter is not working-->
 	<Annunciation>
@@ -461,11 +496,13 @@
 		<Gauge>
 			<Type>Circular</Type>
 			<Style>
+				<Margins> <Top>5</Top> </Margins>
 				<BeginAngle>-50</BeginAngle>
 				<EndAngle>190</EndAngle>
 				<ValuePos>End</ValuePos>
 				<CursorType>Triangle</CursorType>
-				<SizePercent>90</SizePercent>
+				<SizePercent>100</SizePercent>
+				<GraduationLength>200</GraduationLength>
 			</Style>
 			<BeginText></BeginText>
 			<EndText></EndText>
@@ -473,7 +510,7 @@
 			<Title>TRQ</Title>
 			<Unit>FT-LB</Unit>
 			<Minimum>0</Minimum>
-			<Maximum>2600</Maximum>
+			<Maximum>3000</Maximum>
 			<Value>
 				<Simvar name="TURB ENG FREE TURBINE TORQUE:1" unit="foot pounds"/>
 			</Value>
@@ -525,11 +562,12 @@
 		<Gauge>
 			<Type>Circular</Type>
 			<Style>
-				<BeginAngle>-10</BeginAngle>
-				<EndAngle>170</EndAngle>
+				<BeginAngle>-20</BeginAngle>
+				<EndAngle>160</EndAngle>
 				<CursorType>Triangle</CursorType>
 				<ValuePos>End</ValuePos>
 				<SizePercent>90</SizePercent>
+                <GraduationLength>100</GraduationLength>
 			</Style>
 			<BeginText></BeginText>
 			<EndText></EndText>
@@ -612,7 +650,6 @@
 					</StateMachine>
 				</Position>
 			</ColorLine>
-			
 			<RedBlink>
 				<Greater>
 					<Simvar name="TURB ENG1 ITT" unit="celsius"/>
@@ -636,17 +673,17 @@
 					</StateMachine>
 				</Greater>
 			</RedBlink>
-			<GraduationLength>50</GraduationLength>
 		</Gauge>
 		
 		<Gauge>
 			<Type>Circular</Type>
 			<Style>
-				<BeginAngle>-10</BeginAngle>
-				<EndAngle>170</EndAngle>
+				<BeginAngle>-20</BeginAngle>
+				<EndAngle>160</EndAngle>
 				<CursorType>Triangle</CursorType>
 				<ValuePos>End</ValuePos>
 				<SizePercent>90</SizePercent>
+				<GraduationLength>10</GraduationLength>
 				<TextIncrement>1</TextIncrement>
 			</Style>
 			<BeginText></BeginText>
@@ -676,7 +713,6 @@
 				<Color>red</Color>
 				<Position>103.7</Position>
 			</ColorLine>
-			<GraduationLength>10</GraduationLength>
 			<RedBlink>
 				<Greater>
 					<Simvar name="TURB ENG N1:1" unit="percent"/>
@@ -686,8 +722,8 @@
 		</Gauge>
 
 		<Text>
-			<Left>PROP RPM</Left>
-			<Right id="Turbo_RPMGauge">
+			<Left fontsize="9">PROP RPM</Left>
+			<Right fontsize="10" id="Turbo_RPMGauge">
 				<Content>
 					<ToFixed precision="0">
 						<Simvar name="PROP RPM:1" unit="rpm"/>
@@ -696,25 +732,21 @@
 				<Color>
 					<If>
 						<Condition>
-							<Greater>
+							<GreaterEqual>
 								<Simvar name="PROP RPM:1" unit="rpm"/>
 								<Constant>1600</Constant>
-							</Greater>
+							</GreaterEqual>
 						</Condition>
 						<Then>
 							<If>
 								<Condition>
-									<Greater>
+									<GreaterEqual>
 										<Simvar name="PROP RPM:1" unit="rpm"/>
 										<Constant>1910</Constant>
-									</Greater>
+									</GreaterEqual>
 								</Condition>
-								<Then>
-									<Constant>red</Constant>
-								</Then>
-								<Else>
-									<Constant>green</Constant>
-								</Else>
+								<Then> <Constant>red</Constant> </Then>
+								<Else> <Constant>green</Constant> </Else>
 							</If>
 						</Then>
 						<Else>
@@ -724,7 +756,7 @@
 				</Color>
 			</Right>
 		</Text>
-		
+	
 		<Gauge>
 			<Type>Horizontal</Type>
 			<Style>
@@ -886,22 +918,110 @@
 				</ToFixed>
 			</Right>
 		</Text>
-		
+
 		<Text>
-			<Left fontsize="8">BAT AMPS</Left>
-			<Right id="Amperes" fontsize="9">
-			<ToFixed precision="1">
-				<Simvar name="L:XMLVAR_Battery_Current" unit="amps"/>
-			</ToFixed>
+			<Left fontsize="8">
+				<Content>BAT AMPS</Content>
+				<Color>
+					<If>
+						<Condition>
+							<GreaterEqual>
+								<Simvar name="L:XMLVAR_Battery_Current" unit="amps"/>
+								<Constant>-5</Constant>
+							</GreaterEqual>
+						</Condition>
+						<Then> white </Then>
+						<Else> red </Else>
+					</If>
+				</Color>
+			</Left>
+			<Right fontsize="9">
+				<Content>
+					<ToFixed precision="1">
+						<Simvar name="L:XMLVAR_Battery_Current" unit="amps"/>
+					</ToFixed>
+				</Content>
+				<Color>
+					<If>
+						<Condition>
+							<GreaterEqual>
+								<Simvar name="L:XMLVAR_Battery_Current" unit="amps"/>
+								<Constant>-5</Constant>
+							</GreaterEqual>
+						</Condition>
+						<Then> white </Then>
+						<Else> red </Else>
+					</If>
+				</Color>
 			</Right>
 		</Text>
-		
+
 		<Text>
-			<Left fontsize="8">BUS VOLTS</Left>
-			<Right id="Volts" fontsize="9">
-				<ToFixed precision="1">
-					<Simvar name="ELECTRICAL MAIN BUS VOLTAGE:1" unit="volts"/>
-				</ToFixed>
+			<Left fontsize="8">
+				<Content>BUS VOLTS</Content>
+				<Color>
+					<If>
+						<Condition>
+							<GreaterEqual>
+								<Simvar name="ELECTRICAL MAIN BUS VOLTAGE:1" unit="volts"/>
+								<Constant>24</Constant>
+							</GreaterEqual>
+						</Condition>
+						<Then> white </Then>
+						<Else> red </Else>
+					</If>
+				</Color>
+			</Left>
+			<Right fontsize="9">
+				<Content>
+					<ToFixed precision="1">
+						<Simvar name="ELECTRICAL MAIN BUS VOLTAGE:1" unit="volts"/>
+					</ToFixed>
+				</Content>
+				<Color>
+					<If>
+						<Condition>
+							<GreaterEqual>
+								<Simvar name="ELECTRICAL MAIN BUS VOLTAGE:1" unit="volts"/>
+								<Constant>24</Constant>
+							</GreaterEqual>
+						</Condition>
+						<Then> white </Then>
+						<Else> red </Else>
+					</If>
+				</Color>
+			</Right>
+		</Text>
+
+		<Text>
+			<Left fontsize="8">A-ICE GAL</Left>
+			<Right fontsize="9">
+				<Content>
+					<ToFixed precision="1">
+            			<Simvar name="L:XMLVAR_Aice_Fluid_Level" unit="gal"/>
+					</ToFixed>
+				</Content>
+				<Color>
+					<If>
+						<Condition>
+							<GreaterEqual>
+								<Simvar name="L:XMLVAR_Aice_Fluid_Level" unit="gal"/>
+								<Constant>1.3</Constant>
+							</GreaterEqual>
+						</Condition>
+						<Then> <If> 
+							<Condition>
+								<GreaterEqual>
+									<Simvar name="L:XMLVAR_Aice_Fluid_Level" unit="gal"/>
+									<Constant>5.2</Constant>
+								</GreaterEqual>
+							</Condition>
+							<Then> green </Then> 
+							<Else> #ffbf00 </Else>
+						</If> </Then>
+						<Else> red </Else>
+					</If>
+				</Color>
 			</Right>
 		</Text>
 
@@ -911,11 +1031,14 @@
 			<Gauge>
 				<Type>Circular</Type>
 				<Style>
+					<Margins> <Top>5</Top> </Margins>
 					<BeginAngle>-50</BeginAngle>
 					<EndAngle>190</EndAngle>
 					<ValuePos>End</ValuePos>
 					<CursorType>Triangle</CursorType>
-					<SizePercent>90</SizePercent>
+					<SizePercent>100</SizePercent>
+					<TextIncrement>1</TextIncrement>
+                    <GraduationLength>200</GraduationLength>
 				</Style>
 				<BeginText></BeginText>
 				<EndText></EndText>
@@ -942,8 +1065,6 @@
 					</Position>
 					<SmoothFactor>0.2</SmoothFactor>
 				</ColorLine>
-				<GraduationLength>100</GraduationLength>
-				<GraduationTextLength>500</GraduationTextLength>
 				<RedBlink>
 					<Greater>
 						<Simvar name="TURB ENG FREE TURBINE TORQUE:1" unit="foot pounds"/>
@@ -975,11 +1096,14 @@
 			<Gauge>
 				<Type>Circular</Type>
 				<Style>
-					<BeginAngle>-10</BeginAngle>
-					<EndAngle>170</EndAngle>
+					<Margins> <Top>-15</Top> </Margins>
+					<BeginAngle>-20</BeginAngle>
+					<EndAngle>160</EndAngle>
 					<CursorType>Triangle</CursorType>
 					<ValuePos>End</ValuePos>
 					<SizePercent>90</SizePercent>
+					<TextIncrement>1</TextIncrement>
+					<GraduationLength>50</GraduationLength>
 				</Style>
 				<BeginText></BeginText>
 				<EndText></EndText>
@@ -1062,7 +1186,6 @@
 						</StateMachine>
 					</Position>
 				</ColorLine>
-				
 				<RedBlink>
 					<Greater>
 						<Simvar name="TURB ENG1 ITT" unit="celsius"/>
@@ -1086,18 +1209,19 @@
 						</StateMachine>
 					</Greater>
 				</RedBlink>
-				<GraduationLength>50</GraduationLength>
 			</Gauge>
 			
 			<Gauge>
 				<Type>Circular</Type>
 				<Style>
-					<BeginAngle>-10</BeginAngle>
-					<EndAngle>170</EndAngle>
+					<Margins> <Top>-15</Top> </Margins>
+					<BeginAngle>-20</BeginAngle>
+					<EndAngle>160</EndAngle>
 					<CursorType>Triangle</CursorType>
 					<ValuePos>End</ValuePos>
 					<SizePercent>90</SizePercent>
 					<TextIncrement>1</TextIncrement>
+					<GraduationLength>10</GraduationLength>
 				</Style>
 				<BeginText></BeginText>
 				<EndText></EndText>
@@ -1126,7 +1250,6 @@
 					<Color>red</Color>
 					<Position>103.7</Position>
 				</ColorLine>
-				<GraduationLength>10</GraduationLength>
 				<RedBlink>
 					<Greater>
 						<Simvar name="TURB ENG N1:1" unit="percent"/>
@@ -1134,24 +1257,13 @@
 					</Greater>
 				</RedBlink>
 			</Gauge>
-			
-			<Text> <!--Adjust with a brake-->
-				<Style>
-					<Margins>
-						<Top>20</Top>
-					</Margins>
-				</Style>
-				<Center>---------------------------------</Center>
-			</Text>
-			
+
 			<Text>
-				<Style> <!--Adjust placement-->
-					<Margins>
-						<Bottom>10</Bottom>
-					</Margins>
+				<Style>
+					<Margins> <Top>10</Top> </Margins>
 				</Style>
-				<Left>PROP RPM</Left>
-				<Right id="Turbo_RPMGauge">
+				<Left fontsize="9">PROP RPM</Left>
+				<Right fontsize="10" id="Turbo_RPMGauge">
 					<Content>
 						<ToFixed precision="0">
 							<Simvar name="PROP RPM:1" unit="rpm"/>
@@ -1160,10 +1272,10 @@
 					<Color>
 						<If>
 							<Condition>
-									<GreaterEqual>
-										<Simvar name="PROP RPM:1" unit="rpm"/>
-										<Constant>1600</Constant>
-									</GreaterEqual>
+								<GreaterEqual>
+									<Simvar name="PROP RPM:1" unit="rpm"/>
+									<Constant>1600</Constant>
+								</GreaterEqual>
 							</Condition>
 							<Then>
 								<If>
@@ -1173,12 +1285,8 @@
 											<Constant>1910</Constant>
 										</GreaterEqual>
 									</Condition>
-									<Then>
-										<Constant>red</Constant>
-									</Then>
-									<Else>
-										<Constant>green</Constant>
-									</Else>
+									<Then> <Constant>red</Constant> </Then>
+									<Else> <Constant>green</Constant> </Else>
 								</If>
 							</Then>
 							<Else>
@@ -1188,10 +1296,18 @@
 					</Color>
 				</Right>
 			</Text>
+
+			<Text>
+				<Style>
+					<Margins> <Top>-10</Top> </Margins>
+				</Style>
+				<Center>---------------------------------</Center>
+			</Text>
 			
 			<Gauge>
 				<Type>Horizontal</Type>
 				<Style>
+					<Margins> <Top>-10</Top> </Margins>
 					<ValuePos>End</ValuePos>
 				</Style>
 				<ID>Turbo_OilPressGauge</ID>
@@ -1290,25 +1406,26 @@
 			
 			<Text>
 				<Style>
-					<Margins>
-						<Top>10</Top>
-					</Margins>
+					<Margins> <Top>5</Top> </Margins>
 				</Style>
-				<Left>L</Left>
-				<Center>FUEL QTY</Center>
-				<Right>R</Right>
+				<Left fontsize="8">L</Left>
+				<Center fontsize="9">FUEL QTY</Center>
+				<Right fontsize="8">R</Right>
 			</Text>
 			
 			<Gauge>
 				<Type>DoubleVertical</Type>
+				<Style>
+					<Margins> <Top>-2</Top>	</Margins>
+					<GraduationLength text="True">200</GraduationLength>
+				</Style>
 				<ID>Turbo_FuelGauge</ID>
 				<Title></Title>
 				<Unit>LBS</Unit>
-				<Minimum>0</Minimum>
-				<Maximum>1145</Maximum>
-				<Style>
-					<Height>70</Height>
-				</Style>
+				<Minimum>LBS</Minimum>
+				<Maximum>1200</Maximum>
+				<BeginText></BeginText>
+				<EndText>1200</EndText>
 				<Value>
 					<Multiply>
 						<Simvar name="FUEL LEFT QUANTITY" unit="gallons"/>
@@ -1323,22 +1440,18 @@
 				</Value2>
 				<ColorLine>
 					<Color>red</Color>
-					<Position>0</Position>
+					<Position>1200</Position>
 				</ColorLine>
 				<ColorZone>
 					<Color>red</Color>
 					<Begin>0</Begin>
-					<End>25</End>
+					<End>150</End>
 				</ColorZone>
-				<GraduationLength text="True">200</GraduationLength>
-				<EndText></EndText>
 			</Gauge>
-			
+
 			<Text>
 				<Style>
-					<Margins>
-						<Top>10</Top>
-					</Margins>
+					<Margins> <Top>-1</Top> </Margins>
 				</Style>
 				<Left fontsize="8">FFLOW PPH</Left>
 				<Right id="FuelFlow" fontsize="9">
@@ -1360,23 +1473,133 @@
 					</ToFixed>
 				</Right>
 			</Text>
-			
 
 			<Text>
-				<Left fontsize="8">BAT AMPS</Left>
+				<Style>
+					<Margins> <Top>-10</Top> </Margins>
+				</Style>
+				<Center>---------------------------------</Center>
+			</Text>
+
+			<Text>
+				<Style>
+					<Margins> <Top>-10</Top> </Margins>
+				</Style>
+				<Left fontsize="8">
+					<Content>BAT AMPS</Content>
+					<Color>
+						<If>
+							<Condition>
+								<GreaterEqual>
+									<Simvar name="L:XMLVAR_Battery_Current" unit="amps"/>
+									<Constant>-5</Constant>
+								</GreaterEqual>
+							</Condition>
+							<Then> white </Then>
+							<Else> red </Else>
+						</If>
+					</Color>
+				</Left>
 				<Right id="Amperes" fontsize="9">
-	    			<ToFixed precision="1">
-					<Simvar name="L:XMLVAR_Battery_Current" unit="amps"/>
-					</ToFixed>
+					<Content>
+						<ToFixed precision="1">
+							<Simvar name="L:XMLVAR_Battery_Current" unit="amps"/>
+						</ToFixed>
+					</Content>
+					<Color>
+						<If>
+							<Condition>
+								<GreaterEqual>
+									<Simvar name="L:XMLVAR_Battery_Current" unit="amps"/>
+									<Constant>-5</Constant>
+								</GreaterEqual>
+							</Condition>
+							<Then> white </Then>
+							<Else> red </Else>
+						</If>
+					</Color>
 				</Right>
 			</Text>
-		
+
 			<Text>
-				<Left fontsize="8">BUS VOLTS</Left>
+				<Style>
+					<Margins> <Top>-5</Top> </Margins>
+				</Style>
+				<Left fontsize="8">
+					<Content>BUS VOLTS</Content>
+					<Color>
+						<If>
+							<Condition>
+								<GreaterEqual>
+									<Simvar name="ELECTRICAL MAIN BUS VOLTAGE:1" unit="volts"/>
+									<Constant>24</Constant>
+								</GreaterEqual>
+							</Condition>
+							<Then> white </Then>
+							<Else> red </Else>
+						</If>
+					</Color>
+				</Left>
 				<Right id="Volts" fontsize="9">
-					<ToFixed precision="1">
-						<Simvar name="ELECTRICAL MAIN BUS VOLTAGE:1" unit="volts"/>
-					</ToFixed>
+					<Content>
+						<ToFixed precision="1">
+							<Simvar name="ELECTRICAL MAIN BUS VOLTAGE:1" unit="volts"/>
+						</ToFixed>
+					</Content>
+					<Color>
+						<If>
+							<Condition>
+								<GreaterEqual>
+									<Simvar name="ELECTRICAL MAIN BUS VOLTAGE:1" unit="volts"/>
+									<Constant>24</Constant>
+								</GreaterEqual>
+							</Condition>
+							<Then> white </Then>
+							<Else> red </Else>
+						</If>
+					</Color>
+				</Right>
+			</Text>
+	
+			<Text>
+				<Style>
+					<Margins> <Top>-10</Top> </Margins>
+				</Style>
+				<Center>---------------------------------</Center>
+			</Text>
+
+			<Text>
+				<Style>
+					<Margins> <Top>-7</Top> </Margins>
+				</Style>
+				<Left fontsize="8">A-ICE GAL</Left>
+				<Right fontsize="9">
+					<Content>
+						<ToFixed precision="1">
+        	    			<Simvar name="L:XMLVAR_Aice_Fluid_Level" unit="gal"/>
+						</ToFixed>
+					</Content>
+					<Color>
+						<If>
+							<Condition>
+								<GreaterEqual>
+									<Simvar name="L:XMLVAR_Aice_Fluid_Level" unit="gal"/>
+									<Constant>1.3</Constant>
+								</GreaterEqual>
+							</Condition>
+							<Then> <If> 
+								<Condition>
+									<GreaterEqual>
+										<Simvar name="L:XMLVAR_Aice_Fluid_Level" unit="gal"/>
+										<Constant>5.2</Constant>
+									</GreaterEqual>
+								</Condition>
+								<Then> green </Then> 
+								<Else> #ffbf00 </Else>
+							</If> </Then>
+							<Else> red </Else>
+						</If>
+					</Color>
 				</Right>
 			</Text>
 
@@ -1387,11 +1610,14 @@
 			<Gauge>
 				<Type>Circular</Type>
 				<Style>
+					<Margins> <Top>5</Top> </Margins>
 					<BeginAngle>-50</BeginAngle>
 					<EndAngle>190</EndAngle>
 					<ValuePos>End</ValuePos>
 					<CursorType>Triangle</CursorType>
-					<SizePercent>90</SizePercent>
+					<SizePercent>100</SizePercent>
+					<TextIncrement>1</TextIncrement>
+                    <GraduationLength>100</GraduationLength>
 				</Style>
 				<BeginText></BeginText>
 				<EndText></EndText>
@@ -1418,11 +1644,9 @@
 					</Position>
 					<SmoothFactor>0.2</SmoothFactor>
 				</ColorLine>
-				<GraduationLength>100</GraduationLength>
-				<GraduationTextLength>500</GraduationTextLength>
 				<RedBlink>
 					<Greater>
-						<Simvar name="TURB ENG FREE TURBINE TORQUE:1" unit="Foot pounds"/>
+						<Simvar name="TURB ENG FREE TURBINE TORQUE:1" unit="foot pounds"/>
 						<Simvar name="L:XMLVAR_EngineMaxTorque" unit="foot pounds"/>
 					</Greater>
 				</RedBlink>
@@ -1451,11 +1675,14 @@
 			<Gauge>
 				<Type>Circular</Type>
 				<Style>
-					<BeginAngle>-10</BeginAngle>
-					<EndAngle>170</EndAngle>
+					<Margins> <Top>-15</Top> </Margins>
+					<BeginAngle>-20</BeginAngle>
+					<EndAngle>160</EndAngle>
 					<CursorType>Triangle</CursorType>
 					<ValuePos>End</ValuePos>
 					<SizePercent>90</SizePercent>
+					<TextIncrement>1</TextIncrement>
+					<GraduationLength>50</GraduationLength>
 				</Style>
 				<BeginText></BeginText>
 				<EndText></EndText>
@@ -1538,7 +1765,6 @@
 						</StateMachine>
 					</Position>
 				</ColorLine>
-				
 				<RedBlink>
 					<Greater>
 						<Simvar name="TURB ENG1 ITT" unit="celsius"/>
@@ -1562,18 +1788,19 @@
 						</StateMachine>
 					</Greater>
 				</RedBlink>
-				<GraduationLength>50</GraduationLength>
 			</Gauge>
 
 			<Gauge>
 				<Type>Circular</Type>
 				<Style>
-					<BeginAngle>-10</BeginAngle>
-					<EndAngle>170</EndAngle>
+					<Margins> <Top>-15</Top> </Margins>
+					<BeginAngle>-20</BeginAngle>
+					<EndAngle>160</EndAngle>
 					<CursorType>Triangle</CursorType>
 					<ValuePos>End</ValuePos>
 					<SizePercent>90</SizePercent>
 					<TextIncrement>1</TextIncrement>
+					<GraduationLength>10</GraduationLength>
 				</Style>
 				<BeginText></BeginText>
 				<EndText></EndText>
@@ -1602,7 +1829,6 @@
 					<Color>red</Color>
 					<Position>103.7</Position>
 				</ColorLine>
-				<GraduationLength>10</GraduationLength>
 				<RedBlink>
 					<Greater>
 						<Simvar name="TURB ENG N1:1" unit="percent"/>
@@ -1610,14 +1836,13 @@
 					</Greater>
 				</RedBlink>
 			</Gauge>
-			
-			<Text> <!--Adjust with a brake-->
-				<Center>---------------------------------</Center>
-			</Text>
 
 			<Text>
-				<Left>PROP RPM</Left>
-				<Right id="Turbo_RPMGauge">
+				<Style>
+					<Margins> <Top>10</Top> </Margins>
+				</Style>
+				<Left fontsize="9">PROP RPM</Left>
+				<Right fontsize="10" id="Turbo_RPMGauge">
 					<Content>
 						<ToFixed precision="0">
 							<Simvar name="PROP RPM:1" unit="rpm"/>
@@ -1626,10 +1851,10 @@
 					<Color>
 						<If>
 							<Condition>
-									<GreaterEqual>
-										<Simvar name="PROP RPM:1" unit="rpm"/>
-										<Constant>1600</Constant>
-									</GreaterEqual>
+								<GreaterEqual>
+									<Simvar name="PROP RPM:1" unit="rpm"/>
+									<Constant>1600</Constant>
+								</GreaterEqual>
 							</Condition>
 							<Then>
 								<If>
@@ -1657,13 +1882,16 @@
 
 			<Text>
 				<Left>-----------</Left>
-				<Center fontsize="8.5">FUEL</Center>
+				<Center fontsize="8">FUEL</Center>
 				<Right>-----------</Right>
 			</Text>
 			
 			<Text>
+				<Style>
+					<Margins> <Top>-3</Top> </Margins>
+				</Style>
 				<Left fontsize="8">QTY L LBS</Left>
-				<Right fontsize="9">
+				<Right fontsize="10">
 					<ToFixed precision="0">
 						<Multiply>
 							<Simvar name="FUEL LEFT QUANTITY" unit="gallons"/>
@@ -1674,8 +1902,11 @@
 			</Text>
 			
 			<Text>
+				<Style>
+					<Margins> <Top>-3</Top> </Margins>
+				</Style>
 				<Left fontsize="8">QTY R LBS</Left>
-				<Right fontsize="9">
+				<Right fontsize="10">
 					<ToFixed precision="0">
 						<Multiply>
 							<Simvar name="FUEL RIGHT QUANTITY" unit="gallons"/>
@@ -1686,8 +1917,11 @@
 			</Text>
 			
 			<Text>
+				<Style>
+					<Margins> <Top>-3</Top> </Margins>
+				</Style>
 				<Left fontsize="8">FFLOW PPH</Left>
-				<Right fontsize="9">
+				<Right fontsize="10">
 					<ToFixed precision="0">
 						<If>
 							<Condition>
@@ -1708,16 +1942,20 @@
 			</Text>
 			
 			<Text>
+				<Style>
+					<Margins> <Top>2</Top> </Margins>
+				</Style>
 				<Left>--</Left>
-		        <ForceTextColor>Red</ForceTextColor>
-
-				<Center fontsize="8.5">FUEL TOTALIZER</Center>
+				<Center fontsize="8">FUEL TOTALIZER</Center>
 				<Right>--</Right>
 			</Text>
 
 			<Text>
+				<Style>
+					<Margins> <Top>-3</Top> </Margins>
+				</Style>
 				<Left fontsize="8">LB REM</Left>			
-				<Right fontsize="9">
+				<Right fontsize="10">
 					<ToFixed precision="0">
 						<Multiply>
 							<Simvar name="L:WT1000_Fuel_GalRemaining" unit="gallon"/>
@@ -1728,8 +1966,11 @@
 			</Text>
 			
 			<Text>
+				<Style>
+					<Margins> <Top>-3</Top> </Margins>
+				</Style>
 				<Left fontsize="8">LB USED</Left>			
-				<Right fontsize="9">
+				<Right fontsize="10">
 					<ToFixed precision="0">
 						<Multiply>
 							<Simvar name="L:WT1000_Fuel_GalBurned" unit="gallon"/>
@@ -1740,14 +1981,20 @@
 			</Text>
 			
 			<Text>
+				<Style>
+					<Margins> <Top>2</Top> </Margins>
+				</Style>
 				<Left>-----</Left>
-				<Center fontsize="8.5">ELECTRICAL</Center>
+				<Center fontsize="8">ELECTRICAL</Center>
 				<Right>-----</Right>
 			</Text>
 	
 			<Text>
+				<Style>
+					<Margins> <Top>-3</Top> </Margins>
+				</Style>
 				<Left fontsize="8">GEN AMPS</Left>
-				<Right fontsize="9">
+				<Right fontsize="10">
 					<ToFixed precision="1">
 						<Simvar name="L:XMLVAR_Generator_Current" unit="amps"/>
 					</ToFixed>
@@ -1755,8 +2002,11 @@
 			</Text>
 
 			<Text>
+				<Style>
+					<Margins> <Top>-3</Top> </Margins>
+				</Style>
 				<Left fontsize="8">ALT AMPS</Left>
-				<Right fontsize="9">
+				<Right fontsize="10">
 					<ToFixed precision="1">
 						<Simvar name="L:XMLVAR_Alternator_Current" unit="amps"/>
 					</ToFixed>
@@ -1764,20 +2014,123 @@
 			</Text>
 
 			<Text>
-				<Left fontsize="8">BAT AMPS</Left>
-				<Right id="Amperes" fontsize="9">
-					<ToFixed precision="1">
-						<Simvar name="L:XMLVAR_Battery_Current" unit="amps"/>
-					</ToFixed>
+				<Style>
+					<Margins> <Top>-3</Top> </Margins>
+				</Style>
+				<Left fontsize="8">
+					<Content>BAT AMPS</Content>
+					<Color>
+						<If>
+							<Condition>
+								<GreaterEqual>
+									<Simvar name="L:XMLVAR_Battery_Current" unit="amps"/>
+									<Constant>-5</Constant>
+								</GreaterEqual>
+							</Condition>
+							<Then> white </Then>
+							<Else> red </Else>
+						</If>
+					</Color>
+				</Left>
+				<Right fontsize="10">
+					<Content>
+						<ToFixed precision="1">
+							<Simvar name="L:XMLVAR_Battery_Current" unit="amps"/>
+						</ToFixed>
+					</Content>
+					<Color>
+						<If>
+							<Condition>
+								<GreaterEqual>
+									<Simvar name="L:XMLVAR_Battery_Current" unit="amps"/>
+									<Constant>-5</Constant>
+								</GreaterEqual>
+							</Condition>
+							<Then> white </Then>
+							<Else> red </Else>
+						</If>
+					</Color>
 				</Right>
 			</Text>
-		
+
 			<Text>
-				<Left fontsize="8">BUS VOLTS</Left>
-				<Right id="Volts" fontsize="9">
-					<ToFixed precision="1">
-						<Simvar name="ELECTRICAL MAIN BUS VOLTAGE:1" unit="volts"/>
-					</ToFixed>
+				<Style>
+					<Margins> <Top>-3</Top> </Margins>
+				</Style>
+				<Left fontsize="8">
+					<Content>BUS VOLTS</Content>
+					<Color>
+						<If>
+							<Condition>
+								<GreaterEqual>
+									<Simvar name="ELECTRICAL MAIN BUS VOLTAGE:1" unit="volts"/>
+									<Constant>24</Constant>
+								</GreaterEqual>
+							</Condition>
+							<Then> white </Then>
+							<Else> red </Else>
+						</If>
+					</Color>
+				</Left>
+				<Right fontsize="10">
+					<Content>
+						<ToFixed precision="1">
+							<Simvar name="ELECTRICAL MAIN BUS VOLTAGE:1" unit="volts"/>
+						</ToFixed>
+					</Content>
+					<Color>
+						<If>
+							<Condition>
+								<GreaterEqual>
+									<Simvar name="ELECTRICAL MAIN BUS VOLTAGE:1" unit="volts"/>
+									<Constant>24</Constant>
+								</GreaterEqual>
+							</Condition>
+							<Then> white </Then>
+							<Else> red </Else>
+						</If>
+					</Color>
+				</Right>
+			</Text>
+	
+			<Text>
+				<Style>
+					<Margins> <Top>2</Top> </Margins>
+				</Style>
+				<Left>------</Left>
+				<Center fontsize="8">A-ICE GAL</Center>
+				<Right>------</Right>
+			</Text>
+
+			<Text>
+				<Left fontsize="8">A-ICE GAL</Left>
+				<Right fontsize="10">
+					<Content>
+						<ToFixed precision="1">
+    	        			<Simvar name="L:XMLVAR_Aice_Fluid_Level" unit="gal"/>
+						</ToFixed>
+					</Content>
+					<Color>
+						<If>
+							<Condition>
+								<GreaterEqual>
+									<Simvar name="L:XMLVAR_Aice_Fluid_Level" unit="gal"/>
+									<Constant>1.3</Constant>
+								</GreaterEqual>
+							</Condition>
+							<Then> <If> 
+								<Condition>
+									<GreaterEqual>
+										<Simvar name="L:XMLVAR_Aice_Fluid_Level" unit="gal"/>
+										<Constant>5.2</Constant>
+									</GreaterEqual>
+								</Condition>
+								<Then> green </Then> 
+								<Else> #ffbf00 </Else>
+							</If> </Then>
+							<Else> red </Else>
+						</If>
+					</Color>
 				</Right>
 			</Text>
 
@@ -1788,26 +2141,23 @@
   <VoicesAlerts>
 
 	<Alert>
-		<Type>Warning</Type>
-		<Text>TORQUE</Text>
+		<Type>SoundOnly</Type>
 		<SoundEvent>tone_warning</SoundEvent>
 		<Condition>
-			<Greater>
-				<Simvar name="TURB ENG FREE TURBINE TORQUE:1" unit="foot pounds"/>
-				<Simvar name="L:XMLVAR_EngineMaxTorque" unit="foot pounds"/>
-			</Greater>
-		</Condition>
-	</Alert>
-
-	<Alert>
-		<Type>Warning</Type>
-		<Text>ITT</Text>
-		<SoundEvent>tone_warning</SoundEvent>
-		<Condition>
-			<Greater>
-				<Simvar name="TURB ENG ITT:1" unit="celsius"/>
-				<Constant>825</Constant>
-			</Greater>
+			<Or>
+				<Greater>
+					<Simvar name="TURB ENG FREE TURBINE TORQUE:1" unit="foot pounds"/>
+					<Simvar name="L:XMLVAR_EngineMaxTorque" unit="foot pounds"/>
+				</Greater>
+				<Greater>
+					<Simvar name="TURB ENG ITT:1" unit="celsius"/>
+					<Constant>825</Constant>
+				</Greater>
+	  			<Equal>
+  					<Simvar name="L:XMLVAR_FireTest_Switch" unit="enum"/>
+  					<Constant>0</Constant>
+	  			</Equal>
+			</Or>
 		</Condition>
 	</Alert>
 
@@ -1840,6 +2190,7 @@
 			</StateMachine>
 		</Condition>
 	</Alert>
+
 	<Alert>
            <Type>SoundOnly</Type>
            <SoundEvent>tone_altitude_alert_default</SoundEvent>
@@ -2025,7 +2376,7 @@
 		<Type>SoundOnly</Type>
 		<SoundEvent>aural_stall</SoundEvent>
 		<Condition>
-			<Simvar name="STALL WARNING" unit="Bool"/>
+			<Simvar name="L:XMLVAR_Stall_Warning" unit="Bool"/>
 		</Condition>
 	</Alert>
 	
@@ -2137,6 +2488,9 @@
 						<Param>
 							<Substract>
 								<MaxSinceStart>
+									<ResetCondition>
+										<Simvar name="SIM ON GROUND" unit="bool"/>
+									</ResetCondition>
 									<Simvar name="PLANE ALTITUDE" unit="feet"/>
 								</MaxSinceStart>
 								<Simvar name="PLANE ALTITUDE" unit="feet"/>
