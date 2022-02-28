@@ -1,5 +1,45 @@
 ## Changes
 
+**2203.1.0**
+- fix #115: added support for MASTER_BATTERY_ON and MASTER_BATTERY_OFF events
+- fix: XML standard adherence
+- fix: stby torque indicator is not lit
+- fix: cockpit flood lights current consumption changes with light intensity
+- fix: avionics, stby instruments and other panel lights current consumption does not change with light intensity
+- fix #117: various improvment to internal lights setting, cabin ambient light improved. Right now cabin lights dim when battery is almost discharged
+- add: Internal light initialisation + cleanup
+- fix: tooltips does not work for modified controls (battery, generator and alternator switches)
+- fix: the order of CAS messages on FD
+- cleanup: move new mod templates to dedicated files. Remove garbage files.
+- fix: migrate to new autostart / autostop procedure handling
+- Improvment: starter-motor position is sprint loaded and mechanically connected with ignition switch,
+- fix: main generatior is not connected to the system until start switch returns to off position.
+- fix: ignition remains on until starter switch returns to off position or when the ignition switch is in norm position
+- fix: initialisation of ignition switch does not work. setup default value for Norm for all flight phases.
+- fix: do not enter starter mode for NG>46%.
+- fix: battery current indication changes to red when battery is discharged,
+- fix: fuel gauge correction
+- fix: realignement of gauges to prepare space for anti ice system implementation.
+- improvment: Added anti Ice fluid application when anti ice system is turned on. added missing A-ICE CAS messages.
+- improvment: the starter current load depends partly on the external temperature.
+- improvment: electric system changes description
+- improvment: Experimental Anti Ice system implemtnation.
+- improvment: added stall sensor heater switch (inop for now)
+- improvment: added windshield deice switch logic
+- Added: anti-ice system description added to readme file
+- fix: added additional chart and reference to readme file
+- improvment: added deice pump elecric circuit logic
+- improvment: added stall heater implemntation
+- fix: added stall heater description and some final tweaks of the system
+- improvment: added lgoic for propeller speed governor test switch
+- fix: sound is doubled when goveronor test button is released. Min Goverend RPMS set to 1500 RPM.
+- fix: get rid of template related problems, fix deice tooltips
+- improvment: Added logic for CAS announciation test switch
+- fix: tone warning does not work
+- fix: Cold and Dark configuration. Initialisation of fuelshutoff valve. It is possible now to set the valve to open state and condition leaver to cutoff state.
+- fix: merge with SimUpdate8 model
+
+
 **2201.3**
 - Fixed: Gyro hum does not cease when the battery run down.
 - Fixed: Stby Alternator led should light when ACU is powered with battery disconnected
