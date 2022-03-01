@@ -1,5 +1,8 @@
 ## Changes
 
+**2203.1.1**
+- Removed files for Standby Airspeed Indicator (Asobo has fixed this issue)
+
 **2203.1.0**
 - fix #115: added support for MASTER_BATTERY_ON and MASTER_BATTERY_OFF events
 - fix: XML standard adherence
