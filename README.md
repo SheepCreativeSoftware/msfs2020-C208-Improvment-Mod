@@ -4,7 +4,7 @@ A community mod for the Cessna 208B Grand Caravan, which aims to fix many of the
 Feel free to contribute to this mod! Create an issue or fork and create a pull request!  
 Disscution about this mod, takes place in the [official forum](https://forums.flightsimulator.com/t/c208b-grand-caravan-ex-mods-general/322172?u=magrainaone)
 
-**Based on Sim version 1.21.18.0 (SU7)**
+**Based on Sim version 1.23.12.0 (SU8)**
 
 ***Engine and Flight Model***
 - Corrected Different Values according to POH
