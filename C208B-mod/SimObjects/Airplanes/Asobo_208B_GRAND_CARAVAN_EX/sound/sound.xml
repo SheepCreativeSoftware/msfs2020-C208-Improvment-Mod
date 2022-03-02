@@ -59,7 +59,6 @@
   </GroundSounds>
   
   <MiscellaneousSounds>
-    <Sound WwiseEvent="STALL_WARNING" WwiseData="true" />
 	<Sound WwiseEvent="OVERSPEED_WARNING_SOUND" WwiseData="true" />
     <Sound WwiseEvent="AP_PREFLIGHT_CHECK_OVER" ViewPoint="Inside" WwiseData="true" />		
   </MiscellaneousSounds>
@@ -107,9 +106,12 @@
 
 <!-- SimvarSounds ========================================================================================== --> 
 
-   <SimVarSounds>
-   
-       <!-- ENGINE SOUNDS ========================================================================================== -->    
+    <SimVarSounds>
+    <Sound WwiseEvent="STALL_WARNING" WwiseData="true" Continuous="true" LocalVar="XMLVAR_Stall_Warning" Units="BOOLEAN">
+		<Range LowerBound="1"/>
+	</Sound>
+
+<!-- ENGINE SOUNDS ========================================================================================== -->    
   
     <Sound WwiseData="true" WwiseEvent="eng1_ignition" NodeName="HYDROLIC_01_CENTER" SimVar="TURB ENG IS IGNITING" Units="BOOL" Index="1">
       <Range LowerBound="1.0" />
@@ -204,8 +206,8 @@
     </Sound>
 	
 	<Sound WwiseData="true" WwiseEvent="propeller_lever" ViewPoint="Inside" NodeName="ENGINE_LEVER_PROPELLER_1" ContinuousStopDelay="1.0" SimVar="GENERAL ENG PROPELLER LEVER POSITION" Units="PERCENT" Index="1">
-      <WwiseRTPC SimVar="GENERAL ENG PROPELLER LEVER POSITION" Units="PERCENT" Index="1" RTPCName="SIMVAR_GENERAL_ENG_PROPELLER_LEVER_POSITION" />
-	  <WwiseRTPC SimVar="GENERAL ENG PROPELLER LEVER POSITION" Units="PERCENT" Index="1" Derived="true" RTPCName="SIMVAR_GENERAL_ENG_PROPELLER_LEVER_POSITION_DERIVED" />
+      <WwiseRTPC LocalVar="XMLVAR_Propeller_Lever_Position1" Units="PERCENT" Index="1" RTPCName="SIMVAR_GENERAL_ENG_PROPELLER_LEVER_POSITION" />
+	  <WwiseRTPC LocalVar="XMLVAR_Propeller_Lever_Position1" Units="PERCENT" Index="1" Derived="true" RTPCName="SIMVAR_GENERAL_ENG_PROPELLER_LEVER_POSITION_DERIVED" />
     </Sound>
 	
 	<Sound WwiseData="true" WwiseEvent="mixture_lever" ViewPoint="Inside" NodeName="FUEL_LEVER_MIXTURE_1" SimVar="GENERAL ENG MIXTURE LEVER POSITION" Units="PERCENT" Index="1">
@@ -234,21 +236,6 @@
 	  <WwiseRTPC SimVar="CIRCUIT ON" Units="BOOLEAN" Index="32" RTPCName="SIMVAR_CIRCUIT_ON_A2_R2" />
       <Range LowerBound="1.0" />
     </Sound> 
-    <!-- MISCELLANEOUS SOUNDS ========================================================================================== -->  
-	
-	<Sound WwiseData="true" WwiseEvent="ap_disengage_sound" Continuous="false" SimVar="AUTOPILOT DISENGAGED" Units="BOOL" Index="0">
-	  <Range LowerBound="1" />
-	  <Requires SimVar="ELECTRICAL MAIN BUS VOLTAGE" Units="FLOAT" Index="1">
-        <Range LowerBound="20" />
-      </Requires>
-    </Sound>
-	
-	<Sound WwiseData="true" WwiseEvent="ap_disengage_sound" Continuous="false" SimVar="AUTOPILOT MASTER" Units="BOOL" Index="0">
-	  <Range UpperBound="0" />
-	  <Requires SimVar="ELECTRICAL MAIN BUS VOLTAGE" Units="FLOAT" Index="1">
-        <Range LowerBound="20" />
-      </Requires>
-    </Sound>
 	
     <!-- RATTLES ==========================================================================================  -->
     
@@ -293,20 +280,29 @@
       </Requires>
 	  <WwiseRTPC SimVar="GENERAL ENG FUEL PUMP ON" Units="BOOLEAN" Index="1" RTPCName="SIMVAR_GENERAL_ENG_FUEL_PUMP_ON_INTERPOLATION_A1_R1"/>
     </Sound>
-	
-	<Sound WwiseData="true" WwiseEvent="ap_disengage_sound" NodeName="PUSH_CEILING_TESTLIGHT" Continuous="false" SimVar="AUTOPILOT MASTER" Units="BOOL" Index="0" ViewPoint="Inside">
-	  <Range UpperBound="0" />
-	  <Requires SimVar="ELECTRICAL MAIN BUS VOLTAGE" Units="FLOAT" Index="1">
-        <Range LowerBound="20" />
-      </Requires>
-    </Sound>
 
 	<Sound WwiseEvent="ELT_warning" WwiseData="true" NodeName="PUSH_CEILING_TESTLIGHT" BreakOnStop="true" LocalVar="XMLVAR_ELT_STATE" ViewPoint="Inside">
 	  <Range LowerBound="2" />
     </Sound>
-	
-		
-	
+
+	<Sound WwiseData="true" WwiseEvent="ap_disengage_sound" Continuous="false" SimVar="AUTOPILOT DISENGAGED" Units="BOOL" Index="0">
+	  <Requires SimVar="AUTOPILOT DISENGAGED" Units="BOOL" Index="0">
+		<Range LowerBound="1" />
+	  </Requires>
+	  <Requires SimVar="CIRCUIT AUTOPILOT ON" Units="BOOL" Index="0">
+        <Range LowerBound="1" />
+      </Requires>
+    </Sound>
+
+	<Sound WwiseData="true" WwiseEvent="ap_disengage_sound" NodeName="PUSH_CEILING_TESTLIGHT" Continuous="false" SimVar="AUTOPILOT MASTER" Units="BOOL" Index="0">
+	  <Requires SimVar="AUTOPILOT MASTER" Units="BOOL" Index="0">
+		<Range UpperBound="0" />
+	  </Requires>
+	  <Requires SimVar="CIRCUIT AUTOPILOT ON" Units="BOOL" Index="0">
+        <Range LowerBound="1" />
+      </Requires>
+    </Sound>
+
 	<!-- PROPELLER WIND ========================================================================================== --> 
 	
 	<Sound WwiseData="true" WwiseEvent="propeller_wind" ConeHeading="180" SimVar="PROP RPM" Units="RPM" ViewPoint="Outside" Index="1">  
@@ -335,7 +331,7 @@
 	<Sound WwiseData="true" WwiseEvent="aural_500ft" />
 	<Sound WwiseData="true" WwiseEvent="aural_stall" />
 	<Sound WwiseData="true" WwiseEvent="aural_pull_up" />
-	<!-- <Sound WwiseData="true" WwiseEvent="aural_overspeed" /> -->
+	<Sound WwiseData="true" WwiseEvent="aural_overspeed" />
 	<Sound WwiseData="true" WwiseEvent="aural_sink_rate" />
 	<Sound WwiseData="true" WwiseEvent="aural_dont_sink" />
 	<Sound WwiseData="true" WwiseEvent="aural_minimums" />

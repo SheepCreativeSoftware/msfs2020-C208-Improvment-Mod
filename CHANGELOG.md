@@ -1,5 +1,53 @@
 ## Changes
 
+**2203.1.2**
+- Fixed #121: Aircraft is yaws extremely to the left bug
+- Tested Version
+
+**2203.1.1**
+- Removed files for Standby Airspeed Indicator (Asobo has Fixeded this issue)
+- Fixed: Watching the panel from inside the Pilot’s head
+
+**2203.1.0**
+- Fixed #115: added support for MASTER_BATTERY_ON and MASTER_BATTERY_OFF events 
+- Fixed: stby torque indicator is not lit
+- Fixed: cockpit flood lights current consumption changes with light intensity
+- Fixed: avionics, stby instruments and other panel lights current consumption does not change with light intensity
+- Fixed #117: various improvment to internal lights setting, cabin ambient light improved. Right now cabin lights dim when battery is almost discharged
+- Added: Internal light initialisation + cleanup
+- Fixed: tooltips does not work for modified controls (battery, generator and alternator switches)
+- Fixed: the order of CAS messages on FD
+- Cleanup: move new mod templates to dedicated files. Remove garbage files.
+- Fixed: migrate to new autostart / autostop procedure handling
+- Improvment: starter-motor position is spring loaded and mechanically connected with ignition switch,
+- Fixed: main generatior is not connected to the system until start switch returns to off position.
+- Fixed: ignition remains on until starter switch returns to off position or when the ignition switch is in norm position
+- Fixed: initialisation of ignition switch does not work. setup default value for Norm for all flight phases.
+- Fixed: do not enter starter mode for NG>46%.
+- Fixed: battery current indication changes to red when battery is discharged
+- Fixed: fuel gauge correction
+- Fixed: realignement of gauges to prepare space for anti ice system implementation.
+- Improvment: Added anti Ice fluid application when anti ice system is turned on. 
+- Improvment: Added missing A-ICE CAS messages.
+- Improvment: The starter current load depends partly on the external temperature.
+- Improvment: electric system changes description
+- Improvment: Experimental Anti Ice system implemtnation.
+- Improvment: Added stall sensor heater switch 
+- Improvment: Added windshield deice switch logic
+- Added: anti-ice system description added to readme
+- Added additional chart and reference to readme
+- Improvment: added deice pump elecric circuit logic
+- Improvment: added stall heater implemntation
+- Added: stall heater description
+- Improvment: added logic for propeller speed governor test switch
+- Fixed: Min Goverend RPMS set to 1500 RPM.
+- Fixed: get rid of template related problems, Fixed deice tooltips
+- Improvment: Added logic for CAS announciation test switch
+- Fixed: tone warning does not work
+- Fixed: Cold and Dark configuration. Initialisation of fuelshutoff valve. It is possible now to set the valve to open state and condition leaver to cutoff state.
+- Fixed: merge with SimUpdate8 model 
+
+
 **2201.3**
 - Fixed: Gyro hum does not cease when the battery run down.
 - Fixed: Stby Alternator led should light when ACU is powered with battery disconnected
@@ -21,11 +69,11 @@ operating in starter mode.
 - Fixed: Fuel consumption is not zero when engine isn't started
 
 **2201.0.2**
-- fix: reverse thrust is too small and has no effect on the plane
-- fix: add dummy interaction point for ground power unit.
-- fix: prevent reference cruise torque bug disappear if RPMS are slightly above 1900
-- fix: make a few inop controls movable: pressurization lever, heating and ventilation pulling knobs (They still do not impact the model though).
-- fix: Changed the default look of Stby Alternator LED to make it more distinguashable between on and off states
+- Fixed: reverse thrust is too small and has no effect on the plane
+- Fixed: add dummy interaction point for ground power unit.
+- Fixed: prevent reference cruise torque bug disappear if RPMS are slightly above 1900
+- Fixed: make a few inop controls movable: pressurization lever, heating and ventilation pulling knobs (They still do not impact the model though).
+- Fixed: Changed the default look of Stby Alternator LED to make it more distinguashable between on and off states
 
 **2201.0.1**
 - Metal chip detection after prolonged engine overstress (You can disable/enable engine failures in the MSFS Assistance Options)
@@ -37,15 +85,15 @@ operating in starter mode.
 - Cabin light connected directly to battery bus. 
 - Battery switch disconnects battery bus instead of the battery itself
 - Changes in the sound configuration
-- fixes for default FLT configurations
-- fix for a problem with External Power switch. it did not reconnect starter to battery when external power was disconnected
+- Fixes for default FLT configurations
+- Fixed for a problem with External Power switch. it did not reconnect starter to battery when external power was disconnected
 - Generator switch has been fixed. Right now it is possible to trip the main generator.
 - Generator characteristics have been modified: Workaround for now to simulate lack of power during the startup.
 - Fixed the panel emblem light knob
 - increase the brightness of the stby alternator light.
 - Fixed configuration of PFD and MFD - they properly initialize right now. Avionics 1 switch enables only PFD 1.
 - Improved CAS Annunciations
-- fix the battery load indication
+- Fixed the battery load indication
 
 **2112.1.5**
 - Fixed wrong behaivor of the passenger cabin lights
