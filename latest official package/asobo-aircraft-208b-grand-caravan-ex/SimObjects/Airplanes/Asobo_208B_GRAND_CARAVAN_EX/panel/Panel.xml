@@ -801,7 +801,7 @@
 						<Table>
 							<ReferencePoints>0,500,7000</ReferencePoints>
 							<Maximums>50,700,700</Maximums>
-								<Minimums>50,50,50</Minimums>
+							<Minimums>50,50,50</Minimums>
 						</Table>
 						<Param>
 							<Multiply>
@@ -817,11 +817,14 @@
 						<Table>
 							<ReferencePoints>10,70,150</ReferencePoints>
 							<Maximums>50,700,700</Maximums>
-								<Minimums>50,50,50</Minimums>
+							<Minimums>50,50,50</Minimums>
 						</Table>
 						<Param>
 							<Substract>
 								<MaxSinceStart>
+									<ResetCondition>
+										<Simvar name="SIM ON GROUND" unit="bool"/>
+									</ResetCondition>
 									<Simvar name="PLANE ALTITUDE" unit="feet"/>
 								</MaxSinceStart>
 								<Simvar name="PLANE ALTITUDE" unit="feet"/>
