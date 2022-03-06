@@ -1,10 +1,11 @@
 # Cessna 208B Improvement Mod for Microsoft Flight Simulator
 
 A community mod for the Cessna 208B Grand Caravan, which aims to fix many of the issues present in the stock version.
-Feel free to contribute to this mod! Create an issue or fork and create a pull request!  
-Disscution about this mod, takes place in the [official forum](https://forums.flightsimulator.com/t/c208b-grand-caravan-ex-mods-general/322172?u=magrainaone)
+Feel free to contribute to this mod! Create an issue or fork and create a pull request! Disscution about this mod, takes place in the [official forum](https://forums.flightsimulator.com/t/c208b-grand-caravan-ex-mods-general/322172?u=magrainaone)
 
-**Based on Sim version 1.21.18.0 (SU7)**
+**The mod isn't working?** This is usually due to a conflict with another mod in the community folder. The best thing is to remove all other mods and then add them one by one to see what causes the conflict. If you think that you found the legitimate bug please describe and submit it at https://github.com/SheepCreativeSoftware/msfs2020-C208-Improvment-Mod/issues. with the exact reproduction scenario. Saying that feature a does not work usually is not enough to reproduce and fix the issue. 
+
+**Based on Sim version 1.23.12.0 (SU8)**
 
 ***Engine and Flight Model***
 - Corrected Different Values according to POH
@@ -68,15 +69,14 @@ Thanks to everyone who has contributed, and to PilotTrev for sharing his knowled
 ----
 
 ## Compatibility
-- **Working Title's G1000 NXi**  rev 0.10.1 (recommended mod available on Sim Marketplace)
-
-***Important Note:*** Please note that this mod has not been tested with the legacy freeware WT G1000. It is officially at end-of-life and will not be updated. Users should either use stock G1000 sim avionics or download Working Title Simulations G1000 NXi from the Marketplace.
+- The mod has not been tested with the legacy freeware WT G1000. It is officially at end-of-life and will not be updated. Users should either use stock G1000 sim avionics or download **Working Title's G1000 NXi** (recommended mod available on Sim Marketplace) from the Marketplace.
+- the mod was not tested with VR at all. The compatibility with VR si unknown.
 
 ----
 
 ## Download
 
-***[Latest Release v2203.1](https://github.com/SheepCreativeSoftware/msfs2020-C208-Improvment-Mod/releases/latest)***
+***[Latest Release v2203.1.2](https://github.com/SheepCreativeSoftware/msfs2020-C208-Improvment-Mod/releases/latest)***
 
 ### How to install
 

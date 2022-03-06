@@ -510,7 +510,7 @@
 			<Title>TRQ</Title>
 			<Unit>FT-LB</Unit>
 			<Minimum>0</Minimum>
-			<Maximum>3000</Maximum>
+			<Maximum>2600</Maximum>
 			<Value>
 				<Simvar name="TURB ENG FREE TURBINE TORQUE:1" unit="foot pounds"/>
 			</Value>
@@ -1617,7 +1617,7 @@
 					<CursorType>Triangle</CursorType>
 					<SizePercent>100</SizePercent>
 					<TextIncrement>1</TextIncrement>
-                    <GraduationLength>100</GraduationLength>
+                    <GraduationLength>200</GraduationLength>
 				</Style>
 				<BeginText></BeginText>
 				<EndText></EndText>
