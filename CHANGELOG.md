@@ -1,5 +1,9 @@
 ## Changes
 
+**2203.2**
+- Fixed #128: Autostart procedure was incomple / Autostop did no work at all
+- Fixed #127: Torque gauge has a different scaling between Engine and system page
+
 **2203.1.2**
 - Fixed #121: Aircraft is yaws extremely to the left bug
 - Tested Version
