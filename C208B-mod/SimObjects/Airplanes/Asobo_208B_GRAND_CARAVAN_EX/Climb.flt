@@ -96,8 +96,8 @@ Potentiometer.13 = 0.7  ; default value for Kob Copilot flood light brightness
 Potentiometer.30 = 1    ; default value for Kob Avionics brightness
 
 [Electrical.0]
-bus.1=bus.8:1, bus.9:1, bus.10:1, bus.11:0, bus.12:0
-bus.8=bus.9:0, bus.2:0
+bus.1=bus.8:1, bus.9:1, bus.10:1, bus.11:1, bus.12:0
+bus.8=bus.9:0, bus.11:0
 alternator.1=True
 alternator.2=True
 circuit.18=1 ; Stby gauges light
