@@ -4,7 +4,32 @@
     "Strings": {
       "AIRCRAFT.DESCRIPTION": "正式名称 208B キャラバン、通称グランド キャラバン。セスナ社が開発したこの最初の汎用機は 1986 年に認証を受け、25 年以上にわたって生産された。そして、2012 年後半、新型のグランド キャラバン EX が登場した。<\/br><\/br>頑丈で汎用性の高いグランド キャラバン EX は難度の高いフライト、高ペイロード、起伏が多く短い滑走路に対応することを念頭に置いて設計されており、世界中の地域航空会社や、チャーター便会社、貨物航空会社のあいだで一躍人気を集めた。<\/br><\/br>実績のある機体設計に基づいて作られ、単発ユーティリティ ターボプロップ エンジンを搭載したこの航空機は、ガーミン G1000 アビオニクス スイートや優れた内装、防氷装置など数多くの機能強化を誇っているが、EX の真の魅力はそのパワーにある。<\/br><\/br>一新されたプラット・アンド・ホイットニー・カナダ社製の PT6A-140 エンジンは 867 馬力を生み出し、速度、上昇性能、ペイロード性能を向上させている。それにより、優れた効率と単発エンジンによるシンプルな構造がともに実現された。手入れが行き届いていない仮設飛行場であれ、離着陸の困難な土地であれ、どこに行かなければならないにせよ、安定性の高い汎用航空機セスナ 208B グランド キャラバン EX ならば安心のフライトが約束されている。",
       "AIRCRAFT.UI_MANUFACTURER": "テキストロン・アビエーション",
-      "AIRCRAFT.UI_MODEL": "セスナ 208B グランド キャラバン EX Mod"
+      "AIRCRAFT.UI_MODEL": "セスナ 208B グランド キャラバン EX Mod",
+      "COCKPIT.TOOLTIPSV2.EXMOD_GT_STATE_AIRFRAME": "AIRFRAME",
+      "COCKPIT.TOOLTIPSV2.EXMOD_GT_STATE_WINDSHIELD": "WINDSHIELD",
+      "COCKPIT.TOOLTIPSV2.EXMOD_PUSH_OVERSPEEDGOVERNOR_TITLE": "Overspeed Governor",
+      "COCKPIT.TOOLTIPSV2.EXMOD_PUSH_OVERSPEEDGOVERNOR_AIR_ACTION": "Push to Test",
+      "COCKPIT.TOOLTIPS.EXMOD.AC_SWITCH_LEFT_HIGH": "Set fan speed left to HIGH",
+      "COCKPIT.TOOLTIPS.EXMOD.AC_SWITCH_LEFT_LOW": "Set fan speed left to LOW",
+      "COCKPIT.TOOLTIPS.EXMOD.AC_SWITCH_AFT_HIGH": "Set fan speed AFT Cabin to HIGH",
+      "COCKPIT.TOOLTIPS.EXMOD.AC_SWITCH_AFT_LOW": "Set fan speed AFT Cabin to LOW",
+      "COCKPIT.TOOLTIPS.EXMOD.AC_SWITCH_RIGHT_HIGH": "Set fan speed right to HIGH",
+      "COCKPIT.TOOLTIPS.EXMOD.AC_SWITCH_RIGHT_LOW": "Set fan speed right to LOW",
+      "COCKPIT.TOOLTIPS.EXMOD.AC_SWITCH_ON_COOL": "A\/C is set to COOL",
+      "COCKPIT.TOOLTIPS.EXMOD.AC_SWITCH_ON_OFF": "A\/C is set to OFF",
+      "COCKPIT.TOOLTIPS.EXMOD.AC_SWITCH_ON_VENTILATE": "A\/C is set to VENTILATE",
+      "COCKPIT.TOOLTIPS.EXMOD.POWEROUTLET_SWITCH_ON_ALL": "12V power outlet ALL",
+      "COCKPIT.TOOLTIPS.EXMOD.POWEROUTLET_SWITCH_ON_CREW": "12V power outlet CREW",
+      "COCKPIT.TOOLTIPS.EXMOD.POWEROUTLET_SWITCH_ON_OFF": "12V power outlet OFF",
+      "COCKPIT.TOOLTIPS.EXMOD.MIXING_AIR_GND_PULL": "Mixing Air Pull for ground operation",
+      "COCKPIT.TOOLTIPS.EXMOD.MIXING_AIR_FLT_PUSH": "Mixing Air Push for flight operation",
+      "COCKPIT.TOOLTIPS.EXMOD.DEFROST_PULL": "Pull for Windshield DEFROST",
+      "COCKPIT.TOOLTIPS.EXMOD.FWD_CABIN_PUSH": "Push for Heat to FWD CABIN",
+      "COCKPIT.TOOLTIPS.EXMOD.AFT_CABIN_PULL": "Pull for Heat to AFT CABIN",
+      "COCKPIT.TOOLTIPS.EXMOD.INSTRUMENT_VENT_PULL": "Pull open ventilation door",
+      "COCKPIT.TOOLTIPS.EXMOD.INSTRUMENT_VENT_PUSH": "Push close ventilation door",
+      "COCKPIT.TOOLTIPS.EXMOD.CABINHEAT_FIREWALL_PUSH": "Push to open Cabin Heat Firewall shutoff valve",
+      "COCKPIT.TOOLTIPS.EXMOD.CABINHEAT_FIREWALL_PULL": "Pull to close Cabin Heat Firewall shutoff valve"
     }
   }
 }
