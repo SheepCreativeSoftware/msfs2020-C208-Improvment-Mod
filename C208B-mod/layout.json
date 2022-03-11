@@ -2,68 +2,68 @@
   "content": [
     {
       "path": "de-DE.locPak",
-      "size": 1551,
-      "date": 132866862429334300
+      "size": 3580,
+      "date": 132913504797875042
     },
     {
       "path": "en-US.locPak",
-      "size": 1373,
-      "date": 132866862429334300
+      "size": 3466,
+      "date": 132913504797875042
     },
     {
       "path": "es-ES.locPak",
-      "size": 1498,
-      "date": 132866862429334300
+      "size": 3591,
+      "date": 132913504797875042
     },
     {
       "path": "fi-FI.locPak",
-      "size": 1468,
-      "date": 132866862429334300
+      "size": 3573,
+      "date": 132913504797875042
     },
     {
       "path": "fr-FR.locPak",
-      "size": 1638,
-      "date": 132866862429334300
+      "size": 3730,
+      "date": 132913504797875042
     },
     {
       "path": "it-IT.locPak",
-      "size": 1423,
-      "date": 132866862429344319
+      "size": 3515,
+      "date": 132913504798465565
     },
     {
       "path": "ja-JP.locPak",
-      "size": 1893,
-      "date": 132866862429344319
+      "size": 3986,
+      "date": 132913504798465565
     },
     {
       "path": "nb-NO.locPak",
-      "size": 1437,
-      "date": 132866862429354324
+      "size": 3530,
+      "date": 132913504798465565
     },
     {
       "path": "nl-NL.locPak",
-      "size": 1394,
-      "date": 132866862429354324
+      "size": 3498,
+      "date": 132913504798615710
     },
     {
       "path": "pl-PL.locPak",
-      "size": 1665,
-      "date": 132866862429354324
+      "size": 3758,
+      "date": 132913504799074291
     },
     {
       "path": "pt-BR.locPak",
-      "size": 1464,
-      "date": 132866862429364330
+      "size": 3557,
+      "date": 132913504799223477
     },
     {
       "path": "ru-RU.locPak",
-      "size": 2452,
-      "date": 132866862429364330
+      "size": 4545,
+      "date": 132913504799223477
     },
     {
       "path": "sv-SE.locPak",
-      "size": 1502,
-      "date": 132866862429364330
+      "size": 3590,
+      "date": 132913504799223477
     },
     {
       "path": "Effects/LIGHT_C208_BeaconTop.fx",
@@ -252,8 +252,8 @@
     },
     {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/model/208B_GRAND_CARAVAN_EX_INTERIOR.xml",
-      "size": 37950,
-      "date": 132913270180605274
+      "size": 39894,
+      "date": 132913504799223477
     },
     {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/model/208B_GRAND_CARAVAN_EX_INTERIOR_LOD00.gltf",
@@ -262,13 +262,13 @@
     },
     {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/model/208B_GRAND_CARAVAN_EX_propeller.xml",
-      "size": 5650,
-      "date": 132906451852841106
+      "size": 5827,
+      "date": 132913501380740898
     },
     {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/model/208B_GRAND_CARAVAN_EX_templates.xml",
-      "size": 56844,
-      "date": 132913270180615294
+      "size": 56856,
+      "date": 132913501134247855
     },
     {
       "path": "SimObjects/Airplanes/Asobo_208B_GRAND_CARAVAN_EX/panel/Panel.xml",
