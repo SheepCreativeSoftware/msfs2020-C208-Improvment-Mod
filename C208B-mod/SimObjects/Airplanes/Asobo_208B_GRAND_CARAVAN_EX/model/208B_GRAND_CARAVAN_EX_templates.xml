@@ -793,7 +793,6 @@
 
 	<Template Name="ASOBO_ELECTRICAL_Switch_Alternator_STBY_Template_Mod">
 		<Parameters Type="Default">
-			<ALT_ID>2</ALT_ID>
 			<!-- min N1  which activates ACU. Below it the stby alternator is disconnected -->
 			<ENG_N1_THREASHOLD>46</ENG_N1_THREASHOLD>
 			<!-- generator utilisation margin which activates stby alternator -->
@@ -811,11 +810,11 @@
 				<FREQUENCY>5</FREQUENCY>
 				<UPDATE_CODE>
 				    #ENG_N1_THREASHOLD# (A:TURB ENG N1:1, percent) &lt; #GEN_CURRENT# (A:ELECTRICAL MAIN BUS AMPS, amps) &gt; and if{
-						#POWER_BUS_ID# (&gt;A:BUS LOOKUP INDEX, Number) (A:BUS CONNECTION ON:#STBY_ALT_BUS_ID#, Bool) ! if{
-							#POWER_BUS_ID# #STBY_ALT_BUS_ID# (&gt;K:2:ELECTRICAL_BUS_TO_BUS_CONNECTION_TOGGLE) }
+						#STBY_ALT_BUS_ID# (&gt;A:BUS LOOKUP INDEX, Number) (A:ALTERNATOR CONNECTION ON:#ALT_ID#, Bool) ! if{
+							#ALT_ID# #STBY_ALT_BUS_ID# (&gt;K:2:ELECTRICAL_BUS_TO_ALTERNATOR_CONNECTION_TOGGLE) }
 					} els{
-						#POWER_BUS_ID# (&gt;A:BUS LOOKUP INDEX, Number) (A:BUS CONNECTION ON:#STBY_ALT_BUS_ID#, Bool) if{
-   							#POWER_BUS_ID# #STBY_ALT_BUS_ID# (&gt;K:2:ELECTRICAL_BUS_TO_BUS_CONNECTION_TOGGLE) }
+						#STBY_ALT_BUS_ID# (&gt;A:BUS LOOKUP INDEX, Number) (A:ALTERNATOR CONNECTION ON:#ALT_ID#, Bool) if{
+   							#ALT_ID# #STBY_ALT_BUS_ID# (&gt;K:2:ELECTRICAL_BUS_TO_ALTERNATOR_CONNECTION_TOGGLE) }
 					}			
 				</UPDATE_CODE>
 			</UseTemplate>
