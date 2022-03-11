@@ -7,6 +7,8 @@
 - Fixed #123: Bleed Air switch does not have a tooltip
 - Improvement: Additional switches operable
 - Improvement: Tooltips for several switches (partly localized)
+- Fixed #135: The Avionics standby power and Avionics 2 switches do not function per the real aircraft?
+- Fixed: Reversed Standby Avionics switches
 
 **2203.2.1**
 - Fixed #134 & Fixed #130: MASTER_BATTERY_ON & OFF do not work well?
