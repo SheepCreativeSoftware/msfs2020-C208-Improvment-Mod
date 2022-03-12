@@ -4,7 +4,32 @@
     "Strings": {
       "AIRCRAFT.DESCRIPTION": "Grand Carava, med det offisielle navnet 208B Caravan, er et flerbruksfly fra Cessna som ble sertifisert for første gang i 1986. Oppfølgeren, det moderne Grand Caravan EX, kom over 25 år senere, i 2012.<\/br><\/br>Flyet ble laget for å takle utfordrende oppdrag, høy nyttelast og korte, ujevne rullebaner, og det robuste og allsidige Grand Caravan EX ble raskt en favoritt blant regionale flyselskaper, charteroperatører og fraktselskaper over hele verden.<\/br><\/br>Det ble bygget på et velprøvd flyskrog, og den ene motoren med turboprop hadde mange forbedringer av Garmin G1000-flyelektronikken, interiøret og isbeskyttelsessystemet. Det som imidlertid virkelig gjorde EX så populært, var kraften til motoren.<\/br><\/br>Den oppdaterte Pratt & Whitney Canada PT6A-140-motoren genererer 867 hestekrefter, mer enn nok muskler til å oppnå en høyere hastighet, bedre evne til å klatre, og mulighet for større nyttelast – samtidig som motoren leverer overlegen effektivitet og enklere vedlikehold ved kun å ha én motor. Uansett hvor du skal, fra flotte rullebaner til humpete rullebaner med grus, vil Cessna 208B Grand Caravan EX-flerbruksflyet sørge for at du kommer deg dit.",
       "AIRCRAFT.UI_MANUFACTURER": "Textron Aviation",
-      "AIRCRAFT.UI_MODEL": "Cessna 208B GrandCaravan EX Mod"
+      "AIRCRAFT.UI_MODEL": "Cessna 208B GrandCaravan EX Mod",
+      "COCKPIT.TOOLTIPSV2.EXMOD_GT_STATE_AIRFRAME": "AIRFRAME",
+      "COCKPIT.TOOLTIPSV2.EXMOD_GT_STATE_WINDSHIELD": "WINDSHIELD",
+      "COCKPIT.TOOLTIPSV2.EXMOD_PUSH_OVERSPEEDGOVERNOR_TITLE": "Overspeed Governor",
+      "COCKPIT.TOOLTIPSV2.EXMOD_PUSH_OVERSPEEDGOVERNOR_AIR_ACTION": "Push to Test",
+      "COCKPIT.TOOLTIPS.EXMOD.AC_SWITCH_LEFT_HIGH": "Set fan speed left to HIGH",
+      "COCKPIT.TOOLTIPS.EXMOD.AC_SWITCH_LEFT_LOW": "Set fan speed left to LOW",
+      "COCKPIT.TOOLTIPS.EXMOD.AC_SWITCH_AFT_HIGH": "Set fan speed AFT Cabin to HIGH",
+      "COCKPIT.TOOLTIPS.EXMOD.AC_SWITCH_AFT_LOW": "Set fan speed AFT Cabin to LOW",
+      "COCKPIT.TOOLTIPS.EXMOD.AC_SWITCH_RIGHT_HIGH": "Set fan speed right to HIGH",
+      "COCKPIT.TOOLTIPS.EXMOD.AC_SWITCH_RIGHT_LOW": "Set fan speed right to LOW",
+      "COCKPIT.TOOLTIPS.EXMOD.AC_SWITCH_ON_COOL": "A\/C is set to COOL",
+      "COCKPIT.TOOLTIPS.EXMOD.AC_SWITCH_ON_OFF": "A\/C is set to OFF",
+      "COCKPIT.TOOLTIPS.EXMOD.AC_SWITCH_ON_VENTILATE": "A\/C is set to VENTILATE",
+      "COCKPIT.TOOLTIPS.EXMOD.POWEROUTLET_SWITCH_ON_ALL": "12V power outlet ALL",
+      "COCKPIT.TOOLTIPS.EXMOD.POWEROUTLET_SWITCH_ON_CREW": "12V power outlet CREW",
+      "COCKPIT.TOOLTIPS.EXMOD.POWEROUTLET_SWITCH_ON_OFF": "12V power outlet OFF",
+      "COCKPIT.TOOLTIPS.EXMOD.MIXING_AIR_GND_PULL": "Mixing Air Pull for ground operation",
+      "COCKPIT.TOOLTIPS.EXMOD.MIXING_AIR_FLT_PUSH": "Mixing Air Push for flight operation",
+      "COCKPIT.TOOLTIPS.EXMOD.DEFROST_PULL": "Pull for Windshield DEFROST",
+      "COCKPIT.TOOLTIPS.EXMOD.FWD_CABIN_PUSH": "Push for Heat to FWD CABIN",
+      "COCKPIT.TOOLTIPS.EXMOD.AFT_CABIN_PULL": "Pull for Heat to AFT CABIN",
+      "COCKPIT.TOOLTIPS.EXMOD.INSTRUMENT_VENT_PULL": "Pull open ventilation door",
+      "COCKPIT.TOOLTIPS.EXMOD.INSTRUMENT_VENT_PUSH": "Push close ventilation door",
+      "COCKPIT.TOOLTIPS.EXMOD.CABINHEAT_FIREWALL_PUSH": "Push to open Cabin Heat Firewall shutoff valve",
+      "COCKPIT.TOOLTIPS.EXMOD.CABINHEAT_FIREWALL_PULL": "Pull to close Cabin Heat Firewall shutoff valve"
     }
   }
 }

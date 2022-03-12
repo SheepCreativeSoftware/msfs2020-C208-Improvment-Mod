@@ -937,9 +937,9 @@
 				<TT_DESCRIPTION_IS_DYNAMIC>False</TT_DESCRIPTION_IS_DYNAMIC>
 				<TT_VALUE>
 					(#SWITCH_POSITION_TYPE#:#SWITCH_POSITION_VAR#)
-					s0 0 == if{ (R:1:@TT_Package.GT_STATE_AIRFRAME) quit }
+					s0 0 == if{ (R:1:@TT_Package.EXMOD_GT_STATE_AIRFRAME) quit }
 					l0 1 == if{ (R:1:@TT_Package.GT_STATE_OFF) quit }
-					l0 2 == if{ (R:1:@TT_Package.GT_STATE_WINDSHIELD) quit }
+					l0 2 == if{ (R:1:@TT_Package.EXMOD_GT_STATE_WINDSHIELD) quit }
 				</TT_VALUE>
 				<TT_VALUE_IS_DYNAMIC>True</TT_VALUE_IS_DYNAMIC>
     			<TT_INTERACTION>PRIMARY_DOWN+Y_AXIS</TT_INTERACTION>
