@@ -1,5 +1,20 @@
 ## Changes
 
+**2203.2.2**
+- Tested version
+- Fixed #140: Tooltip on deice fluid control switch only shows "0." on up or down position
+- Fixed #122: Governor test button does not have a tooltip
+- Fixed #123: Bleed Air switch does not have a tooltip
+- Improvement: Additional switches operable
+- Improvement: Tooltips for several switches (partly localized)
+- Fixed #135: The Avionics standby power and Avionics 2 switches do not function per the real aircraft?
+- Fixed: Reversed Standby Avionics switches
+
+**2203.2.1**
+- Fixed #134 & Fixed #130: MASTER_BATTERY_ON & OFF do not work well?
+- Fixed #131: Tooltip may incorrect on Fuel Shutoff
+- Fixed #124: Oxygen handle does not have a tooltip
+
 **2203.2**
 - Fixed #128: Autostart procedure was incomple / Autostop did no work at all
 - Fixed #127: Torque gauge has a different scaling between Engine and system page

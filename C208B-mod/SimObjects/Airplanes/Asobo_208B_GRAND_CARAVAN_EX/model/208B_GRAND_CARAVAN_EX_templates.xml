@@ -793,7 +793,6 @@
 
 	<Template Name="ASOBO_ELECTRICAL_Switch_Alternator_STBY_Template_Mod">
 		<Parameters Type="Default">
-			<ALT_ID>2</ALT_ID>
 			<!-- min N1  which activates ACU. Below it the stby alternator is disconnected -->
 			<ENG_N1_THREASHOLD>46</ENG_N1_THREASHOLD>
 			<!-- generator utilisation margin which activates stby alternator -->
@@ -811,11 +810,11 @@
 				<FREQUENCY>5</FREQUENCY>
 				<UPDATE_CODE>
 				    #ENG_N1_THREASHOLD# (A:TURB ENG N1:1, percent) &lt; #GEN_CURRENT# (A:ELECTRICAL MAIN BUS AMPS, amps) &gt; and if{
-						#POWER_BUS_ID# (&gt;A:BUS LOOKUP INDEX, Number) (A:BUS CONNECTION ON:#STBY_ALT_BUS_ID#, Bool) ! if{
-							#POWER_BUS_ID# #STBY_ALT_BUS_ID# (&gt;K:2:ELECTRICAL_BUS_TO_BUS_CONNECTION_TOGGLE) }
+						#STBY_ALT_BUS_ID# (&gt;A:BUS LOOKUP INDEX, Number) (A:ALTERNATOR CONNECTION ON:#ALT_ID#, Bool) ! if{
+							#ALT_ID# #STBY_ALT_BUS_ID# (&gt;K:2:ELECTRICAL_BUS_TO_ALTERNATOR_CONNECTION_TOGGLE) }
 					} els{
-						#POWER_BUS_ID# (&gt;A:BUS LOOKUP INDEX, Number) (A:BUS CONNECTION ON:#STBY_ALT_BUS_ID#, Bool) if{
-   							#POWER_BUS_ID# #STBY_ALT_BUS_ID# (&gt;K:2:ELECTRICAL_BUS_TO_BUS_CONNECTION_TOGGLE) }
+						#STBY_ALT_BUS_ID# (&gt;A:BUS LOOKUP INDEX, Number) (A:ALTERNATOR CONNECTION ON:#ALT_ID#, Bool) if{
+   							#ALT_ID# #STBY_ALT_BUS_ID# (&gt;K:2:ELECTRICAL_BUS_TO_ALTERNATOR_CONNECTION_TOGGLE) }
 					}			
 				</UPDATE_CODE>
 			</UseTemplate>
@@ -938,9 +937,9 @@
 				<TT_DESCRIPTION_IS_DYNAMIC>False</TT_DESCRIPTION_IS_DYNAMIC>
 				<TT_VALUE>
 					(#SWITCH_POSITION_TYPE#:#SWITCH_POSITION_VAR#)
-					s0 0 == if{ (R:1:@TT_Package.GT_STATE_AIRFRAME) quit }
+					s0 0 == if{ (R:1:@TT_Package.EXMOD_GT_STATE_AIRFRAME) quit }
 					l0 1 == if{ (R:1:@TT_Package.GT_STATE_OFF) quit }
-					l0 2 == if{ (R:1:@TT_Package.GT_STATE_WINDSHIELD) quit }
+					l0 2 == if{ (R:1:@TT_Package.EXMOD_GT_STATE_WINDSHIELD) quit }
 				</TT_VALUE>
 				<TT_VALUE_IS_DYNAMIC>True</TT_VALUE_IS_DYNAMIC>
     			<TT_INTERACTION>PRIMARY_DOWN+Y_AXIS</TT_INTERACTION>
@@ -1245,7 +1244,7 @@
 			<UseInputEvent ID="CESSNA_MOD">
 				<TT_DESCRIPTION>@TT_Package.FUEL_SWITCH_OPENCLOSED_ACTION_SET</TT_DESCRIPTION>
 				<TT_DESCRIPTION_IS_DYNAMIC>False</TT_DESCRIPTION_IS_DYNAMIC>
-				<TT_VALUE>(L:ENG FUEL VALVE:1) == if{ @TT_On } els{ @TT_Off }</TT_VALUE>
+				<TT_VALUE>(L:ENG FUEL VALVE:1) == if{ @TT_Off } els{ @TT_On }</TT_VALUE>
 				<TT_VALUE_IS_DYNAMIC>True</TT_VALUE_IS_DYNAMIC>
 				<TT_INTERACTION>PRIMARY_DOWN</TT_INTERACTION>
 				<TT_INTERACTION_LOCKABLE>LOCK</TT_INTERACTION_LOCKABLE>
