@@ -17,7 +17,8 @@
 	<Include ModelBehaviorFile="Asobo\GlassCockpit\AS1000.xml"/>
 	<Include ModelBehaviorFile="Asobo\NAVCOM\ADF.xml"/>
 	<Include RelativeFile="208B_GRAND_CARAVAN_EX_templates.xml"/>
-	<Include RelativeFile="208B_GRAND_CARAVAN_EX_propeller.xml"/>
+	<Include RelativeFile="208B_GRAND_CARAVAN_EX_inputevent.xml"/>
+	<Include RelativeFile="208B_GRAND_CARAVAN_EX_levers.xml"/>
 
 	<Component ID="SYSTEM">
 		<UseTemplate Name="ASOBO_SYSTEM_Electric_Template_Mod">
@@ -292,6 +293,9 @@
 			<ANIM_NAME>ENGINE_Switch_Ignition</ANIM_NAME>
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_ENGINE_Lever_Throttle_Template_Mod">
+			<PART_ID>ENGINE_Lever_Throttle</PART_ID>
+			<NODE_ID>ENGINE_Lever_Throttle_1</NODE_ID>
+			<ANIM_NAME>ENGINE_Lever_Throttle_1</ANIM_NAME>
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_ENGINE_Lever_Propeller_Template_Mod">
 			<PART_ID>ENGINE_Lever_Propeller</PART_ID>
