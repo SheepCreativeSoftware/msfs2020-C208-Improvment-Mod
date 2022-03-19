@@ -1,6 +1,14 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ModelBehaviors>
 
+	<macro Name="ProcessAxisSnapZone">
+		p0 #AXIS_SCALE# * #AXIS_SHIFT# + s0 l0 0 &gt; if{
+			l0 #LEVER_DEAD_ZONE# &gt; if{ 
+				l0 #LEVER_DEAD_ZONE# - 1 1 #LEVER_DEAD_ZONE# - / *
+			} els{ 0 }
+		} els{ l0 }
+	</macro>
+
 	<InputEvent ID="CESSNA_MOD">
 	<Presets>
 		<Switch Param="INPUT_EVENT_ID_SOURCE">
@@ -270,26 +278,25 @@
 		<Case Value="ENGINE_Propeller">
 			<Preset ID="#INPUT_EVENT_ID_SOURCE#_#IE_NAME#">
 				<Parameters Type="Default">
-					<AXIS_SCALE Process="Float">1 @FeatherPropPos - 2 /</AXIS_SCALE>
+					<AXIS_SCALE Process="Float">1 #LOWER_LIMIT_PCT_OVER_100# - 2 /</AXIS_SCALE>
 				</Parameters>
 				<Parameters Type="Default">
 					<AXIS_SHIFT Process="Float">1 #AXIS_SCALE# -</AXIS_SHIFT>
-					<LOWER_POSITION_PCT_OVER_100 Process="Float">#LOWER_LIMIT_PCT# 100 /</LOWER_POSITION_PCT_OVER_100>
 				</Parameters>
 				<Tooltip>
 					<Icon>MOVE_AXIS_Y</Icon>
 					<Interaction>PRIMARY_DOWN+Y_AXIS</Interaction>
 					<InteractionLockable>Y_AXIS</InteractionLockable>
 					<TTDescription RPN="#TT_DESCRIPTION_IS_DYNAMIC#">#TT_DESCRIPTION#</TTDescription>
-					<TTValue RPN="True">(L:XMLVAR_Propeller_Lever_Position#ENGINE_ID#) '%.1f%%' @sprintf</TTValue>
+					<TTValue RPN="True">(L:#LEVER_POSITION_VAR#) '%.1f%%' @sprintf</TTValue>
 				</Tooltip>
 				<Value>
 					<Units>percent</Units>
-					<Code>(L:XMLVAR_Propeller_Lever_Position#ENGINE_ID#, percent) #LOWER_LIMIT_PCT# - #UPPER_LIMIT_PCT# #LOWER_LIMIT_PCT# - / 100 *</Code>
+					<Code>(L:#LEVER_POSITION_VAR#, percent) #LOWER_LIMIT_PCT# - #UPPER_LIMIT_PCT# #LOWER_LIMIT_PCT# - / 100 *</Code>
 					<Init>
 						(L:XMLVAR_Overspeed_Test) ! if{ 
 							(A:GENERAL ENG PROPELLER LEVER POSITION:#ENGINE_ID#, position 16k) 163.84 / #LOWER_LIMIT_PCT# max #UPPER_LIMIT_PCT# min d
-							(&gt;L:XMLVAR_Propeller_Lever_Position#ENGINE_ID#) 163.84 * (&gt;K:PROP_PITCH#ENGINE_ID#_SET)
+							(&gt;L:#LEVER_POSITION_VAR#) 163.84 * (&gt;K:PROP_PITCH#ENGINE_ID#_SET)
 						}
 					</Init>
 					<WatchVars>
@@ -298,9 +305,9 @@
 				</Value>
 				<Inc>
 					<Code>
-						(L:XMLVAR_Propeller_Lever_Position#ENGINE_ID#) p0 +
+						(L:#LEVER_POSITION_VAR#) p0 +
 						(L:XMLVAR_Overspeed_Test) ! if{ 163.84 * (&gt;K:PROP_PITCH#ENGINE_ID#_SET) } els{
-						#LOWER_LIMIT_PCT# max #UPPER_LIMIT_PCT# min (&gt;L:XMLVAR_Propeller_Lever_Position#ENGINE_ID#) }
+						#LOWER_LIMIT_PCT# max #UPPER_LIMIT_PCT# min (&gt;L:#LEVER_POSITION_VAR#) }
 					</Code>
 					<Parameters>
 						<Param Type="Float" RPN="True">p0 #INCREMENT# *</Param>
@@ -322,9 +329,9 @@
 				</Inc>
 				<Dec>
 					<Code>
-						(L:XMLVAR_Propeller_Lever_Position#ENGINE_ID#) p0 100 * -
+						(L:#LEVER_POSITION_VAR#) p0 100 * -
 						(L:XMLVAR_Overspeed_Test) ! if{ 163.84 * (&gt;K:PROP_PITCH#ENGINE_ID#_SET) } els{
-						#LOWER_LIMIT_PCT# max #UPPER_LIMIT_PCT# min (&gt;L:XMLVAR_Propeller_Lever_Position#ENGINE_ID#) }
+						#LOWER_LIMIT_PCT# max #UPPER_LIMIT_PCT# min (&gt;L:#LEVER_POSITION_VAR#) }
 					</Code>
 					<Parameters>
 						<Param Type="Float" RPN="True">p0 #INCREMENT# *</Param>
@@ -347,24 +354,24 @@
 				<Set>                                                            
 					<Code>
 						p0 (L:XMLVAR_Overspeed_Test) ! if{ 16384 * (&gt;K:PROP_PITCH#ENGINE_ID#_SET) } els{
-						100 * #LOWER_LIMIT_PCT# max #UPPER_LIMIT_PCT# min (&gt;L:XMLVAR_Propeller_Lever_Position#ENGINE_ID#) }
+						100 * #LOWER_LIMIT_PCT# max #UPPER_LIMIT_PCT# min (&gt;L:#LEVER_POSITION_VAR#) }
 					</Code>
 					<Parameters>
 						<Param Type="Float" RPN="True">p0</Param>
 					</Parameters>
 					<Bindings>
 						<Binding EventID="PROP_PITCH_AXIS_SET_EX1"> <!-- event manipulating all propellers -->
-							<Param RPN="True">p0 #AXIS_SCALE# * #AXIS_SHIFT# +</Param>
+							<Param RPN="True">@ProcessAxisSnapZone</Param>
 						</Binding>
 						<Binding EventID="PROP_PITCH1_AXIS_SET_EX1">
-							<Param RPN="True">p0 #AXIS_SCALE# * #AXIS_SHIFT# +</Param>
+							<Param RPN="True">@ProcessAxisSnapZone</Param>
 						</Binding>
 						<!-- Aliases -->
 						<Binding Alias="ENGINE_All_Propeller_Full_Forward"><!-- event manipulating all propellers -->
 							<Param>1</Param>
 						</Binding>
 						<Binding Alias="ENGINE_All_Propeller_Full_Backward"><!-- event manipulating all propellers -->
-							<Param>#LOWER_POSITION_PCT_OVER_100#</Param>
+							<Param>#LOWER_LIMIT_PCT_OVER_100#</Param>
 						</Binding>
 						<Binding Alias="ENGINE_All_Propeller_Idle"><!-- event manipulating all propellers -->
 							<Param>0</Param>
@@ -373,7 +380,7 @@
 							<Param>1</Param>
 						</Binding>
 						<Binding Alias="ENGINE_Propeller_#ENGINE_ID#_Full_Backward">
-							<Param>#LOWER_POSITION_PCT_OVER_100#</Param>
+							<Param>#LOWER_LIMIT_PCT_OVER_100#</Param>
 						</Binding>
 						<Binding Alias="ENGINE_Propeller_#ENGINE_ID#_Idle">
 							<Param>0</Param>
@@ -385,11 +392,13 @@
 		<Case Value="ENGINE_Throttle">
 			<Preset ID="#INPUT_EVENT_ID_SOURCE#_#IE_NAME#">
 				<Parameters Type="Default">
-					<AXIS_SCALE Process="Float">1 @FeatherPropPos - 2 /</AXIS_SCALE>
+
+				</Parameters>
+				<Parameters Type="Default">
+					<AXIS_SCALE Process="Float">1 #LOWER_LIMIT_PCT_OVER_100# - 2 /</AXIS_SCALE>
 				</Parameters>
 				<Parameters Type="Default">
 					<AXIS_SHIFT Process="Float">1 #AXIS_SCALE# -</AXIS_SHIFT>
-					<LOWER_POSITION_PCT_OVER_100 Process="Float">#LOWER_LIMIT_PCT# 100 /</LOWER_POSITION_PCT_OVER_100>
 				</Parameters>
 				<Tooltip>
 					<Icon>MOVE_AXIS_Y</Icon>
@@ -483,7 +492,7 @@
 							<Param>1</Param>
 						</Binding>
 						<Binding Alias="ENGINE_Throttle_#ENGINE_ID#_Full_Backward">
-							<Param>#LOWER_POSITION_PCT_OVER_100#</Param>
+							<Param>#LOWER_LIMIT_PCT_OVER_100#</Param>
 						</Binding>
 						<Binding Alias="ENGINE_Throttle_#ENGINE_ID#_Idle">
 							<Param>0</Param>
@@ -501,22 +510,22 @@
 							<Param>0</Param>
 						</Binding>
 						<Binding EventID="THROTTLE#ENGINE_ID#_SET">
-							<Param RPN="True">p0 #AXIS_SCALE# * #AXIS_SHIFT# +</Param>
+							<Param RPN="True">@ProcessAxisSnapZone</Param>
 						</Binding>
 						<Binding EventID="THROTTLE#ENGINE_ID#_AXIS_SET_EX1">
-							<Param RPN="True">p0 #AXIS_SCALE# * #AXIS_SHIFT# +</Param>
+							<Param RPN="True">@ProcessAxisSnapZone</Param>
 						</Binding>
 						<Binding EventID="AXIS_THROTTLE#ENGINE_ID#_SET">
-							<Param RPN="True">p0 #AXIS_SCALE# * #AXIS_SHIFT# +</Param>
+							<Param RPN="True">@ProcessAxisSnapZone</Param>
 						</Binding>
 						<Binding EventID="THROTTLE_SET">
-							<Param RPN="True">p0 #AXIS_SCALE# * #AXIS_SHIFT# +</Param>
+							<Param RPN="True">@ProcessAxisSnapZone</Param>
 						</Binding>
 						<Binding EventID="THROTTLE_AXIS_SET_EX1">
-							<Param RPN="True">p0 #AXIS_SCALE# * #AXIS_SHIFT# +</Param>
+							<Param RPN="True">@ProcessAxisSnapZone</Param>
 						</Binding>
 						<Binding EventID="AXIS_THROTTLE_SET">
-							<Param RPN="True">p0 #AXIS_SCALE# * #AXIS_SHIFT# +</Param>
+							<Param RPN="True">@ProcessAxisSnapZone</Param>
 						</Binding>
 					</Bindings>
 				</Set>
