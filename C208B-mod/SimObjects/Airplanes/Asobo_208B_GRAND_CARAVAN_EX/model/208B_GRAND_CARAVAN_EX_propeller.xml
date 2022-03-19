@@ -1,21 +1,46 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ModelBehaviors>
 
+<Template Name="ASOBO_ENGINE_Lever_Throttle_Template_Mod">
+	<Component ID="Throttle_1_Visibility" Node="ENGINE_LEVER_THROTTLE_1">
+		<UseTemplate Name="ASOBO_GT_Visibility_Code">
+			<VISIBILITY_CODE>(L:XMLVAR_LeverThrottleHidden1) !</VISIBILITY_CODE>
+		</UseTemplate> 
+	</Component>
+
+	<Parameters Type="Default">
+		<ID>1</ID>
+	</Parameters>
+
+	<UseTemplate Name="ASOBO_ENGINE_Throttle_SubTemplate">
+		<ID_NODE>#ID#</ID_NODE>
+		<HAS_IDLE_GATE>True</HAS_IDLE_GATE>
+		<IDLE_GATE_ANIM_POS>0.35</IDLE_GATE_ANIM_POS>
+		<INTERACTION_TYPE>Lever</INTERACTION_TYPE>
+	</UseTemplate>
+</Template>
+
 <Template Name="ASOBO_ENGINE_Lever_Propeller_Template_Mod">
 	<Parameters Type="Default">
 		<ENGINE_ID>1</ENGINE_ID>
 		<INPUT_EVENT_ID_SOURCE>ENGINE_Propeller</INPUT_EVENT_ID_SOURCE>
 		<IE_NAME>Lever</IE_NAME>
-		<IDLE>0.25</IDLE> <!-- ANIMATION MIN POSITION -->
+		<IDLE>0.25</IDLE> <!-- ANIMATION IDLE POSITION -->
 		<UPPER_LIMIT>16384</UPPER_LIMIT>
 		<UPPER_LIMIT_PCT>100</UPPER_LIMIT_PCT>
 		<LOWER_LIMIT Process="Int">@FeatherPropPos 16384 * 0 (A:THROTTLE LOWER LIMIT, position 16k) 0 &lt; ?</LOWER_LIMIT>
 		<LOWER_LIMIT_PCT Process="Float">@FeatherPropPos 100 *</LOWER_LIMIT_PCT>
 	</Parameters>
 	<Parameters Type="Default">
+		<LEVER_VISIBILITY_VAR>XMLVAR_LeverPropellerHidden</LEVER_VISIBILITY_VAR>
+		<LEVER_POSITION_VAR>XMLVAR_Propeller_Lever_Position#ENGINE_ID#</LEVER_POSITION_VAR>
 		<MAIN_LEVER_REVERSE_POSITION Process="Int">@FeatherPropPos 16384 * 0 #LOWER_LIMIT# 0 &lt; ?</MAIN_LEVER_REVERSE_POSITION>
 		<MAIN_LEVER_REVERSE_POSITION_PCT Process="Int">@FeatherPropPos 100 * 0 #LOWER_LIMIT# 0 &lt; ?</MAIN_LEVER_REVERSE_POSITION_PCT>
 	</Parameters>
+	<UseTemplate Name="ASOBO_ENGINE_Lever_Template_Mod"/>
+</Template>
+
+<Template Name="ASOBO_ENGINE_Lever_Template_Mod">
 	<Parameters Type="Default">
 		<TRUE_IDLE_01 Process="Float">0 #MAIN_LEVER_REVERSE_POSITION_PCT# - 100 #MAIN_LEVER_REVERSE_POSITION_PCT# - /</TRUE_IDLE_01>
 	</Parameters>
@@ -37,7 +62,7 @@
 		<DRAG_MIN_VALUE>#MAIN_LEVER_REVERSE_POSITION# (O:XMLVAR_MIN_Limit) max</DRAG_MIN_VALUE>
 		<DRAG_MAX_VALUE>#UPPER_LIMIT# (O:XMLVAR_MAX_Limit) min</DRAG_MAX_VALUE>
 		<PROCESS_LIMITS>
-			(L:XMLVAR_Propeller_Lever_Position#ENGINE_ID#) 0 &gt; if{
+			(L:#LEVER_POSITION_VAR#) 0 &gt; if{
 				0 (&gt;O:XMLVAR_MIN_Limit)
 				#UPPER_LIMIT# (&gt;O:XMLVAR_MAX_Limit)
 			} els{
@@ -81,7 +106,7 @@
 			<TOOLTIP_TITLE>@TT_Package.ENGINE_PROPELLER_TITLE</TOOLTIP_TITLE>
 			<TOOLTIP_ENTRY_0>#INPUT_EVENT_ID_SOURCE#_#IE_NAME#</TOOLTIP_ENTRY_0>
 			<DOWN_CODE>
-				(L:XMLVAR_Propeller_Lever_Position#ENGINE_ID#) 0 == if{
+				(L:#LEVER_POSITION_VAR#) 0 == if{
 					1 (&gt;O:XMLVAR_Limits_Needs_Recalculation)
 				} els{
 					#PROCESS_LIMITS#
@@ -95,7 +120,7 @@
 			<DRAG_CODE>
 				(M:InputType) 1 == if{
 					(O:_ResetLimitsTime) (E:SIMULATION TIME, second) &lt; if{
-							(L:XMLVAR_Propeller_Lever_Position#ENGINE_ID#) abs #MIN_DIFF_POS# &lt; if{
+						(L:#LEVER_POSITION_VAR#) abs #MIN_DIFF_POS# &lt; if{
 							#RESET_LIMITS#
 							1 (&gt;O:XMLVAR_Limits_Needs_Recalculation)
 						}
@@ -106,7 +131,7 @@
 				#DRAG_VALUE_OVERRIDE#
 				l0 #DRAG_MAX_VALUE# min #DRAG_MIN_VALUE# max 16384 / (&gt;B:#INPUT_EVENT_ID_SOURCE#_#IE_NAME#_Set)
 				(O:XMLVAR_Limits_Needs_Recalculation) if{
-						(L:XMLVAR_Propeller_Lever_Position#ENGINE_ID#) abs #MIN_DIFF_POS# &gt; if{
+						(L:#LEVER_POSITION_VAR#) abs #MIN_DIFF_POS# &gt; if{
 						#PROCESS_LIMITS#
 						0 (&gt;O:XMLVAR_Limits_Needs_Recalculation)
 					}
@@ -115,9 +140,8 @@
 			<POSITIVE_AXIS_CODE>1 (&gt;B:#INPUT_EVENT_ID_SOURCE#_#IE_NAME#_Inc)</POSITIVE_AXIS_CODE>
 			<NEGATIVE_AXIS_CODE>1 (&gt;B:#INPUT_EVENT_ID_SOURCE#_#IE_NAME#_Dec)</NEGATIVE_AXIS_CODE>
 		</UseTemplate>
-
 		<UseTemplate Name="ASOBO_GT_Visibility_Code">
-			<VISIBILITY_CODE>(L:XMLVAR_LeverPropellerHidden) !</VISIBILITY_CODE>
+			<VISIBILITY_CODE>(L:#LEVER_VISIBILITY_VAR#) !</VISIBILITY_CODE>
 		</UseTemplate>
 	</Component>
 </Template>
