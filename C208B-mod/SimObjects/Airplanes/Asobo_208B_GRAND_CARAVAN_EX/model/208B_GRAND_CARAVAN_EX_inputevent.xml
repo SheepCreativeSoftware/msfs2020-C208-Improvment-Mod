@@ -313,12 +313,14 @@
 						<Param Type="Float" RPN="True">p0 #INCREMENT# *</Param>
 					</Parameters>
 					<Bindings>
-						<Binding EventID="PROP_PITCH_INCR"><!-- event manipulating all propellers -->
+						<!-- event manipulating all propellers -->
+						<Binding EventID="PROP_PITCH_INCR">
 							<Param>0.1</Param>
 						</Binding>
-						<Binding EventID="PROP_PITCH_INCR_SMALL"><!-- event manipulating all propellers -->
+						<Binding EventID="PROP_PITCH_INCR_SMALL">
 							<Param>0.05</Param>
 						</Binding>
+						<!-- event manipulating a specific propeller -->
 						<Binding EventID="PROP_PITCH#ENGINE_ID#_INCR">
 							<Param>0.1</Param>
 						</Binding>
@@ -337,12 +339,14 @@
 						<Param Type="Float" RPN="True">p0 #INCREMENT# *</Param>
 					</Parameters>
 					<Bindings>
-						<Binding EventID="PROP_PITCH_DECR"><!-- event manipulating all propellers -->
+						<!-- event manipulating all propellers -->
+						<Binding EventID="PROP_PITCH_DECR">
 							<Param>0.1</Param>
 						</Binding>
-						<Binding EventID="PROP_PITCH_DECR_SMALL"><!-- event manipulating all propellers -->
+						<Binding EventID="PROP_PITCH_DECR_SMALL">
 							<Param>0.05</Param>
 						</Binding>
+						<!-- event manipulating a specific propeller -->
 						<Binding EventID="PROP_PITCH#ENGINE_ID#_DECR">
 							<Param>0.1</Param>
 						</Binding>
@@ -360,21 +364,22 @@
 						<Param Type="Float" RPN="True">p0</Param>
 					</Parameters>
 					<Bindings>
-						<Binding EventID="PROP_PITCH_AXIS_SET_EX1"> <!-- event manipulating all propellers -->
+						<!-- event manipulating all propellers -->
+						<Binding EventID="PROP_PITCH_AXIS_SET_EX1">
 							<Param RPN="True">@ProcessAxisSnapZone</Param>
 						</Binding>
-						<Binding EventID="PROP_PITCH1_AXIS_SET_EX1">
-							<Param RPN="True">@ProcessAxisSnapZone</Param>
-						</Binding>
-						<!-- Aliases -->
-						<Binding Alias="ENGINE_All_Propeller_Full_Forward"><!-- event manipulating all propellers -->
+						<Binding Alias="ENGINE_All_Propeller_Full_Forward">
 							<Param>1</Param>
 						</Binding>
-						<Binding Alias="ENGINE_All_Propeller_Full_Backward"><!-- event manipulating all propellers -->
+						<Binding Alias="ENGINE_All_Propeller_Full_Backward">
 							<Param>#LOWER_LIMIT_PCT_OVER_100#</Param>
 						</Binding>
-						<Binding Alias="ENGINE_All_Propeller_Idle"><!-- event manipulating all propellers -->
+						<Binding Alias="ENGINE_All_Propeller_Idle">
 							<Param>0</Param>
+						</Binding>
+						<!-- event manipulating a specific propeller -->
+						<Binding EventID="PROP_PITCH#ENGINE_ID#_AXIS_SET_EX1">
+							<Param RPN="True">@ProcessAxisSnapZone</Param>
 						</Binding>
 						<Binding Alias="ENGINE_Propeller_#ENGINE_ID#_Full_Forward">
 							<Param>1</Param>
@@ -391,9 +396,6 @@
 		</Case>
 		<Case Value="ENGINE_Throttle">
 			<Preset ID="#INPUT_EVENT_ID_SOURCE#_#IE_NAME#">
-				<Parameters Type="Default">
-
-				</Parameters>
 				<Parameters Type="Default">
 					<AXIS_SCALE Process="Float">1 #LOWER_LIMIT_PCT_OVER_100# - 2 /</AXIS_SCALE>
 				</Parameters>
@@ -510,7 +512,7 @@
 							<Param>0</Param>
 						</Binding>
 						<Binding EventID="THROTTLE#ENGINE_ID#_SET">
-							<Param RPN="True">@ProcessAxisSnapZone</Param>
+							<Param RPN="True">p0</Param>
 						</Binding>
 						<Binding EventID="THROTTLE#ENGINE_ID#_AXIS_SET_EX1">
 							<Param RPN="True">@ProcessAxisSnapZone</Param>
@@ -519,7 +521,7 @@
 							<Param RPN="True">@ProcessAxisSnapZone</Param>
 						</Binding>
 						<Binding EventID="THROTTLE_SET">
-							<Param RPN="True">@ProcessAxisSnapZone</Param>
+							<Param RPN="True">p0</Param>
 						</Binding>
 						<Binding EventID="THROTTLE_AXIS_SET_EX1">
 							<Param RPN="True">@ProcessAxisSnapZone</Param>
