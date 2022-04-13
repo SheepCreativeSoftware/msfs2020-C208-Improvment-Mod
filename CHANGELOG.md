@@ -1,5 +1,9 @@
 ## Changes
 
+**2203.4.1**
+- Fixed #141: Beta reverse is extremely powerful and speed up the plane very fast
+- Fixed: for some cases generator does not kicks in during starter sequence
+
 **2203.2.2**
 - Tested version
 - Fixed #140: Tooltip on deice fluid control switch only shows "0." on up or down position
