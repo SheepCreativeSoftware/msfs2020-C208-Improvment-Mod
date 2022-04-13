@@ -1,0 +1,553 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ModelBehaviors>
+
+	<macro Name="ProcessAxisSnapZone">
+		p0 #AXIS_SCALE# * #AXIS_SHIFT# + s0 l0 0 &gt; if{
+			l0 #LEVER_DEAD_ZONE# &gt; if{ 
+				l0 #LEVER_DEAD_ZONE# - 1 1 #LEVER_DEAD_ZONE# - / *
+			} els{ 0 }
+		} els{ l0 }
+	</macro>
+
+	<InputEvent ID="CESSNA_MOD">
+	<Presets>
+		<Switch Param="INPUT_EVENT_ID_SOURCE">
+        <Case Value="ELECTRICAL_Power_Bus">
+			<Extend Target="ASOBO_GIE_Base">
+				<Parameters Type="Default">
+					<VALUE_UNITS>Bool</VALUE_UNITS>
+					<VALUE_CODE>
+						 #POWER_BUS_ID# (&gt;A:BUS LOOKUP INDEX, Number) (A:BUS CONNECTION ON:#BATTERY_BUS_ID#, Bool) 
+					</VALUE_CODE>
+					<INIT_CODE>
+						#POWER_BUS_ID# (&gt;A:BUS LOOKUP INDEX, Number) (A:BUS CONNECTION ON:#BATTERY_BUS_ID#, Bool)
+						(A:ELECTRICAL MASTER BATTERY:#DUMMY_BATTERY_ID#, Bool) != if{ 
+							#POWER_BUS_ID# #BATTERY_BUS_ID# (&gt;K:2:ELECTRICAL_BUS_TO_BUS_CONNECTION_TOGGLE) }
+						#MASTER_BATTERY_ID# (&gt;K:MASTER_BATTERY_ON)
+					</INIT_CODE>
+					<SIMVAR_TO_WATCH_0>ELECTRICAL MASTER BATTERY:#DUMMY_BATTERY_ID#</SIMVAR_TO_WATCH_0>
+					<SIMVAR_TO_WATCH_1>ELECTRICAL MASTER BATTERY:#MASTER_BATTERY_ID#</SIMVAR_TO_WATCH_1>
+					<INC_CODE/>
+					<DEC_CODE/>
+					<SET_CODE>
+						#POWER_BUS_ID# (&gt;A:BUS LOOKUP INDEX, Number) (A:BUS CONNECTION ON:#BATTERY_BUS_ID#, Bool) p0
+						!= if{ #POWER_BUS_ID# #BATTERY_BUS_ID# (&gt;K:2:ELECTRICAL_BUS_TO_BUS_CONNECTION_TOGGLE) } 
+						#DUMMY_BATTERY_ID# p0 (&gt;K:MASTER_BATTERY_SET)
+					</SET_CODE>
+					<SET_ARG_COUNT>1</SET_ARG_COUNT>
+
+					<BINDING_SET_0>Toggle</BINDING_SET_0>
+					<BINDING_SET_0_PARAM_0>(B:#INPUT_EVENT_ID_SOURCE#_#IE_NAME#) !</BINDING_SET_0_PARAM_0>
+					<BINDING_SET_0_PARAM_0_IS_DYNAMIC>TRUE</BINDING_SET_0_PARAM_0_IS_DYNAMIC>
+
+					<BINDING_SET_1>EVENT1</BINDING_SET_1>
+					<BINDING_SET_1_EVENT_ID>TOGGLE_MASTER_BATTERY</BINDING_SET_1_EVENT_ID>
+					<BINDING_SET_1_EVENT_ID_ONLY>TRUE</BINDING_SET_1_EVENT_ID_ONLY>
+					<BINDING_SET_1_PARAM_0>(B:#INPUT_EVENT_ID_SOURCE#_#IE_NAME#) !</BINDING_SET_1_PARAM_0>
+					<BINDING_SET_1_PARAM_0_IS_DYNAMIC>TRUE</BINDING_SET_1_PARAM_0_IS_DYNAMIC>
+				</Parameters>
+			</Extend>
+		</Case>
+        <Case Value="ENGINE_Ignition">
+			<Extend Target="ASOBO_GIE_Base">
+				<Parameters Type="Default">
+					<VALUE_UNITS>Bool</VALUE_UNITS>
+					<VALUE_CODE>
+						(#SWITCH_POSITION_TYPE#:#SWITCH_POSITION_VAR#, bool)
+					</VALUE_CODE>
+					<INIT_CODE>
+						(A:TURB ENG IGNITION SWITCH EX1:#ENGINE_ID#, enum) 0 > (&gt;#SWITCH_POSITION_TYPE#:#SWITCH_POSITION_VAR#, bool)
+					</INIT_CODE>
+					<INC_CODE/>
+					<DEC_CODE/>
+					<SET_CODE>
+						p0 d (&gt;#SWITCH_POSITION_TYPE#:#SWITCH_POSITION_VAR#)
+						(L:#STARTER_SWITCH_LOCAL_VAR#, bool) ! or (&gt;K:TURBINE_IGNITION_SWITCH_SET#ENGINE_ID#)
+					</SET_CODE>
+					<SET_ARG_COUNT>1</SET_ARG_COUNT>
+
+					<BINDING_SET_0>Toggle</BINDING_SET_0>
+					<BINDING_SET_0_PARAM_0>(#SWITCH_POSITION_TYPE#:#SWITCH_POSITION_VAR#, bool) !</BINDING_SET_0_PARAM_0>
+					<BINDING_SET_0_PARAM_0_IS_DYNAMIC>TRUE</BINDING_SET_0_PARAM_0_IS_DYNAMIC>
+
+					<BINDING_SET_1>EVENT1</BINDING_SET_1>
+					<BINDING_SET_1_EVENT_ID>TURBINE_IGNITION_SWITCH_TOGGLE</BINDING_SET_1_EVENT_ID>
+					<BINDING_SET_1_EVENT_ID_ONLY>TRUE</BINDING_SET_1_EVENT_ID_ONLY>
+					<BINDING_SET_1_PARAM_0>(#SWITCH_POSITION_TYPE#:#SWITCH_POSITION_VAR#, bool) !</BINDING_SET_1_PARAM_0>
+					<BINDING_SET_1_PARAM_0_IS_DYNAMIC>TRUE</BINDING_SET_1_PARAM_0_IS_DYNAMIC>
+
+					<BINDING_SET_2>EVENT2</BINDING_SET_2>
+					<BINDING_SET_2_EVENT_ID>TURBINE_IGNITION_SWITCH_SET</BINDING_SET_2_EVENT_ID>
+					<BINDING_SET_2_EVENT_ID_ONLY>TRUE</BINDING_SET_2_EVENT_ID_ONLY>
+					<BINDING_SET_2_PARAM_0>p0</BINDING_SET_2_PARAM_0>
+					<BINDING_SET_2_PARAM_0_IS_DYNAMIC>TRUE</BINDING_SET_2_PARAM_0_IS_DYNAMIC>
+
+					<BINDING_SET_3>EVENT3</BINDING_SET_3>
+					<BINDING_SET_3_EVENT_ID>TURBINE_IGNITION_SWITCH_SET#ENGINE_ID#</BINDING_SET_3_EVENT_ID>
+					<BINDING_SET_3_EVENT_ID_ONLY>TRUE</BINDING_SET_3_EVENT_ID_ONLY>
+					<BINDING_SET_3_PARAM_0>p0</BINDING_SET_3_PARAM_0>
+					<BINDING_SET_3_PARAM_0_IS_DYNAMIC>TRUE</BINDING_SET_3_PARAM_0_IS_DYNAMIC>
+				</Parameters>
+			</Extend>
+		</Case>
+        <Case Value="ENGINE_Starter">
+			<Extend Target="ASOBO_GIE_Base">
+				<Parameters Type="Default">
+					<VALUE_UNITS>enum</VALUE_UNITS>
+					<VALUE_CODE>
+						(#SWITCH_POSITION_TYPE#:#SWITCH_POSITION_VAR#, enum)
+					</VALUE_CODE>
+					<INIT_CODE>
+						#STATE_OFF# (&gt;#SWITCH_POSITION_TYPE#:#SWITCH_POSITION_VAR#)
+					</INIT_CODE>
+					<INC_CODE/>
+					<DEC_CODE/>
+					<SET_CODE>
+						p0 d (&gt;#SWITCH_POSITION_TYPE#:#SWITCH_POSITION_VAR#)
+						#STATE_OFF# == if{
+							0 (&gt;K:STARTER1_SET) 
+							(B:Engine_Ignition_Switch, bool)
+							#POWER_BUS_ID# (&gt;A:BUS LOOKUP INDEX, Number) (A:ALTERNATOR CONNECTION ON:#ENGINE_ID#, bool) ! if{
+								#ENGINE_ID# #POWER_BUS_ID# (&gt;K:2:ELECTRICAL_BUS_TO_ALTERNATOR_CONNECTION_TOGGLE) }
+						 } els{
+							(A:TURB ENG N1:#ENGINE_ID#, percent) 46 &gt; if{ quit }
+							#POWER_BUS_ID# (&gt;A:BUS LOOKUP INDEX, Number) (A:ALTERNATOR CONNECTION ON:#ENGINE_ID#, bool) if{ 
+								#ENGINE_ID# #POWER_BUS_ID# (&gt;K:2:ELECTRICAL_BUS_TO_ALTERNATOR_CONNECTION_TOGGLE) }
+							p0 #STATE_MOTOR# == if{ 0 } els{ (B:Engine_Ignition_Switch, bool) }
+							20 (A:AMBIENT TEMPERATURE, celsius) - 0 max 0.4 / 100 min #STARTER_CIRCUIT# (&gt;K:2:ELECTRICAL_CIRCUIT_POWER_SETTING_SET)
+                            1 (&gt;K:STARTER1_SET) }
+						(&gt;B:Engine_Ignition_Switch_Set)
+					</SET_CODE>
+					<SET_ARG_COUNT>1</SET_ARG_COUNT>
+
+					<BINDING_SET_0>EVENT0</BINDING_SET_0>
+					<BINDING_SET_0_EVENT_ID>TOGGLE_STARTER#ENGINE_ID#</BINDING_SET_0_EVENT_ID>
+					<BINDING_SET_0_EVENT_ID_ONLY>TRUE</BINDING_SET_0_EVENT_ID_ONLY>
+					<BINDING_SET_0_PARAM_0>
+						#STATE_OFF# #STATE_START# (#SWITCH_POSITION_TYPE#:#SWITCH_POSITION_VAR#) #STATE_START# == ?
+					</BINDING_SET_0_PARAM_0>
+					<BINDING_SET_0_PARAM_0_IS_DYNAMIC>TRUE</BINDING_SET_0_PARAM_0_IS_DYNAMIC>
+
+					<BINDING_SET_1>EVENT1</BINDING_SET_1>
+					<BINDING_SET_1_EVENT_ID>TOGGLE_ALL_STARTERS</BINDING_SET_1_EVENT_ID>
+					<BINDING_SET_1_EVENT_ID_ONLY>TRUE</BINDING_SET_1_EVENT_ID_ONLY>
+					<BINDING_SET_1_PARAM_0>
+						#STATE_OFF# #STATE_START# (#SWITCH_POSITION_TYPE#:#SWITCH_POSITION_VAR#) #STATE_START# == ?
+					</BINDING_SET_1_PARAM_0>
+					<BINDING_SET_1_PARAM_0_IS_DYNAMIC>TRUE</BINDING_SET_1_PARAM_0_IS_DYNAMIC>
+
+					<BINDING_SET_2>EVENT2</BINDING_SET_2>
+					<BINDING_SET_2_EVENT_ID>TOGGLE_MASTER_STARTER_SWITCH</BINDING_SET_2_EVENT_ID>
+					<BINDING_SET_2_EVENT_ID_ONLY>TRUE</BINDING_SET_2_EVENT_ID_ONLY>
+					<BINDING_SET_2_PARAM_0>
+						#STATE_OFF# #STATE_START# (#SWITCH_POSITION_TYPE#:#SWITCH_POSITION_VAR#) #STATE_START# == ?
+					</BINDING_SET_2_PARAM_0>
+					<BINDING_SET_2_PARAM_0_IS_DYNAMIC>TRUE</BINDING_SET_2_PARAM_0_IS_DYNAMIC>
+
+					<BINDING_SET_3>EVENT3</BINDING_SET_3>
+					<BINDING_SET_3_EVENT_ID>STARTER#ENGINE_ID#_SET</BINDING_SET_3_EVENT_ID>
+					<BINDING_SET_3_EVENT_ID_ONLY>TRUE</BINDING_SET_3_EVENT_ID_ONLY>
+					<BINDING_SET_3_PARAM_0>p0</BINDING_SET_3_PARAM_0>
+					<BINDING_SET_3_PARAM_0_IS_DYNAMIC>TRUE</BINDING_SET_3_PARAM_0_IS_DYNAMIC>
+                                 
+					<BINDING_SET_4>EVENT4</BINDING_SET_4>
+					<BINDING_SET_4_EVENT_ID>SET_STARTER#ENGINE_ID#_HELD</BINDING_SET_4_EVENT_ID>
+					<BINDING_SET_4_EVENT_ID_ONLY>TRUE</BINDING_SET_4_EVENT_ID_ONLY>
+					<BINDING_SET_4_PARAM_0>#STATE_OFF# #STATE_START# p0 0 == ?</BINDING_SET_4_PARAM_0>
+					<BINDING_SET_4_PARAM_0_IS_DYNAMIC>TRUE</BINDING_SET_4_PARAM_0_IS_DYNAMIC>
+
+					<BINDING_SET_5>EVENT5</BINDING_SET_5>
+					<BINDING_SET_5_EVENT_ID>SET_STARTER_ALL_HELD</BINDING_SET_5_EVENT_ID>
+					<BINDING_SET_5_EVENT_ID_ONLY>TRUE</BINDING_SET_5_EVENT_ID_ONLY>
+					<BINDING_SET_5_PARAM_0>#STATE_OFF# #STATE_START# p0 0 == ?</BINDING_SET_5_PARAM_0>
+					<BINDING_SET_5_PARAM_0_IS_DYNAMIC>TRUE</BINDING_SET_5_PARAM_0_IS_DYNAMIC>
+				</Parameters>
+			</Extend>
+		</Case>
+        <Case Value="DEICE_System">
+			<Preset ID="#INPUT_EVENT_ID_SOURCE#_#IE_NAME#">
+				<Value> 
+					<Units>enum</Units>
+					<Code>(O:DeicePumpState)</Code>
+					<Init>
+						@Disable_deice_pump1
+						@Disable_deice_pump2
+						@Disable_deice_pump3
+						(E:ABSOLUTE TIME, second) seed
+					</Init>
+				</Value>
+                <Inc><Code/></Inc>
+                <Dec><Code/></Dec>
+				<Set>
+					<Code>
+						p0 #STATE_BACKUP# == if{ 
+							(L:XMLVAR_Deice_Backup_Switch) ! d (&gt;L:XMLVAR_Deice_Backup_Switch) if{ 
+								#STATE_BACKUP# (&gt;O:DeicePumpState)
+								#USE_RATE_HIGH# (&gt;O:DeiceFluidFlow)
+								1 (&gt;O:DeiceCycleState)
+								0 (&gt;O:DeiceWindshieldState)
+								@Disable_deice_pump1
+								@Enable_deice_pump2
+								@Enable_deice_pump3
+							} els{
+								(L:XMLVAR_Deice_Airframe, enum) d (&gt;O:DeicePumpState)
+								#STATE_HIGH# == if{ #USE_RATE_HIGH# (&gt;O:DeiceFluidFlow) } 
+												els{ #USE_RATE_NORMAL# (&gt;O:DeiceFluidFlow) }
+								0 (&gt;O:DeiceCycleState)
+								@Disable_deice_pump2
+								@Disable_deice_pump3
+							}
+							(E:SIMULATION TIME, second) d (&gt;O:LastCycleStateChange) (&gt;O:LastUpdateTime)
+							quit
+						}
+
+						(O:DeicePumpState) #STATE_BACKUP# == if{ quit }
+
+						p0 #STATE_MAXFLOW# &lt; p0 (L:XMLVAR_Deice_Airframe) != and if{ p0 (&gt;L:XMLVAR_Deice_Airframe) quit }
+
+						p0 #STATE_OFF# == if{
+							#STATE_OFF# (&gt;O:DeicePumpState)
+							0 (&gt;O:DeiceWindshieldState)
+							@Disable_deice_pump1
+							@Disable_deice_pump3
+							0 (&gt;K:WINDSHIELD_DEICE_SET)
+							(A:STRUCTURAL DEICE SWITCH, bool) if{ (&gt;K:TOGGLE_STRUCTURAL_DEICE) }
+						}
+
+						(O:DeicePumpState) #STATE_OFF# != if{ 
+							(A:ELECTRICAL MAIN BUS VOLTAGE, bool) if{
+								p0 #STATE_WINDSHIELD# == if{
+									1 (&gt;O:DeiceWindshieldState)
+									@Enable_deice_pump3
+									(E:SIMULATION TIME, second) (&gt;O:WindshieldPumpStarted)
+									quit
+								}
+								p0 #STATE_MAXFLOW# == if{
+									#STATE_MAXFLOW# (&gt;O:DeicePumpState)
+									#USE_RATE_MAX# (&gt;O:DeiceFluidFlow)
+									@Enable_deice_pump1
+									100 #CIRCUIT_DEICE_PUMP1# (&gt;K:2:ELECTRICAL_CIRCUIT_POWER_SETTING_SET)
+									(E:SIMULATION TIME, second) (&gt;O:MaxFlowPumpStarted)
+									quit
+								}
+							}
+							p0 #STATE_HIGH# == if{ 
+								#STATE_HIGH# (&gt;O:DeicePumpState)
+								#USE_RATE_HIGH# (&gt;O:DeiceFluidFlow)
+								100 #CIRCUIT_DEICE_PUMP1# (&gt;K:2:ELECTRICAL_CIRCUIT_POWER_SETTING_SET)
+								quit
+							}
+						}
+
+						p0 #STATE_NORM# == if{
+							#STATE_NORM# (&gt;O:DeicePumpState)
+							#USE_RATE_NORMAL# (&gt;O:DeiceFluidFlow) 
+							0 #CIRCUIT_DEICE_PUMP1# (&gt;K:2:ELECTRICAL_CIRCUIT_POWER_SETTING_SET)
+							(O:DeicePumpState) #STATE_OFF# == if{
+								1 (&gt;O:DeiceCycleState)
+								@Enable_deice_pump1
+								(E:SIMULATION TIME, second) d (&gt;O:LastCycleStateChange) (&gt;O:LastUpdateTime)
+							}
+    					}
+					</Code>
+					<Parameters>
+						<Param Type="Int" RPN="True">p0</Param>
+					</Parameters>
+					<Bindings>
+						<Binding Alias="#INPUT_EVENT_ID_SOURCE#_#IE_NAME#_Backup_Toggle">
+							<Param RPN="True">#STATE_BACKUP#</Param>
+						</Binding>
+						<Binding Alias="#INPUT_EVENT_ID_SOURCE#_#IE_NAME#_Set_MaxFlow">
+							<Param RPN="True">#STATE_MAXFLOW#</Param>
+						</Binding>
+						<Binding Alias="#INPUT_EVENT_ID_SOURCE#_#IE_NAME#_Set_Windshield">
+							<Param RPN="True">#STATE_WINDSHIELD#</Param>
+						</Binding>
+						<Binding EventID="TOGGLE_STRUCTURAL_DEICE">
+							<Param RPN="True">
+								#STATE_OFF# #STATE_HIGH# (L:XMLVAR_Deice_Airframe) #STATE_HIGH# == ? d (&gt;L:XMLVAR_Deice_Airframe)
+							</Param>
+						</Binding>
+						<Binding EventID="WINDSHIELD_DEICE_TOGGLE">
+							<Param RPN="True">#STATE_WINDSHIELD#</Param>
+						</Binding>
+					</Bindings>
+				</Set>
+			</Preset>
+		</Case>
+		<Case Value="ENGINE_Propeller">
+			<Preset ID="#INPUT_EVENT_ID_SOURCE#_#IE_NAME#">
+				<Parameters Type="Default">
+					<AXIS_SCALE Process="Float">1 #LOWER_LIMIT_PCT_OVER_100# - 2 /</AXIS_SCALE>
+				</Parameters>
+				<Parameters Type="Default">
+					<AXIS_SHIFT Process="Float">1 #AXIS_SCALE# -</AXIS_SHIFT>
+				</Parameters>
+				<Tooltip>
+					<Icon>MOVE_AXIS_Y</Icon>
+					<Interaction>PRIMARY_DOWN+Y_AXIS</Interaction>
+					<InteractionLockable>Y_AXIS</InteractionLockable>
+					<TTDescription RPN="#TT_DESCRIPTION_IS_DYNAMIC#">#TT_DESCRIPTION#</TTDescription>
+					<TTValue RPN="True">(L:#LEVER_POSITION_VAR#) '%.1f%%' @sprintf</TTValue>
+				</Tooltip>
+				<Value>
+					<Units>percent</Units>
+					<Code>(L:#LEVER_POSITION_VAR#, percent) #LOWER_LIMIT_PCT# - #UPPER_LIMIT_PCT# #LOWER_LIMIT_PCT# - / 100 *</Code>
+					<Init>
+						(L:XMLVAR_Overspeed_Test) ! if{ 
+							(A:GENERAL ENG PROPELLER LEVER POSITION:#ENGINE_ID#, position 16k) 163.84 / #LOWER_LIMIT_PCT# max #UPPER_LIMIT_PCT# min d
+							(&gt;L:#LEVER_POSITION_VAR#) 163.84 * (&gt;K:PROP_PITCH#ENGINE_ID#_SET)
+						}
+					</Init>
+					<WatchVars>
+						<Simvar ID="GENERAL ENG PROPELLER LEVER POSITION:#ENGINE_ID#"/>
+					</WatchVars>
+				</Value>
+				<Inc>
+					<Code>
+						(L:#LEVER_POSITION_VAR#) p0 +
+						(L:XMLVAR_Overspeed_Test) ! if{ 163.84 * (&gt;K:PROP_PITCH#ENGINE_ID#_SET) } els{
+						#LOWER_LIMIT_PCT# max #UPPER_LIMIT_PCT# min (&gt;L:#LEVER_POSITION_VAR#) }
+					</Code>
+					<Parameters>
+						<Param Type="Float" RPN="True">p0 #INCREMENT# *</Param>
+					</Parameters>
+					<Bindings>
+						<!-- event manipulating all propellers -->
+						<Binding EventID="PROP_PITCH_INCR">
+							<Param>0.1</Param>
+						</Binding>
+						<Binding EventID="PROP_PITCH_INCR_SMALL">
+							<Param>0.05</Param>
+						</Binding>
+						<!-- event manipulating a specific propeller -->
+						<Binding EventID="PROP_PITCH#ENGINE_ID#_INCR">
+							<Param>0.1</Param>
+						</Binding>
+						<Binding EventID="PROP_PITCH#ENGINE_ID#_INCR_SMALL">
+							<Param>0.05</Param>
+						</Binding>
+					</Bindings>
+				</Inc>
+				<Dec>
+					<Code>
+						(L:#LEVER_POSITION_VAR#) p0 100 * -
+						(L:XMLVAR_Overspeed_Test) ! if{ 163.84 * (&gt;K:PROP_PITCH#ENGINE_ID#_SET) } els{
+						#LOWER_LIMIT_PCT# max #UPPER_LIMIT_PCT# min (&gt;L:#LEVER_POSITION_VAR#) }
+					</Code>
+					<Parameters>
+						<Param Type="Float" RPN="True">p0 #INCREMENT# *</Param>
+					</Parameters>
+					<Bindings>
+						<!-- event manipulating all propellers -->
+						<Binding EventID="PROP_PITCH_DECR">
+							<Param>0.1</Param>
+						</Binding>
+						<Binding EventID="PROP_PITCH_DECR_SMALL">
+							<Param>0.05</Param>
+						</Binding>
+						<!-- event manipulating a specific propeller -->
+						<Binding EventID="PROP_PITCH#ENGINE_ID#_DECR">
+							<Param>0.1</Param>
+						</Binding>
+						<Binding EventID="PROP_PITCH#ENGINE_ID#_DECR_SMALL">
+							<Param>0.05</Param>
+						</Binding>
+					</Bindings>
+				</Dec>
+				<Set>                                                            
+					<Code>
+						p0 (L:XMLVAR_Overspeed_Test) ! if{ 16384 * (&gt;K:PROP_PITCH#ENGINE_ID#_SET) } els{
+						100 * #LOWER_LIMIT_PCT# max #UPPER_LIMIT_PCT# min (&gt;L:#LEVER_POSITION_VAR#) }
+					</Code>
+					<Parameters>
+						<Param Type="Float" RPN="True">p0</Param>
+					</Parameters>
+					<Bindings>
+						<!-- event manipulating all propellers -->
+						<Binding EventID="PROP_PITCH_AXIS_SET_EX1">
+							<Param RPN="True">@ProcessAxisSnapZone</Param>
+						</Binding>
+						<Binding Alias="ENGINE_All_Propeller_Full_Forward">
+							<Param>1</Param>
+						</Binding>
+						<Binding Alias="ENGINE_All_Propeller_Full_Backward">
+							<Param>#LOWER_LIMIT_PCT_OVER_100#</Param>
+						</Binding>
+						<Binding Alias="ENGINE_All_Propeller_Idle">
+							<Param>0</Param>
+						</Binding>
+						<!-- event manipulating a specific propeller -->
+						<Binding EventID="PROP_PITCH#ENGINE_ID#_AXIS_SET_EX1">
+							<Param RPN="True">@ProcessAxisSnapZone</Param>
+						</Binding>
+						<Binding Alias="ENGINE_Propeller_#ENGINE_ID#_Full_Forward">
+							<Param>1</Param>
+						</Binding>
+						<Binding Alias="ENGINE_Propeller_#ENGINE_ID#_Full_Backward">
+							<Param>#LOWER_LIMIT_PCT_OVER_100#</Param>
+						</Binding>
+						<Binding Alias="ENGINE_Propeller_#ENGINE_ID#_Idle">
+							<Param>0</Param>
+						</Binding>
+					</Bindings>
+				</Set>
+			</Preset>
+		</Case>
+		<Case Value="ENGINE_Throttle">
+			<Preset ID="#INPUT_EVENT_ID_SOURCE#_#IE_NAME#">
+				<Parameters Type="Default">
+					<AXIS_SCALE Process="Float">1 #LOWER_LIMIT_PCT_OVER_100# - 2 /</AXIS_SCALE>
+				</Parameters>
+				<Parameters Type="Default">
+					<AXIS_SHIFT Process="Float">1 #AXIS_SCALE# -</AXIS_SHIFT>
+				</Parameters>
+				<Tooltip>
+					<Icon>MOVE_AXIS_Y</Icon>
+					<Interaction>PRIMARY_DOWN+Y_AXIS</Interaction>
+					<InteractionLockable>Y_AXIS</InteractionLockable>
+					<TTDescription RPN="#TT_DESCRIPTION_IS_DYNAMIC#">#TT_DESCRIPTION#</TTDescription>
+					<TTValue RPN="True">(L:#LEVER_POSITION_VAR#) '%.1f%%' @sprintf</TTValue>
+				</Tooltip>
+				<Value>
+					<Units>percent</Units>
+					<Code>(L:#LEVER_POSITION_VAR#, percent) #LOWER_LIMIT_PCT# - #UPPER_LIMIT_PCT# #LOWER_LIMIT_PCT# - / 100 *</Code>
+					<Init>
+						(A:GENERAL ENG THROTTLE LEVER POSITION:#ENGINE_ID#, position 16k) 163.84 / #LOWER_LIMIT_PCT# max #UPPER_LIMIT_PCT# min d
+						(&gt;L:#LEVER_POSITION_VAR#) 163.84 * (&gt;K:THROTTLE#ENGINE_ID#_SET)
+					</Init>
+					<WatchVars>
+						<Simvar ID="GENERAL ENG THROTTLE LEVER POSITION:#ENGINE_ID#"/>
+					</WatchVars>
+				</Value>
+				<Inc>
+					<Code>
+						(L:#LEVER_POSITION_VAR#) p0 + 163.84 * (&gt;K:THROTTLE#ENGINE_ID#_SET)
+					</Code>
+					<Parameters>
+						<Param Type="Float" RPN="True">p0 #INCREMENT# *</Param>
+					</Parameters>
+					<Bindings>
+						<!-- event manipulating all throttles (declared for each throttle preset) -->
+						<Binding EventID="THROTTLE_INCR">
+							<Param>0.1</Param>
+						</Binding>
+						<Binding EventID="THROTTLE_INCR_SMALL">
+							<Param>0.05</Param>
+						</Binding>
+						<!-- event manipulating one throttle for specific engine -->
+						<Binding EventID="THROTTLE#ENGINE_ID#_INCR">
+							<Param>0.1</Param>
+						</Binding>
+						<Binding EventID="THROTTLE#ENGINE_ID#_INCR_SMALL">
+							<Param>0.05</Param>
+						</Binding>
+					</Bindings>
+				</Inc>
+				<Dec>
+					<Code>
+						(L:#LEVER_POSITION_VAR#) p0 100 * - 163.84 * (&gt;K:THROTTLE#ENGINE_ID#_SET)
+					</Code>
+					<Parameters>
+						<Param Type="Float" RPN="True">p0 #INCREMENT# *</Param>
+					</Parameters>
+					<Bindings>
+						<!-- event manipulating all throttles (declared for each throttle preset) -->
+						<Binding EventID="THROTTLE_DECR">
+							<Param>0.1</Param>
+						</Binding>
+						<Binding EventID="THROTTLE_DECR_SMALL">
+							<Param>0.05</Param>
+						</Binding>
+						<!-- event manipulating one throttle for specific engine -->
+						<Binding EventID="THROTTLE#ENGINE_ID#_DECR">
+							<Param>0.1</Param>
+						</Binding>
+						<Binding EventID="THROTTLE#ENGINE_ID#_DECR_SMALL">
+							<Param>0.05</Param>
+						</Binding>
+					</Bindings>
+				</Dec>
+				<Set>                                                            
+					<Code>
+						p0 16384 * (&gt;K:THROTTLE#ENGINE_ID#_SET)
+					</Code>
+					<Parameters>
+						<Param Type="Float" RPN="True">p0</Param>
+					</Parameters>
+					<Bindings>
+						<Binding Alias="Set_All_Throttles">
+							<Param Type="Float" RPN="True">(L:XMLVAR_IE_Throttle_VR_Value)</Param>
+						</Binding>
+						<!-- events manipulating all throttles (declared for each throttle preset) -->
+						<Binding Alias="ENGINE_All_Throttle_Full_Forward">
+							<Param>1</Param>
+						</Binding>
+						<Binding Alias="ENGINE_All_Throttle_Full_Backward">
+							<Param>0</Param>
+						</Binding>
+						<Binding Alias="ENGINE_All_Throttle_Idle">
+							<Param>0</Param>
+						</Binding>
+						<!-- event manipulating one throttle for specific engine -->
+						<Binding Alias="ENGINE_Throttle_#ENGINE_ID#_Full_Forward">
+							<Param>1</Param>
+						</Binding>
+						<Binding Alias="ENGINE_Throttle_#ENGINE_ID#_Full_Backward">
+							<Param>#LOWER_LIMIT_PCT_OVER_100#</Param>
+						</Binding>
+						<Binding Alias="ENGINE_Throttle_#ENGINE_ID#_Idle">
+							<Param>0</Param>
+						</Binding>
+						<Binding EventID="THROTTLE_FULL">
+							<Param>1</Param>
+						</Binding>
+						<Binding EventID="THROTTLE_CUT">
+							<Param>0</Param>
+						</Binding>
+						<Binding EventID="THROTTLE#ENGINE_ID#_FULL">
+							<Param>1</Param>
+						</Binding>
+						<Binding EventID="THROTTLE#ENGINE_ID#_CUT">
+							<Param>0</Param>
+						</Binding>
+						<Binding EventID="THROTTLE#ENGINE_ID#_SET">
+							<Param RPN="True">p0</Param>
+						</Binding>
+						<Binding EventID="THROTTLE#ENGINE_ID#_AXIS_SET_EX1">
+							<Param RPN="True">@ProcessAxisSnapZone</Param>
+						</Binding>
+						<Binding EventID="AXIS_THROTTLE#ENGINE_ID#_SET">
+							<Param RPN="True">@ProcessAxisSnapZone</Param>
+						</Binding>
+						<Binding EventID="THROTTLE_SET">
+							<Param RPN="True">p0</Param>
+						</Binding>
+						<Binding EventID="THROTTLE_AXIS_SET_EX1">
+							<Param RPN="True">@ProcessAxisSnapZone</Param>
+						</Binding>
+						<Binding EventID="AXIS_THROTTLE_SET">
+							<Param RPN="True">@ProcessAxisSnapZone</Param>
+						</Binding>
+					</Bindings>
+				</Set>
+			</Preset>
+		</Case>
+		<Default>
+			<Extend Target="ASOBO_GIE_Base">
+				<Parameters Type="Default">
+					<VALUE_UNITS/>
+					<VALUE_CODE/>
+					<INIT_CODE/>
+					<INC_CODE/>
+					<DEC_CODE/>
+					<SET_CODE/>
+					<SET_ARG_COUNT/>
+				</Parameters>
+			</Extend>
+		</Default>
+		</Switch>
+	</Presets>
+	</InputEvent>
+
+</ModelBehaviors>

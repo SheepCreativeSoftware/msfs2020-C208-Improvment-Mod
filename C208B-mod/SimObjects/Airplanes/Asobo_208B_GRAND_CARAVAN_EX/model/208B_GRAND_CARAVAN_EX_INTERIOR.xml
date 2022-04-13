@@ -9,7 +9,6 @@
 		<LOD minSize="50" ModelFile="208B_GRAND_CARAVAN_EX_INTERIOR_LOD02.gltf"/>
 		<LOD minSize="25" ModelFile="208B_GRAND_CARAVAN_EX_INTERIOR_LOD03.gltf"/>
 		<LOD minSize="5" ModelFile="208B_GRAND_CARAVAN_EX_INTERIOR_LOD04.gltf"/>
-		<!-- <LOD minSize="2" ModelFile="208B_GRAND_CARAVAN_EX_INTERIOR_LOD05.gltf"/> -->
 		<LOD minSize="1" ModelFile="208B_GRAND_CARAVAN_EX_INTERIOR_LOD06.gltf"/>
 	</LODS>
 
@@ -18,7 +17,8 @@
 	<Include ModelBehaviorFile="Asobo\GlassCockpit\AS1000.xml"/>
 	<Include ModelBehaviorFile="Asobo\NAVCOM\ADF.xml"/>
 	<Include RelativeFile="208B_GRAND_CARAVAN_EX_templates.xml"/>
-	<Include RelativeFile="208B_GRAND_CARAVAN_EX_propeller.xml"/>
+	<Include RelativeFile="208B_GRAND_CARAVAN_EX_inputevent.xml"/>
+	<Include RelativeFile="208B_GRAND_CARAVAN_EX_levers.xml"/>
 
 	<Component ID="SYSTEM">
 		<UseTemplate Name="ASOBO_SYSTEM_Electric_Template_Mod">
@@ -292,21 +292,11 @@
 			<NODE_ID>ENGINE_Switch_Ignition</NODE_ID>
 			<ANIM_NAME>ENGINE_Switch_Ignition</ANIM_NAME>
 		</UseTemplate>
-		<Component ID="Throttle_1_Visibility" Node="ENGINE_LEVER_THROTTLE_1">
-			<UseTemplate Name="ASOBO_GT_Visibility_Code">
-				<VISIBILITY_CODE>(L:XMLVAR_LeverThrottleHidden1) !</VISIBILITY_CODE>
-			</UseTemplate> 
-		</Component>
-		<UseTemplate Name="ASOBO_ENGINE_Lever_Throttle_Template">
-			<ID>1</ID>
-			<HAS_IDLE_GATE/>
-			<IDLE_GATE_ANIM_POS>0.2</IDLE_GATE_ANIM_POS>
+		<UseTemplate Name="ASOBO_ENGINE_Lever_Throttle_Template_Mod">
+			<PART_ID>ENGINE_Lever_Throttle</PART_ID>
+			<NODE_ID>ENGINE_Lever_Throttle_1</NODE_ID>
+			<ANIM_NAME>ENGINE_Lever_Throttle_1</ANIM_NAME>
 		</UseTemplate>
-			<Component ID="Propeller_1_Visibility" Node="ENGINE_LEVER_PROPELLER_1">
-			<UseTemplate Name="ASOBO_GT_Visibility_Code">
-				<VISIBILITY_CODE>(L:XMLVAR_LeverPropellerHidden1) !</VISIBILITY_CODE>
-			</UseTemplate> 
-		</Component>
 		<UseTemplate Name="ASOBO_ENGINE_Lever_Propeller_Template_Mod">
 			<PART_ID>ENGINE_Lever_Propeller</PART_ID>
 			<NODE_ID>ENGINE_Lever_Propeller_1</NODE_ID>
