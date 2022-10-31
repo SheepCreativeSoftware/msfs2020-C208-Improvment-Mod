@@ -35,7 +35,7 @@
     </Sound> 
    
   </AlwaysPlaySounds>
-  
+
 <!-- TriggerSounds ========================================================================================== -->  
 
   <WindSounds>
@@ -104,19 +104,26 @@
   </EngineSoundTransitions>
 
 
-<!-- SimvarSounds ========================================================================================== --> 
+  <!-- SimvarSounds ========================================================================================== --> 
+  <SimVarSounds>
 
-    <SimVarSounds>
     <Sound WwiseEvent="STALL_WARNING" WwiseData="true" Continuous="true" LocalVar="XMLVAR_Stall_Warning" Units="BOOLEAN">
 		<Range LowerBound="1"/>
 	</Sound>
 
-<!-- ENGINE SOUNDS ========================================================================================== -->    
+    <Sound WwiseData="false" WwiseEvent="GYRO_SOUND" FileName="C208B Avionics up" ViewPoint="Inside" Continuous="false" NodeName="AS1000_Panel_NoAutopilot_1" SimVar="CIRCUIT ON" Units="Boolean" Index="26">
+        <Range LowerBound="1"/>
+        <Requires SimVar="ELECTRICAL MAIN BUS VOLTAGE" Units="Volts" Index="1" BreakOnStop="True">
+		    <Range LowerBound="20"/>
+        </Requires>
+    </Sound>
+
+    <!-- ENGINE SOUNDS ========================================================================================== -->    
   
     <Sound WwiseData="true" WwiseEvent="eng1_ignition" NodeName="HYDROLIC_01_CENTER" SimVar="TURB ENG IS IGNITING" Units="BOOL" Index="1">
       <Range LowerBound="1.0" />
     </Sound>
-	
+
 	<Sound WwiseData="true" WwiseEvent="eng1_turbine_start" NodeName="HYDROLIC_01_CENTER" Continuous="false" SimVar="GENERAL ENG STARTER ACTIVE" Units="BOOL" Index="1">
       <Range LowerBound="1.0" />
     </Sound>
@@ -339,7 +346,7 @@
 	<Sound WwiseData="true" WwiseEvent="aural_warning_ok" ViewPoint="Inside"/> 	
 	<Sound WwiseData="true" WwiseEvent="tone_caution" ViewPoint="Inside"/>
 	<Sound WwiseData="true" WwiseEvent="tone_warning" ViewPoint="Inside"/>
-	<Sound WwiseData="true" WwiseEvent="tone_altitude_alert_default" ViewPoint="Inside"/>	
+	<Sound WwiseData="true" WwiseEvent="tone_altitude_alert_default" ViewPoint="Inside"/>
   </AvionicSounds>
    
 <!-- AnimationSounds ========================================================================================== --> 
@@ -456,7 +463,7 @@
 	<Sound WwiseData="true" WwiseEvent="safety_elt_switch_on" ViewPoint="Inside"/>	  	  
 	<Sound WwiseData="true" WwiseEvent="safety_elt_switch_off" ViewPoint="Inside"/>	  	  
 
-<!-- AS1000 ###############################################################-->
+    <!-- AS1000 ###############################################################-->
     <Sound WwiseData="true" WwiseEvent="as3000_knob_push_button_off" ViewPoint="Inside"/>	         
     <Sound WwiseData="true" WwiseEvent="as3000_knob_push_button_on" ViewPoint="Inside"/>	     
     <Sound WwiseData="true" WwiseEvent="as3000_push_button_on" ViewPoint="Inside"/>	      
@@ -467,7 +474,7 @@
 	<Sound WwiseData="true" WwiseEvent="as3000_big_knob_turn" ViewPoint="Inside"/>	  	  
 	<Sound WwiseData="true" WwiseEvent="as3000_joystick" ViewPoint="Inside"/>	  	  
 
-<!-- ADF ###############################################################-->	  
+    <!-- ADF ###############################################################-->	  
 	<Sound WwiseData="true" WwiseEvent="ADF_push_button_on" ViewPoint="Inside"/>	   	
 	<Sound WwiseData="true" WwiseEvent="ADF_push_button_off" ViewPoint="Inside"/>	   	  
 	<Sound WwiseData="true" WwiseEvent="ADF_knob_push_button_on" ViewPoint="Inside"/>	    	  
