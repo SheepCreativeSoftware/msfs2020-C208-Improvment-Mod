@@ -139,21 +139,21 @@ IsUsedForLesson=False
 ForceDisplayUI=False
 
 [Controls.0]
-SpoilersHandle=000.00
+SpoilersHandle=0
 FlapsHandle=033.33
 LeftFlap=033.33
 RightFlap=033.33
-GearsHandle=000.00
+GearsHandle=0
 Gear1=100.00
 Gear2=100.00
 Gear3=100.00
 YokeY=050.00
 YokeX=050.00
 Rudder=050.00
-LeftBrake=000.00
-RightBrake=000.00
-ParkingBrake=100.00
-
+LeftBrake=0
+RightBrake=0
+ParkingBrake=1
+ElevatorTrim=0.6
 RudderTrimPct=0
 AileronTrimPct=0
 AileronTrimDisabled=False
