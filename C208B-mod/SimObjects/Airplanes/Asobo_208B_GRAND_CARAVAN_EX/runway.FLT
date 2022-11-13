@@ -140,9 +140,9 @@ ForceDisplayUI=False
 
 [Controls.0]
 SpoilersHandle=0
-FlapsHandle=033.33
-LeftFlap=033.33
-RightFlap=033.33
+FlapsHandle=0
+LeftFlap=0
+RightFlap=0
 GearsHandle=0
 Gear1=100.00
 Gear2=100.00
