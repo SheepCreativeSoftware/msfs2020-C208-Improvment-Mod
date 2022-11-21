@@ -118,6 +118,13 @@
         </Requires>
     </Sound>
 
+    <Sound WwiseData="false" WwiseEvent="GYRO_SOUND" FileName="C208B Fire Alarm" ViewPoint="Inside" Continuous="true" NodeName="AS1000_Panel_NoAutopilot_1" SimVar="CIRCUIT ON" Units="Boolean" Index="26">
+        <Range LowerBound="1"/>
+        <Requires LocalVar="XMLVAR_FireTest_Switch" Units="unum" Index="1" BreakOnStop="True">
+		    <Range LowerBound="0" UpperBound="0"/>
+        </Requires>
+    </Sound>
+
     <!-- ENGINE SOUNDS ========================================================================================== -->    
   
     <Sound WwiseData="true" WwiseEvent="eng1_ignition" NodeName="HYDROLIC_01_CENTER" SimVar="TURB ENG IS IGNITING" Units="BOOL" Index="1">

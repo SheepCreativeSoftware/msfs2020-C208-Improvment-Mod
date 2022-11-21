@@ -219,13 +219,6 @@
 
 	<!-- FUEL ###########################################-->
 	<Component ID="FUEL">
-		<UseTemplate Name="ASOBO_FUEL_Switch_Pump_Template">
-			<ID>1</ID>
-			<SWITCH_TYPE>OFF_AUTO_ON</SWITCH_TYPE>
-			<STATE_OFF>2</STATE_OFF>
-			<STATE_ON>0</STATE_ON>
-			<STATE_AUTO>1</STATE_AUTO>
-		</UseTemplate>
 		<Component ID="Fuel_Selectors">
 			<Parameters Type="Override">
 				<SELECTOR_TYPE>INDEPENDANT</SELECTOR_TYPE>
@@ -262,7 +255,15 @@
 				<ENUM_VAL_TO_POS_EXTERNAL>#ENUM_VAL_TO_POS_EXTERNAL# l0 2 == if{ 0 sp1 g1 }</ENUM_VAL_TO_POS_EXTERNAL>
 				<IS_VALID_ENUM_VAL_TEST_EXTERNAL>#IS_VALID_ENUM_VAL_TEST_EXTERNAL# l0 2 == or</IS_VALID_ENUM_VAL_TEST_EXTERNAL>
 			</UseTemplate>
+			<CameraTitle>Overhead</CameraTitle>
 		</Component>
+		<UseTemplate Name="ASOBO_FUEL_Switch_Pump_Template">
+			<ID>1</ID>
+			<SWITCH_TYPE>OFF_AUTO_ON</SWITCH_TYPE>
+			<STATE_OFF>2</STATE_OFF>
+			<STATE_ON>0</STATE_ON>
+			<STATE_AUTO>1</STATE_AUTO>
+		</UseTemplate>
 		<UseTemplate Name="ASOBO_FUEL_Condition_Lever_Template">
 			<ID>1</ID>
 			<HIDE_NODE>True</HIDE_NODE>
@@ -275,7 +276,6 @@
 			<NODE_ID>FUEL_Switch_Cutoff_1</NODE_ID>
 			<PART_ID>FUEL_Switch_Cutoff</PART_ID>
 		</UseTemplate>
-		<CameraTitle>Overhead</CameraTitle>
 	</Component>
 
 	<!-- ENGINE START ###################################-->
@@ -612,9 +612,11 @@
 		<UseTemplate Name="ASOBO_AUTOPILOT_Push_Altitude_Template">
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_AUTOPILOT_Knob_Altitude_Template">
-			<INCREMENT>100</INCREMENT>
 			<NODE_ID>AUTOPILOT_Knob_Altitude_1</NODE_ID>
 			<ANIM_NAME>AUTOPILOT_Knob_Altitude_1</ANIM_NAME>
+			<USE_SINGLE_ALTITUDE_KNOB>True</USE_SINGLE_ALTITUDE_KNOB>
+			<NO_ALTITUDE_FIXED_INCREMENT>True</NO_ALTITUDE_FIXED_INCREMENT>
+			<INCREMENTaaa>100</INCREMENTaaa>
 		</UseTemplate>
 		<!-- VERTICAL SPEED -->
 		<UseTemplate Name="ASOBO_AUTOPILOT_Push_VerticalSpeed_Template">

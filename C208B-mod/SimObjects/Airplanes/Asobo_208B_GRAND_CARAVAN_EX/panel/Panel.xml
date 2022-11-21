@@ -2153,10 +2153,6 @@
 					<Simvar name="TURB ENG ITT:1" unit="celsius"/>
 					<Constant>825</Constant>
 				</Greater>
-	  			<Equal>
-  					<Simvar name="L:XMLVAR_FireTest_Switch" unit="enum"/>
-  					<Constant>0</Constant>
-	  			</Equal>
 			</Or>
 		</Condition>
 	</Alert>

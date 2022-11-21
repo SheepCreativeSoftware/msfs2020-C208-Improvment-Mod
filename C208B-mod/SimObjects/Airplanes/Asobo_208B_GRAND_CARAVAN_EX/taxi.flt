@@ -159,3 +159,4 @@ RudderTrimDisabled=False
 
 [LocalVars.0]
 XMLVAR_Aice_Fluid_Level=20.8
+XMLVAR_FireTest_Switch=1
