@@ -732,23 +732,77 @@
 		</Component>		
 	</Template>	
 
+
+	<Template Name="ASOBO_LIGHTING_Switch_Template_Mod">
+		<Parameters Type="Default">
+			<SIMVAR_INDEX>1</SIMVAR_INDEX>
+
+			<KEY_ID_SET>#LIGHT_TYPE#_LIGHTS_SET</KEY_ID_SET>
+			<KEY_ID_ON>#LIGHT_TYPE#_LIGHTS_ON</KEY_ID_ON>
+			<KEY_ID_OFF>#LIGHT_TYPE#_LIGHTS_OFF</KEY_ID_OFF>
+			<KEY_ID_TOGGLE>TOGGLE_#LIGHT_TYPE#_LIGHTS</KEY_ID_TOGGLE>
+			
+			<Switch Param="LIGHT_TYPE">
+				<Case Value="STROBE">
+					<KEY_ID_SET>STROBES_SET</KEY_ID_SET>
+					<KEY_ID_ON>STROBES_ON</KEY_ID_ON>
+					<KEY_ID_OFF>STROBES_OFF</KEY_ID_OFF>
+					<KEY_ID_TOGGLE>STROBES_TOGGLE</KEY_ID_TOGGLE>
+				</Case>
+				<Case Value="LANDING">
+					<KEY_ID_TOGGLE>LANDING_LIGHTS_TOGGLE</KEY_ID_TOGGLE>
+				</Case>
+			</Switch>
+		</Parameters>
+	
+		<Component ID="#PART_ID#" Node="#NODE_ID#">
+			<Parameters Type="Override">
+				<INPUT_EVENT_ID_SOURCE>ELECTRICAL_Lighting</INPUT_EVENT_ID_SOURCE>
+				<IE_NAME>#LIGHT_TYPE#_#SIMVAR_INDEX#</IE_NAME>
+				<SWITCH_POSITION_TYPE>L</SWITCH_POSITION_TYPE>
+				<SWITCH_POSITION_VAR>XMLVAR_Lighting_Switch_#LIGHT_TYPE#_#SIMVAR_INDEX#</SWITCH_POSITION_VAR>
+			</Parameters>
+	
+			<UseInputEvent ID="CESSNA_MOD">
+				<TT_DESCRIPTION_IS_DYNAMIC>True</TT_DESCRIPTION_IS_DYNAMIC>
+				<TT_VALUE>(B:#LIGHT_INPUT_EVENT_ID#) 1 == if{ @TT_On } els{ @TT_Off }</TT_VALUE>
+				<TT_VALUE_IS_DYNAMIC>True</TT_VALUE_IS_DYNAMIC>
+			</UseInputEvent>
+	
+			<UseTemplate Name="ASOBO_GT_Switch_Code">
+				<ANIM_NAME>#NODE_ID#</ANIM_NAME>
+				<ANIM_CODE>(B:#INPUT_EVENT_ID_SOURCE#_#IE_NAME#, bool) 100 *</ANIM_CODE>
+				<LEFT_SINGLE_CODE>(&gt;B:#INPUT_EVENT_ID_SOURCE#_#IE_NAME#_Toggle)</LEFT_SINGLE_CODE>
+
+				<WWISE_EVENT_1>#LIGHT_TYPE#_light_SWITCH_on</WWISE_EVENT_1>
+				<NORMALIZED_TIME_1>0.1</NORMALIZED_TIME_1>
+				<WWISE_EVENT_2>#LIGHT_TYPE#_light_SWITCH_off</WWISE_EVENT_2>
+				<NORMALIZED_TIME_2>0.5</NORMALIZED_TIME_2>
+
+				<TOOLTIP_ENTRY_0>#INPUT_EVENT_ID_SOURCE#_#IE_NAME#</TOOLTIP_ENTRY_0>
+			</UseTemplate>
+		</Component>
+	</Template>	
+
 	<Template Name="ASOBO_LIGHTING_Knob_Template_Mod">
 		<Parameters Type="Default">
 			<ANIMTIP_0_ON_CURSOR>TurnLeft</ANIMTIP_0_ON_CURSOR>
 			<ANIMTIP_1_ON_CURSOR>TurnRight</ANIMTIP_1_ON_CURSOR>
 			<WWISE_EVENT>lighting_knob_generic</WWISE_EVENT>
 		</Parameters>
-		<Parameters Type="Overflow">
-			<Condition Check="INIT_VALUE">
+		<Parameters Type="Override">
+			<Condition Check="KNOB_LOCAL_VAR">
 				<True>
 					<INIT_CODE>
-						#INIT_VALUE# s0	#POTENTIOMETER# (&gt;K:2:LIGHT_POTENTIOMETER_SET)
-					</INIT_CODE> 
+						(L:#KNOB_LOCAL_VAR#, percent) s0 #POTENTIOMETER# (&gt;K:2:LIGHT_POTENTIOMETER_SET)
+					</INIT_CODE>
+					<SAVE_CODE>	(&gt;L:#KNOB_LOCAL_VAR#, percent) </SAVE_CODE>
 				</True>
 				<False>
 		            <INIT_CODE>
 						(A:LIGHT POTENTIOMETER:#POTENTIOMETER#, percent) sp0
 					</INIT_CODE>
+					<SAVE_CODE>	p </SAVE_CODE>
 				</False>
 			</Condition>
 		</Parameters>
@@ -794,9 +848,6 @@
 									#ANTICLOCKWISE_CODE_T#
 									(A:CIRCUIT SWITCH ON:#CURRENT_CIRCUIT#,Bool) ! if{ #CURRENT_CIRCUIT# (&gt;K:ELECTRICAL_CIRCUIT_TOGGLE) }
 								</ANTICLOCKWISE_CODE_T>
-								<!-- sim overwrites circuit initialisation setting after new flight load. 
-									 it needs more investigation if it is a sim bug or conflict with other components 
-									 right now usefull only for debugging -->
 								<INIT_CODE_T>
 									#INIT_CODE_T# (A:CIRCUIT SWITCH ON:#CURRENT_CIRCUIT#,Bool) ! if{ #CURRENT_CIRCUIT# (&gt;K:ELECTRICAL_CIRCUIT_TOGGLE) }
 								</INIT_CODE_T>
@@ -810,11 +861,9 @@
 									#ANTICLOCKWISE_CODE_T#
 									d ! (A:CIRCUIT SWITCH ON:#CURRENT_CIRCUIT#,Bool) and if{ #CURRENT_CIRCUIT# (&gt;K:ELECTRICAL_CIRCUIT_TOGGLE) }
 								</ANTICLOCKWISE_CODE_T>
-								<!-- sim overwrites circuit initialisation setting after new flight load. 
-									 it needs more investigation if it is a sim bug or conflict with other components 
-									 right now usefull only for debugging -->
 								<INIT_CODE_T>
-									#INIT_CODE_T# (A:CIRCUIT SWITCH ON:#CURRENT_CIRCUIT#,Bool) s1 l0 ! and l0 l1 ! and or 
+									#INIT_CODE_T# 
+									(A:CIRCUIT SWITCH ON:#CURRENT_CIRCUIT#,Bool) s1 l0 ! and l0 l1 ! and or
 									if{ #CURRENT_CIRCUIT# (&gt;K:ELECTRICAL_CIRCUIT_TOGGLE) }
 								</INIT_CODE_T>
 							</Case>
@@ -827,11 +876,11 @@
 					</INIT_CODE>
 					<CLOCKWISE_CODE>
 						(A:LIGHT POTENTIOMETER:#POTENTIOMETER#, percent) #KNOB_TURN_SPEED# + 100 min d #POTENTIOMETER# (&gt;K:2:LIGHT_POTENTIOMETER_SET) 
-						#CLOCKWISE_CODE_T# p
+						#CLOCKWISE_CODE_T# #SAVE_CODE#
 					</CLOCKWISE_CODE>
 					<ANTICLOCKWISE_CODE>
 						(A:LIGHT POTENTIOMETER:#POTENTIOMETER#, percent) #KNOB_TURN_SPEED# - 0 max d #POTENTIOMETER# (&gt;K:2:LIGHT_POTENTIOMETER_SET)
-						#ANTICLOCKWISE_CODE_T# p
+						#ANTICLOCKWISE_CODE_T# #SAVE_CODE#
 					</ANTICLOCKWISE_CODE>
 				</Then>
 			</Loop>
@@ -874,11 +923,11 @@
 				<TT_ICON>MOVE_Y</TT_ICON>
 			</UseInputEvent>
 			<UseTemplate Name="ASOBO_GT_Switch_Code">
+				<ANIM_CODE>(L:ENG FUEL VALVE:1, bool) 100 *</ANIM_CODE>
+
 				<LEFT_SINGLE_CODE>
 					(L:ENG FUEL VALVE:1, Bool) ! d (&gt;L:ENG FUEL VALVE:1, Bool) (A:GENERAL ENG FUEL VALVE:1, Bool) != 0 (L:Condition_Lever_CutOff_1) != and if{ (&gt;K:TOGGLE_FUEL_VALVE_ENG1) }
 				</LEFT_SINGLE_CODE>
-
-				<ANIM_CODE>(L:ENG FUEL VALVE:1, bool) 100 *</ANIM_CODE>
 
 				<WWISE_EVENT_1>fuel_cutoff_switch_on</WWISE_EVENT_1>
 				<NORMALIZED_TIME_1>0.1</NORMALIZED_TIME_1>
