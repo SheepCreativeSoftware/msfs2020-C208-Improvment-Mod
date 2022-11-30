@@ -438,7 +438,6 @@
   </Annunciations>
   
 <!-- Engine Display -->
-<!-- Set Override to "true" for WorkingTitle NXi when it is ready -->
 	<EngineDisplay override="true">
 		<Function Name="MaximumCruiseTorqueBug">
 			<MultiDimensionsTable>
@@ -694,7 +693,10 @@
 			<Minimum>0</Minimum>
 			<Maximum>110</Maximum>
 			<Value>
-				<Simvar name="TURB ENG N1:1" unit="percent"/>
+				<Multiply>
+					<Simvar name="TURB ENG N1:1" unit="percent"/>
+					<Constant>1.037</Constant>
+				</Multiply>	
 			</Value>
 			<ColorZone>
 				<Color>green</Color>
@@ -716,7 +718,7 @@
 			<RedBlink>
 				<Greater>
 					<Simvar name="TURB ENG N1:1" unit="percent"/>
-					<Constant>103.6</Constant>
+					<Constant>103.7</Constant>
 				</Greater>
 			</RedBlink>
 		</Gauge>
@@ -1231,7 +1233,10 @@
 				<Minimum>0</Minimum>
 				<Maximum>110</Maximum>
 				<Value>
-					<Simvar name="TURB ENG N1:1" unit="percent"/>
+					<Multiply>
+						<Simvar name="TURB ENG N1:1" unit="percent"/>
+						<Constant>1.037</Constant>
+					</Multiply>	
 				</Value>
 				<ColorZone>
 					<Color>green</Color>
@@ -1253,7 +1258,7 @@
 				<RedBlink>
 					<Greater>
 						<Simvar name="TURB ENG N1:1" unit="percent"/>
-						<Constant>103.6</Constant>
+						<Constant>103.7</Constant>
 					</Greater>
 				</RedBlink>
 			</Gauge>
@@ -1810,7 +1815,10 @@
 				<Minimum>0</Minimum>
 				<Maximum>110</Maximum>
 				<Value>
-					<Simvar name="TURB ENG N1:1" unit="percent"/>
+					<Multiply>
+						<Simvar name="TURB ENG N1:1" unit="percent"/>
+						<Constant>1.037</Constant>
+					</Multiply>	
 				</Value>
 				<ColorZone>
 					<Color>green</Color>
@@ -1832,7 +1840,7 @@
 				<RedBlink>
 					<Greater>
 						<Simvar name="TURB ENG N1:1" unit="percent"/>
-						<Constant>103.6</Constant>
+						<Constant>103.7</Constant>
 					</Greater>
 				</RedBlink>
 			</Gauge>
