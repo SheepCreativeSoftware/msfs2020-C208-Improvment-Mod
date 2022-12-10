@@ -566,6 +566,7 @@
 				<CursorType>Triangle</CursorType>
 				<ValuePos>End</ValuePos>
 				<SizePercent>90</SizePercent>
+				<TextIncrement>5</TextIncrement>
                 <GraduationLength>100</GraduationLength>
 			</Style>
 			<BeginText></BeginText>
@@ -1104,8 +1105,8 @@
 					<CursorType>Triangle</CursorType>
 					<ValuePos>End</ValuePos>
 					<SizePercent>90</SizePercent>
-					<TextIncrement>1</TextIncrement>
-					<GraduationLength>50</GraduationLength>
+					<TextIncrement>5</TextIncrement>
+					<GraduationLength>100</GraduationLength>
 				</Style>
 				<BeginText></BeginText>
 				<EndText></EndText>
@@ -1686,8 +1687,8 @@
 					<CursorType>Triangle</CursorType>
 					<ValuePos>End</ValuePos>
 					<SizePercent>90</SizePercent>
-					<TextIncrement>1</TextIncrement>
-					<GraduationLength>50</GraduationLength>
+					<TextIncrement>5</TextIncrement>
+					<GraduationLength>100</GraduationLength>
 				</Style>
 				<BeginText></BeginText>
 				<EndText></EndText>
