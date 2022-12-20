@@ -268,6 +268,17 @@
 			<Simvar name="ENG FAILED:1" unit="bool"/>
       </Condition>
     </Annunciation>
+	<!-- EMERGENCY POWER lever is not in normal position -->
+	<Annunciation>
+      <Type>Warning</Type>
+      <Text>EMERG PWR LVR</Text>
+      <Condition>
+			<Greater>
+				<Simvar name="L:XMLVAR_EmergencyPower_Lever_Position1" unit="percent"/>
+				<Constant>2</Constant>
+			</Greater>
+      </Condition>
+    </Annunciation>
 	<!--Indicates the starter-generator is operating in starter mode-->
 	<Annunciation>
 	  <Type>Caution</Type>

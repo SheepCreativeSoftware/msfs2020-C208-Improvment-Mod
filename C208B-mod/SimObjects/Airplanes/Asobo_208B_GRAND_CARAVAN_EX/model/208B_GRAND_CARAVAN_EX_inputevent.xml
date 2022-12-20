@@ -367,7 +367,7 @@
 						#LOWER_LIMIT_PCT# max #UPPER_LIMIT_PCT# min (&gt;L:#LEVER_POSITION_VAR#) }
 					</Code>
 					<Parameters>
-						<Param Type="Float" RPN="True">p0 #INCREMENT# *</Param>
+						<Param Type="Float" RPN="True">p0</Param>
 					</Parameters>
 					<Bindings>
 						<!-- event manipulating all propellers -->
@@ -388,12 +388,12 @@
 				</Inc>
 				<Dec>
 					<Code>
-						(L:#LEVER_POSITION_VAR#) p0 100 * -
+						(L:#LEVER_POSITION_VAR#) p0 -
 						(L:XMLVAR_Overspeed_Test) ! if{ 163.84 * (&gt;K:PROP_PITCH#ENGINE_ID#_SET) } els{
 						#LOWER_LIMIT_PCT# max #UPPER_LIMIT_PCT# min (&gt;L:#LEVER_POSITION_VAR#) }
 					</Code>
 					<Parameters>
-						<Param Type="Float" RPN="True">p0 #INCREMENT# *</Param>
+						<Param Type="Float" RPN="True">p0</Param>
 					</Parameters>
 					<Bindings>
 						<!-- event manipulating all propellers -->
@@ -479,10 +479,10 @@
 				</Value>
 				<Inc>
 					<Code>
-						(L:#LEVER_POSITION_VAR#) p0 100 * + 163.84 * (&gt;K:THROTTLE#ENGINE_ID#_SET)
+						(L:#LEVER_POSITION_VAR#) p0 + 163.84 * (&gt;K:THROTTLE#ENGINE_ID#_SET)
 					</Code>
 					<Parameters>
-						<Param Type="Float" RPN="True">p0 #INCREMENT# *</Param>
+						<Param Type="Float" RPN="True">p0</Param>
 					</Parameters>
 					<Bindings>
 						<!-- event manipulating all throttles (declared for each throttle preset) -->
@@ -503,10 +503,10 @@
 				</Inc>
 				<Dec>
 					<Code>
-						(L:#LEVER_POSITION_VAR#) p0 100 * - 163.84 * (&gt;K:THROTTLE#ENGINE_ID#_SET)
+						(L:#LEVER_POSITION_VAR#) p0 - 163.84 * (&gt;K:THROTTLE#ENGINE_ID#_SET)
 					</Code>
 					<Parameters>
-						<Param Type="Float" RPN="True">p0 #INCREMENT# *</Param>
+						<Param Type="Float" RPN="True">p0</Param>
 					</Parameters>
 					<Bindings>
 						<!-- event manipulating all throttles (declared for each throttle preset) -->
@@ -618,7 +618,7 @@
 						(L:#LEVER_POSITION_VAR#) p0 + (&gt;L:#LEVER_POSITION_VAR#)
 					</Code>
 					<Parameters>
-						<Param Type="Float" RPN="True">p0 100 *</Param>
+						<Param Type="Float" RPN="True">p0</Param>
 					</Parameters>
 				</Inc>
 				<Dec>
@@ -626,7 +626,7 @@
 						(L:#LEVER_POSITION_VAR#) p0 - (&gt;L:#LEVER_POSITION_VAR#)
 					</Code>
 					<Parameters>
-						<Param Type="Float" RPN="True">p0 100 *</Param>
+						<Param Type="Float" RPN="True">p0</Param>
 					</Parameters>
 				</Dec>
 				<Set>                                                            
