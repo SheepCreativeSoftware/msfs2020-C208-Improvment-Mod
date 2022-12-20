@@ -75,7 +75,6 @@
 			<CIRCUIT_ID>44</CIRCUIT_ID>
 		</UseTemplate>
 	</Component>
-
 	<Component ID="ADF">
 		<UseTemplate Name="ASOBO_ADF_AS87_Template">
 			<EMISSIVE_POTENTIOMETER>30</EMISSIVE_POTENTIOMETER>
@@ -152,6 +151,11 @@
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_HANDLING_Indicator_ElevatorTrim_Template">
 			<ANIM_NAME>HANDLING_Wheel_ElevatorTrim_Indicator</ANIM_NAME> 
+		</UseTemplate>
+		<UseTemplate Name="ASOBO_ENGINE_Lever_EmergencyPower_Template_Mod">
+			<PART_ID>ENGINE_Lever_EmeregencyPower</PART_ID>
+			<NODE_ID>ENGINE_Lever_EmeregencyPower</NODE_ID>
+			<ANIM_NAME>ENGINE_Lever_EmeregencyPower</ANIM_NAME>
 		</UseTemplate>
 		<UseTemplate Name="ASOBO_ENGINE_Lever_Throttle_Template_Mod">
 			<PART_ID>ENGINE_Lever_Throttle</PART_ID>
@@ -606,7 +610,6 @@
 			</UseTemplate>
 			<CameraTitle>Overhead</CameraTitle>
 		</Component>
-	
 		<!-- PRESSURIZATION #################################-->
 		<Component ID="PRESSURIZATION">
 			<UseTemplate Name="ASOBO_GT_Switch_Dummy">

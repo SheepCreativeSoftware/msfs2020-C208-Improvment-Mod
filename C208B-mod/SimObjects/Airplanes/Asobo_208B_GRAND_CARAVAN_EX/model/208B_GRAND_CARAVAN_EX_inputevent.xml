@@ -479,7 +479,7 @@
 				</Value>
 				<Inc>
 					<Code>
-						(L:#LEVER_POSITION_VAR#) p0 + 163.84 * (&gt;K:THROTTLE#ENGINE_ID#_SET)
+						(L:#LEVER_POSITION_VAR#) p0 100 * + 163.84 * (&gt;K:THROTTLE#ENGINE_ID#_SET)
 					</Code>
 					<Parameters>
 						<Param Type="Float" RPN="True">p0 #INCREMENT# *</Param>
@@ -590,6 +590,56 @@
 				</Set>
 			</Preset>
 		</Case>
+		<Case Value="ENGINE_EmergencyPower">
+			<Preset ID="#INPUT_EVENT_ID_SOURCE#_#IE_NAME#">
+				<Parameters Type="Default">
+					<AXIS_SCALE Process="Float">1 #LOWER_LIMIT_PCT_OVER_100# - 2 /</AXIS_SCALE>
+				</Parameters>
+				<Parameters Type="Default">
+					<AXIS_SHIFT Process="Float">1 #AXIS_SCALE# -</AXIS_SHIFT>
+				</Parameters>
+				<Tooltip>
+					<Icon>MOVE_AXIS_Y</Icon>
+					<Interaction>PRIMARY_DOWN+Y_AXIS</Interaction>
+					<InteractionLockable>Y_AXIS</InteractionLockable>
+					<TTDescription RPN="#TT_DESCRIPTION_IS_DYNAMIC#">#TT_DESCRIPTION#</TTDescription>
+					<TTValue RPN="True">(L:#LEVER_POSITION_VAR#) '%.1f%%' @sprintf</TTValue>
+				</Tooltip>
+				<Value>
+					<Units>percent</Units>
+					<Code>(L:#LEVER_POSITION_VAR#, percent) #LOWER_LIMIT_PCT# - #UPPER_LIMIT_PCT# #LOWER_LIMIT_PCT# - / 100 *</Code>
+					<Init>
+					</Init>
+					<WatchVars>
+					</WatchVars>
+				</Value>
+				<Inc>
+					<Code>
+						(L:#LEVER_POSITION_VAR#) p0 + (&gt;L:#LEVER_POSITION_VAR#)
+					</Code>
+					<Parameters>
+						<Param Type="Float" RPN="True">p0 100 *</Param>
+					</Parameters>
+				</Inc>
+				<Dec>
+					<Code>
+						(L:#LEVER_POSITION_VAR#) p0 - (&gt;L:#LEVER_POSITION_VAR#)
+					</Code>
+					<Parameters>
+						<Param Type="Float" RPN="True">p0 100 *</Param>
+					</Parameters>
+				</Dec>
+				<Set>                                                            
+					<Code>
+						p0 (&gt;L:#LEVER_POSITION_VAR#)
+					</Code>
+					<Parameters>
+						<Param Type="Float" RPN="True">p0 100 *</Param>
+					</Parameters>
+				</Set>
+			</Preset>
+		</Case>
+
 		<Default>
 			<Extend Target="ASOBO_GIE_Base">
 				<Parameters Type="Default">
