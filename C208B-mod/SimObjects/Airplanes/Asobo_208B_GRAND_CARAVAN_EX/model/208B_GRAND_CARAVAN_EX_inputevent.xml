@@ -362,9 +362,7 @@
 				</Value>
 				<Inc>
 					<Code>
-						(L:#LEVER_POSITION_VAR#) p0 +
-						(L:XMLVAR_Overspeed_Test) ! if{ 16384 * (&gt;K:PROP_PITCH#ENGINE_ID#_SET) } els{
-						#LOWER_LIMIT_PCT_OVER_100# max #UPPER_LIMIT_PCT_OVER_100# min (&gt;L:#LEVER_POSITION_VAR#) }
+						(L:#LEVER_POSITION_VAR#) p0 + (&gt;B:#INPUT_EVENT_ID_SOURCE#_#IE_NAME#_Set)
 					</Code>
 					<Parameters>
 						<Param Type="Float" RPN="True">p0</Param>
@@ -388,9 +386,7 @@
 				</Inc>
 				<Dec>
 					<Code>
-						(L:#LEVER_POSITION_VAR#) p0 -
-						(L:XMLVAR_Overspeed_Test) ! if{ 16384 * (&gt;K:PROP_PITCH#ENGINE_ID#_SET) } els{
-						#LOWER_LIMIT_PCT_OVER_100# max #UPPER_LIMIT_PCT_OVER_100# min (&gt;L:#LEVER_POSITION_VAR#) }
+						(L:#LEVER_POSITION_VAR#) p0 - (&gt;B:#INPUT_EVENT_ID_SOURCE#_#IE_NAME#_Set)
 					</Code>
 					<Parameters>
 						<Param Type="Float" RPN="True">p0</Param>
@@ -470,8 +466,10 @@
 					<Units>float</Units>
 					<Code>(L:#LEVER_POSITION_VAR#) #LOWER_LIMIT_PCT_OVER_100# - #UPPER_LIMIT_PCT_OVER_100# #LOWER_LIMIT_PCT_OVER_100# - /</Code>
 					<Init>
-						(A:GENERAL ENG THROTTLE LEVER POSITION:#ENGINE_ID#, position 16k) 16384 / #LOWER_LIMIT_PCT_OVER_100# max #UPPER_LIMIT_PCT_OVER_100# min
-						d (&gt;L:#LEVER_POSITION_VAR#) 16384 * (&gt;K:THROTTLE#ENGINE_ID#_SET)
+						(L:#EMERGENCY_POWER_VAR#) 0.01 &lt; if{
+							(A:GENERAL ENG THROTTLE LEVER POSITION:#ENGINE_ID#, position 16k) 16384 / #LOWER_LIMIT_PCT_OVER_100# max #UPPER_LIMIT_PCT_OVER_100# min
+							(&gt;L:#LEVER_POSITION_VAR#) 16384 *
+						}
 					</Init>
 					<WatchVars>
 						<Simvar ID="GENERAL ENG THROTTLE LEVER POSITION:#ENGINE_ID#"/>
@@ -479,7 +477,7 @@
 				</Value>
 				<Inc>
 					<Code>
-						(L:#LEVER_POSITION_VAR#) p0 + 16384 * (&gt;K:THROTTLE#ENGINE_ID#_SET)
+						(L:#LEVER_POSITION_VAR#) p0 + (&gt;B:#INPUT_EVENT_ID_SOURCE#_#IE_NAME#_Set)
 					</Code>
 					<Parameters>
 						<Param Type="Float" RPN="True">p0</Param>
@@ -503,7 +501,7 @@
 				</Inc>
 				<Dec>
 					<Code>
-						(L:#LEVER_POSITION_VAR#) p0 - 16384 * (&gt;K:THROTTLE#ENGINE_ID#_SET)
+						(L:#LEVER_POSITION_VAR#) p0 - (&gt;B:#INPUT_EVENT_ID_SOURCE#_#IE_NAME#_Set)
 					</Code>
 					<Parameters>
 						<Param Type="Float" RPN="True">p0</Param>
@@ -527,7 +525,9 @@
 				</Dec>
 				<Set>                                                            
 					<Code>
-						p0 16384 * (&gt;K:THROTTLE#ENGINE_ID#_SET)
+						p0 #UPPER_LIMIT_PCT_OVER_100# min #LOWER_LIMIT_PCT_OVER_100# max 
+						(L:#EMERGENCY_POWER_VAR#) 0.01 &lt; if{ 16384 * (&gt;K:THROTTLE#ENGINE_ID#_SET) } 
+						els{ (&gt;L:#LEVER_POSITION_VAR#) }
 					</Code>
 					<Parameters>
 						<Param Type="percent over 100" RPN="True">p0</Param>
@@ -614,7 +614,7 @@
 				</Value>
 				<Inc>
 					<Code>
-						(L:#LEVER_POSITION_VAR#) p0 + (&gt;L:#LEVER_POSITION_VAR#)
+						(L:#LEVER_POSITION_VAR#) p0 + (&gt;B:#INPUT_EVENT_ID_SOURCE#_#IE_NAME#_Set)
 					</Code>
 					<Parameters>
 						<Param Type="Float" RPN="True">p0</Param>
@@ -622,7 +622,7 @@
 				</Inc>
 				<Dec>
 					<Code>
-						(L:#LEVER_POSITION_VAR#) p0 - (&gt;L:#LEVER_POSITION_VAR#)
+						(L:#LEVER_POSITION_VAR#) p0 - (&gt;B:#INPUT_EVENT_ID_SOURCE#_#IE_NAME#_Set)
 					</Code>
 					<Parameters>
 						<Param Type="Float" RPN="True">p0</Param>
@@ -630,7 +630,13 @@
 				</Dec>
 				<Set>                                                            
 					<Code>
-						p0 (&gt;L:#LEVER_POSITION_VAR#)
+						p0 d (&gt;L:#LEVER_POSITION_VAR#)
+						#LEVER_DETENT_POINT# - d 0 &gt;= if{
+							#UPPER_LIMIT_PCT_OVER_100# #LEVER_DETENT_POINT# - /
+							16384 * (&gt;K:THROTTLE#ENGINE_ID#_SET)
+						} els{ 
+							p (L:XMLVAR_Throttle_Lever_Position1) (&gt;B:ENGINE_Throttle_Lever_set)
+						}
 					</Code>
 					<Parameters>
 						<Param Type="Float" RPN="True">p0</Param>

@@ -274,8 +274,8 @@
       <Text>EMERG PWR LVR</Text>
       <Condition>
 			<Greater>
-				<Simvar name="L:XMLVAR_EmergencyPower_Lever_Position1" unit="percent"/>
-				<Constant>2</Constant>
+				<Simvar name="L:XMLVAR_EmergencyPower_Lever_Position1" unit="Float"/>
+				<Constant>0.05</Constant>
 			</Greater>
       </Condition>
     </Annunciation>
