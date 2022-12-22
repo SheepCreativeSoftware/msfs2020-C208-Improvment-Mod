@@ -348,12 +348,12 @@
 					<TTValue RPN="True">(L:#LEVER_POSITION_VAR#) '%.1f%%' @sprintf</TTValue>
 				</Tooltip>
 				<Value>
-					<Units>percent</Units>
-					<Code>(L:#LEVER_POSITION_VAR#, percent) #LOWER_LIMIT_PCT# - #UPPER_LIMIT_PCT# #LOWER_LIMIT_PCT# - / 100 *</Code>
+					<Units>percent over 100</Units>
+					<Code>(L:#LEVER_POSITION_VAR#) #LOWER_LIMIT_PCT_OVER_100# - #UPPER_LIMIT_PCT_OVER_100# #LOWER_LIMIT_PCT_OVER_100# - /</Code>
 					<Init>
 						(L:XMLVAR_Overspeed_Test) ! if{ 
-							(A:GENERAL ENG PROPELLER LEVER POSITION:#ENGINE_ID#, position 16k) 163.84 / #LOWER_LIMIT_PCT# max #UPPER_LIMIT_PCT# min d
-							(&gt;L:#LEVER_POSITION_VAR#) 163.84 * (&gt;K:PROP_PITCH#ENGINE_ID#_SET)
+							(A:GENERAL ENG PROPELLER LEVER POSITION:#ENGINE_ID#, position 16k) 16384 / #LOWER_LIMIT_PCT_OVER_100# max #UPPER_LIMIT_PCT_OVER_100# min
+							d (&gt;L:#LEVER_POSITION_VAR#) 16384 * (&gt;K:PROP_PITCH#ENGINE_ID#_SET)
 						}
 					</Init>
 					<WatchVars>
@@ -363,8 +363,8 @@
 				<Inc>
 					<Code>
 						(L:#LEVER_POSITION_VAR#) p0 +
-						(L:XMLVAR_Overspeed_Test) ! if{ 163.84 * (&gt;K:PROP_PITCH#ENGINE_ID#_SET) } els{
-						#LOWER_LIMIT_PCT# max #UPPER_LIMIT_PCT# min (&gt;L:#LEVER_POSITION_VAR#) }
+						(L:XMLVAR_Overspeed_Test) ! if{ 16384 * (&gt;K:PROP_PITCH#ENGINE_ID#_SET) } els{
+						#LOWER_LIMIT_PCT_OVER_100# max #UPPER_LIMIT_PCT_OVER_100# min (&gt;L:#LEVER_POSITION_VAR#) }
 					</Code>
 					<Parameters>
 						<Param Type="Float" RPN="True">p0</Param>
@@ -372,25 +372,25 @@
 					<Bindings>
 						<!-- event manipulating all propellers -->
 						<Binding EventID="PROP_PITCH_INCR">
-							<Param>0.1</Param>
+							<Param Type="Float" RPN="True">p0 2 *</Param>
 						</Binding>
 						<Binding EventID="PROP_PITCH_INCR_SMALL">
-							<Param>0.05</Param>
+							<Param Type="Float" RPN="True">p0</Param>
 						</Binding>
 						<!-- event manipulating a specific propeller -->
 						<Binding EventID="PROP_PITCH#ENGINE_ID#_INCR">
-							<Param>0.1</Param>
+							<Param Type="Float" RPN="True">p0 2 *</Param>
 						</Binding>
 						<Binding EventID="PROP_PITCH#ENGINE_ID#_INCR_SMALL">
-							<Param>0.05</Param>
+							<Param Type="Float" RPN="True">p0</Param>
 						</Binding>
 					</Bindings>
 				</Inc>
 				<Dec>
 					<Code>
 						(L:#LEVER_POSITION_VAR#) p0 -
-						(L:XMLVAR_Overspeed_Test) ! if{ 163.84 * (&gt;K:PROP_PITCH#ENGINE_ID#_SET) } els{
-						#LOWER_LIMIT_PCT# max #UPPER_LIMIT_PCT# min (&gt;L:#LEVER_POSITION_VAR#) }
+						(L:XMLVAR_Overspeed_Test) ! if{ 16384 * (&gt;K:PROP_PITCH#ENGINE_ID#_SET) } els{
+						#LOWER_LIMIT_PCT_OVER_100# max #UPPER_LIMIT_PCT_OVER_100# min (&gt;L:#LEVER_POSITION_VAR#) }
 					</Code>
 					<Parameters>
 						<Param Type="Float" RPN="True">p0</Param>
@@ -398,24 +398,24 @@
 					<Bindings>
 						<!-- event manipulating all propellers -->
 						<Binding EventID="PROP_PITCH_DECR">
-							<Param>0.1</Param>
+							<Param Type="Float" RPN="True">p0 2 *</Param>
 						</Binding>
 						<Binding EventID="PROP_PITCH_DECR_SMALL">
-							<Param>0.05</Param>
+							<Param Type="Float" RPN="True">p0</Param>
 						</Binding>
 						<!-- event manipulating a specific propeller -->
 						<Binding EventID="PROP_PITCH#ENGINE_ID#_DECR">
-							<Param>0.1</Param>
+							<Param Type="Float" RPN="True">p0 2 *</Param>
 						</Binding>
 						<Binding EventID="PROP_PITCH#ENGINE_ID#_DECR_SMALL">
-							<Param>0.05</Param>
+							<Param Type="Float" RPN="True">p0</Param>
 						</Binding>
 					</Bindings>
 				</Dec>
 				<Set>                                                            
 					<Code>
 						p0 (L:XMLVAR_Overspeed_Test) ! if{ 16384 * (&gt;K:PROP_PITCH#ENGINE_ID#_SET) } els{
-						100 * #LOWER_LIMIT_PCT# max #UPPER_LIMIT_PCT# min (&gt;L:#LEVER_POSITION_VAR#) }
+						#LOWER_LIMIT_PCT_OVER_100# max #UPPER_LIMIT_PCT_OVER_100# min (&gt;L:#LEVER_POSITION_VAR#) }
 					</Code>
 					<Parameters>
 						<Param Type="Float" RPN="True">p0</Param>
@@ -426,26 +426,26 @@
 							<Param RPN="True">@ProcessAxisSnapZone</Param>
 						</Binding>
 						<Binding Alias="ENGINE_All_Propeller_Full_Forward">
-							<Param>1</Param>
+							<Param>#UPPER_LIMIT_PCT_OVER_100#</Param>
 						</Binding>
 						<Binding Alias="ENGINE_All_Propeller_Full_Backward">
 							<Param>#LOWER_LIMIT_PCT_OVER_100#</Param>
 						</Binding>
 						<Binding Alias="ENGINE_All_Propeller_Idle">
-							<Param>0</Param>
+							<Param RPN="True">#LEVER_DETENT_POINT#</Param>
 						</Binding>
 						<!-- event manipulating a specific propeller -->
 						<Binding EventID="PROP_PITCH#ENGINE_ID#_AXIS_SET_EX1">
 							<Param RPN="True">@ProcessAxisSnapZone</Param>
 						</Binding>
 						<Binding Alias="ENGINE_Propeller_#ENGINE_ID#_Full_Forward">
-							<Param>1</Param>
+							<Param>#UPPER_LIMIT_PCT_OVER_100#</Param>
 						</Binding>
 						<Binding Alias="ENGINE_Propeller_#ENGINE_ID#_Full_Backward">
 							<Param>#LOWER_LIMIT_PCT_OVER_100#</Param>
 						</Binding>
 						<Binding Alias="ENGINE_Propeller_#ENGINE_ID#_Idle">
-							<Param>0</Param>
+							<Param RPN="True">#LEVER_DETENT_POINT#</Param>
 						</Binding>
 					</Bindings>
 				</Set>
@@ -467,11 +467,11 @@
 					<TTValue RPN="True">(L:#LEVER_POSITION_VAR#) '%.1f%%' @sprintf</TTValue>
 				</Tooltip>
 				<Value>
-					<Units>percent</Units>
-					<Code>(L:#LEVER_POSITION_VAR#, percent) #LOWER_LIMIT_PCT# - #UPPER_LIMIT_PCT# #LOWER_LIMIT_PCT# - / 100 *</Code>
+					<Units>float</Units>
+					<Code>(L:#LEVER_POSITION_VAR#) #LOWER_LIMIT_PCT_OVER_100# - #UPPER_LIMIT_PCT_OVER_100# #LOWER_LIMIT_PCT_OVER_100# - /</Code>
 					<Init>
-						(A:GENERAL ENG THROTTLE LEVER POSITION:#ENGINE_ID#, position 16k) 163.84 / #LOWER_LIMIT_PCT# max #UPPER_LIMIT_PCT# min d
-						(&gt;L:#LEVER_POSITION_VAR#) 163.84 * (&gt;K:THROTTLE#ENGINE_ID#_SET)
+						(A:GENERAL ENG THROTTLE LEVER POSITION:#ENGINE_ID#, position 16k) 16384 / #LOWER_LIMIT_PCT_OVER_100# max #UPPER_LIMIT_PCT_OVER_100# min
+						d (&gt;L:#LEVER_POSITION_VAR#) 16384 * (&gt;K:THROTTLE#ENGINE_ID#_SET)
 					</Init>
 					<WatchVars>
 						<Simvar ID="GENERAL ENG THROTTLE LEVER POSITION:#ENGINE_ID#"/>
@@ -479,7 +479,7 @@
 				</Value>
 				<Inc>
 					<Code>
-						(L:#LEVER_POSITION_VAR#) p0 + 163.84 * (&gt;K:THROTTLE#ENGINE_ID#_SET)
+						(L:#LEVER_POSITION_VAR#) p0 + 16384 * (&gt;K:THROTTLE#ENGINE_ID#_SET)
 					</Code>
 					<Parameters>
 						<Param Type="Float" RPN="True">p0</Param>
@@ -487,23 +487,23 @@
 					<Bindings>
 						<!-- event manipulating all throttles (declared for each throttle preset) -->
 						<Binding EventID="THROTTLE_INCR">
-							<Param>0.1</Param>
+							<Param Type="Float" RPN="True">p0 2 *</Param>
 						</Binding>
 						<Binding EventID="THROTTLE_INCR_SMALL">
-							<Param>0.05</Param>
+							<Param Type="Float" RPN="True">p0</Param>
 						</Binding>
 						<!-- event manipulating one throttle for specific engine -->
 						<Binding EventID="THROTTLE#ENGINE_ID#_INCR">
-							<Param>0.1</Param>
+							<Param Type="Float" RPN="True">p0 2 *</Param>
 						</Binding>
 						<Binding EventID="THROTTLE#ENGINE_ID#_INCR_SMALL">
-							<Param>0.05</Param>
+							<Param Type="Float" RPN="True">p0</Param>
 						</Binding>
 					</Bindings>
 				</Inc>
 				<Dec>
 					<Code>
-						(L:#LEVER_POSITION_VAR#) p0 - 163.84 * (&gt;K:THROTTLE#ENGINE_ID#_SET)
+						(L:#LEVER_POSITION_VAR#) p0 - 16384 * (&gt;K:THROTTLE#ENGINE_ID#_SET)
 					</Code>
 					<Parameters>
 						<Param Type="Float" RPN="True">p0</Param>
@@ -511,17 +511,17 @@
 					<Bindings>
 						<!-- event manipulating all throttles (declared for each throttle preset) -->
 						<Binding EventID="THROTTLE_DECR">
-							<Param>0.1</Param>
+							<Param Type="Float" RPN="True">p0 2 *</Param>
 						</Binding>
 						<Binding EventID="THROTTLE_DECR_SMALL">
-							<Param>0.05</Param>
+							<Param Type="Float" RPN="True">p0</Param>
 						</Binding>
 						<!-- event manipulating one throttle for specific engine -->
 						<Binding EventID="THROTTLE#ENGINE_ID#_DECR">
-							<Param>0.1</Param>
+							<Param Type="Float" RPN="True">p0 2 *</Param>
 						</Binding>
 						<Binding EventID="THROTTLE#ENGINE_ID#_DECR_SMALL">
-							<Param>0.05</Param>
+							<Param Type="Float" RPN="True">p0</Param>
 						</Binding>
 					</Bindings>
 				</Dec>
@@ -530,7 +530,7 @@
 						p0 16384 * (&gt;K:THROTTLE#ENGINE_ID#_SET)
 					</Code>
 					<Parameters>
-						<Param Type="Float" RPN="True">p0</Param>
+						<Param Type="percent over 100" RPN="True">p0</Param>
 					</Parameters>
 					<Bindings>
 						<Binding Alias="Set_All_Throttles">
@@ -538,35 +538,35 @@
 						</Binding>
 						<!-- events manipulating all throttles (declared for each throttle preset) -->
 						<Binding Alias="ENGINE_All_Throttle_Full_Forward">
-							<Param>1</Param>
+							<Param>#UPPER_LIMIT_PCT_OVER_100#</Param>
 						</Binding>
 						<Binding Alias="ENGINE_All_Throttle_Full_Backward">
-							<Param>0</Param>
+							<Param>#LOWER_LIMIT_PCT_OVER_100#</Param>
 						</Binding>
 						<Binding Alias="ENGINE_All_Throttle_Idle">
-							<Param>0</Param>
+							<Param RPN="True">#LEVER_DETENT_POINT# 100 /</Param>
 						</Binding>
 						<!-- event manipulating one throttle for specific engine -->
 						<Binding Alias="ENGINE_Throttle_#ENGINE_ID#_Full_Forward">
-							<Param>1</Param>
+							<Param>#UPPER_LIMIT_PCT_OVER_100#</Param>
 						</Binding>
 						<Binding Alias="ENGINE_Throttle_#ENGINE_ID#_Full_Backward">
 							<Param>#LOWER_LIMIT_PCT_OVER_100#</Param>
 						</Binding>
 						<Binding Alias="ENGINE_Throttle_#ENGINE_ID#_Idle">
-							<Param>0</Param>
+							<Param RPN="True">#LEVER_DETENT_POINT# 100 /</Param>
 						</Binding>
 						<Binding EventID="THROTTLE_FULL">
-							<Param>1</Param>
+							<Param>#UPPER_LIMIT_PCT_OVER_100#</Param>
 						</Binding>
 						<Binding EventID="THROTTLE_CUT">
-							<Param>0</Param>
+							<Param RPN="True">#LEVER_DETENT_POINT# 100 /</Param>
 						</Binding>
 						<Binding EventID="THROTTLE#ENGINE_ID#_FULL">
-							<Param>1</Param>
+							<Param>#UPPER_LIMIT_PCT_OVER_100#</Param>
 						</Binding>
 						<Binding EventID="THROTTLE#ENGINE_ID#_CUT">
-							<Param>0</Param>
+							<Param RPN="True">#LEVER_DETENT_POINT# 100 /</Param>
 						</Binding>
 						<Binding EventID="THROTTLE#ENGINE_ID#_SET">
 							<Param RPN="True">p0</Param>
@@ -606,10 +606,9 @@
 					<TTValue RPN="True">(L:#LEVER_POSITION_VAR#) '%.1f%%' @sprintf</TTValue>
 				</Tooltip>
 				<Value>
-					<Units>percent</Units>
-					<Code>(L:#LEVER_POSITION_VAR#, percent) #LOWER_LIMIT_PCT# - #UPPER_LIMIT_PCT# #LOWER_LIMIT_PCT# - / 100 *</Code>
-					<Init>
-					</Init>
+					<Units>percent overr 100</Units>
+					<Code>(L:#LEVER_POSITION_VAR#) #LOWER_LIMIT_PCT_OVER_100# - #UPPER_LIMIT_PCT_OVER_100# #LOWER_LIMIT_PCT_OVER_100# - /</Code>
+					<Init></Init>
 					<WatchVars>
 					</WatchVars>
 				</Value>
@@ -634,7 +633,7 @@
 						p0 (&gt;L:#LEVER_POSITION_VAR#)
 					</Code>
 					<Parameters>
-						<Param Type="Float" RPN="True">p0 100 *</Param>
+						<Param Type="Float" RPN="True">p0</Param>
 					</Parameters>
 				</Set>
 			</Preset>
