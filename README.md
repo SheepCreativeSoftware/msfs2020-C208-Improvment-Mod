@@ -43,6 +43,7 @@ https://www.researchgate.net/publication/269212570_Overview_and_risk_assessment_
 - Works with Stock G1000 and WT G1000 NXi Avionics
 - Added CAS annunciations, Systems Page, improved engine readouts, fuel indication
 - Cruize torque bug does not longer disappear for RPMS slightly above 1900 
+- Emergency power lever has been implemented in a simplified way. When used it overrides all throttle settings. Regular throttle is having no effect until the Emergency power lever is set back to normal position.
 - Reversionary Mode Enabled
 - Additional Voice Alerts
 - Autopilot and instrument fixes
