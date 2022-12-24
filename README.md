@@ -15,9 +15,20 @@ The average time of engine failure after metal chips appearance is 100 minutes. 
 If the engine is kept overstressed the probability of engine failure increases. Each second of keeping the engine above the torque limit decreases the expected engine failure time by 8 seconds.  
 You can disable/enable engine failures in the MSFS Assistance Options.
 
-***Ground Handling***
-- More control while taxiing
-- Tighter turning circle
+***Aircraft Handling***
+- More control while taxiing, tighter turning circle
+- Throttle lever allows to set forward and beta power range with the same controller axis. Putting the controller input backwards sets the reverse thrust. The idle position is in the middle and it has a small range of dead zone implemented that makes the trottle stick to idle position for small range of controller input. That  helps to set the idle position without too much struggle.
+- Emergency power lever has been implemented in a simplified way. When used it overrides all throttle settings. Regular throttle is having no effect until the Emergency power lever is set back to normal position.
+
+***Systems & Avionics***
+- Works with Stock G1000 and WT G1000 NXi Avionics
+- Added CAS annunciations, Systems Page, improved engine readouts, fuel indication
+- Cruize torque bug does not longer disappear for RPMS slightly above 1900 
+- Avionics Reversionary Mode Enabled
+- Additional Voice Alerts
+- Autopilot and instrument fixes
+- Yaw Damper Working
+- More accurate start up
 
 ***Electric System***
 - The electric system of Cessna has been modified to reflect the real aircraft configuration. The battery is connected to an always-hot battery bus. The Master Battery Switch disconnects the battery bus from the main power distribution bus of the aircraft.
@@ -39,16 +50,6 @@ You can disable/enable engine failures in the MSFS Assistance Options.
 https://www.researchgate.net/publication/269212570_Overview_and_risk_assessment_of_icing_for_transport_category_aircraft_and_components
 - In high icing condition stall sensor can become inoperational if not heated. After 5 minutes of ice accumulation, the stall sensor either silently stops operating or becomes permanently triggered. The way it fails is random each time. After failure, the only way of recovery is to enable the stall sensor heater. Melting down the ice does not happen immediately, it takes between 60 - 120 seconds for the stall sensor to become operational again depending on the amount of ice accumulated on the sensor.
 
-***Systems & Avionics***
-- Works with Stock G1000 and WT G1000 NXi Avionics
-- Added CAS annunciations, Systems Page, improved engine readouts, fuel indication
-- The cruize torque bug does not longer disappear for RPMS slightly above 1900 
-- Reversionary Mode Enabled
-- Additional Voice Alerts
-- Autopilot and instrument fixes
-- Yaw Damper Working
-- More accurate start-up
-
 ***Miscellaneous***
 - Improved lighting and textures
 - All panel potentiometers work
@@ -63,20 +64,20 @@ Thanks to everyone who has contributed, and to PilotTrev for sharing his knowled
 
 ## Known Issues and Limitations
 - Some Voice Alerts won't work with NXi (Is not implemented by WT yet)
-- Fuel consumption is not zero when the engine isn't started (Bug by Asobo)
-- Not compatible (not tested) with other mods which modify the C208 Grand Caravan EX
+- Fuel consumption is not zero when engine isn't started (Bug by Asobo)
 
 ----
 
 ## Compatibility
-- The mod has not been tested with the legacy freeware WT G1000. It is officially at end-of-life and will not be updated. Users should either use stock G1000 sim avionics or download **Working Title's G1000 NXi** (recommended mod available on Sim Marketplace) from the Marketplace.
-- the mod was not tested with VR at all. The compatibility with VR is unknown.
+- Users are recommended to use the mod together with **Working Title's G1000 NXi** (available on Sim Marketplace).
+- The mod was not tested with VR at all. The compatibility with VR si unknown.
+- Not compatible (not tested) with other mods which modify the C208 Grand Caravan EX
 
 ----
 
 ## Download
 
-***[Latest Release v2203.2.2](https://github.com/SheepCreativeSoftware/msfs2020-C208-Improvment-Mod/releases/latest)***
+***[Latest Release v2212.1](https://github.com/SheepCreativeSoftware/msfs2020-C208-Improvment-Mod/releases/latest)***
 
 ### How to install
 

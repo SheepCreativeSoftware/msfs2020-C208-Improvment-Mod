@@ -268,6 +268,17 @@
 			<Simvar name="ENG FAILED:1" unit="bool"/>
       </Condition>
     </Annunciation>
+	<!-- EMERGENCY POWER lever is not in normal position -->
+	<Annunciation>
+      <Type>Warning</Type>
+      <Text>EMERG PWR LVR</Text>
+      <Condition>
+			<Greater>
+				<Simvar name="L:XMLVAR_EmergencyPower_Lever_Position1" unit="Float"/>
+				<Constant>0.05</Constant>
+			</Greater>
+      </Condition>
+    </Annunciation>
 	<!--Indicates the starter-generator is operating in starter mode-->
 	<Annunciation>
 	  <Type>Caution</Type>
@@ -438,7 +449,6 @@
   </Annunciations>
   
 <!-- Engine Display -->
-<!-- Set Override to "true" for WorkingTitle NXi when it is ready -->
 	<EngineDisplay override="true">
 		<Function Name="MaximumCruiseTorqueBug">
 			<MultiDimensionsTable>
@@ -567,6 +577,7 @@
 				<CursorType>Triangle</CursorType>
 				<ValuePos>End</ValuePos>
 				<SizePercent>90</SizePercent>
+				<TextIncrement>5</TextIncrement>
                 <GraduationLength>100</GraduationLength>
 			</Style>
 			<BeginText></BeginText>
@@ -694,7 +705,10 @@
 			<Minimum>0</Minimum>
 			<Maximum>110</Maximum>
 			<Value>
-				<Simvar name="TURB ENG N1:1" unit="percent"/>
+				<Multiply>
+					<Simvar name="TURB ENG N1:1" unit="percent"/>
+					<Constant>1.037</Constant>
+				</Multiply>	
 			</Value>
 			<ColorZone>
 				<Color>green</Color>
@@ -716,7 +730,7 @@
 			<RedBlink>
 				<Greater>
 					<Simvar name="TURB ENG N1:1" unit="percent"/>
-					<Constant>103.6</Constant>
+					<Constant>103.7</Constant>
 				</Greater>
 			</RedBlink>
 		</Gauge>
@@ -1102,8 +1116,8 @@
 					<CursorType>Triangle</CursorType>
 					<ValuePos>End</ValuePos>
 					<SizePercent>90</SizePercent>
-					<TextIncrement>1</TextIncrement>
-					<GraduationLength>50</GraduationLength>
+					<TextIncrement>5</TextIncrement>
+					<GraduationLength>100</GraduationLength>
 				</Style>
 				<BeginText></BeginText>
 				<EndText></EndText>
@@ -1231,7 +1245,10 @@
 				<Minimum>0</Minimum>
 				<Maximum>110</Maximum>
 				<Value>
-					<Simvar name="TURB ENG N1:1" unit="percent"/>
+					<Multiply>
+						<Simvar name="TURB ENG N1:1" unit="percent"/>
+						<Constant>1.037</Constant>
+					</Multiply>	
 				</Value>
 				<ColorZone>
 					<Color>green</Color>
@@ -1253,7 +1270,7 @@
 				<RedBlink>
 					<Greater>
 						<Simvar name="TURB ENG N1:1" unit="percent"/>
-						<Constant>103.6</Constant>
+						<Constant>103.7</Constant>
 					</Greater>
 				</RedBlink>
 			</Gauge>
@@ -1681,8 +1698,8 @@
 					<CursorType>Triangle</CursorType>
 					<ValuePos>End</ValuePos>
 					<SizePercent>90</SizePercent>
-					<TextIncrement>1</TextIncrement>
-					<GraduationLength>50</GraduationLength>
+					<TextIncrement>5</TextIncrement>
+					<GraduationLength>100</GraduationLength>
 				</Style>
 				<BeginText></BeginText>
 				<EndText></EndText>
@@ -1810,7 +1827,10 @@
 				<Minimum>0</Minimum>
 				<Maximum>110</Maximum>
 				<Value>
-					<Simvar name="TURB ENG N1:1" unit="percent"/>
+					<Multiply>
+						<Simvar name="TURB ENG N1:1" unit="percent"/>
+						<Constant>1.037</Constant>
+					</Multiply>	
 				</Value>
 				<ColorZone>
 					<Color>green</Color>
@@ -1832,7 +1852,7 @@
 				<RedBlink>
 					<Greater>
 						<Simvar name="TURB ENG N1:1" unit="percent"/>
-						<Constant>103.6</Constant>
+						<Constant>103.7</Constant>
 					</Greater>
 				</RedBlink>
 			</Gauge>
@@ -2153,10 +2173,6 @@
 					<Simvar name="TURB ENG ITT:1" unit="celsius"/>
 					<Constant>825</Constant>
 				</Greater>
-	  			<Equal>
-  					<Simvar name="L:XMLVAR_FireTest_Switch" unit="enum"/>
-  					<Constant>0</Constant>
-	  			</Equal>
 			</Or>
 		</Condition>
 	</Alert>

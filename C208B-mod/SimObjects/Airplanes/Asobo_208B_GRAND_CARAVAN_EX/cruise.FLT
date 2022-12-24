@@ -1,6 +1,5 @@
-
 [SimVarForSpawningInTheAir.0]
-IAS=262
+IAS=174
 FlapsDegree=0000.00
 
 [Avionics.0]
@@ -63,7 +62,6 @@ StandbyVacuum=False
 PropSync=False
 AutoFeatherSwitch=False
 FlightDirector=False
-PanelLights=False
 LaunchBarSwitch=False
 LaunchBarState=0
 TailhookHandle=False
@@ -77,33 +75,11 @@ KollsmanSetting=29.921342849731445313
 [BleedAir.0]
 BleedAirSource=0
 
-[Switches.0]
-PitotHeat=False
-BeaconLights=True
-LandingLights=False
-LogoLights=True
-NavLights=True
-RecognitionLights=True
-StrobeLights=True
-TaxiLights=False
-WingLights=False
-Potentiometer.2  = 1    ; default value for Kob Stby Gauges brightness 
-Potentiometer.3  = 0.6  ; default value for Kob Decals brightness 
-Potentiometer.6  = 0.7  ; default value for Kob Central flood light brightness
-Potentiometer.12 = 0.7  ; default value for Kob Pilot flood light brightness
-Potentiometer.13 = 0.7  ; default value for Kob Copilot flood light brightness
-Potentiometer.30 = 1    ; default value for Kob Avionics brightness
-
 [Electrical.0]
 bus.1=bus.8:1, bus.9:1, bus.10:1, bus.11:1, bus.12:0
 bus.8=bus.9:0, bus.11:0
 alternator.1=True
 alternator.2=True
-circuit.18=1 ; Stby gauges light
-circuit.22=1 ; cockpit pilot floodlight
-circuit.23=1 ; cockpit copilot floodlight
-circuit.24=1 ; cockpit central floodlight
-circuit.52=1 ; cabin lights
 
 [AutoPilot.0]
 MasterSwitch=True
@@ -156,3 +132,4 @@ RudderTrimDisabled=False
 
 [LocalVars.0]
 XMLVAR_Aice_Fluid_Level=20.8
+XMLVAR_FireTest_Switch=1
