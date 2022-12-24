@@ -5,7 +5,7 @@ Feel free to contribute to this mod! Create an issue or fork and create a pull r
 
 **The mod isn't working?** This is usually due to a conflict with another mod in the community folder. The best thing is to remove all other mods and then add them one by one to see what causes the conflict. If you think that you found the legitimate bug or someting what is missing, please describe and submit it at https://github.com/SheepCreativeSoftware/msfs2020-C208-Improvment-Mod/issues. With the exact reproduction scenario. Saying that feature A does not work, usually is not enough to reproduce and fix the issue. 
 
-**Based on Sim version 1.23.12.0 (SU8)**
+**Based on Sim version 1.29.30.0 (SU11)**
 
 ***Engine and Flight Model***
 - Corrected Different Values according to POH
