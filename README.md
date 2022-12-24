@@ -17,18 +17,18 @@ You can disable/enable engine failures in the MSFS Assistance Options.
 
 ***Aircraft Handling***
 - More control while taxiing, tighter turning circle
-- Throttle lever allows to set forward and beta power range with the same controller axis. Putting the controller input backwards sets the reverse thrust. The idle position is in the middle and it has a small range of dead zone implemented that makes the trottle stick to idle position for small range of controller input. That  helps to set the idle position without too much struggle.
-- Emergency power lever has been implemented in a simplified way. When used it overrides all throttle settings. Regular throttle is having no effect until the Emergency power lever is set back to normal position.
+- The throttle lever allows to set forward and beta power range with the same controller axis. Putting the controller input backward sets the reverse thrust. The idle position is in the middle and it has a small range of dead zone implemented that makes the throttle stick to the idle position for a small range of controller input. That  helps to set the idle position without too much struggle.
+- The emergency power lever has been implemented in a simplified way. When used it overrides all throttle settings. Regular throttle is having no effect until the Emergency power lever is set back to normal position.
 
 ***Systems & Avionics***
 - Works with Stock G1000 and WT G1000 NXi Avionics
 - Added CAS annunciations, Systems Page, improved engine readouts, fuel indication
-- Cruize torque bug does not longer disappear for RPMS slightly above 1900 
+- The cruize torque bug does not longer disappear for RPMS slightly above 1900 
 - Avionics Reversionary Mode Enabled
 - Additional Voice Alerts
 - Autopilot and instrument fixes
 - Yaw Damper Working
-- More accurate start up
+- More accurate start-up
 
 ***Electric System***
 - The electric system of Cessna has been modified to reflect the real aircraft configuration. The battery is connected to an always-hot battery bus. The Master Battery Switch disconnects the battery bus from the main power distribution bus of the aircraft.
@@ -63,8 +63,7 @@ Thanks to everyone who has contributed, and to PilotTrev for sharing his knowled
 ----
 
 ## Known Issues and Limitations
-- Some Voice Alerts won't work with NXi (Is not implemented by WT yet)
-- Fuel consumption is not zero when engine isn't started (Bug by Asobo)
+- Anti Ice fluid is refilled only at the start of the new flight
 
 ----
 

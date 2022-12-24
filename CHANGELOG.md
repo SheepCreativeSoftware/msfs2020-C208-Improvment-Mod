@@ -1,5 +1,11 @@
 ## Changes
 
+**2212.1.0**
+- Improvement: The throttle lever allows to set both forward and beta power range 
+- Improvement: Emergency Power Lever simplified implementation
+- Improvement: Sound of Avionics power-on
+- Improvement: Flight model tweaks
+
 **2203.4.2**
 - Improvement: Throttle mod to enable reverse control
 - Improvement: FLight model tweaks
